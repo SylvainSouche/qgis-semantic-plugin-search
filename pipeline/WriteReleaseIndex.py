@@ -110,7 +110,7 @@ def main(argv: list[str] | None = None) -> int:
         modelPath=Path(args.model),
         databases=databases,
         baseUrl=args.base_url.rstrip("/"),
-        generatedAt=datetime.datetime.now(datetime.UTC)
+        generatedAt=datetime.datetime.now(datetime.timezone.utc)
         .strftime("%Y%m%dT%H%M%SZ"),
     )
     outputPath = Path(args.output)

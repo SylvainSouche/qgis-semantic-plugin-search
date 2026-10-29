@@ -37,9 +37,13 @@ def test_pure_layers_do_not_import_qgis_or_qt():
 
 
 def test_pure_layers_limit_third_party_imports_to_numpy():
-    import sys
-
-    allowed = set(sys.stdlib_module_names) | {"numpy"}
+    # Explicit allowlist rather than sys.stdlib_module_names: deterministic
+    # across Python versions (3.9 has no stdlib_module_names) and stricter.
+    allowed = {
+        "__future__", "abc", "collections", "dataclasses", "hashlib", "json", "os",
+        "pathlib", "sqlite3", "tempfile", "typing", "unicodedata", "urllib",
+        "numpy",
+    }
     offenders = []
     for layer in PURE_LAYERS:
         for path in (PLUGIN_ROOT / layer).rglob("*.py"):
