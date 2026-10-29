@@ -4,12 +4,13 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
-# Downloaded plugin metadata and readmes (make fetch)
-data/
+# Downloaded plugin metadata and readmes (make fetch); anchored so the
+# plugin's SemanticPluginSearch/Data package is never ignored.
+/data/
 
 # Embeddings databases and converted model (make embed, CI)
-build/
-dist/
+/build/
+/dist/
 *.sqlite
 
 
