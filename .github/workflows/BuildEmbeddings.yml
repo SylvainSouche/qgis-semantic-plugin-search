@@ -110,12 +110,16 @@ jobs:
             --base-url "https://github.com/${{ github.repository }}/releases/latest/download" \
             --output build/index.json
       - name: Publish to the embeddings release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -x
-          gh release upload embeddings --clobber \
-            build/EmbeddingModel.npz build/Embeddings-3.sqlite build/Embeddings-4.sqlite build/index.json \
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: embeddings
+          name: Embeddings database
+          make_latest: true
+          files: |
+            build/EmbeddingModel.npz
+            build/Embeddings-3.sqlite
+            build/Embeddings-4.sqlite
+            build/index.json \
             || gh release create embeddings \
               --title "Embeddings database" \
               --notes "Automated weekly build of the semantic search embeddings (model + per QGIS version databases). The plugin reads assets/index via the latest/download URLs." \
