@@ -71,6 +71,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-ci-accepted": {
+    "active": true,
+    "id": "0f87-6ae3-945f-ef3b",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-embeddings-search": {
     "active": true,
     "id": "0f87-6ae3-6955-953f",
@@ -286,6 +292,12 @@
     "id": "0f87-6ae3-6996-386d",
     "status": "confirmed",
     "type": "nreq"
+  },
+  "obs-ci-validation": {
+    "active": true,
+    "id": "0f87-6ae3-945f-dcf6",
+    "status": "recorded",
+    "type": "obs"
   },
   "obs-existing-data": {
     "active": true,
