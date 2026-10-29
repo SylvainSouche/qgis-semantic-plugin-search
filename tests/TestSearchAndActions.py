@@ -24,8 +24,14 @@ class StubSearchService:
         return self.results
 
 
-def makeInfo(pluginId: int, name: str) -> PluginInfo:
-    return PluginInfo(pluginId=pluginId, name=name, description="fixture")
+def makeInfo(pluginId: int, name: str, experimental=False, deprecated=False) -> PluginInfo:  # noqa: ANN001
+    return PluginInfo(
+        pluginId=pluginId,
+        name=name,
+        description="fixture",
+        experimental=experimental,
+        deprecated=deprecated,
+    )
 
 
 # ------------------------------------------------------------------ search
@@ -117,3 +123,60 @@ def test_action_states_without_selection_disable_everything():
     states = view.actionStates[-1]
     assert not states.canInstall and not states.canUpgrade
     assert not states.canReinstall and not states.canUninstall
+
+
+# --------------------------------------------------------------- filters
+
+
+def test_filters_exclude_experimental_and_deprecated_by_default():
+    view = FakeView()
+    results = [
+        SearchResult(makeInfo(1, "Standard"), 0.9),
+        SearchResult(makeInfo(2, "Trial", experimental=True), 0.8),
+        SearchResult(makeInfo(3, "Legacy", deprecated=True), 0.7),
+    ]
+    controller = SearchController(
+        engine=None, searchService=StubSearchService(results), reporter=FakeReporter()
+    )
+    controller.store = object()
+    controller.search(view, "anything")
+    assert [r.info.name for r in view.results] == ["Standard"]
+
+
+def test_filters_include_each_category_when_toggled():
+    view = FakeView()
+    results = [
+        SearchResult(makeInfo(1, "Standard"), 0.9),
+        SearchResult(makeInfo(2, "Trial", experimental=True), 0.8),
+        SearchResult(makeInfo(3, "Legacy", deprecated=True), 0.7),
+    ]
+    controller = SearchController(
+        engine=None, searchService=StubSearchService(results), reporter=FakeReporter()
+    )
+    controller.store = object()
+
+    controller.setFilters(True, False)
+    controller.search(view, "anything")
+    assert [r.info.name for r in view.results] == ["Standard", "Trial"]
+
+    controller.setFilters(True, True)
+    controller.search(view, "anything")
+    assert [r.info.name for r in view.results] == ["Standard", "Trial", "Legacy"]
+
+    controller.setFilters(False, True)
+    controller.search(view, "anything")
+    assert [r.info.name for r in view.results] == ["Standard", "Legacy"]
+
+
+def test_results_of_applies_the_filters():
+    results = [
+        SearchResult(makeInfo(1, "Standard"), 0.9),
+        SearchResult(makeInfo(2, "Trial", experimental=True), 0.8),
+    ]
+    controller = SearchController(
+        engine=None, searchService=StubSearchService(results), reporter=FakeReporter()
+    )
+    controller.store = object()
+    assert [r.info.name for r in controller.resultsOf("q")] == ["Standard"]
+    controller.setFilters(True, True)
+    assert [r.info.name for r in controller.resultsOf("q")] == ["Standard", "Trial"]

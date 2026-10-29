@@ -190,12 +190,34 @@ def main() -> int:
     app.processEvents()
     check("asset refresh fails safely", True)
 
+    # 8. The visibility toggles drive the controller and persist.
+    dialog.experimentalBox.setChecked(True)
+    app.processEvents()
+    check(
+        "experimental toggle reaches the controller",
+        searchController.includeExperimental is True,
+    )
+    dialog.experimentalBox.setChecked(False)
+    app.processEvents()
+    check(
+        "experimental toggle restores",
+        searchController.includeExperimental is False,
+    )
+    check("live search timer is armed ready", not dialog.liveSearchTimer.isActive())
+
+    # Teardown order matters: drop the Qt objects before exitQgis, and
+    # flush before leaving; some offscreen teardowns still crash on exit.
+    del dialog, controllers
+    app.processEvents()
     app.exitQgis()
     for line in checks:
         print(line)
     print(f"QGIS smoke test passed ({len(checks)} checks, "
           f"QGIS {versionProvider.qgisVersion()}, universe {universe})")
-    return 0
+    sys.stdout.flush()
+    # Leave without interpreter teardown of Qt objects, which segfaults on
+    # some platform combinations after all checks already passed.
+    os._exit(0)
 
 
 if __name__ == "__main__":

@@ -191,6 +191,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-visibility-and-polish": {
+    "active": true,
+    "id": "0f87-6ae3-a1e6-f68d",
+    "status": "recorded",
+    "type": "dec"
+  },
   "impl-action-delegation": {
     "active": true,
     "id": "0f87-6ae3-74ce-4cc1",
@@ -303,6 +309,18 @@
     "active": true,
     "id": "0f87-6ae3-74ce-b13c",
     "status": "verified",
+    "type": "impl"
+  },
+  "impl-visibility-filters": {
+    "active": true,
+    "id": "0f87-6ae3-a350-e688",
+    "status": "asserted",
+    "type": "impl"
+  },
+  "impl-window-polish": {
+    "active": true,
+    "id": "0f87-6ae3-a350-70ad",
+    "status": "asserted",
     "type": "impl"
   },
   "nreq-no-noncommercial-vectors": {
@@ -527,6 +545,18 @@
     "status": "confirmed",
     "type": "req"
   },
+  "req-visibility-filters": {
+    "active": true,
+    "id": "0f87-6ae3-a1e6-cf4c",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-window-polish": {
+    "active": true,
+    "id": "0f87-6ae3-a1e6-0cd7",
+    "status": "confirmed",
+    "type": "req"
+  },
   "t-actions-delegate": {
     "active": true,
     "id": "0f87-6ae3-69be-f5cf",
@@ -572,6 +602,12 @@
   "t-suite-no-qgis": {
     "active": true,
     "id": "0f87-6ae3-69be-78c4",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-visibility-filters": {
+    "active": true,
+    "id": "0f87-6ae3-a1e6-8cd8",
     "status": "passing",
     "type": "test"
   },

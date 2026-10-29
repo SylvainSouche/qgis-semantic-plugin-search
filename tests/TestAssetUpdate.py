@@ -15,6 +15,7 @@ from SemanticPluginSearch.Data.SqliteVectorStore import SqliteVectorStore
 from SemanticPluginSearch.Data.StaticModelLoader import NpzStaticModel
 from pipeline.BuildEmbeddings import EmbeddingDatabaseWriter
 from pipeline.WriteReleaseIndex import buildIndex
+from tests.conftest import FIXTURE_PLUGINS
 from tests.conftest import (
     FakePaths,
     FakeReporter,
@@ -182,7 +183,7 @@ def test_offline_falls_back_to_the_cache(tmp_path, published):
     assert controller.reporter.warnings, "offline refresh must warn"
     assert paths.databasePath("4").read_bytes() == cachedBytes
     store = SqliteVectorStore.open(paths.databasePath("4"))
-    assert store.pluginCount() == 4
+    assert store.pluginCount() == len(FIXTURE_PLUGINS)
 
 
 def test_no_database_for_the_running_universe_is_reported(tmp_path, published):

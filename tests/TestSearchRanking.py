@@ -94,3 +94,27 @@ def test_limit_and_metadata_roundtrip(store, searchService):
     assert info.description == original["description"]
     assert info.author == "Fixture Author"
     assert "parcel" in info.tags or info.name == "InvoiceReporter" or info.name == "WebLayerLoader"
+
+
+def test_filter_results_is_a_pure_domain_function(store, searchService):
+    from SemanticPluginSearch.Domain.SearchEngine import filterResults
+
+    results = searchService.search(store, "invoice export report budget")
+    assert {r.info.name for r in results} >= {"InvoiceReporter", "ShapeExporter"}
+    standard = filterResults(results)
+    assert all(
+        not r.info.experimental and not r.info.deprecated for r in standard
+    ), "default filters drop flagged plugins"
+    withExperimental = filterResults(results, includeExperimental=True)
+    assert any(r.info.experimental for r in withExperimental)
+    withDeprecated = filterResults(results, includeDeprecated=True)
+    assert any(r.info.deprecated for r in withDeprecated)
+    withBoth = filterResults(results, True, True)
+    assert len(withBoth) == len(results)
+
+
+def test_flagged_plugins_are_indexed_with_their_flags(store):
+    invoice = store.pluginInfo(3)
+    assert invoice.experimental is True and invoice.deprecated is False
+    exporter = store.pluginInfo(5)
+    assert exporter.deprecated is True and exporter.experimental is False

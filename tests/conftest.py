@@ -84,6 +84,7 @@ FIXTURE_PLUGINS = {
     3: {
         "name": "InvoiceReporter",
         "version": "2.0.3",
+        "experimental": True,
         "description": "Generate invoices and accounting reports as pdf",
         "about": "Accounting and invoice report export",
         "tags": "invoice,accounting,pdf",
@@ -96,6 +97,15 @@ FIXTURE_PLUGINS = {
         "about": "Add wfs and wms service layers by url",
         "tags": "wfs,wms,layer",
         "readme": "# WebLayerLoader\n\nLoad WFS and WMS layers from a service url.\n",
+    },
+    5: {
+        "name": "ShapeExporter",
+        "version": "0.5.0",
+        "description": "Export layers to shapefiles, superseded by modern formats",
+        "about": "Legacy shapefile export kept for old projects",
+        "tags": "export,shapefile",
+        "readme": "# ShapeExporter\n\nLegacy export of layers to shapefiles.\n",
+        "deprecated": True,
     },
 }
 
@@ -158,8 +168,8 @@ def fixtureCatalogueBytes() -> bytes:
         <qgis_maximum_version>4.99.0</qgis_maximum_version>
         <author_name><![CDATA[Fixture Author]]></author_name>
         <download_url>https://plugins.qgis.org/plugins/{spec['name']}/download/</download_url>
-        <experimental>False</experimental>
-        <deprecated>False</deprecated>
+        <experimental>{'True' if spec.get('experimental') else 'False'}</experimental>
+        <deprecated>{'True' if spec.get('deprecated') else 'False'}</deprecated>
         <repository><![CDATA[https://github.com/fixture/{spec['name']}]]></repository>
         <tags><![CDATA[{spec['tags']}]]></tags>
         <downloads>1000</downloads>

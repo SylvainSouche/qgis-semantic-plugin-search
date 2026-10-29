@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from ..Domain.Entities import PluginInfo, SearchResult
 from ..Domain.Ports import EmbeddingEngine, PluginVectorStore, Reporter
-from ..Domain.SearchEngine import SearchService
+from ..Domain.SearchEngine import SearchService, filterResults
 from .ViewPorts import SearchWindowView
 
 
@@ -23,9 +23,16 @@ class SearchController:
         self.searchService = searchService
         self.reporter = reporter
         self.store: PluginVectorStore | None = None
+        self.includeExperimental = False
+        self.includeDeprecated = False
 
     def setStore(self, store: PluginVectorStore | None) -> None:
         self.store = store
+
+    def setFilters(self, includeExperimental: bool, includeDeprecated: bool) -> None:
+        """Apply the visibility toggles; the next search uses them."""
+        self.includeExperimental = includeExperimental
+        self.includeDeprecated = includeDeprecated
 
     def search(self, view: SearchWindowView, text: str) -> None:
         """Run the query and push the ranked list to the view."""
@@ -37,7 +44,9 @@ class SearchController:
             view.clearDetails()
             return
         results = self.searchService.search(self.store, text)
-        view.showResults(results)
+        view.showResults(
+            filterResults(results, self.includeExperimental, self.includeDeprecated)
+        )
         if results:
             view.showStatus(
                 f"{len(results)} plugin(s) match; showing similarity as a percentage."
@@ -49,4 +58,10 @@ class SearchController:
         """Ranking without a view, used by tests and keyboard navigation."""
         if self.store is None:
             return []
-        return self.searchService.search(self.store, text)
+        return filterResults(
+            self.searchService.search(self.store, text),
+            self.includeExperimental,
+            self.includeDeprecated,
+        )
+
+# @impl 0f87-6ae3-a1e6-cf4c

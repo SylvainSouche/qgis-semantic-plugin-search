@@ -10,6 +10,23 @@ from .Entities import PluginInfo, SearchResult
 from .Ports import EmbeddingEngine, PluginVectorStore
 
 
+def filterResults(
+    results: list[SearchResult],
+    includeExperimental: bool = False,
+    includeDeprecated: bool = False,
+) -> list[SearchResult]:
+    """Keep standard plugins; add experimental and deprecated when allowed.
+
+    A plugin flagged both experimental and deprecated needs both toggles.
+    """
+    return [
+        result
+        for result in results
+        if (includeExperimental or not result.info.experimental)
+        and (includeDeprecated or not result.info.deprecated)
+    ]
+
+
 class SearchService:
     """Ranks every plugin of a store against a natural language query."""
 
@@ -49,3 +66,5 @@ class SearchService:
         return results
 
 # @impl 0f87-6ae3-6985-5a6f
+
+# @impl 0f87-6ae3-a1e6-cf4c
