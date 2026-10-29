@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Downloaded plugin metadata and readmes (make fetch)
+data/
+
+# Embeddings databases and converted model (make embed, CI)
+build/
+dist/
+*.sqlite
+
+
+# @impl 0f87-6ae3-7f93-edfd

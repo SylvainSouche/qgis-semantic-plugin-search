@@ -1,0 +1,121 @@
+name: BuildEmbeddings
+
+on:
+  schedule:
+    # Every Monday 03:00 UTC.
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  model:
+    name: Convert static model
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install numpy
+        run: python -m pip install numpy
+      - name: Fetch a commercially usable static model
+        run: |
+          mkdir -p build/model
+          # minishlab/potion-base-8M: MIT licensed, distilled from the
+          # Apache-2.0 all-MiniLM-L6-v2, so redistribution is allowed.
+          curl -fL --retry 3 \
+            https://huggingface.co/minishlab/potion-base-8M/resolve/main/model.safetensors \
+            -o build/model/model.safetensors
+          curl -fL --retry 3 \
+            https://huggingface.co/minishlab/potion-base-8M/resolve/main/tokenizer.json \
+            -o build/model/tokenizer.json
+      - name: Convert to the distributed .npz format
+        run: |
+          python pipeline/ConvertStaticModel.py \
+            --model-dir build/model \
+            --model-id static-potion-base-8M \
+            --source-model "minishlab/potion-base-8M" \
+            --license-note "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed" \
+            --output build/EmbeddingModel.npz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: embedding-model
+          path: build/EmbeddingModel.npz
+
+  database:
+    name: Embeddings for QGIS ${{ matrix.version }}
+    runs-on: ubuntu-latest
+    needs: model
+    strategy:
+      matrix:
+        version: ["3.44", "4.2"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy
+      - uses: actions/download-artifact@v4
+        with:
+          name: embedding-model
+          path: build
+      - name: Fetch catalogue and readmes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python pipeline/FetchCatalogue.py ${{ matrix.version }} --output-dir build --connections 12
+      - name: Build the embeddings database
+        run: |
+          python pipeline/BuildEmbeddings.py \
+            --catalogue build/plugins-${{ matrix.version }}.xml \
+            --readmes build/plugins-${{ matrix.version }} \
+            --readme-urls build/readme-urls-${{ matrix.version }}.json \
+            --model build/EmbeddingModel.npz \
+            --universe ${{ contains(matrix.version, '4.') && '4' || '3' }} \
+            --output build/Embeddings-${{ contains(matrix.version, '4.') && '4' || '3' }}.sqlite
+      - uses: actions/upload-artifact@v4
+        with:
+          name: embeddings-${{ matrix.version }}
+          path: build/Embeddings-*.sqlite
+
+  publish:
+    name: Publish release and index
+    runs-on: ubuntu-latest
+    needs: [model, database]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy
+      - uses: actions/download-artifact@v4
+        with:
+          name: embedding-model
+          path: build
+      - uses: actions/download-artifact@v4
+        with:
+          name: embeddings-3.44
+          path: build
+      - uses: actions/download-artifact@v4
+        with:
+          name: embeddings-4.2
+          path: build
+      - name: Write the release index
+        run: |
+          python pipeline/WriteReleaseIndex.py \
+            --model build/EmbeddingModel.npz \
+            --database 3=build/Embeddings-3.sqlite \
+            --database 4=build/Embeddings-4.sqlite \
+            --base-url "https://github.com/${{ github.repository }}/releases/latest/download" \
+            --output build/index.json
+      - name: Publish to the embeddings release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete embeddings --yes --cleanup-tag || true
+          gh release create embeddings \
+            --title "Embeddings database" \
+            --notes "Automated weekly build of the semantic search embeddings (model + per QGIS version databases). The plugin reads assets/index via the latest/download URLs." \
+            --latest \
+            build/EmbeddingModel.npz build/Embeddings-3.sqlite build/Embeddings-4.sqlite build/index.json

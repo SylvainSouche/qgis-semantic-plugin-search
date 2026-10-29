@@ -1,0 +1,542 @@
+{
+  "ai-model-choice": {
+    "active": true,
+    "id": "0f87-6ae3-6996-ef8b",
+    "status": "proposed",
+    "type": "ai"
+  },
+  "ai-release-index": {
+    "active": true,
+    "id": "0f87-6ae3-6997-428c",
+    "status": "proposed",
+    "type": "ai"
+  },
+  "ai-reuse-fetcher": {
+    "active": true,
+    "id": "0f87-6ae3-6997-82b8",
+    "status": "proposed",
+    "type": "ai"
+  },
+  "ai-sqlite-db": {
+    "active": true,
+    "id": "0f87-6ae3-6997-117e",
+    "status": "proposed",
+    "type": "ai"
+  },
+  "ai-static-embeddings": {
+    "active": true,
+    "id": "0f87-6ae3-6996-518f",
+    "status": "proposed",
+    "type": "ai"
+  },
+  "asm-installer-reachable": {
+    "active": true,
+    "id": "0f87-6ae3-69a7-c0c1",
+    "status": "assumed",
+    "type": "asm"
+  },
+  "asm-numpy-bundled": {
+    "active": true,
+    "id": "0f87-6ae3-69a7-ecc2",
+    "status": "assumed",
+    "type": "asm"
+  },
+  "asm-static-quality": {
+    "active": true,
+    "id": "0f87-6ae3-69a7-c4d4",
+    "status": "assumed",
+    "type": "asm"
+  },
+  "con-commercial-models": {
+    "active": true,
+    "id": "0f87-6ae3-6956-b93e",
+    "status": "recorded",
+    "type": "con"
+  },
+  "con-light-engine": {
+    "active": true,
+    "id": "0f87-6ae3-6956-5e6b",
+    "status": "recorded",
+    "type": "con"
+  },
+  "con-qgis-runtime": {
+    "active": true,
+    "id": "0f87-6ae3-6956-aab8",
+    "status": "recorded",
+    "type": "con"
+  },
+  "dec-actions-defer": {
+    "active": true,
+    "id": "0f87-6ae3-6955-eb4f",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-embeddings-search": {
+    "active": true,
+    "id": "0f87-6ae3-6955-953f",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-engineering-rules": {
+    "active": true,
+    "id": "0f87-6ae3-6956-371e",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-fetcher-adopted": {
+    "active": true,
+    "id": "0f87-6ae3-7631-f356",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-github-pipeline": {
+    "active": true,
+    "id": "0f87-6ae3-6955-80be",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-license-policy": {
+    "active": true,
+    "id": "0f87-6ae3-6956-fbf2",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-local-model": {
+    "active": true,
+    "id": "0f87-6ae3-6955-f69e",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-makefile": {
+    "active": true,
+    "id": "0f87-6ae3-7ce1-1c69",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-one-codebase": {
+    "active": false,
+    "id": "0f87-6ae3-6956-8896",
+    "status": "superseded",
+    "type": "dec"
+  },
+  "dec-one-codebase-v2": {
+    "active": true,
+    "id": "0f87-6ae3-7451-7b84",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-plugin-license-mit": {
+    "active": true,
+    "id": "0f87-6ae3-7f88-5bb3",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-python": {
+    "active": true,
+    "id": "0f87-6ae3-6955-a9df",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-repository-identity": {
+    "active": true,
+    "id": "0f87-6ae3-8fc9-118a",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-ui-layout": {
+    "active": true,
+    "id": "0f87-6ae3-6956-17f5",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-version-correction": {
+    "active": true,
+    "id": "0f87-6ae3-7451-fad7",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "impl-action-delegation": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-4cc1",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-asset-update": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-95bf",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-bundled-deps": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-d6ae",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-details-controller": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-f2b3",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-gitignore": {
+    "active": true,
+    "id": "0f87-6ae3-7f93-edfd",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-license-carrying": {
+    "active": true,
+    "id": "0f87-6ae3-7524-2078",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-makefile": {
+    "active": true,
+    "id": "0f87-6ae3-7ce1-c703",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-mvc-isolation": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-84e2",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-naming-convention": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-436b",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-pipeline-build": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-025b",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-pipeline-fetch": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-32bf",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-qt-compat": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-d56d",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-query-embedding": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-fb48",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-query-local": {
+    "active": true,
+    "id": "0f87-6ae3-7524-8676",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-release-index": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-d227",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-search-ranking": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-7032",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-search-window": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-5300",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-tests-off-qgis": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-3f8c",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-verified-download": {
+    "active": true,
+    "id": "0f87-6ae3-74ce-b13c",
+    "status": "verified",
+    "type": "impl"
+  },
+  "nreq-no-noncommercial-vectors": {
+    "active": true,
+    "id": "0f87-6ae3-6996-571d",
+    "status": "confirmed",
+    "type": "nreq"
+  },
+  "nreq-no-own-install": {
+    "active": true,
+    "id": "0f87-6ae3-6996-c732",
+    "status": "confirmed",
+    "type": "nreq"
+  },
+  "nreq-query-stays-local": {
+    "active": true,
+    "id": "0f87-6ae3-6996-386d",
+    "status": "confirmed",
+    "type": "nreq"
+  },
+  "obs-existing-data": {
+    "active": true,
+    "id": "0f87-6ae3-6956-c190",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-version-344": {
+    "active": true,
+    "id": "0f87-6ae3-7451-f64c",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "req-action-integration": {
+    "active": true,
+    "id": "0f87-6ae3-6970-313d",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-architecture-quality": {
+    "active": true,
+    "id": "0f87-6ae3-6970-181f",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-atomic-cache-update": {
+    "active": true,
+    "id": "0f87-6ae3-6985-9c48",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-auto-updated-assets": {
+    "active": true,
+    "id": "0f87-6ae3-6970-f0a1",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-bundled-deps-only": {
+    "active": true,
+    "id": "0f87-6ae3-6986-51e1",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-camelcase-naming": {
+    "active": true,
+    "id": "0f87-6ae3-6986-14e6",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-cosine-ranking": {
+    "active": true,
+    "id": "0f87-6ae3-6985-5a6f",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-db-version-match": {
+    "active": true,
+    "id": "0f87-6ae3-6985-6264",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-first-run-bootstrap": {
+    "active": true,
+    "id": "0f87-6ae3-6985-a030",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-gitignore-generated": {
+    "active": true,
+    "id": "0f87-6ae3-7f88-fc1b",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-makefile-targets": {
+    "active": true,
+    "id": "0f87-6ae3-7ce1-fb2e",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-manager-buttons": {
+    "active": true,
+    "id": "0f87-6ae3-6985-0cec",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-mvc-isolation": {
+    "active": true,
+    "id": "0f87-6ae3-6986-f061",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-natural-language-search": {
+    "active": true,
+    "id": "0f87-6ae3-6970-f113",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-pipeline": {
+    "active": true,
+    "id": "0f87-6ae3-6970-949f",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-pipeline-embed": {
+    "active": true,
+    "id": "0f87-6ae3-6986-9d64",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-pipeline-fetch": {
+    "active": true,
+    "id": "0f87-6ae3-6986-4446",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-pipeline-publish": {
+    "active": true,
+    "id": "0f87-6ae3-6986-d290",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-portability": {
+    "active": false,
+    "id": "0f87-6ae3-6970-90c5",
+    "status": "superseded",
+    "type": "req"
+  },
+  "req-portability-v2": {
+    "active": true,
+    "id": "0f87-6ae3-746d-1a0c",
+    "status": "proposed",
+    "type": "req"
+  },
+  "req-pyqt5-pyqt6": {
+    "active": true,
+    "id": "0f87-6ae3-6986-bc9f",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-query-embedding-local": {
+    "active": true,
+    "id": "0f87-6ae3-6985-7c77",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-result-presentation": {
+    "active": true,
+    "id": "0f87-6ae3-6970-4b22",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-tests-without-qgis": {
+    "active": true,
+    "id": "0f87-6ae3-6986-4c12",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-two-pane-layout": {
+    "active": true,
+    "id": "0f87-6ae3-6985-53e9",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-two-tabs": {
+    "active": true,
+    "id": "0f87-6ae3-6985-9f7c",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "t-actions-delegate": {
+    "active": true,
+    "id": "0f87-6ae3-69be-f5cf",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-architecture-isolation": {
+    "active": true,
+    "id": "0f87-6ae3-7589-e4f6",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-db-update-flow": {
+    "active": true,
+    "id": "0f87-6ae3-69b6-18b0",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-engine-embedding": {
+    "active": true,
+    "id": "0f87-6ae3-69be-e07c",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-inspect-tabs": {
+    "active": true,
+    "id": "0f87-6ae3-69b6-a8e4",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-pipeline-build": {
+    "active": true,
+    "id": "0f87-6ae3-69be-5b62",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-search-rank": {
+    "active": true,
+    "id": "0f87-6ae3-69b6-03d5",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-suite-no-qgis": {
+    "active": true,
+    "id": "0f87-6ae3-69be-78c4",
+    "status": "passing",
+    "type": "test"
+  },
+  "uc-act": {
+    "active": true,
+    "id": "0f87-6ae3-695e-d7d1",
+    "status": "confirmed",
+    "type": "uc"
+  },
+  "uc-build": {
+    "active": true,
+    "id": "0f87-6ae3-695f-cd51",
+    "status": "confirmed",
+    "type": "uc"
+  },
+  "uc-dev-test": {
+    "active": true,
+    "id": "0f87-6ae3-695f-8c38",
+    "status": "confirmed",
+    "type": "uc"
+  },
+  "uc-inspect": {
+    "active": true,
+    "id": "0f87-6ae3-695e-7151",
+    "status": "confirmed",
+    "type": "uc"
+  },
+  "uc-refresh": {
+    "active": true,
+    "id": "0f87-6ae3-695f-647a",
+    "status": "confirmed",
+    "type": "uc"
+  },
+  "uc-search": {
+    "active": true,
+    "id": "0f87-6ae3-695e-9458",
+    "status": "confirmed",
+    "type": "uc"
+  }
+}

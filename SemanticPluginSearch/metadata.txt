@@ -1,0 +1,19 @@
+[general]
+name=Semantic Plugin Search
+qgisMinimumVersion=3.44
+qgisMaximumVersion=4.99.99
+description=Find QGIS plugins with natural language semantic search over plugin metadata and readmes
+about=Semantic Plugin Search indexes every plugin of the QGIS repository with text embeddings and lets you describe what you are looking for in plain language, for example "classify a drone orthophoto into land cover classes". The plugin downloads a compact embedding model and a per QGIS version embeddings database from the project releases, ranks all plugins by semantic similarity to your query, and shows metadata and readmes. Install, Upgrade, Reinstall and Uninstall buttons defer to the standard plugin manager. Your query never leaves your machine.
+version=0.1.0
+author=SylvainSouche
+email=
+tracker=https://github.com/SylvainSouche/qgis-semantic-plugin-search/issues
+repository=https://github.com/SylvainSouche/qgis-semantic-plugin-search
+homepage=https://github.com/SylvainSouche/qgis-semantic-plugin-search
+icon=assets/Icon.svg
+category=Plugins
+tags=semantic search,embeddings,plugin manager,discovery,nlp
+experimental=True
+deprecated=False
+server=False
+license=MIT
