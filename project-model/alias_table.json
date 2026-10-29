@@ -29,10 +29,16 @@
     "status": "proposed",
     "type": "ai"
   },
-  "asm-installer-reachable": {
+  "asm-installer-api-versions": {
     "active": true,
-    "id": "0f87-6ae3-69a7-c0c1",
+    "id": "0f87-6ae3-bb9f-f942",
     "status": "assumed",
+    "type": "asm"
+  },
+  "asm-installer-reachable": {
+    "active": false,
+    "id": "0f87-6ae3-69a7-c0c1",
+    "status": "superseded",
     "type": "asm"
   },
   "asm-numpy-bundled": {
@@ -128,6 +134,12 @@
   "dec-github-pipeline": {
     "active": true,
     "id": "0f87-6ae3-6955-80be",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-installer-resolution": {
+    "active": true,
+    "id": "0f87-6ae3-bb9f-bd47",
     "status": "recorded",
     "type": "dec"
   },
@@ -410,6 +422,12 @@
   "obs-inqgis-load-failure": {
     "active": true,
     "id": "0f87-6ae3-95fd-9d3c",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-installer-api-differs": {
+    "active": true,
+    "id": "0f87-6ae3-bb9f-d695",
     "status": "recorded",
     "type": "obs"
   },

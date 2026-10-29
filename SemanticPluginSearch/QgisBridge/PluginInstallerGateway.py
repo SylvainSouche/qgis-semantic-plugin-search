@@ -2,10 +2,13 @@
 
 The search window never installs, upgrades or removes anything itself: this
 gateway calls the same pyplugin_installer entry points the plugin manager
-dialog uses. The exact callable names differ slightly across QGIS major
-versions, so the adapter resolves them defensively and falls back to opening
-the plugin manager dialog when a direct call is unavailable
-(see asm-installer-reachable in the project model).
+dialog uses. The API differs across QGIS versions: QGIS 4 exposes
+pyplugin_installer.instance() returning a QgsPluginInstaller and has no
+reinstallPlugin, while QGIS 3 had a module level installer singleton with
+reinstallPlugin, so the gateway resolves the installer lazily at action time
+and falls back to opening the plugin manager dialog when nothing matches
+(verified against the installed QGIS 4.2.3 source; see
+asm-installer-reachable in the project model).
 """
 from __future__ import annotations
 
@@ -30,7 +33,13 @@ class PluginInstallerGateway(PluginManagerGateway):
         self._call("installPlugin", pluginName)
 
     def reinstall(self, pluginName: str) -> None:
-        self._call("reinstallPlugin", pluginName)
+        installer = self._resolve()
+        if installer is not None and hasattr(installer, "reinstallPlugin"):
+            # QGIS 3.x dedicated entry point.
+            self._call("reinstallPlugin", pluginName)
+        else:
+            # QGIS 4.x: installing over an existing installation reinstalls.
+            self._call("installPlugin", pluginName)
 
     def uninstall(self, pluginName: str) -> None:
         self._call("uninstallPlugin", pluginName)
@@ -47,9 +56,29 @@ class PluginInstallerGateway(PluginManagerGateway):
             installedVersion=installed,
         )
 
+    def _resolve(self):
+        """The installer instance for this QGIS version, or None.
+
+        Resolution happens at action time: the QGIS 4 entry point
+        initializes repository data and can start fetches, which is exactly
+        what the plugin manager does when it is used.
+        """
+        try:
+            from pyplugin_installer import instance
+
+            return instance()
+        except Exception:  # noqa: BLE001 - try the QGIS 3 spelling next
+            pass
+        try:
+            from pyplugin_installer.installer import installer  # QGIS 3 singleton
+
+            return installer
+        except Exception:  # noqa: BLE001 - nothing matches on this QGIS
+            return None
+
     def _call(self, operation: str, pluginName: str) -> None:
-        installer = _pluginInstaller()
-        method = getattr(installer, operation, None)
+        installer = self._resolve()
+        method = getattr(installer, operation, None) if installer is not None else None
         if method is None:
             self._openManagerFallback(pluginName, operation)
             return
@@ -64,12 +93,6 @@ class PluginInstallerGateway(PluginManagerGateway):
         self.reporter.info(
             f"Please {operation} '{pluginName}' in the plugin manager."
         )
-
-
-def _pluginInstaller():
-    from pyplugin_installer.installer import installer
-
-    return installer
 
 
 def _installedVersion(pluginName: str) -> str:
@@ -93,5 +116,3 @@ def _versionIsNewer(candidate: str, installed: str) -> bool:
         return tuple(chunks)
 
     return parts(candidate or "0") > parts(installed or "0")
-
-# @impl 0f87-6ae3-6996-c732
