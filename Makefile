@@ -5,7 +5,7 @@
 # @impl 0f87-6ae3-7ce1-c703
 
 .DEFAULT_GOAL := help
-.PHONY: help test fetch embed package clean clean-all _venv
+.PHONY: help test smoke fetch embed package clean clean-all _venv
 
 PLUGIN := SemanticPluginSearch
 DATA_DIR := data
@@ -43,6 +43,9 @@ help: ## Show this help and how to install the plugin
 
 test: _venv ## Run the test suite (no QGIS needed); ARGS passes pytest options
 	$(PY) -m pytest $(ARGS)
+
+smoke: ## Load and run the plugin inside real QGIS, headless (QGIS_APP=/path/to/QGIS.app)
+	tools/RunQgisSmoke.sh
 
 fetch: _venv ## Fetch the plugin catalogue and readmes into data/ (QGIS_VERSIONS selects versions)
 	@command -v curl >/dev/null || { echo "curl is required"; exit 1; }

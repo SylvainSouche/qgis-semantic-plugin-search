@@ -143,6 +143,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-qgis-smoke-test": {
+    "active": true,
+    "id": "0f87-6ae3-9f5e-4a54",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-repository-identity": {
     "active": true,
     "id": "0f87-6ae3-8fc9-118a",
@@ -332,6 +338,12 @@
   "obs-inqgis-load-failure": {
     "active": true,
     "id": "0f87-6ae3-95fd-9d3c",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-metaclass-conflict": {
+    "active": true,
+    "id": "0f87-6ae3-9f5e-45e4",
     "status": "recorded",
     "type": "obs"
   },
