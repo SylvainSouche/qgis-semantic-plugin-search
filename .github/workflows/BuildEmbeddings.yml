@@ -113,8 +113,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view embeddings >/dev/null 2>&1; then
-            gh release upload embeddings --clobber \
+          set -x
+          gh release upload embeddings --clobber \
+            build/EmbeddingModel.npz build/Embeddings-3.sqlite build/Embeddings-4.sqlite build/index.json \
+            || gh release create embeddings \
+              --title "Embeddings database" \
+              --notes "Automated weekly build of the semantic search embeddings (model + per QGIS version databases). The plugin reads assets/index via the latest/download URLs." \
+              --latest \
               build/EmbeddingModel.npz build/Embeddings-3.sqlite build/Embeddings-4.sqlite build/index.json
           else
             gh release create embeddings \
