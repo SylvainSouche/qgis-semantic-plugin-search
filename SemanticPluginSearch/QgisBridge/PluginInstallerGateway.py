@@ -12,10 +12,20 @@ asm-installer-reachable in the project model).
 """
 from __future__ import annotations
 
+import time
+
+from qgis.PyQt.QtCore import QEventLoop, QTimer
 from qgis.gui import QgisInterface
 
-from ..Domain.Entities import ActionStates
+from ..Domain.Entities import ActionStates, PluginInfo
 from ..Domain.Ports import PluginManagerGateway, Reporter
+
+
+def _spin(seconds: float) -> None:
+    """Process events for a short while, keeping the GUI responsive."""
+    loop = QEventLoop()
+    QTimer.singleShot(int(seconds * 1000), loop.quit)
+    loop.exec()
 
 
 class PluginInstallerGateway(PluginManagerGateway):
@@ -25,24 +35,76 @@ class PluginInstallerGateway(PluginManagerGateway):
         self.iface = iface
         self.reporter = reporter
 
-    def install(self, pluginName: str) -> None:
-        self._call("installPlugin", pluginName)
+    def install(self, plugin: PluginInfo) -> None:
+        key = self._installerKey(plugin)
+        self._ensureInstallerData(key)
+        self._call("installPlugin", key)
 
-    def upgrade(self, pluginName: str) -> None:
+    def upgrade(self, plugin: PluginInfo) -> None:
         # Upgrading is an install of the newer version over the existing one.
-        self._call("installPlugin", pluginName)
+        key = self._installerKey(plugin)
+        self._ensureInstallerData(key)
+        self._call("installPlugin", key)
 
-    def reinstall(self, pluginName: str) -> None:
+    def reinstall(self, plugin: PluginInfo) -> None:
+        key = self._installerKey(plugin)
+        self._ensureInstallerData(key)
         installer = self._resolve()
         if installer is not None and hasattr(installer, "reinstallPlugin"):
             # QGIS 3.x dedicated entry point.
-            self._call("reinstallPlugin", pluginName)
+            self._call("reinstallPlugin", key)
         else:
             # QGIS 4.x: installing over an existing installation reinstalls.
-            self._call("installPlugin", pluginName)
+            self._call("installPlugin", key)
 
-    def uninstall(self, pluginName: str) -> None:
-        self._call("uninstallPlugin", pluginName)
+    def uninstall(self, plugin: PluginInfo) -> None:
+        # Uninstalling an installed plugin needs no repository data: the
+        # installer falls back to its installed cache.
+        self._call("uninstallPlugin", self._installerKey(plugin))
+
+    @staticmethod
+    def _installerKey(plugin: PluginInfo) -> str:
+        """The key pyplugin_installer knows the plugin by.
+
+        The installer derives keys from the package file name (e.g.
+        topoprofilestudio.1.0.0.zip gives topoprofilestudio), not from the
+        display name, so the two can differ in case and spacing.
+        """
+        if plugin.fileName:
+            return plugin.fileName.partition(".")[0]
+        return plugin.name
+
+    def _ensureInstallerData(self, key: str, timeout: float = 30.0) -> None:
+        """Make the installer's plugin dictionary contain the key.
+
+        The plugin manager populates pyplugin_installer when it opens; since
+        we delegate directly, fetch the repositories once and wait, like the
+        manager does on start.
+        """
+        try:
+            from pyplugin_installer import installer_data
+        except ImportError:
+            # No installer data module: delegate anyway and let the installer
+            # report its own complaint.
+            return
+
+        if key in installer_data.plugins.all():
+            return
+        repositories = installer_data.repositories
+        if not repositories.fetchingInProgress():
+            self.reporter.info("Fetching the plugin list…")
+            for repositoryKey in repositories.allEnabled():
+                repositories.requestFetching(repositoryKey)
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            if not repositories.fetchingInProgress():
+                break
+            _spin(0.15)
+        if key not in installer_data.plugins.all():
+            raise RuntimeError(
+                f"'{key}' is not in the fetched plugin lists; "
+                "open the plugin manager once to refresh them."
+            )
 
     def actionStates(self, pluginName: str, availableVersion: str) -> ActionStates:
         installed = _installedVersion(pluginName)

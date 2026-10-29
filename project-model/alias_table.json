@@ -137,6 +137,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-installer-keys-and-data": {
+    "active": true,
+    "id": "0f87-6ae3-cd2d-d827",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-installer-resolution": {
     "active": true,
     "id": "0f87-6ae3-bb9f-bd47",
@@ -428,6 +434,12 @@
   "obs-installer-api-differs": {
     "active": true,
     "id": "0f87-6ae3-bb9f-d695",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-installer-key-mismatch": {
+    "active": true,
+    "id": "0f87-6ae3-cd2d-9b91",
     "status": "recorded",
     "type": "obs"
   },

@@ -169,6 +169,7 @@ def fixtureCatalogueBytes() -> bytes:
         <qgis_maximum_version>4.99.0</qgis_maximum_version>
         <author_name><![CDATA[Fixture Author]]></author_name>
         <download_url>https://plugins.qgis.org/plugins/{spec['name']}/download/</download_url>
+        <file_name>{spec['name']}.{spec['version']}.zip</file_name>
         <icon>{spec.get('icon', '')}</icon>
         <experimental>{'True' if spec.get('experimental') else 'False'}</experimental>
         <deprecated>{'True' if spec.get('deprecated') else 'False'}</deprecated>
@@ -294,17 +295,17 @@ class FakePluginManagerGateway:
         self.calls: list[tuple[str, str]] = []
         self.nextStates = None
 
-    def install(self, pluginName: str) -> None:
-        self.calls.append(("install", pluginName))
+    def install(self, plugin) -> None:  # noqa: ANN001
+        self.calls.append(("install", plugin.name))
 
-    def upgrade(self, pluginName: str) -> None:
-        self.calls.append(("upgrade", pluginName))
+    def upgrade(self, plugin) -> None:  # noqa: ANN001
+        self.calls.append(("upgrade", plugin.name))
 
-    def reinstall(self, pluginName: str) -> None:
-        self.calls.append(("reinstall", pluginName))
+    def reinstall(self, plugin) -> None:  # noqa: ANN001
+        self.calls.append(("reinstall", plugin.name))
 
-    def uninstall(self, pluginName: str) -> None:
-        self.calls.append(("uninstall", pluginName))
+    def uninstall(self, plugin) -> None:  # noqa: ANN001
+        self.calls.append(("uninstall", plugin.name))
 
     def actionStates(self, pluginName: str, availableVersion: str):  # noqa: ANN001
         if self.nextStates is not None:

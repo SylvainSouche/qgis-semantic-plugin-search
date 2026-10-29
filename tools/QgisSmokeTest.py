@@ -114,6 +114,12 @@ def main() -> int:
             except Exception as error:  # noqa: BLE001
                 on_failure(error)
 
+    class InstantReadmeGateway:
+        """No network: readme content is not version sensitive."""
+
+        def fetchReadme(self, info):  # noqa: ANN001, ANN202
+            return f"# {info.name}\n\nSmoke readme."
+
     from SemanticPluginSearch.Controllers.ActionController import ActionController
     from SemanticPluginSearch.Controllers.IconController import IconController
     from SemanticPluginSearch.Controllers.AssetsController import AssetsController
@@ -151,11 +157,10 @@ def main() -> int:
     tmpProfile = Path(tempfile.mkdtemp(prefix="smoke-profile-"))
     paths = ProfilePathsProvider(rootDir=tmpProfile)
     runner = InlineRunner()
-    readmeGateway = HttpReadmeGateway()
     managerGateway = FakeManagerGateway()
     engine = DeferredEmbeddingEngine(paths)
     searchController = SearchController(engine, SearchService(engine), FakeReporter())
-    detailsController = DetailsController(readmeGateway, runner)
+    detailsController = DetailsController(InstantReadmeGateway(), runner)
     actionController = ActionController(managerGateway, FakeReporter())
 
     def onStoreReady(store):  # noqa: ANN001, ANN202

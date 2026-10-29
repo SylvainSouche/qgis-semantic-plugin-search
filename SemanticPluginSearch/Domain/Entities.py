@@ -22,6 +22,7 @@ class PluginInfo:
     homepage: str = ""
     tracker: str = ""
     downloadUrl: str = ""
+    fileName: str = ""
     iconUrl: str = ""
     downloads: int = 0
     averageVote: float = 0.0

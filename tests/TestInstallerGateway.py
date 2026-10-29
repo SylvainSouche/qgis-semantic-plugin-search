@@ -60,12 +60,26 @@ if "qgis" not in sys.modules or not hasattr(sys.modules.get("qgis"), "_stubbed")
     class _QThreadPool:  # noqa: N801
         pass
 
+    class _QEventLoop:  # noqa: N801
+        def exec(self) -> int:  # noqa: D102
+            return 0
+
+        def quit(self) -> None:  # noqa: D102
+            pass
+
+    class _QTimer:  # noqa: N801
+        @staticmethod
+        def singleShot(msec, callback):  # noqa: ANN001
+            callback()
+
     _qtcore.QObject = _QObject
     _qtcore.pyqtSignal = _pyqtSignal
     _qtcore.Qt = _Qt
     _qtcore.QSettings = _QSettings
     _qtcore.QRunnable = _QRunnable
     _qtcore.QThreadPool = _QThreadPool
+    _qtcore.QEventLoop = _QEventLoop
+    _qtcore.QTimer = _QTimer
 
     _qtgui = types.ModuleType("qgis.PyQt.QtGui")
 
@@ -144,13 +158,92 @@ class Recording:
         self.calls.append(("uninstallPlugin", key))
 
 
+class FakeEntity:
+    def __init__(self, name="SomePlugin", fileName="") -> None:  # noqa: ANN001
+        self.name = name
+        self.fileName = fileName
+
+
+class FakeRepositories:
+    def __init__(self, ready: bool, known: set, pluginToServe: str = "") -> None:  # noqa: ANN001
+        self.ready = ready
+        self.known = known
+        self.pluginToServe = pluginToServe
+        self.requested = []
+
+    def allEnabled(self):  # noqa: ANN202
+        return {"official": {}, "third-party": {}}
+
+    def fetchingInProgress(self):  # noqa: ANN202
+        return not self.ready
+
+    def requestFetching(self, key):  # noqa: ANN001, ANN002
+        self.requested.append(key)
+        if self.pluginToServe:
+            self.known.add(self.pluginToServe)  # like xmlDownloaded
+
+
+class FakeInstallerDataModule:
+    def __init__(self, known: set, repositories) -> None:  # noqa: ANN001
+        self._known = known
+        self.repositories = repositories
+        self.plugins = types.SimpleNamespace(
+            all=lambda: {key: {} for key in self._known}
+        )
+
+
+def test_installer_key_derives_from_file_name():
+    gateway = makeGateway()
+    assert gateway._installerKey(FakeEntity("TopoProfile Studio", "topoprofilestudio.1.0.0.zip")) == "topoprofilestudio"
+    assert gateway._installerKey(FakeEntity("QuickWKT", "QuickWKT.3.4.zip")) == "QuickWKT"
+    assert gateway._installerKey(FakeEntity("OnlyName")) == "OnlyName"
+
+
+def test_ensure_installer_data_skips_fetch_when_known():
+    data = FakeInstallerDataModule({"SomePlugin"}, FakeRepositories(False, set()))
+    package = installStubModule("pyplugin_installer", installer_data=data)
+    package.instance = lambda: None
+    gateway = makeGateway()
+    gateway._ensureInstallerData("SomePlugin")
+    assert data.repositories.requested == []
+    teardownStubModules()
+
+
+def test_ensure_installer_data_fetches_when_unknown():
+    known: set = set()
+    data = FakeInstallerDataModule(
+        known, FakeRepositories(True, known, pluginToServe="SomePlugin")
+    )
+    package = installStubModule("pyplugin_installer", installer_data=data)
+    package.instance = lambda: None
+    gateway = makeGateway()
+    gateway._ensureInstallerData("SomePlugin", timeout=1.0)
+    assert sorted(data.repositories.requested) == ["official", "third-party"]
+    teardownStubModules()
+
+
+def test_ensure_installer_data_fails_clearly_when_absent():
+    data = FakeInstallerDataModule(set(), FakeRepositories(True, set()))
+    package = installStubModule("pyplugin_installer", installer_data=data)
+    package.instance = lambda: None
+    gateway = makeGateway()
+    try:
+        gateway._ensureInstallerData("Unknown", timeout=0.2)
+        raised = False
+    except RuntimeError as error:
+        raised = True
+        assert "not in the fetched plugin lists" in str(error)
+    assert raised
+    teardownStubModules()
+
+
 def test_qgis4_instance_entry_point_is_used():
     recorder = Recording()
-    package = installStubModule("pyplugin_installer")
+    package = installStubModule("pyplugin_installer", installer_data=FakeInstallerDataModule({"SomePlugin"}, FakeRepositories(True, set())))
     package.instance = lambda: recorder
     gateway = makeGateway()
-    gateway.install("SomePlugin")
-    gateway.uninstall("SomePlugin")
+    gateway.install(FakeEntity("SomePlugin"))
+    gateway.uninstall(FakeEntity("SomePlugin"))
     assert recorder.calls == [
         ("installPlugin", "SomePlugin"),
         ("uninstallPlugin", "SomePlugin"),
@@ -169,7 +262,7 @@ def test_qgis3_singleton_is_the_fallback():
     installerModule = installStubModule("pyplugin_installer.installer")
     installerModule.installer = recorder
     gateway = makeGateway()
-    gateway.install("SomePlugin")
+    gateway.install(FakeEntity("SomePlugin"))
     assert recorder.calls == [("installPlugin", "SomePlugin")]
     teardownStubModules()
 
@@ -179,7 +272,7 @@ def test_reinstall_maps_to_install_on_qgis4():
     package = installStubModule("pyplugin_installer")
     package.instance = lambda: recorder
     gateway = makeGateway()
-    gateway.reinstall("SomePlugin")
+    gateway.reinstall(FakeEntity("SomePlugin"))
     assert recorder.calls == [("installPlugin", "SomePlugin")]
     teardownStubModules()
 
@@ -192,7 +285,7 @@ def test_reinstall_uses_dedicated_entry_point_when_available():
     package = installStubModule("pyplugin_installer")
     package.instance = lambda: recorder
     gateway = makeGateway()
-    gateway.reinstall("SomePlugin")
+    gateway.reinstall(FakeEntity("SomePlugin"))
     assert recorder.calls == [("reinstallPlugin", "SomePlugin")]
     teardownStubModules()
 
@@ -203,7 +296,7 @@ def test_unresolvable_installer_opens_the_manager():
     sys.modules["pyplugin_installer"].instance = lambda: None
     iface = FakeIface()
     gateway = makeGateway(iface)
-    gateway.install("SomePlugin")
+    gateway.install(FakeEntity("SomePlugin"))
     assert iface.shown, "the plugin manager opens as the fallback"
     assert any("plugin manager" in m for m in gateway.reporter.infos)
     teardownStubModules()

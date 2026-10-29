@@ -95,7 +95,7 @@ def test_unknown_action_is_reported():
 
 def test_gateway_failure_is_surfaced_not_raised():
     class FailingGateway(FakePluginManagerGateway):
-        def install(self, pluginName: str) -> None:
+        def install(self, plugin) -> None:  # noqa: ANN001
             raise RuntimeError("installer exploded")
 
     view = FakeView()

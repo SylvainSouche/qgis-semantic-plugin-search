@@ -41,7 +41,7 @@ class ActionController:
         operation, label = handler
         view.showStatus(f"{label} {info.name} through the plugin manager…")
         try:
-            operation(info.name)
+            operation(info)
         except Exception as error:  # noqa: BLE001 - surfaced to the user
             self.reporter.error(f"{label} {info.name} failed: {error}")
             view.showStatus(f"{label} failed: {error}")

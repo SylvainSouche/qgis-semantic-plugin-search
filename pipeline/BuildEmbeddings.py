@@ -31,7 +31,7 @@ from SemanticPluginSearch.Data.StaticModelLoader import FORMAT_ID  # noqa: E402
 from SemanticPluginSearch.Domain.WordPieceTokenizer import WordPieceTokenizer  # noqa: E402
 from SemanticPluginSearch.Data.StaticModelLoader import NpzStaticModel  # noqa: E402
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 
 class EmbeddingDatabaseWriter:
@@ -110,6 +110,7 @@ class EmbeddingDatabaseWriter:
             record.homepage,
             record.tracker,
             record.downloadUrl,
+            record.fileName,
             record.iconUrl,  # icon_url
             record.downloads,
             record.averageVote,
@@ -140,7 +141,7 @@ class EmbeddingDatabaseWriter:
                 name TEXT, version TEXT, author TEXT,
                 description TEXT, about TEXT, tags TEXT,
                 repository TEXT, homepage TEXT, tracker TEXT,
-                download_url TEXT, icon_url TEXT,
+                download_url TEXT, file_name TEXT, icon_url TEXT,
                 downloads INTEGER, average_vote REAL, votes INTEGER,
                 experimental INTEGER, deprecated INTEGER, server INTEGER,
                 qgis_minimum TEXT, qgis_maximum TEXT,
@@ -153,7 +154,7 @@ class EmbeddingDatabaseWriter:
             """
         )
         connection.executemany(
-            "INSERT INTO plugins VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO plugins VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             rows,
         )
         connection.executemany(

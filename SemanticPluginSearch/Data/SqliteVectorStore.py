@@ -23,11 +23,11 @@ import numpy as np
 from ..Domain.Entities import PluginInfo
 from ..Domain.Ports import PluginVectorStore
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 _PLUGIN_COLUMNS = (
     "plugin_id, name, version, author, description, about, tags, repository,"
-    " homepage, tracker, download_url, icon_url, downloads, average_vote,"
+    " homepage, tracker, download_url, file_name, icon_url, downloads, average_vote,"
     " votes, experimental, deprecated, server, qgis_minimum, qgis_maximum,"
     " readme_url, update_date"
 )
@@ -133,6 +133,7 @@ def _rowToInfo(row: tuple) -> PluginInfo:
         homepage,
         tracker,
         downloadUrl,
+        fileName,
         iconUrl,
         downloads,
         averageVote,
@@ -157,6 +158,7 @@ def _rowToInfo(row: tuple) -> PluginInfo:
         homepage=homepage or "",
         tracker=tracker or "",
         downloadUrl=downloadUrl or "",
+        fileName=fileName or "",
         iconUrl=iconUrl or "",
         downloads=int(downloads or 0),
         averageVote=float(averageVote or 0.0),

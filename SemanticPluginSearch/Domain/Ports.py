@@ -111,19 +111,19 @@ class PluginManagerGateway(ABC):
     """
 
     @abstractmethod
-    def install(self, pluginName: str) -> None:
+    def install(self, plugin: PluginInfo) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def upgrade(self, pluginName: str) -> None:
+    def upgrade(self, plugin: PluginInfo) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def reinstall(self, pluginName: str) -> None:
+    def reinstall(self, plugin: PluginInfo) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def uninstall(self, pluginName: str) -> None:
+    def uninstall(self, plugin: PluginInfo) -> None:
         raise NotImplementedError
 
     @abstractmethod
