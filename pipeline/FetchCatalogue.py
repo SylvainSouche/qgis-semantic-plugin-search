@@ -117,24 +117,32 @@ class ReadmeFetcher:
         return ""
 
     def _githubUrls(self, repository: str) -> list[str]:
+        """Candidate readme URLs, cheapest first.
+
+        raw.githubusercontent.com guesses cost no API quota; the api.github.com
+        readme endpoint (one call, exact file name) is only consulted when the
+        guesses all fail, keeping a full catalogue run far below the 5,000
+        requests per hour installation limit.
+        """
         match = re.match(r"https?://github\.com/([^/]+)/([^/#?]+)", repository.strip())
         if not match:
             return []
         owner, repo = match.groups()
         repo = repo.removesuffix(".git")
-        api = f"https://api.github.com/repos/{owner}/{repo}"
-        try:
-            metadata = json.loads(self.transport(api))
-            readme = json.loads(self.transport(f"{api}/readme"))
-            downloadUrl = readme.get("download_url")
-            if downloadUrl:
-                return [downloadUrl]
-        except (Exception, ValueError):  # noqa: BLE001 - fall through to guesses
-            pass
-        return [
+        raw = [
             f"https://raw.githubusercontent.com/{owner}/{repo}/HEAD/{fileName}"
             for fileName in ("README.md", "README.rst", "README.txt", "README")
         ]
+        try:
+            readme = json.loads(
+                self.transport(f"https://api.github.com/repos/{owner}/{repo}/readme")
+            )
+            downloadUrl = readme.get("download_url")
+            if downloadUrl and downloadUrl not in raw:
+                raw.append(downloadUrl)
+        except (Exception, ValueError):  # noqa: BLE001 - raw guesses may suffice
+            pass
+        return raw
 
     def _readmeFromArchive(self, downloadUrl: str, destination: Path) -> bool:
         try:
