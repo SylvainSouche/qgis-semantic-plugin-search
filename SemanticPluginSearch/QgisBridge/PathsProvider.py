@@ -20,14 +20,15 @@ class ProfilePathsProvider(PathsProvider):
     """Resolves asset paths inside the active QGIS profile."""
 
     def __init__(self, rootDir: Path | None = None) -> None:
-        self._rootDir = rootDir
-
-    def cacheDir(self) -> Path:
-        directory = self._rootDir or (
+        # Resolving the profile directory reads QGIS settings; do it once
+        # here on the GUI thread so worker threads never call into QGIS.
+        self._rootDir = rootDir or (
             Path(QgsApplication.qgisSettingsDirPath()) / CACHE_DIR_NAME
         )
-        directory.mkdir(parents=True, exist_ok=True)
-        return directory
+
+    def cacheDir(self) -> Path:
+        self._rootDir.mkdir(parents=True, exist_ok=True)
+        return self._rootDir
 
     def modelPath(self) -> Path:
         return self.cacheDir() / MODEL_FILE_NAME

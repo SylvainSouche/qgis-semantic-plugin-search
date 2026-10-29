@@ -12,14 +12,15 @@ from __future__ import annotations
 from qgis.gui import QgisInterface
 
 from ..Domain.Entities import ActionStates
-from ..Domain.Ports import PluginManagerGateway
+from ..Domain.Ports import PluginManagerGateway, Reporter
 
 
 class PluginInstallerGateway(PluginManagerGateway):
     """Thin proxy over pyplugin_installer; owns no installation logic."""
 
-    def __init__(self, iface: QgisInterface) -> None:
+    def __init__(self, iface: QgisInterface, reporter: Reporter) -> None:
         self.iface = iface
+        self.reporter = reporter
 
     def install(self, pluginName: str) -> None:
         self._call("installPlugin", pluginName)
@@ -60,10 +61,8 @@ class PluginInstallerGateway(PluginManagerGateway):
         show = getattr(self.iface, "showPluginManager", None)
         if show is not None:
             show()
-        self.iface.messageBar().pushMessage(
-            "Semantic Plugin Search",
-            f"Please {operation} '{pluginName}' in the plugin manager.",
-            duration=8,
+        self.reporter.info(
+            f"Please {operation} '{pluginName}' in the plugin manager."
         )
 
 

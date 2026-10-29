@@ -97,7 +97,7 @@ class SemanticPluginSearchPlugin:
         runner = QtJobRunner()
         gateway = HttpAssetGateway(indexUrl=configuredIndexUrl())
         readmeGateway = HttpReadmeGateway()
-        actionsGateway = PluginInstallerGateway(self.iface)
+        actionsGateway = PluginInstallerGateway(self.iface, reporter)
         engine = DeferredEmbeddingEngine(paths)
 
         searchController = SearchController(

@@ -161,6 +161,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-thread-safe-reporter": {
+    "active": true,
+    "id": "0f87-6ae3-9c6d-100c",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-ui-layout": {
     "active": true,
     "id": "0f87-6ae3-6956-17f5",
@@ -338,6 +344,12 @@
   "obs-pyqt6-scoped-enums": {
     "active": true,
     "id": "0f87-6ae3-9811-c4f4",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-qgis-crash-worker-gui": {
+    "active": true,
+    "id": "0f87-6ae3-9c6d-ff56",
     "status": "recorded",
     "type": "obs"
   },

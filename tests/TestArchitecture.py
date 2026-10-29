@@ -108,3 +108,25 @@ def test_qt_and_qgis_enums_use_scoped_access():
                     f"{path}:{line}: {match.group(0)} - use {scopedForm}"
                 )
     assert offenders == [], "Unscoped enum access (breaks on PyQt6/QGIS 4):\n" + "\n".join(offenders)
+
+
+def test_message_bar_is_only_touched_by_the_thread_safe_reporter():
+    """Pushing a message from a pool thread crashes QGIS on macOS: widgets
+    may only be touched from the GUI thread. The message bar is therefore
+    confined to MessageBarReporter, which marshals through queued signals.
+    """
+    offenders = []
+    for path in PLUGIN_ROOT.rglob("*.py"):
+        if path.name == "Reporter.py":
+            continue
+        for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if "messageBar" in line:
+                offenders.append(f"{path}:{number}: {line.strip()}")
+    assert offenders == [], "Direct message bar access:\n" + "\n".join(offenders)
+
+
+def test_reporter_marshals_to_the_gui_thread():
+    source = (PLUGIN_ROOT / "QgisBridge" / "Reporter.py").read_text(encoding="utf-8")
+    assert "pyqtSignal" in source
+    assert "QueuedConnection" in source
+    assert "QObject" in source
