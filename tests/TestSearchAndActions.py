@@ -5,7 +5,8 @@ from __future__ import annotations
 
 import pytest
 
-from SemanticPluginSearch.Controllers.SearchController import ActionController, SearchController
+from SemanticPluginSearch.Controllers.ActionController import ActionController
+from SemanticPluginSearch.Controllers.SearchController import SearchController
 from SemanticPluginSearch.Domain.Entities import ActionStates, PluginInfo, SearchResult
 from SemanticPluginSearch.Domain.SearchEngine import SearchService
 from tests.conftest import FakePluginManagerGateway, FakeReporter, FakeView

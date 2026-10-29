@@ -11,7 +11,7 @@ from .PathsProvider import ProfilePathsProvider
 from .Reporter import MessageBarReporter
 from .QtJobRunner import QtJobRunner
 from .PluginInstallerGateway import PluginInstallerGateway
-from .Settings import defaultIndexUrl
+from .Settings import configuredIndexUrl, defaultIndexUrl
 
 __all__ = [
     "QgisVersionProvider",
@@ -20,4 +20,5 @@ __all__ = [
     "QtJobRunner",
     "PluginInstallerGateway",
     "defaultIndexUrl",
+    "configuredIndexUrl",
 ]

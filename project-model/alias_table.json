@@ -149,6 +149,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-static-import-test": {
+    "active": true,
+    "id": "0f87-6ae3-95fd-fbab",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-ui-layout": {
     "active": true,
     "id": "0f87-6ae3-6956-17f5",
@@ -302,6 +308,12 @@
   "obs-existing-data": {
     "active": true,
     "id": "0f87-6ae3-6956-c190",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-inqgis-load-failure": {
+    "active": true,
+    "id": "0f87-6ae3-95fd-9d3c",
     "status": "recorded",
     "type": "obs"
   },
