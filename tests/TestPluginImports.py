@@ -7,6 +7,8 @@ relative import points at an existing module and that the imported names are
 actually defined there. No qgis or Qt import happens.
 """
 
+from __future__ import annotations
+
 import ast
 from pathlib import Path
 
