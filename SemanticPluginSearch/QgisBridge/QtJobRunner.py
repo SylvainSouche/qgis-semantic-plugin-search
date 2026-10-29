@@ -1,7 +1,7 @@
 """Background job execution marshaled back to the Qt main loop.
 
 QThreadPool runs the task; completion is signaled through a QObject that
-lives on the GUI thread and is connected with Qt.QueuedConnection, so the
+lives on the GUI thread and is connected queued, so the
 controller callbacks always run on the GUI thread even though the signal is
 emitted from a worker thread. Each job carries its own callbacks through the
 signal payload, so overlapping jobs cannot dispatch to each other's handlers.
@@ -47,8 +47,8 @@ class QtJobRunner(QObject):
     def __init__(self, parent: QObject | None = None) -> None:
         super().__init__(parent)
         self._pool = QThreadPool.globalInstance()
-        self.succeeded.connect(self._dispatchSuccess, Qt.QueuedConnection)
-        self.failed.connect(self._dispatchFailure, Qt.QueuedConnection)
+        self.succeeded.connect(self._dispatchSuccess, Qt.ConnectionType.QueuedConnection)
+        self.failed.connect(self._dispatchFailure, Qt.ConnectionType.QueuedConnection)
 
     def submit(
         self,

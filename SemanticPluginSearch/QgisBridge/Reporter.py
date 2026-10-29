@@ -15,15 +15,15 @@ class MessageBarReporter(Reporter):
 
     def info(self, message: str) -> None:
         self.iface.messageBar().pushMessage(
-            "Semantic Plugin Search", message, level=Qgis.Info, duration=4
+            "Semantic Plugin Search", message, level=Qgis.MessageLevel.Info, duration=4
         )
 
     def warn(self, message: str) -> None:
         self.iface.messageBar().pushMessage(
-            "Semantic Plugin Search", message, level=Qgis.Warning, duration=6
+            "Semantic Plugin Search", message, level=Qgis.MessageLevel.Warning, duration=6
         )
 
     def error(self, message: str) -> None:
         self.iface.messageBar().pushMessage(
-            "Semantic Plugin Search", message, level=Qgis.Critical, duration=8
+            "Semantic Plugin Search", message, level=Qgis.MessageLevel.Critical, duration=8
         )

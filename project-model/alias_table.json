@@ -149,6 +149,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-scoped-enums": {
+    "active": true,
+    "id": "0f87-6ae3-9811-a9fe",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-static-import-test": {
     "active": true,
     "id": "0f87-6ae3-95fd-fbab",
@@ -314,6 +320,12 @@
   "obs-inqgis-load-failure": {
     "active": true,
     "id": "0f87-6ae3-95fd-9d3c",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-pyqt6-scoped-enums": {
+    "active": true,
+    "id": "0f87-6ae3-9811-c4f4",
     "status": "recorded",
     "type": "obs"
   },

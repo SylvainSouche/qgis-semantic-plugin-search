@@ -80,3 +80,31 @@ def test_qt_imports_go_through_the_qgis_indirection_only():
 
 
 # @impl 0f87-6ae3-6996-386d
+
+
+def test_qt_and_qgis_enums_use_scoped_access():
+    """PyQt6 and QGIS 4 removed unscoped enum access; the scoped form works
+    on both PyQt5 and PyQt6, so only scoped forms are allowed."""
+    import re
+
+    unscopedPatterns = {
+        r"\bQt\.(QueuedConnection|DirectConnection|BlockingQueuedConnection)\b":
+            "Qt.ConnectionType.*",
+        r"\bQt\.(Horizontal|Vertical)\b": "Qt.Orientation.*",
+        r"\bQt\.(UserRole|DisplayRole|EditRole|ToolTipRole|UserCheckRole)\b":
+            "Qt.ItemDataRole.*",
+        r"\bQt\.(AlignCenter|AlignLeft|AlignRight|AlignTop|AlignBottom|AlignVCenter|AlignHCenter)\b":
+            "Qt.AlignmentFlag.*",
+        r"\bQt\.(WA_\w+)\b": "Qt.WidgetAttribute.*",
+        r"\bQgis\.(Info|Warning|Critical|Success|NoLevel)\b": "Qgis.MessageLevel.*",
+    }
+    offenders = []
+    for path in PLUGIN_ROOT.rglob("*.py"):
+        source = path.read_text(encoding="utf-8")
+        for pattern, scopedForm in unscopedPatterns.items():
+            for match in re.finditer(pattern, source):
+                line = source[: match.start()].count("\n") + 1
+                offenders.append(
+                    f"{path}:{line}: {match.group(0)} - use {scopedForm}"
+                )
+    assert offenders == [], "Unscoped enum access (breaks on PyQt6/QGIS 4):\n" + "\n".join(offenders)

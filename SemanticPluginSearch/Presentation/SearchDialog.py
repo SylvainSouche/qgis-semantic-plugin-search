@@ -56,7 +56,7 @@ class SearchDialog(QDialog):
         self.resultsList = QListWidget(self)
         self.detailsPanel = DetailsPanel(self)
 
-        splitter = QSplitter(Qt.Horizontal, self)
+        splitter = QSplitter(Qt.Orientation.Horizontal, self)
         splitter.addWidget(self.resultsList)
         splitter.addWidget(self.detailsPanel)
         splitter.setStretchFactor(0, 2)
@@ -98,14 +98,14 @@ class SearchDialog(QDialog):
         if current is None:
             self.controllers.details.showDetails(self, self._infoOf(None))
             return
-        info = self._infoOf(current.data(Qt.UserRole))
+        info = self._infoOf(current.data(Qt.ItemDataRole.UserRole))
         if info is not None:
             self.controllers.details.showDetails(self, info)
             self.controllers.actions.refreshStates(self, info, info.version)
 
     def _onAction(self, action: str) -> None:
         item = self.resultsList.currentItem()
-        info = self._infoOf(item.data(Qt.UserRole)) if item is not None else None
+        info = self._infoOf(item.data(Qt.ItemDataRole.UserRole)) if item is not None else None
         self.controllers.actions.runAction(self, action, info)
 
     def _infoOf(self, pluginId: int | None) -> PluginInfo | None:
@@ -127,7 +127,7 @@ class SearchDialog(QDialog):
                 f"{result.info.name}  ({result.score * 100:.0f}%)",
                 self.resultsList,
             )
-            item.setData(Qt.UserRole, result.info.pluginId)
+            item.setData(Qt.ItemDataRole.UserRole, result.info.pluginId)
             item.setToolTip(result.info.description)
             self.resultsList.addItem(item)
         self.resultsList.blockSignals(False)
