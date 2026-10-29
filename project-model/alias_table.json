@@ -173,6 +173,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-view-review": {
+    "active": true,
+    "id": "0f87-6ae3-9a5f-c3b8",
+    "status": "recorded",
+    "type": "dec"
+  },
   "impl-action-delegation": {
     "active": true,
     "id": "0f87-6ae3-74ce-4cc1",
@@ -320,6 +326,12 @@
   "obs-inqgis-load-failure": {
     "active": true,
     "id": "0f87-6ae3-95fd-9d3c",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-metadata-panel-str-widget": {
+    "active": true,
+    "id": "0f87-6ae3-9a5f-793f",
     "status": "recorded",
     "type": "obs"
   },

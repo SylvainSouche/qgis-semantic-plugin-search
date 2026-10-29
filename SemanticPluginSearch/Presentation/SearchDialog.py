@@ -123,10 +123,7 @@ class SearchDialog(QDialog):
         self.resultsList.blockSignals(True)
         self.resultsList.clear()
         for result in self.results:
-            item = QListWidgetItem(
-                f"{result.info.name}  ({result.score * 100:.0f}%)",
-                self.resultsList,
-            )
+            item = QListWidgetItem(f"{result.info.name}  ({result.score * 100:.0f}%)")
             item.setData(Qt.ItemDataRole.UserRole, result.info.pluginId)
             item.setToolTip(result.info.description)
             self.resultsList.addItem(item)

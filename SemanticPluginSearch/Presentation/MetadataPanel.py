@@ -29,6 +29,7 @@ class MetadataPanel(QWidget):
         self.tagsLabel = QLabel(self)
         self.tagsLabel.setWordWrap(True)
         self.statsLabel = QLabel(self)
+        self.aboutCaption = QLabel(self.tr("About:"))
         self.linksView = QTextBrowser(self)
         self.linksView.setOpenExternalLinks(True)
         self.linksView.setMaximumHeight(70)
@@ -44,7 +45,7 @@ class MetadataPanel(QWidget):
         layout.addWidget(self.nameLabel)
         layout.addWidget(self.descriptionLabel)
         layout.addLayout(form)
-        layout.addWidget(self.tr("About:"))
+        layout.addWidget(self.aboutCaption)
         layout.addWidget(self.aboutView, 1)
 
     def showPlugin(self, info: PluginInfo) -> None:
