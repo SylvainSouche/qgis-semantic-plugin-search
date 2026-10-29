@@ -125,23 +125,14 @@ Real-world reference point: the full QGIS 4.2 universe (1567 plugins with
 readmes) embeds in **~4.6s** on a laptop CPU; a query ranks all of them in
 **~0.2ms**.
 
-## License policy
+## License considerations
 
-The repository and the plugin are released under the **MIT license** (see
-[LICENSE](LICENSE)). One caveat to keep in mind before publishing to
-plugins.qgis.org: the plugin delegates install actions to QGIS's
-`pyplugin_installer` (GPL) and runs inside GPL QGIS — the QGIS ecosystem
-commonly expects plugins to remain GPL-compatible even when their own source
-is MIT. The choice is yours; the repository source itself carries no
-restriction.
-
-Only models whose license allows commercial use may be converted and
-distributed — a database of vectors is close enough to model weights that
-the distinction does not matter. The CI pipeline uses
-`minishlab/potion-base-8M` (MIT, distilled from `all-MiniLM-L6-v2`,
-Apache-2.0). Non-commercial models are allowed **only** as unpublished
-development fixtures. The license note travels inside the model file and in
-the release index.
+The repository and the plugin are released under the MIT license. The MIT
+license is compatible with the GPL v2 licensing required for QGIS plugins,
+as per the QGIS project requirement described in
+[Licensing requirements for QGIS plugins](https://blog.qgis.org/2016/05/29/licensing-requirements-for-qgis-plugins/),
+and the complete source code is happily published and available in this
+repository as that requirement asks.
 
 ## Make targets
 

@@ -72,7 +72,12 @@ class EmbeddingDatabaseWriter:
 
     def embedRecord(self, record: PluginRecord, readmeDir: Path) -> np.ndarray:
         text = preparePluginText(record, self._readmeOf(record, readmeDir))
-        tokenIds = self.tokenizer.encode(text)
+        # [UNK] is a placeholder, not a meaning: exclude it from the average,
+        # exactly like the plugin side does for queries.
+        unkId = self.tokenizer.vocabulary.get(self.tokenizer.unkToken)
+        tokenIds = [
+            tokenId for tokenId in self.tokenizer.encode(text) if tokenId != unkId
+        ]
         if not tokenIds:
             return np.zeros(self.model.dimension(), dtype=np.float32)
         matrix = self.model.vectors()

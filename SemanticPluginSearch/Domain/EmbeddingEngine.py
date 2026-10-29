@@ -33,7 +33,13 @@ class StaticEmbeddingEngine(EmbeddingEngine):
         meaningful = [token for token in tokens if token != self.tokenizer.unkToken]
         if not meaningful:
             return np.zeros(self.model.dimension(), dtype=np.float32)
-        tokenIds = self.tokenizer.encode(text)
+        # [UNK] is a placeholder, not a meaning: exclude it from the average.
+        unkId = self.tokenizer.vocabulary.get(self.tokenizer.unkToken)
+        tokenIds = [
+            tokenId
+            for tokenId in self.tokenizer.encode(text)
+            if tokenId != unkId
+        ]
         stacked = np.stack([self.model.vectorFor(tokenId) for tokenId in tokenIds])
         mean = stacked.mean(axis=0)
         norm = float(np.linalg.norm(mean))

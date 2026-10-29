@@ -47,6 +47,36 @@
     "status": "assumed",
     "type": "asm"
   },
+  "cand-configurable-settings": {
+    "active": true,
+    "id": "0f87-6ae3-b62e-5936",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-hybrid-ranking": {
+    "active": true,
+    "id": "0f87-6ae3-b62e-feed",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-incremental-updates": {
+    "active": true,
+    "id": "0f87-6ae3-b62e-c648",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-multilingual-model": {
+    "active": true,
+    "id": "0f87-6ae3-b62e-1a1e",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-version-compat-filter": {
+    "active": true,
+    "id": "0f87-6ae3-b62e-f4a4",
+    "status": "open",
+    "type": "cand"
+  },
   "con-commercial-models": {
     "active": true,
     "id": "0f87-6ae3-6956-b93e",
@@ -158,6 +188,12 @@
   "dec-result-rows": {
     "active": true,
     "id": "0f87-6ae3-ab0f-d83b",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-review-fixes": {
+    "active": true,
+    "id": "0f87-6ae3-b62e-3aa5",
     "status": "recorded",
     "type": "dec"
   },
@@ -398,6 +434,12 @@
   "obs-qgis-crash-worker-gui": {
     "active": true,
     "id": "0f87-6ae3-9c6d-ff56",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-review-corrections": {
+    "active": true,
+    "id": "0f87-6ae3-b62e-7a99",
     "status": "recorded",
     "type": "obs"
   },

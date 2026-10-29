@@ -47,9 +47,12 @@ class SearchService:
         score zero, which the minScore floor filters out.
         """
         query = self.engine.embedQuery(text)
-        if not np.any(query):
+        matrix = store.embeddings()
+        # A zero query (unknown vocabulary, model still downloading) and a
+        # dimension mismatch both mean "no results", never a crash.
+        if not np.any(query) or query.shape[0] != matrix.shape[1]:
             return []
-        scores = store.embeddings() @ query
+        scores = matrix @ query
         order = np.argsort(-scores)
         results: list[SearchResult] = []
         for index in order:

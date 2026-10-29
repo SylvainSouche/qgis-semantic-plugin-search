@@ -118,3 +118,15 @@ def test_flagged_plugins_are_indexed_with_their_flags(store):
     assert invoice.experimental is True and invoice.deprecated is False
     exporter = store.pluginInfo(5)
     assert exporter.deprecated is True and exporter.experimental is False
+
+
+def test_search_survives_a_dimension_mismatch(store):
+    """C1: an engine answering with the wrong dimension yields no results,
+    never a crash (model still downloading on first run)."""
+    from SemanticPluginSearch.Domain.SearchEngine import SearchService
+
+    class MismatchEngine:
+        def embedQuery(self, text):  # noqa: ANN001, ANN202
+            return np.zeros(1, dtype=np.float32)
+
+    assert SearchService(MismatchEngine()).search(store, "parcel") == []

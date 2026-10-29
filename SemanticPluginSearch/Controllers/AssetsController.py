@@ -10,6 +10,7 @@ This module is part of the Controllers layer: it must import neither qgis nor Qt
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Callable
 
@@ -79,7 +80,7 @@ class AssetsController:
         databasePath = self.paths.databasePath(universe)
         if databasePath.is_file():
             localStamp = _localBuildStamp(databasePath)
-            if localStamp and localStamp >= release.buildStamp:
+            if localStamp and not _stampIsNewer(localStamp, release.buildStamp):
                 return
             self.reporter.info(
                 f"Updating the embeddings database (build {release.buildStamp})…"
@@ -104,6 +105,23 @@ class AssetsController:
             )
         else:
             self.reporter.error(f"Embeddings update failed: {error}")
+
+
+STAMP_FORMAT = "%Y%m%dT%H%M%SZ"
+
+
+def _stampIsNewer(local: str, remote: str) -> bool:
+    """True when remote is strictly newer than local.
+
+    Stamps are UTC timestamps; compare them as datetimes and fall back to
+    the lexicographic order if either does not parse.
+    """
+    try:
+        localTime = datetime.strptime(local, STAMP_FORMAT)
+        remoteTime = datetime.strptime(remote, STAMP_FORMAT)
+        return remoteTime > localTime
+    except ValueError:
+        return remote > local
 
 
 def _stampMatches(stampPath: Path, sha256: str) -> bool:

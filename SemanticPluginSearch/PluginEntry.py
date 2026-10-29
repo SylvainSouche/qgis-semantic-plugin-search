@@ -15,14 +15,13 @@ try:  # QAction lives in QtGui on PyQt6 (QGIS 4) and QtWidgets on PyQt5 (QGIS 3)
 except ImportError:  # pragma: no cover - QGIS 3 / PyQt5
     pass
 
-import numpy as np
-
 from .Controllers.ActionController import ActionController
 from .Controllers.AssetsController import AssetsController
 from .Controllers.DetailsController import DetailsController
 from .Controllers.IconController import IconController
 from .Controllers.SearchController import SearchController
 from .Data.AssetGateways import HttpAssetGateway, HttpIconGateway, HttpReadmeGateway
+from .Data.DeferredEmbeddingEngine import DeferredEmbeddingEngine
 from .Domain.SearchEngine import SearchService
 from .QgisBridge import (
     MessageBarReporter,
@@ -51,6 +50,7 @@ class SemanticPluginSearchPlugin:
 
     def __init__(self, iface) -> None:  # noqa: ANN001 - QgisInterface
         self.iface = iface
+        self.engine = None
         self.action: QAction | None = None
         self.dialog = None  # SearchDialog, created on first open
         self.controllers: Controllers | None = None
@@ -101,6 +101,7 @@ class SemanticPluginSearchPlugin:
         readmeGateway = HttpReadmeGateway()
         actionsGateway = PluginInstallerGateway(self.iface, reporter)
         engine = DeferredEmbeddingEngine(paths)
+        self.engine = engine
 
         searchController = SearchController(
             engine=engine,
@@ -131,40 +132,9 @@ class SemanticPluginSearchPlugin:
     def _onStoreReady(self, store) -> None:  # noqa: ANN001
         if self.controllers is None or self.dialog is None:
             return
+        if self.engine is not None:
+            # Size placeholder embeddings to the database before it is usable.
+            self.engine.setExpectedDimension(store.modelDim())
         self.controllers.search.setStore(store)
         # Re-run the current query against the fresh store.
         self.controllers.search.search(self.dialog, self.dialog.queryEdit.text())
-
-
-class DeferredEmbeddingEngine:
-    """EmbeddingEngine that loads the cached model on first use.
-
-    The model is configured once the asset refresh has placed (or already
-    found) the model file; until then queries yield zero vectors, which the
-    search reports as no results rather than failing.
-    """
-
-    def __init__(self, paths) -> None:  # noqa: ANN001 - PathsProvider
-        self.paths = paths
-        self.engine = None
-
-    def ensureLoaded(self) -> bool:
-        if self.engine is not None:
-            return True
-        modelPath = self.paths.modelPath()
-        if not modelPath.is_file():
-            return False
-        from .Data.StaticModelLoader import NpzStaticModel
-        from .Domain.EmbeddingEngine import StaticEmbeddingEngine
-        from .Domain.WordPieceTokenizer import WordPieceTokenizer
-
-        model = NpzStaticModel.load(modelPath)
-        self.engine = StaticEmbeddingEngine(WordPieceTokenizer(model.vocabulary()), model)
-        return True
-
-    def embedQuery(self, text: str) -> np.ndarray:
-        if not self.ensureLoaded():
-            return np.zeros(1, dtype=np.float32)
-        return self.engine.embedQuery(text)
-
-# @impl 0f87-6ae3-6986-bc9f

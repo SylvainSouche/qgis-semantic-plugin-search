@@ -99,13 +99,21 @@ class HttpAssetGateway(AssetGateway):
 
 
 class _VerifiedDownloader:
-    """Checksum verified, atomic file downloads."""
+    """Checksum verified, atomic file downloads with a hard size cap."""
 
-    def __init__(self, transport=fetchUrl) -> None:
+    MAX_ASSET_BYTES = 50_000_000
+
+    def __init__(self, transport=fetchUrl, maxBytes: int = MAX_ASSET_BYTES) -> None:
         self.transport = transport
+        self.maxBytes = maxBytes
 
     def downloadVerified(self, remoteFile: RemoteFile, destination: Path) -> None:
         payload = self.transport(remoteFile.url)
+        if len(payload) > self.maxBytes:
+            raise TransportError(
+                f"download too large for {remoteFile.url}:"
+                f" {len(payload)} > {self.maxBytes}"
+            )
         if remoteFile.sha256:
             digest = hashlib.sha256(payload).hexdigest()
             if digest != remoteFile.sha256:

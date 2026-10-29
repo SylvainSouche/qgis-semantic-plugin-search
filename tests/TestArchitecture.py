@@ -40,7 +40,8 @@ def test_pure_layers_limit_third_party_imports_to_numpy():
     # Explicit allowlist rather than sys.stdlib_module_names: deterministic
     # across Python versions (3.9 has no stdlib_module_names) and stricter.
     allowed = {
-        "__future__", "abc", "collections", "dataclasses", "hashlib", "json", "os",
+        "__future__", "abc", "collections", "dataclasses", "datetime", "hashlib",
+        "json", "os",
         "pathlib", "sqlite3", "tempfile", "typing", "unicodedata", "urllib",
         "numpy",
     }
