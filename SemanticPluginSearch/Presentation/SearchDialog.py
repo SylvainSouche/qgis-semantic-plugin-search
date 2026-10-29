@@ -270,3 +270,5 @@ class SearchDialog(QDialog):
         self.detailsPanel.clearDetails()
 
 # @impl 0f87-6ae3-a1e6-0cd7
+
+# @impl 0f87-6ae3-6985-53e9
