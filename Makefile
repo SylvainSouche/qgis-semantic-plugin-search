@@ -44,8 +44,22 @@ help: ## Show this help and how to install the plugin
 test: _venv ## Run the test suite (no QGIS needed); ARGS passes pytest options
 	$(PY) -m pytest $(ARGS)
 
-smoke: ## Load and run the plugin inside real QGIS, headless (QGIS_APP=/path/to/QGIS.app)
-	tools/RunQgisSmoke.sh
+QGIS_APPS ?= $(wildcard /Applications/QGIS*.app /Applications/MacPorts/QGIS*.app)
+# The MacPorts QGIS3 cannot be smoke tested on this machine: its Qt5
+# QtWebKit fails to dlopen on macOS 26 (missing _CGLGetCurrentContext),
+# so the qgis Python bindings cannot even import. Remove from the skip
+# list once the MacPorts Qt5 is fixed.
+QGIS_SKIP_APPS ?= /Applications/MacPorts/QGIS3.app
+
+smoke: ## Load and run the plugin inside every installed real QGIS, headless (QGIS_APPS overrides the list)
+	@status=0; \
+	for app in $(QGIS_APPS); do \
+		case " $(QGIS_SKIP_APPS) " in *" $$app "*) echo "==> skipping $$app"; continue;; esac; \
+		echo "==> Smoke test in $$app"; \
+		QGIS_APP="$$app" tools/RunQgisSmoke.sh || status=1; \
+		echo; \
+	done; \
+	exit $$status
 
 fetch: _venv ## Fetch the plugin catalogue and readmes into data/ (QGIS_VERSIONS selects versions)
 	@command -v curl >/dev/null || { echo "curl is required"; exit 1; }
