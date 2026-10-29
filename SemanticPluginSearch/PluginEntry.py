@@ -20,8 +20,9 @@ import numpy as np
 from .Controllers.ActionController import ActionController
 from .Controllers.AssetsController import AssetsController
 from .Controllers.DetailsController import DetailsController
+from .Controllers.IconController import IconController
 from .Controllers.SearchController import SearchController
-from .Data.AssetGateways import HttpAssetGateway, HttpReadmeGateway
+from .Data.AssetGateways import HttpAssetGateway, HttpIconGateway, HttpReadmeGateway
 from .Domain.SearchEngine import SearchService
 from .QgisBridge import (
     MessageBarReporter,
@@ -36,12 +37,13 @@ from .QgisBridge import (
 class Controllers(QObject):
     """Bundle of controllers handed to the window."""
 
-    def __init__(self, search, details, actions, assets) -> None:  # noqa: ANN001
+    def __init__(self, search, details, actions, assets, icons) -> None:  # noqa: ANN001
         super().__init__()
         self.search = search
         self.details = details
         self.actions = actions
         self.assets = assets
+        self.icons = icons
 
 
 class SemanticPluginSearchPlugin:
@@ -115,8 +117,15 @@ class SemanticPluginSearchPlugin:
             reporter=reporter,
             onStoreReady=self._onStoreReady,
         )
+        iconController = IconController(
+            HttpIconGateway(paths.cacheDir() / "Icons"), runner
+        )
         return Controllers(
-            searchController, detailsController, actionController, assetsController
+            searchController,
+            detailsController,
+            actionController,
+            assetsController,
+            iconController,
         )
 
     def _onStoreReady(self, store) -> None:  # noqa: ANN001

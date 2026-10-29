@@ -62,6 +62,7 @@ FIXTURE_PLUGINS = {
     1: {
         "name": "ParcelDigitizer",
         "version": "1.2.0",
+        "icon": "/media/packages/parcel.png",
         "description": "Digitize parcel boundaries from cadastre maps",
         "about": "Parcel and cadastre digitizing with boundary tracing tools",
         "tags": "parcel,cadastre,digitizing",
@@ -168,6 +169,7 @@ def fixtureCatalogueBytes() -> bytes:
         <qgis_maximum_version>4.99.0</qgis_maximum_version>
         <author_name><![CDATA[Fixture Author]]></author_name>
         <download_url>https://plugins.qgis.org/plugins/{spec['name']}/download/</download_url>
+        <icon>{spec.get('icon', '')}</icon>
         <experimental>{'True' if spec.get('experimental') else 'False'}</experimental>
         <deprecated>{'True' if spec.get('deprecated') else 'False'}</deprecated>
         <repository><![CDATA[https://github.com/fixture/{spec['name']}]]></repository>

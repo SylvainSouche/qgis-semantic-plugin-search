@@ -131,6 +131,46 @@ class _VerifiedDownloader:
             raise
 
 
+class HttpIconGateway:
+    """Fetches plugin icons with a local disk cache and in memory hits."""
+
+    MAX_ICON_BYTES = 300_000
+
+    def __init__(self, cacheDir: Path, transport=fetchUrl) -> None:
+        self.cacheDir = Path(cacheDir)
+        self.cacheDir.mkdir(parents=True, exist_ok=True)
+        self.transport = transport
+        self.cache: dict[str, bytes] = {}
+
+    def fetchIcon(self, url: str) -> bytes:
+        """Return the icon bytes for url, or raise for missing/invalid icons."""
+        if url in self.cache:
+            return self.cache[url]
+        path = self._pathFor(url)
+        if path.is_file():
+            payload = path.read_bytes()
+        else:
+            payload = self.transport(url)[: self.MAX_ICON_BYTES]
+            _assertImage(payload, url)
+            path.write_bytes(payload)
+        self.cache[url] = payload
+        return payload
+
+    def _pathFor(self, url: str) -> Path:
+        import hashlib
+
+        suffix = Path(url.split("?")[0]).suffix.lower()
+        if suffix not in (".png", ".jpg", ".jpeg", ".gif", ".svg"):
+            suffix = ".png"
+        return self.cacheDir / (hashlib.sha256(url.encode()).hexdigest() + suffix)
+
+
+def _assertImage(payload: bytes, url: str) -> None:
+    signatures = (b"\x89PNG", b"\xff\xd8", b"GIF87a", b"GIF89a", b"<?xml", b"<svg")
+    if not payload or not payload.startswith(signatures):
+        raise ValueError(f"not an image: {url}")
+
+
 class HttpReadmeGateway(ReadmeGateway):
     """Fetches readme text, preferring the URL resolved by the pipeline."""
 

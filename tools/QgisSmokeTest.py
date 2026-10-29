@@ -115,6 +115,7 @@ def main() -> int:
                 on_failure(error)
 
     from SemanticPluginSearch.Controllers.ActionController import ActionController
+    from SemanticPluginSearch.Controllers.IconController import IconController
     from SemanticPluginSearch.Controllers.AssetsController import AssetsController
     from SemanticPluginSearch.Controllers.DetailsController import DetailsController
     from SemanticPluginSearch.Controllers.SearchController import SearchController
@@ -168,7 +169,14 @@ def main() -> int:
         reporter=FakeReporter(),
         onStoreReady=onStoreReady,
     )
-    controllers = Controllers(searchController, detailsController, actionController, assetsController)
+    from SemanticPluginSearch.Data.AssetGateways import HttpIconGateway
+    from SemanticPluginSearch.QgisBridge.QtJobRunner import QtJobRunner
+
+    iconGateway = HttpIconGateway(tmpProfile / "Icons")
+    iconController = IconController(iconGateway, QtJobRunner())
+    controllers = Controllers(
+        searchController, detailsController, actionController, assetsController, iconController
+    )
 
     dialog = SearchDialog(controllers)
     dialog.resize(920, 620)
@@ -204,6 +212,42 @@ def main() -> int:
         searchController.includeExperimental is False,
     )
     check("live search timer is armed ready", not dialog.liveSearchTimer.isActive())
+
+    # 9. Real rows against a real database with real icon fetches
+    #    (SMOKE_DB=/path/to/Embeddings-4.sqlite enables this section).
+    smokeDb = os.environ.get("SMOKE_DB")
+    if smokeDb and Path(smokeDb).is_file():
+        import shutil
+        import time
+
+        shutil.copy(smokeDb, paths.databasePath(universe))
+        from SemanticPluginSearch.Data.SqliteVectorStore import SqliteVectorStore
+
+        modelSource = Path(os.environ.get("SMOKE_MODEL", REPO_ROOT / "build" / "EmbeddingModel.npz"))
+        if not modelSource.is_file():
+            raise AssertionError(f"smoke model not found: {modelSource}")
+        shutil.copy(modelSource, paths.modelPath())
+        store = SqliteVectorStore.open(paths.databasePath(universe))
+        searchController.setStore(store)
+        searchController.search(dialog, "create contour lines from a DEM")
+        check("rows built for a real query", dialog.resultsList.count() > 0,
+              f"{dialog.resultsList.count()} rows")
+        first = dialog.resultsList.item(0)
+        check("row carries a real widget", dialog.resultsList.itemWidget(first) is not None)
+        deadline = time.time() + 30
+        while time.time() < deadline:
+            app.processEvents()
+            withPixmaps = sum(
+                1 for label in dialog._iconLabels.values()
+                if label.pixmap() is not None and not label.pixmap().isNull()
+            )
+            if withPixmaps:
+                break
+            time.sleep(0.1)
+        check("icons fetched through the queued runner", withPixmaps > 0,
+              f"{withPixmaps}/{dialog.resultsList.count()} icons")
+    else:
+        check("real store section skipped (no SMOKE_DB)", True)
 
     # Teardown order matters: drop the Qt objects before exitQgis, and
     # flush before leaving; some offscreen teardowns still crash on exit.

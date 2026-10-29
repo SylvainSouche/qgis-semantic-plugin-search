@@ -26,6 +26,7 @@ class PluginRecord:
     homepage: str
     tracker: str
     downloadUrl: str
+    iconUrl: str
     fileName: str
     authorName: str
     qgisMinimum: str
@@ -62,6 +63,17 @@ def parseCatalogue(xmlBytes: bytes) -> list[PluginRecord]:
     return list(records.values())
 
 
+def _absoluteIconUrl(icon: str) -> str:
+    """The catalogue stores icon paths relative to plugins.qgis.org."""
+    if not icon:
+        return ""
+    if icon.startswith("http"):
+        return icon
+    if icon.startswith("/"):
+        return "https://plugins.qgis.org" + icon
+    return ""
+
+
 def _text(element: ET.Element, tag: str) -> str:
     child = element.find(tag)
     return (child.text or "").strip() if child is not None else ""
@@ -86,6 +98,7 @@ def _parsePluginElement(element: ET.Element) -> PluginRecord | None:
         homepage=_text(element, "homepage"),
         tracker=_text(element, "tracker"),
         downloadUrl=_text(element, "download_url"),
+        iconUrl=_absoluteIconUrl(_text(element, "icon")),
         fileName=_text(element, "file_name"),
         authorName=_text(element, "author_name"),
         qgisMinimum=_text(element, "qgis_minimum_version"),

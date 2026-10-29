@@ -11,8 +11,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from qgis.PyQt.QtCore import QSettings, Qt, QTimer
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtCore import QSettings, Qt, QTimer, QSize
+from qgis.PyQt.QtGui import QFont, QIcon, QPixmap
 from qgis.PyQt.QtWidgets import (
     QCheckBox,
     QDialog,
@@ -44,6 +44,9 @@ ACTION_LABELS = (
 )
 LIVE_SEARCH_DELAY_MS = 300
 DESCRIPTION_EXCERPT_CHARS = 110
+ICON_SIZE = 32
+SCORE_COLUMN_WIDTH = 56
+ROW_MIN_HEIGHT = 40
 
 
 class SearchDialog(QDialog):
@@ -53,6 +56,7 @@ class SearchDialog(QDialog):
         super().__init__(parent)
         self.controllers = controllers
         self.results: list[SearchResult] = []
+        self._iconLabels: dict[int, QLabel] = {}
         self.setWindowTitle(self.tr("Semantic Plugin Search"))
         self.setWindowIcon(self._pluginIcon())
         self._buildUi()
@@ -210,15 +214,20 @@ class SearchDialog(QDialog):
 
     def showResults(self, results: list[SearchResult]) -> None:
         self.results = list(results)
+        self._iconLabels.clear()
         self.resultsList.blockSignals(True)
         self.resultsList.clear()
         for result in self.results:
-            item = QListWidgetItem(self._rowText(result))
+            item = QListWidgetItem()
             item.setData(Qt.ItemDataRole.UserRole, result.info.pluginId)
             item.setToolTip(result.info.description)
             self.resultsList.addItem(item)
+            row = self._buildRow(result)
+            item.setSizeHint(QSize(0, row.sizeHint().height()))
+            self.resultsList.setItemWidget(item, row)
         self.resultsList.blockSignals(False)
         self.countLabel.setText(self.tr("{} plugin(s)").format(len(self.results)))
+        self.controllers.icons.fetchFor(self.results, self._showIcon)
         if self.results:
             # Default the details to the first result when nothing is selected.
             self.resultsList.setCurrentRow(0)
@@ -226,21 +235,82 @@ class SearchDialog(QDialog):
             self.detailsPanel.clearDetails()
             self.setActionStates(ActionStates())
 
-    @staticmethod
-    def _rowText(result: SearchResult) -> str:
+    # ------------------------------------------------------ result rows
+
+    def _buildRow(self, result: SearchResult) -> QWidget:
+        """One row: icon, bold title over smaller serif description, and the
+        similarity percentage in a right aligned column aligned with the
+        title line, two pixels from the icon."""
+        row = QWidget(self.resultsList)
+        row.setMinimumHeight(ROW_MIN_HEIGHT)
+        layout = QHBoxLayout(row)
+        layout.setContentsMargins(2, 2, 2, 2)
+        layout.setSpacing(2)
+
+        iconLabel = QLabel(row)
+        iconLabel.setFixedSize(ICON_SIZE, ICON_SIZE)
+        self._iconLabels[result.info.pluginId] = iconLabel
+        layout.addWidget(iconLabel)
+
+        textColumn = QVBoxLayout()
+        textColumn.setSpacing(0)
+        nameLabel = QLabel(result.info.name, row)
+        nameFont = nameLabel.font()
+        nameFont.setBold(True)
+        nameLabel.setFont(nameFont)
+        descriptionLabel = QLabel(self._excerpt(result.info.description), row)
+        descriptionFont = QFont("Times New Roman")
+        descriptionFont.setStyleHint(QFont.StyleHint.Serif)
+        descriptionFont.setPointSize(max(9, nameFont.pointSize() - 2))
+        descriptionLabel.setFont(descriptionFont)
+        textColumn.addWidget(nameLabel)
+        textColumn.addWidget(descriptionLabel)
+        layout.addLayout(textColumn, 1)
+
         flags = []
         if result.info.experimental:
-            flags.append("experimental")
+            flags.append("exp")
         if result.info.deprecated:
-            flags.append("deprecated")
-        flagText = f"  [{' / '.join(flags)}]" if flags else ""
-        description = result.info.description
-        if len(description) > DESCRIPTION_EXCERPT_CHARS:
-            description = description[:DESCRIPTION_EXCERPT_CHARS].rstrip() + "…"
-        return (
-            f"{result.info.name}  ·  {result.score * 100:.0f}%{flagText}\n"
-            f"{description}"
+            flags.append("dep")
+        scoreLabel = QLabel(
+            self.tr("{percent}%{flags}").format(
+                percent=f"{result.score * 100:.0f}",
+                flags=f"  [{' / '.join(flags)}]" if flags else "",
+            ),
+            row,
         )
+        scoreFont = scoreLabel.font()
+        scoreFont.setBold(True)
+        scoreLabel.setFont(scoreFont)
+        scoreLabel.setAlignment(
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop
+        )
+        scoreLabel.setFixedWidth(SCORE_COLUMN_WIDTH)
+        layout.addWidget(scoreLabel)
+        return row
+
+    @staticmethod
+    def _excerpt(description: str) -> str:
+        text = description.replace("\n", " ").strip()
+        if len(text) > DESCRIPTION_EXCERPT_CHARS:
+            text = text[:DESCRIPTION_EXCERPT_CHARS].rstrip() + "…"
+        return text
+
+    def _showIcon(self, pluginId: int, payload: bytes) -> None:
+        """Icon bytes arrived from the background fetch; replace the slot."""
+        label = self._iconLabels.get(pluginId)
+        if label is None:
+            return  # the rows were rebuilt since the fetch started
+        pixmap = QPixmap()
+        if pixmap.loadFromData(payload):
+            label.setPixmap(
+                pixmap.scaled(
+                    ICON_SIZE,
+                    ICON_SIZE,
+                    Qt.AspectRatioMode.KeepAspectRatio,
+                    Qt.TransformationMode.SmoothTransformation,
+                )
+            )
 
     def showStatus(self, message: str) -> None:
         self.statusLabel.setText(message)
@@ -272,3 +342,5 @@ class SearchDialog(QDialog):
 # @impl 0f87-6ae3-a1e6-0cd7
 
 # @impl 0f87-6ae3-6985-53e9
+
+# @impl 0f87-6ae3-ab0f-ea79

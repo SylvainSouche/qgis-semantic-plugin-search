@@ -14,6 +14,7 @@ if [ -x "$CONTENTS/MacOS/python3.12" ]; then
     PYTHONPATH="$CONTENTS/Resources/python3.12/lib-dynload:$CONTENTS/Resources/python3.12/site-packages:$CONTENTS/Resources/python3.12:$REPO"
     export DYLD_LIBRARY_PATH="$CONTENTS/Frameworks"
     export QT_QPA_PLATFORM_PLUGIN_PATH="$CONTENTS/PlugIns/platforms"
+    export QT_PLUGIN_PATH="$CONTENTS/PlugIns"
 # Official 3.x bundle: interpreter at MacOS/bin/python3.9, stdlib in MacOS.
 elif [ -x "$CONTENTS/MacOS/bin/python3.9" ]; then
     PYTHON="$CONTENTS/MacOS/bin/python3.9"
@@ -21,6 +22,7 @@ elif [ -x "$CONTENTS/MacOS/bin/python3.9" ]; then
     PYTHONPATH="$CONTENTS/Resources/python:$CONTENTS/Resources/python/site-packages:$REPO"
     export DYLD_LIBRARY_PATH="$CONTENTS/Frameworks:$CONTENTS/MacOS/lib"
     export QT_QPA_PLATFORM_PLUGIN_PATH="$CONTENTS/PlugIns/platforms"
+    export QT_PLUGIN_PATH="$CONTENTS/PlugIns"
 # MacPorts bundle: MacPorts python + Resources/python modules. Note: the
 # MacPorts Qt5 currently fails to load QtWebKit on macOS 26, which breaks
 # the qgis bindings import at the OS level, not at the plugin level.

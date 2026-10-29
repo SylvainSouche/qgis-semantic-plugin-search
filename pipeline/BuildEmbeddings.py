@@ -54,6 +54,8 @@ class EmbeddingDatabaseWriter:
     ) -> int:
         """Write the database and return the number of plugins embedded."""
         outputPath.parent.mkdir(parents=True, exist_ok=True)
+        # Regenerate from scratch: a stale file would collide with CREATE TABLE.
+        outputPath.unlink(missing_ok=True)
         self.readmeUrls = readmeUrls or {}
         vectors: list[tuple[int, bytes]] = []
         rows: list[tuple] = []
@@ -103,7 +105,7 @@ class EmbeddingDatabaseWriter:
             record.homepage,
             record.tracker,
             record.downloadUrl,
-            "",  # icon_url
+            record.iconUrl,  # icon_url
             record.downloads,
             record.averageVote,
             record.ratingVotes,

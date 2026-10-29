@@ -155,6 +155,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-result-rows": {
+    "active": true,
+    "id": "0f87-6ae3-ab0f-d83b",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-scoped-enums": {
     "active": true,
     "id": "0f87-6ae3-9811-a9fe",
@@ -290,6 +296,12 @@
   "impl-release-index": {
     "active": true,
     "id": "0f87-6ae3-74ce-d227",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-result-rows": {
+    "active": true,
+    "id": "0f87-6ae3-af18-207b",
     "status": "verified",
     "type": "impl"
   },
@@ -536,6 +548,12 @@
   "req-result-presentation": {
     "active": true,
     "id": "0f87-6ae3-6970-4b22",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-result-rows": {
+    "active": true,
+    "id": "0f87-6ae3-ab0f-ea79",
     "status": "confirmed",
     "type": "req"
   },
