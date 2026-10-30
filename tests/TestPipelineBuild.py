@@ -152,3 +152,52 @@ def test_publish_gate_blocks_a_collapsed_catalogue():
 
     firstPublish = checkGates(newIndex, None)
     assert firstPublish == [], "no previous release always passes"
+
+
+def test_index_merge_carries_over_unbuilt_universes(modelPath, catalogueAndReadmes, tmp_path):
+    """Weekly builds are spread across days: a run that rebuilds only one
+    universe must carry the other universe's still valid entry verbatim."""
+    import json
+
+    from pipeline.WriteReleaseIndex import buildIndex, previousUniverses
+
+    catalogue, readmeDir = catalogueAndReadmes
+    model = NpzStaticModel.load(modelPath)
+    writer = EmbeddingDatabaseWriter(model, fixtureTokenizer())
+    fresh = tmp_path / "Embeddings-4.sqlite"
+    writer.build(
+        records=parseCatalogue(catalogue.read_bytes()),
+        readmeDir=readmeDir,
+        universe="4",
+        outputPath=fresh,
+        buildStamp="20261030T120000Z",
+        catalogueSource="fixture",
+    )
+    previousUrl = "https://example.test/releases/download/embeddings/index.json"
+    previous = {
+        "universes": {
+            "3": {
+                "url": previousUrl + "/Embeddings-3.sqlite",
+                "sha256": "a" * 64,
+                "bytes": 11644928,
+                "build_stamp": "20261026T120000Z",
+                "plugin_count": 3818,
+            }
+        }
+    }
+
+    def fakeTransport(url: str, maxBytes=None) -> bytes:  # noqa: ANN001, ANN202
+        assert url == previousUrl
+        return json.dumps(previous).encode()
+
+    carried = previousUniverses(previousUrl, transport=fakeTransport)
+    index = buildIndex(
+        modelPath=modelPath,
+        databases={"4": fresh},
+        baseUrl="https://example.test/releases/download/embeddings",
+        generatedAt="20261030T130000Z",
+        previousUniversesMap=carried,
+    )
+    # The rebuilt universe is fresh; the unbuilt one is carried verbatim.
+    assert index["universes"]["4"]["build_stamp"] == "20261030T120000Z"
+    assert index["universes"]["3"] == previous["universes"]["3"]

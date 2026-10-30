@@ -61,12 +61,42 @@ def modelMeta(path: Path) -> dict:
     }
 
 
+def previousUniverses(previousUrl: str, transport=None) -> dict[str, dict]:
+    """Load the universe entries of the previously published index.
+
+    Returns an empty dict when there is no previous release or it cannot be
+    reached: a first publish has nothing to merge.
+    """
+    if not previousUrl:
+        return {}
+    try:
+        import json
+
+        fetch = transport
+        if fetch is None:
+            from SemanticPluginSearch.Data.AssetGateways import fetchUrl
+
+            fetch = fetchUrl
+        document = json.loads(fetch(previousUrl))
+        return document.get("universes") or {}
+    except Exception:  # noqa: BLE001 - merging is best effort
+        return {}
+
+
 def buildIndex(
     modelPath: Path,
     databases: dict[str, Path],
     baseUrl: str,
     generatedAt: str,
+    previousUniversesMap: dict[str, dict] | None = None,
 ) -> dict:
+    """Build the index for the freshly built universes.
+
+    Universes of the previous release that were NOT rebuilt this run are
+    carried over verbatim: their assets are still published under the same
+    fixed tag and their checksums still match, so the index stays complete
+    when the weekly builds are spread across days.
+    """
     index = {
         "format": INDEX_FORMAT,
         "generated_at": generatedAt,
@@ -87,6 +117,9 @@ def buildIndex(
             "build_stamp": meta["build_stamp"],
             "plugin_count": meta["plugin_count"],
         }
+    for universe, entry in sorted((previousUniversesMap or {}).items()):
+        if universe not in index["universes"]:
+            index["universes"][universe] = entry
     return index
 
 
@@ -100,6 +133,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--database", action="append", required=True, help="Universe=path")
     parser.add_argument("--base-url", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument(
+        "--merge-previous-url",
+        default="",
+        help="Published index whose unbuilt universes are carried over",
+    )
     args = parser.parse_args(argv)
 
     databases = {}

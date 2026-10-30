@@ -269,6 +269,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-spread-schedule": {
+    "active": true,
+    "id": "0f87-6ae3-eb3a-ed7f",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-static-import-test": {
     "active": true,
     "id": "0f87-6ae3-95fd-fbab",
@@ -530,6 +536,12 @@
   "obs-version-344": {
     "active": true,
     "id": "0f87-6ae3-7451-f64c",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-weekly-parallel-load": {
+    "active": true,
+    "id": "0f87-6ae3-eb3a-4d77",
     "status": "recorded",
     "type": "obs"
   },

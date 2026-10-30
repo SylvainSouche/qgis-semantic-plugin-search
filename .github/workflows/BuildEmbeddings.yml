@@ -2,18 +2,50 @@ name: BuildEmbeddings
 
 on:
   schedule:
-    # Every Monday 03:00 UTC.
-    - cron: "0 3 * * 1"
-  workflow_dispatch:
+    # The two universes are spread across days: rebuilding both at once
+    # hammers the catalogue host and doubles the blast radius of a bad
+    # fetch. Monday serves QGIS 3, Tuesday QGIS 4.
+    - cron: "0 3 * * 1" # Monday 03:00 UTC - QGIS 3.44
+    - cron: "0 3 * * 2" # Tuesday 03:00 UTC - QGIS 4.2
+  workflow_dispatch: # manual runs build both universes
 
 concurrency:
   group: build-embeddings
   cancel-in-progress: false
 
 jobs:
+  plan:
+    name: Plan the universe matrix
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      versions: ${{ steps.plan.outputs.versions }}
+    steps:
+      - id: plan
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          # Scheduled runs rebuild exactly one universe per day; manual
+          # runs build both.
+          if [ "$EVENT_NAME" = "schedule" ]; then
+            case "$EVENT_SCHEDULE" in
+              "0 3 * * 1") VERSIONS='["3.44"]' ;;
+              "0 3 * * 2") VERSIONS='["4.2"]' ;;
+              *) VERSIONS='[]' ;;
+            esac
+          else
+            VERSIONS='["3.44", "4.2"]'
+          fi
+          echo "versions=$VERSIONS" >> "$GITHUB_OUTPUT"
+          echo "planned versions: $VERSIONS"
+
   model:
     name: Convert static model
     runs-on: ubuntu-latest
+    needs: plan
+    if: needs.plan.outputs.versions != '[]'
     permissions:
       contents: read
     steps:
@@ -55,12 +87,12 @@ jobs:
   database:
     name: Embeddings for QGIS ${{ matrix.version }}
     runs-on: ubuntu-latest
-    needs: model
+    needs: [plan, model]
     permissions:
       contents: read
     strategy:
       matrix:
-        version: ["3.44", "4.2"]
+        version: ${{ fromJSON(needs.plan.outputs.versions) }}
     steps:
       - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v5
@@ -92,7 +124,7 @@ jobs:
   publish:
     name: Publish release and index
     runs-on: ubuntu-latest
-    needs: [model, database]
+    needs: [plan, model, database]
     permissions:
       contents: write
     steps:
@@ -107,18 +139,25 @@ jobs:
           path: build
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v4
         with:
-          name: embeddings-3.44
-          path: build
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v4
-        with:
-          name: embeddings-4.2
+          pattern: embeddings-*
+          merge-multiple: true
           path: build
       - name: Write the release index
+        env:
+          VERSIONS: ${{ needs.plan.outputs.versions }}
         run: |
+          # Only the universes built this run are fresh; the others are
+          # carried over from the published index, whose assets stay valid
+          # under the fixed release tag.
+          DATABASE_ARGS=""
+          for v in $(echo "$VERSIONS" | jq -r '.[]'); do
+            u=${v%%.*}
+            DATABASE_ARGS="$DATABASE_ARGS --database $u=build/Embeddings-$u.sqlite"
+          done
           python pipeline/WriteReleaseIndex.py \
             --model build/EmbeddingModel.npz \
-            --database 3=build/Embeddings-3.sqlite \
-            --database 4=build/Embeddings-4.sqlite \
+            $DATABASE_ARGS \
+            --merge-previous-url "https://github.com/${{ github.repository }}/releases/download/embeddings/index.json" \
             --base-url "https://github.com/${{ github.repository }}/releases/download/embeddings" \
             --output build/index.json
       - name: Sanity gate against the previous release
@@ -134,8 +173,7 @@ jobs:
           make_latest: false
           files: |
             build/EmbeddingModel.npz
-            build/Embeddings-3.sqlite
-            build/Embeddings-4.sqlite
+            build/Embeddings-*.sqlite
       - name: Publish the index last
         env:
           GH_TOKEN: ${{ github.token }}
