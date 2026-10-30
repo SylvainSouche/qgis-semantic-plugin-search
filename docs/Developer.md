@@ -123,8 +123,8 @@ make smoke       # load and exercise the plugin headless in every installed QGIS
 make fetch       # catalogue and readmes into data/ (QGIS_VERSIONS="3.44 4.2")
 make embed       # model and per-universe databases into build/, fetching first if needed
 make dist        # run the tests, then build dist/SemanticPluginSearch.<version>.zip
-make version VERSION=0.4.1   # set the version, adding a changelog entry to fill in
-make increment inc=rel       # bump maj, min or rel (0.4.0 -> 1.0.0, 0.5.0, 0.4.1)
+make version VERSION=0.4.1 COMMENT="What changed"   # set the version and its changelog entry
+make increment INC=rel COMMENT="What changed"       # bump maj, min or rel (0.4.0 -> 1.0.0, 0.5.0, 0.4.1)
 make clean       # remove build/ (except build/ddd), dist/ and caches; keeps data/ and .venv/
 make clean-all   # also remove data/ and .venv/
 ```
@@ -174,10 +174,11 @@ can never pair a new index with an old file.
 
 ## Releasing the plugin
 
-1. `make increment inc=rel` (or `min`, `maj`, or `make version
-   VERSION=x.y.z`). This sets the version in `metadata.txt` and adds a
-   `<version> - TODO describe this release` changelog entry: replace the
-   TODO with what changed.
+1. `make increment INC=rel COMMENT="What changed"` (or `INC=min`, `INC=maj`,
+   or `make version VERSION=x.y.z COMMENT="..."`). This sets the version in
+   `metadata.txt` and adds the changelog entry. Without `COMMENT`, the entry
+   reads `<version> - TODO describe this release`: replace the TODO with
+   what changed.
 2. `make dist`, which refuses to package if a test fails, including while
    the changelog entry still says TODO.
 3. `make smoke` on QGIS 3 and QGIS 4.

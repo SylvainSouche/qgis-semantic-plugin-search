@@ -1,6 +1,6 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 207 objects in model
+Generated from `project-model/` · schema_version 2 · 209 objects in model
 Sources: 4 CON, 3 NREQ, 39 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
@@ -42,11 +42,11 @@ Refines: `req-action-integration`
 
 ## Requirements
 
-### A Makefile at the repository root provides help, test, smoke, fetch, embed, dist, version, increment, clean and clean-all; embed fetches the catalogue and readmes first when missing, fetch and embed cover the configured QGIS version universes, version VERSION=x.y.z sets and increment inc=maj|min|rel bumps the plugin version with a changelog entry to fill in, and clean keeps the model tooling in build/ddd
+### A Makefile at the repository root provides help, test, smoke, fetch, embed, dist, version, increment, clean and clean-all; embed fetches the catalogue and readmes first when missing, fetch and embed cover the configured QGIS version universes, version VERSION=x.y.z sets and increment INC=maj|min|rel bumps the plugin version, COMMENT giving the changelog entry or else a TODO entry to fill in, and clean keeps the model tooling in build/ddd
 
-`REQ-req-makefile-targets-v2` · status **confirmed** · id `4be9-6ae4-41db-88b2`
+`REQ-req-makefile-targets-v3` · status **confirmed** · id `4be9-6ae4-471f-260f`
 
-Supersedes 0f87-6ae3-7ce1-fb2e (A Makefile at the repository root provides clean, clean-all, package, help, fetch, embed and test; embed fetches the catalogue and readmes first when they are missing, and fetch and embed cover the configured QGIS version universes).
+Supersedes 4be9-6ae4-41db-88b2 (A Makefile at the repository root provides help, test, smoke, fetch, embed, dist, version, increment, clean and clean-all; embed fetches the catalogue and readmes first when missing, fetch and embed cover the configured QGIS version universes, version VERSION=x.y.z sets and increment inc=maj|min|rel bumps the plugin version with a changelog entry to fill in, and clean keeps the model tooling in build/ddd).
 
 Carries forward what remained valid and states what changed.
 
@@ -206,7 +206,7 @@ Refines: `req-auto-updated-assets`
 
 `REQ-req-repository-metadata` · status **confirmed** · id `4be9-6ae3-f4ad-668c`
 
-Refines: `req-makefile-targets-v2`
+Refines: `req-makefile-targets-v3`
 
 ### The plugin reads the installed plugins from the plugin folders on disk, matching a result by installer key, then case insensitively, then by declared name, so the action buttons follow the real installed state, refresh after every action, and stay disabled when the state cannot be read
 
@@ -280,7 +280,7 @@ Supersedes 4be9-6ae3-f12c-682d (make package runs the full test suite first and 
 
 Carries forward what remained valid and states what changed.
 
-Refines: `req-makefile-targets-v2`
+Refines: `req-makefile-targets-v3`
 
 ## Use cases
 

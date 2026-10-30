@@ -1,14 +1,15 @@
 """Set or increment the plugin version in SemanticPluginSearch/metadata.txt.
 
-    python tools/SetVersion.py --set 0.4.1
-    python tools/SetVersion.py --increment maj|min|rel
+    python tools/SetVersion.py --set 0.4.1 [--comment "What changed"]
+    python tools/SetVersion.py --increment maj|min|rel [--comment "What changed"]
 
 Versions are MAJOR.MINOR.RELEASE. Incrementing a part resets the parts after
-it (0.4.1 + min -> 0.5.0). The new version gets a changelog entry
-"<version> - TODO describe this release" at the top of the changelog: the
-QGIS plugin repository requires a changelog for updates, and
-TestPluginRepositoryRules (so `make dist`) refuses to package while the
-current version's entry still says TODO.
+it (0.4.1 + min -> 0.5.0). The new version gets a changelog entry at the top
+of the changelog: "<version> - <comment>", or without a comment
+"<version> - TODO describe this release". The QGIS plugin repository
+requires a changelog for updates, and TestPluginRepositoryRules (so
+`make dist`) refuses to package while the current version's entry still
+says TODO.
 """
 from __future__ import annotations
 
@@ -52,15 +53,16 @@ def currentVersion(metadata: str) -> str:
     return match.group(1).strip()
 
 
-def withVersion(metadata: str, version: str) -> str:
-    """The metadata text with the new version and a changelog stub on top."""
+def withVersion(metadata: str, version: str, comment: str = "") -> str:
+    """The metadata text with the new version and its changelog entry on top."""
     parseVersion(version)
     current = currentVersion(metadata)
     if version == current:
         raise VersionError(f"the version is already {version}")
     text = re.sub(r"^version=.*$", f"version={version}", metadata, count=1, flags=re.M)
     match = re.search(r"^changelog=(.*)$", text, re.M)
-    stub = f"{version} - {TODO_MARK}"
+    comment = " ".join(comment.split())  # one line: the changelog is line based
+    stub = f"{version} - {comment or TODO_MARK}"
     if match:
         text = (
             text[: match.start()]
@@ -77,6 +79,7 @@ def main(argv: list[str] | None = None) -> int:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--set", metavar="VERSION")
     group.add_argument("--increment", metavar="PART", help="maj, min or rel")
+    parser.add_argument("--comment", default="", help="Changelog entry for the new version")
     parser.add_argument("--metadata", default=str(METADATA))
     args = parser.parse_args(argv)
 
@@ -85,18 +88,21 @@ def main(argv: list[str] | None = None) -> int:
     try:
         current = currentVersion(metadata)
         version = args.set if args.set else incremented(current, args.increment)
-        path.write_text(withVersion(metadata, version), encoding="utf-8")
+        path.write_text(withVersion(metadata, version, args.comment), encoding="utf-8")
     except VersionError as error:
         print(f"Version unchanged: {error}", file=sys.stderr)
         return 1
     print(f"==> Version {current} -> {version}")
+    if args.comment.strip():
+        print(f"==> Changelog: {version} - {' '.join(args.comment.split())}")
+        return 0
     print(f"==> Now describe it: edit the '{version} - {TODO_MARK}' changelog entry")
-    print(f"    in {path.relative_to(Path.cwd()) if path.is_relative_to(Path.cwd()) else path};")
-    print("    make dist refuses to package until it is written.")
+    print(f"    in {path.relative_to(Path.cwd()) if path.is_relative_to(Path.cwd()) else path},")
+    print('    or pass COMMENT="..." next time; make dist refuses to package until it is written.')
     return 0
 
 
 if __name__ == "__main__":
     sys.exit(main())
 
-# @impl 4be9-6ae4-41db-88b2
+# @impl 4be9-6ae4-471f-260f

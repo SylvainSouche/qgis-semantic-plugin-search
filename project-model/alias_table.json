@@ -251,6 +251,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-make-inc-comment": {
+    "active": true,
+    "id": "4be9-6ae4-471e-5f5d",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-makefile": {
     "active": true,
     "id": "0f87-6ae3-7ce1-1c69",
@@ -876,8 +882,14 @@
     "type": "req"
   },
   "req-makefile-targets-v2": {
-    "active": true,
+    "active": false,
     "id": "4be9-6ae4-41db-88b2",
+    "status": "superseded",
+    "type": "req"
+  },
+  "req-makefile-targets-v3": {
+    "active": true,
+    "id": "4be9-6ae4-471f-260f",
     "status": "confirmed",
     "type": "req"
   },

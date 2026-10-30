@@ -44,3 +44,16 @@ def test_the_cli_rewrites_the_file(tmp_path):
     assert "version=0.5.0" in metadata.read_text(encoding="utf-8")
     assert main(["--set", "bad", "--metadata", str(metadata)]) == 1
     assert "version=0.5.0" in metadata.read_text(encoding="utf-8")
+
+
+def test_a_comment_becomes_the_changelog_entry():
+    text = withVersion(METADATA, "0.4.1", "Coloured  installed\n badges")
+    assert "changelog=0.4.1 - Coloured installed badges\n    0.4.0 - Fixes" in text
+    assert TODO_MARK not in text
+
+
+def test_the_cli_accepts_a_comment(tmp_path):
+    metadata = tmp_path / "metadata.txt"
+    metadata.write_text(METADATA, encoding="utf-8")
+    assert main(["--increment", "rel", "--comment", "Badges", "--metadata", str(metadata)]) == 0
+    assert "changelog=0.4.1 - Badges" in metadata.read_text(encoding="utf-8")

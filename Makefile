@@ -2,7 +2,7 @@
 #
 # Naming convention: UpperCamelCase classes and modules, Qt style camelCase
 # methods, matching the surrounding PyQt ecosystem.
-# @impl 4be9-6ae4-41db-88b2
+# @impl 4be9-6ae4-471f-260f
 
 .DEFAULT_GOAL := help
 .PHONY: help test smoke fetch embed dist version increment clean clean-all _venv
@@ -21,6 +21,9 @@ CURRENT_VERSION := $(shell sed -n 's/^version=\(.*\)/\1/p' $(PLUGIN)/metadata.tx
 VERSION ?= $(CURRENT_VERSION)
 # Model tooling kept in build/ across `make clean` (discovery-driven dev scripts).
 KEEP_IN_BUILD := ddd ddd-scripts.tgz
+# The changelog comment reaches tools/SetVersion.py through the environment,
+# never pasted into the shell command: quotes, $ and backticks stay literal.
+export COMMENT
 QGIS_VERSIONS ?= 3.44 4.2
 FETCH_CONNECTIONS ?= 8
 
@@ -35,7 +38,8 @@ help: ## Show this help and how to install the plugin
 	@echo "  FETCH_CONNECTIONS=$(FETCH_CONNECTIONS)     parallel readme downloads"
 	@echo "  ARGS=\"-k ranking\"        extra pytest arguments for 'test'"
 	@echo "  VERSION=0.4.1            new version for 'version'"
-	@echo "  inc=maj|min|rel          part to bump for 'increment'"
+	@echo "  INC=maj|min|rel          part to bump for 'increment'"
+	@echo "  COMMENT=\"...\"            changelog entry for 'version' and 'increment'"
 	@echo
 	@echo "Install in QGIS:"
 	@echo "  1. make dist"
@@ -107,13 +111,13 @@ dist: test ## Run the tests, then package the plugin as dist/<plugin>.<version>.
 	@echo "==> Packaged $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip"
 	@ls -lh $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip
 
-version: _venv ## Set the plugin version: make version VERSION=0.4.1 (adds a changelog entry to fill in)
-	@test "$(origin VERSION)" = "command line" || { echo "Usage: make version VERSION=x.y.z (current: $(CURRENT_VERSION))"; exit 1; }
-	@$(PY) tools/SetVersion.py --set $(VERSION)
+version: _venv ## Set the plugin version: make version VERSION=0.4.1 COMMENT="What changed"
+	@test "$(origin VERSION)" = "command line" || { echo "Usage: make version VERSION=x.y.z [COMMENT=\"...\"] (current: $(CURRENT_VERSION))"; exit 1; }
+	@$(PY) tools/SetVersion.py --set $(VERSION) --comment "$$COMMENT"
 
-increment: _venv ## Bump the plugin version: make increment inc=maj|min|rel (adds a changelog entry to fill in)
-	@test -n "$(inc)" || { echo "Usage: make increment inc=maj|min|rel (current: $(CURRENT_VERSION))"; exit 1; }
-	@$(PY) tools/SetVersion.py --increment $(inc)
+increment: _venv ## Bump the plugin version: make increment INC=maj|min|rel COMMENT="What changed"
+	@test -n "$(INC)" || { echo "Usage: make increment INC=maj|min|rel [COMMENT=\"...\"] (current: $(CURRENT_VERSION))"; exit 1; }
+	@$(PY) tools/SetVersion.py --increment $(INC) --comment "$$COMMENT"
 
 clean: ## Remove generated files (build/ except the model tooling, dist/, caches); keeps data/ and .venv/
 	@if [ -d $(BUILD_DIR) ]; then \
