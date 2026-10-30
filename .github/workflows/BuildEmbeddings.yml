@@ -45,7 +45,9 @@ jobs:
       - name: Check out the stored embeddings
         run: |
           mkdir -p store
-          if git fetch --depth 1 origin embeddings; then
+          # The full ref name: a bare "embeddings" also matches the tag of the
+          # retired embeddings release, which points at a source commit.
+          if git fetch --depth 1 origin refs/heads/embeddings; then
             git archive FETCH_HEAD | tar -x -C store
           fi
           ls -l store
@@ -109,9 +111,12 @@ jobs:
           cp pipeline/EmbeddingsBranchReadme.md store/README.md
           cd store
           # A single commit, force pushed: the branch never accumulates history.
+          # Only the data files are committed, whatever else the directory holds.
           git init -q -b embeddings
-          git add -A
+          git add -- index.json README.md EmbeddingModel.*.npz Embeddings-*.sqlite Readmes-*.json.gz
           git -c user.name="github-actions[bot]" \
               -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
               commit -q -m "Embeddings $(date -u +%Y-%m-%dT%H:%MZ)"
-          git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" embeddings
+          git status --short
+          git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" \
+            HEAD:refs/heads/embeddings
