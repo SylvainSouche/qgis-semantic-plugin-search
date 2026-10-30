@@ -28,6 +28,11 @@ class EmbeddingEngine(ABC):
         """Return a normalized vector, or a zero vector for empty input."""
         raise NotImplementedError
 
+    @abstractmethod
+    def modelId(self) -> str:
+        """Identifier of the model, compared with the database's model id."""
+        raise NotImplementedError
+
 
 class StaticModelData(ABC):
     """Access to the token vocabulary and vectors of the distributed model."""

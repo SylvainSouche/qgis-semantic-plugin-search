@@ -21,6 +21,9 @@ class StaticEmbeddingEngine(EmbeddingEngine):
         self.tokenizer = tokenizer
         self.model = model
 
+    def modelId(self) -> str:
+        return self.model.modelId()
+
     def embedQuery(self, text: str) -> np.ndarray:
         """Return the normalized query embedding, or a zero vector when empty.
 
@@ -45,3 +48,4 @@ class StaticEmbeddingEngine(EmbeddingEngine):
         return (mean / norm).astype(np.float32)
 
 # @impl 0f87-6ae3-6985-7c77
+# @impl 4be9-6ae4-3eac-c78b

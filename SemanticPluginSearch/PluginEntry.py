@@ -162,16 +162,7 @@ class SemanticPluginSearchPlugin:
         self._activate(store)
 
     def _validatedStore(self, store):  # noqa: ANN001, ANN202
-        self.engine.ensureLoaded()
-        loadedModelId = self.engine.modelId()
-        if loadedModelId is not None and loadedModelId != store.modelId():
-            self.engine.reset()
-            self.engine.ensureLoaded()
-            if self.engine.modelId() != store.modelId():
-                raise RuntimeError(
-                    f"model {self.engine.modelId()!r} cannot rank "
-                    f"database {store.modelId()!r}"
-                )
+        self.engine.validatePairing(store)
         return store
 
     def _activate(self, store) -> None:  # noqa: ANN001

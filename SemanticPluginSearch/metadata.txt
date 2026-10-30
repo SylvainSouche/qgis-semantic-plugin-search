@@ -17,7 +17,7 @@ experimental=True
 deprecated=False
 server=False
 license=MIT
-changelog=0.4.0 - Fix the window failing to open in 0.3.0 (stale package), icons now return on every search, installed plugins are recognised so Upgrade, Reinstall and Uninstall work, installed and update badges, hybrid ranking that puts exact plugin names first, downloads through the QGIS network settings (proxy, authentication), embeddings served from the repository embeddings branch
+changelog=0.4.0 - Fix the window failing to open in 0.3.0 (stale package), fix search never activating after a database update (model check error), icons now return on every search, installed plugins are recognised so Upgrade, Reinstall and Uninstall work, installed and update badges, hybrid ranking that puts exact plugin names first, downloads through the QGIS network settings (proxy, authentication), embeddings served from the repository embeddings branch
     0.3.0 - Offline first cache, pinned update channel, safer links, bounded background work, hardening
     0.2.0 - Plugin icons in the results, QGIS 3 and QGIS 4 installer support, experimental and deprecated filters, live search
     0.1.0 - First release: natural language plugin search with local embeddings

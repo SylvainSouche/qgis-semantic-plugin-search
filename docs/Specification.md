@@ -1,7 +1,7 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 185 objects in model
-Sources: 4 CON, 3 NREQ, 36 REQ, 8 UC
+Generated from `project-model/` · schema_version 2 · 190 objects in model
+Sources: 4 CON, 3 NREQ, 37 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
 ## Constraints
@@ -45,6 +45,12 @@ Refines: `req-action-integration`
 ### A Makefile at the repository root provides clean, clean-all, package, help, fetch, embed and test; embed fetches the catalogue and readmes first when they are missing, and fetch and embed cover the configured QGIS version universes
 
 `REQ-req-makefile-targets` · status **confirmed** · id `0f87-6ae3-7ce1-fb2e`
+
+### A new embeddings database is activated only when the cached model's id matches the database's model id, reloading the model file once when the loaded model differs; with no model yet the search waits without error, and a mismatch pauses search with a message
+
+`REQ-req-model-pairing` · status **confirmed** · id `4be9-6ae4-3eac-c78b`
+
+Refines: `req-auto-updated-assets`
 
 ### A newer database replaces the local copy atomically and only after integrity checks pass, and a failed update leaves the previous cache fully usable
 

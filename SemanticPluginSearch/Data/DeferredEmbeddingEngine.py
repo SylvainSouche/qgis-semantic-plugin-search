@@ -48,7 +48,26 @@ class DeferredEmbeddingEngine:
         self.engine = StaticEmbeddingEngine(WordPieceTokenizer(model.vocabulary()), model)
         return True
 
+    def validatePairing(self, store) -> None:  # noqa: ANN001 - PluginVectorStore
+        """Load the model and make sure it can rank the store; raise if not.
+
+        A model loaded earlier but different from the store's (the model was
+        updated) is dropped and the file on disk reloaded once. Runs on a
+        worker thread: parsing the model must never freeze the window.
+        """
+        if not self.ensureLoaded():
+            return  # no model yet: queries stay empty until it is downloaded
+        if self.modelId() == store.modelId():
+            return
+        self.reset()
+        self.ensureLoaded()
+        if self.modelId() != store.modelId():
+            raise RuntimeError(
+                f"model {self.modelId()!r} cannot rank database {store.modelId()!r}"
+            )
+
     def embedQuery(self, text: str) -> np.ndarray:
         if not self.ensureLoaded():
             return np.zeros(self._expectedDimension or 1, dtype=np.float32)
         return self.engine.embedQuery(text)
+# @impl 4be9-6ae4-3eac-c78b

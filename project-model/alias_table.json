@@ -257,6 +257,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-pairing-in-engine": {
+    "active": true,
+    "id": "4be9-6ae4-3eac-756b",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-plugin-license-mit": {
     "active": true,
     "id": "0f87-6ae3-7f88-5bb3",
@@ -446,6 +452,12 @@
   "impl-makefile": {
     "active": true,
     "id": "0f87-6ae3-7ce1-c703",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-model-pairing": {
+    "active": true,
+    "id": "4be9-6ae4-3eac-cb74",
     "status": "verified",
     "type": "impl"
   },
@@ -641,6 +653,12 @@
     "status": "recorded",
     "type": "obs"
   },
+  "obs-pairing-attribute-error": {
+    "active": true,
+    "id": "4be9-6ae4-3eac-c89a",
+    "status": "recorded",
+    "type": "obs"
+  },
   "obs-pyqt6-scoped-enums": {
     "active": true,
     "id": "0f87-6ae3-9811-c4f4",
@@ -806,6 +824,12 @@
   "req-manager-buttons": {
     "active": true,
     "id": "0f87-6ae3-6985-0cec",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-model-pairing": {
+    "active": true,
+    "id": "4be9-6ae4-3eac-c78b",
     "status": "confirmed",
     "type": "req"
   },
@@ -998,6 +1022,12 @@
   "t-manual-review-1030": {
     "active": true,
     "id": "4be9-6ae3-f13e-6931",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-model-pairing": {
+    "active": true,
+    "id": "4be9-6ae4-3eac-a5b8",
     "status": "passing",
     "type": "test"
   },
