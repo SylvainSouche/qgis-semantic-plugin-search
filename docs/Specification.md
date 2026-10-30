@@ -1,7 +1,7 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 181 objects in model
-Sources: 4 CON, 3 NREQ, 35 REQ, 8 UC
+Generated from `project-model/` · schema_version 2 · 185 objects in model
+Sources: 4 CON, 3 NREQ, 36 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
 ## Constraints
@@ -51,6 +51,12 @@ Refines: `req-action-integration`
 `REQ-req-atomic-cache-update` · status **confirmed** · id `0f87-6ae3-6985-9c48`
 
 Refines: `req-auto-updated-assets`
+
+### A run fetches only the readmes of plugins that are new or whose version or repository changed, plus cached misses older than 28 days, reusing the others from a Readmes-<universe>.json.gz cache on the embeddings branch that holds exactly the current catalogue; a manual run can force a full refresh
+
+`REQ-req-readme-cache` · status **confirmed** · id `4be9-6ae4-3a55-8652`
+
+Refines: `req-fetch-budget`
 
 ### Each result row presents the plugin icon, a bold sans serif plugin name line and a smaller serif description line left aligned two pixels from the icon, and on the right a column with the relevance percentage, capped at 100, aligned with the name line and, for installed plugins, a muted installed or update badge beneath it
 

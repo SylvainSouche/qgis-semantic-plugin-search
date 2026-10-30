@@ -151,9 +151,13 @@ a manual run builds both. Each run:
 2. converts the pinned model from Hugging Face **only when the branch has
    none** (the first run, or after deleting it to change models), so
    Hugging Face is not called otherwise;
-3. fetches the catalogue and readmes (`FetchCatalogue.py`): raw readme
-   guesses first, then one GitHub API call per plugin only when every guess
-   missed, and a capped package download as the last resort;
+3. fetches the catalogue and readmes (`FetchCatalogue.py`). Readmes of
+   unchanged plugins come from the branch's `Readmes-<universe>.json.gz`
+   cache, so a weekly run only downloads new or updated plugins (a plugin
+   that had no readme is retried after 28 days). For those, raw readme
+   guesses come first, then one GitHub API call only when every guess
+   missed, and a capped package download as the last resort. A manual run
+   with *refresh_readmes* fetches everything again;
 4. builds each embeddings database (`BuildEmbeddings.py`);
 5. stores them (`StoreEmbeddings.py`): content addressed file names, the
    universes not rebuilt carried over, the run refused if a universe has no

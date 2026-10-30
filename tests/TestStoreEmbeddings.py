@@ -95,3 +95,14 @@ def test_the_readme_survives_pruning(tmp_path, modelPath, buildDatabase):
     storeEmbeddings(store, {"4": buildDatabase("4", "20261027T000000Z")}, BASE, model=modelPath)
     assert "README.md" in stored(store) and "stale.bin" not in stored(store)
     shutil.rmtree(store)
+
+
+def test_readme_caches_are_kept_but_not_indexed(tmp_path, modelPath, buildDatabase):
+    store = tmp_path / "store"
+    store.mkdir()
+    (store / "Readmes-4.json.gz").write_bytes(b"cache")
+    index = storeEmbeddings(
+        store, {"4": buildDatabase("4", "20261027T000000Z")}, BASE, model=modelPath
+    )
+    assert (store / "Readmes-4.json.gz").read_bytes() == b"cache"
+    assert "Readmes" not in json.dumps(index)

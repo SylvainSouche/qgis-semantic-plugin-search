@@ -10,6 +10,11 @@ on:
     - cron: "0 3 * * 1" # Monday 03:00 UTC - QGIS 3.44
     - cron: "0 3 * * 2" # Tuesday 03:00 UTC - QGIS 4.2
   workflow_dispatch: # manual runs build both universes
+    inputs:
+      refresh_readmes:
+        description: "Fetch every readme again instead of reusing unchanged ones"
+        type: boolean
+        default: false
 
 concurrency:
   group: build-embeddings
@@ -28,6 +33,7 @@ jobs:
       PYTHONUNBUFFERED: "1"
       GITHUB_TOKEN: ${{ github.token }}
       EVENT_SCHEDULE: ${{ github.event.schedule }}
+      REFRESH_READMES: ${{ inputs.refresh_readmes && '--refresh' || '' }}
     steps:
       # Action SHAs pinned to the commits their tags pointed at; bump deliberately.
       - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
@@ -83,7 +89,9 @@ jobs:
           DATABASES=""
           for v in $VERSIONS; do
             u=${v%%.*}
-            python pipeline/FetchCatalogue.py "$v" --output-dir build --connections 12
+            # Only new or updated plugins are fetched; the cache lives on the branch.
+            python pipeline/FetchCatalogue.py "$v" --output-dir build --connections 12 \
+              --readme-cache "store/Readmes-$u.json.gz" $REFRESH_READMES
             python pipeline/BuildEmbeddings.py \
               --catalogue "build/plugins-$v.xml" \
               --readmes "build/plugins-$v" \

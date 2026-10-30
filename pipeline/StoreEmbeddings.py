@@ -10,7 +10,8 @@ more universe databases, and calls this script, which:
    store's current index.json;
 3. refuses to store anything when a universe has no plugins or its plugin
    count moved more than the gate tolerance from the stored one;
-4. writes index.json and deletes every data file it no longer references.
+4. writes index.json and deletes every data file it no longer references,
+   keeping the readme caches the fetch step maintains.
 
 Everything is local: no network access, no release API.
 
@@ -36,6 +37,9 @@ from pipeline.WriteReleaseIndex import buildIndex, sha256Of  # noqa: E402
 
 INDEX_NAME = "index.json"
 KEEP_NAMES = {INDEX_NAME, "README.md"}
+# Per universe readme caches (pipeline/FetchCatalogue.py ReadmeCache): kept
+# on the branch for the next run, never listed in the index.
+KEEP_PATTERNS = ("Readmes-*.json.gz",)
 
 
 class GateFailure(RuntimeError):
@@ -102,8 +106,11 @@ def storeEmbeddings(
     indexPath.write_text(json.dumps(index, indent=2), encoding="utf-8")
     referenced = {modelPath.name} | {path.name for path in databases.values()}
     for path in store.iterdir():
-        if path.is_file() and path.name not in referenced | KEEP_NAMES:
-            path.unlink()
+        if not path.is_file() or path.name in referenced | KEEP_NAMES:
+            continue
+        if any(path.match(pattern) for pattern in KEEP_PATTERNS):
+            continue
+        path.unlink()
     return index
 
 
@@ -136,3 +143,4 @@ def main(argv: list[str] | None = None) -> int:
 if __name__ == "__main__":
     sys.exit(main())
 # @impl 4be9-6ae3-f849-7641
+# @impl 4be9-6ae4-3a55-8652

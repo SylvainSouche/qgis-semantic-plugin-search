@@ -120,3 +120,64 @@ def test_transport_enforces_a_wall_clock_deadline(opener, monkeypatch):
 def test_transport_returns_the_whole_payload(opener):
     opener.response = FakeResponse([b"ab", b"cd"], length=4)
     assert FetchCatalogue.defaultTransport("https://example.test/ok") == b"abcd"
+
+
+# ------------------------------------------------------------ readme cache
+
+import datetime  # noqa: E402
+
+from pipeline.FetchCatalogue import MISS_RETRY_DAYS, ReadmeCache  # noqa: E402
+
+
+def versioned(name: str, version: str, pluginId: int, repository: str = REPO):
+    return SimpleNamespace(
+        name=name, version=version, repository=repository, downloadUrl="", pluginId=pluginId
+    )
+
+
+def test_unchanged_plugins_come_from_the_cache_and_changed_ones_are_fetched(tmp_path: Path):
+    cachePath = tmp_path / "Readmes-4.json.gz"
+    transport = ScriptedTransport({RAW + "README.md": b"# fresh"})
+    first = ReadmeCache()
+    ReadmeFetcher(transport).fetchAll([versioned("A", "1.0", 1)], tmp_path / "r1", first)
+    first.save(cachePath)
+    assert len(transport.calls) == 1
+
+    transport.calls.clear()
+    cache = ReadmeCache.load(cachePath)
+    urls = ReadmeFetcher(transport).fetchAll([versioned("A", "1.0", 1)], tmp_path / "r2", cache)
+    assert transport.calls == [], "unchanged plugin: no network"
+    assert urls == {1: RAW + "README.md"}
+    assert (tmp_path / "r2" / "A.md").read_text() == "# fresh"
+
+    ReadmeFetcher(transport).fetchAll([versioned("A", "1.1", 1)], tmp_path / "r3", cache)
+    assert transport.calls, "a new version is fetched again"
+    assert cache.entries["1"]["version"] == "1.1"
+
+
+def test_the_cache_holds_exactly_the_current_catalogue(tmp_path: Path):
+    transport = ScriptedTransport({RAW + "README.md": b"# text"})
+    cache = ReadmeCache()
+    fetcher = ReadmeFetcher(transport)
+    fetcher.fetchAll([versioned("A", "1", 1), versioned("B", "1", 2)], tmp_path / "a", cache)
+    fetcher.fetchAll([versioned("B", "1", 2)], tmp_path / "b", cache)
+    assert set(cache.entries) == {"2"}, "removed plugins drop out of the cache"
+
+
+def test_misses_are_cached_then_retried_after_the_delay():
+    record = versioned("NoReadme", "1", 7)
+    today = datetime.date(2026, 11, 2)
+    entry = ReadmeCache.entryFor(record, "", "", today=today)
+    cache = ReadmeCache({"7": entry})
+    assert cache.hit(record, today=today + datetime.timedelta(days=7)) is entry
+    later = today + datetime.timedelta(days=MISS_RETRY_DAYS)
+    assert cache.hit(record, today=later) is None
+
+
+def test_a_changed_repository_or_unreadable_cache_means_fetching(tmp_path: Path):
+    record = versioned("A", "1", 1)
+    cache = ReadmeCache({"1": ReadmeCache.entryFor(record, RAW + "README.md", "x")})
+    assert cache.hit(versioned("A", "1", 1, repository="https://github.com/new/home")) is None
+    broken = tmp_path / "broken.json.gz"
+    broken.write_bytes(b"not gzip")
+    assert ReadmeCache.load(broken).entries == {}

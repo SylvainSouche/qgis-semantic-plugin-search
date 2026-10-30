@@ -275,6 +275,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-readme-cache": {
+    "active": true,
+    "id": "4be9-6ae4-3a55-d784",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-repository-compliance": {
     "active": true,
     "id": "4be9-6ae3-f4ad-bf8b",
@@ -494,6 +500,12 @@
   "impl-query-local": {
     "active": true,
     "id": "0f87-6ae3-7524-8676",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-readme-cache": {
+    "active": true,
+    "id": "4be9-6ae4-3a56-bbcd",
     "status": "verified",
     "type": "impl"
   },
@@ -875,6 +887,12 @@
     "status": "confirmed",
     "type": "req"
   },
+  "req-readme-cache": {
+    "active": true,
+    "id": "4be9-6ae4-3a55-8652",
+    "status": "confirmed",
+    "type": "req"
+  },
   "req-repository-metadata": {
     "active": true,
     "id": "4be9-6ae3-f4ad-668c",
@@ -998,6 +1016,12 @@
   "t-pipeline-build": {
     "active": true,
     "id": "0f87-6ae3-69be-5b62",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-readme-cache": {
+    "active": true,
+    "id": "4be9-6ae4-3a56-51b1",
     "status": "passing",
     "type": "test"
   },

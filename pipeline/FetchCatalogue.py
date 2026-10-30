@@ -10,6 +10,8 @@ Usage:
 from __future__ import annotations
 
 import concurrent.futures
+import datetime
+import gzip
 import io
 import json
 import os
@@ -41,6 +43,72 @@ MAX_ARCHIVE_BYTES = 25_000_000
 # socket read, so a server trickling bytes could otherwise hold a worker
 # (and with all workers held, the whole run) indefinitely.
 DOWNLOAD_DEADLINE = 60
+
+
+# Readme text kept per plugin in the cache. The embedding uses a 4000 char
+# excerpt after markdown noise is stripped; keeping more raw text leaves room
+# for that stripping without storing whole manuals.
+MAX_CACHED_README_CHARS = 32_000
+# A miss can be a transient failure as much as a plugin without readme:
+# misses are retried once they are this old, hits only on a new version.
+MISS_RETRY_DAYS = 28
+
+
+class ReadmeCache:
+    """Readmes of the previous run, reused while a plugin is unchanged.
+
+    One gzipped JSON file per universe, stored on the embeddings branch next
+    to the databases (never downloaded by the plugin). An entry is reused
+    when the plugin version and repository are those it was fetched for, so
+    a weekly run only downloads the readmes of new or updated plugins.
+    Plugins without a readme are cached too and retried after
+    MISS_RETRY_DAYS, since a miss may also have been a transient failure.
+    """
+
+    def __init__(self, entries: dict[str, dict] | None = None) -> None:
+        self.entries = dict(entries or {})
+
+    @classmethod
+    def load(cls, path: Path | None) -> ReadmeCache:
+        if path is None or not path.is_file():
+            return cls()
+        try:
+            with gzip.open(path, "rt", encoding="utf-8") as stream:
+                document = json.load(stream)
+        except (OSError, ValueError):
+            return cls()  # unreadable cache: fetch everything, never fail the run
+        return cls(document.get("plugins") or {})
+
+    def save(self, path: Path) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with gzip.open(path, "wt", encoding="utf-8") as stream:
+            json.dump({"format": "readme-cache-v1", "plugins": self.entries}, stream)
+
+    def hit(self, record, today: datetime.date | None = None) -> dict | None:  # noqa: ANN001
+        entry = self.entries.get(str(record.pluginId))
+        if not entry or entry.get("version") != record.version:
+            return None
+        if entry.get("repository", "") != (record.repository or ""):
+            return None
+        if not entry.get("url"):
+            today = today or datetime.date.today()
+            try:
+                checked = datetime.date.fromisoformat(entry.get("checked", ""))
+            except ValueError:
+                return None
+            if (today - checked).days >= MISS_RETRY_DAYS:
+                return None
+        return entry
+
+    @staticmethod
+    def entryFor(record, url: str, text: str, today: datetime.date | None = None) -> dict:  # noqa: ANN001
+        return {
+            "version": record.version,
+            "repository": record.repository or "",
+            "url": url,
+            "text": text[:MAX_CACHED_README_CHARS],
+            "checked": (today or datetime.date.today()).isoformat(),
+        }
 
 
 class DownloadTooLarge(RuntimeError):
@@ -111,10 +179,35 @@ class ReadmeFetcher:
         self.transport = transport
         self.connections = connections
 
-    def fetchAll(self, records, outputDir: Path) -> dict[int, str]:  # noqa: ANN001
-        """Write <safe-name>.md files and return pluginId -> readmeUrl."""
+    def fetchAll(
+        self, records, outputDir: Path, cache: ReadmeCache | None = None  # noqa: ANN001
+    ) -> dict[int, str]:
+        """Write <safe-name>.md files and return pluginId -> readmeUrl.
+
+        With a cache, unchanged plugins are served from it and only new or
+        updated ones are fetched; the cache is then rewritten in place to
+        hold exactly the current catalogue.
+        """
         outputDir.mkdir(parents=True, exist_ok=True)
         resolved: dict[int, str] = {}
+        fresh: dict[str, dict] = {}
+        toFetch = []
+        for record in records:
+            entry = cache.hit(record) if cache is not None else None
+            if entry is None:
+                toFetch.append(record)
+                continue
+            fresh[str(record.pluginId)] = entry
+            if entry.get("text"):
+                PathSafeName(record.name, outputDir).write_text(entry["text"], encoding="utf-8")
+            if entry.get("url"):
+                resolved[record.pluginId] = entry["url"]
+        print(
+            f"Readmes: {len(records) - len(toFetch)} unchanged plugins from the cache, "
+            f"{len(toFetch)} to fetch",
+            flush=True,
+        )
+        records = toFetch
         with concurrent.futures.ThreadPoolExecutor(
             max_workers=self.connections, thread_name_prefix="readme"
         ) as pool:
@@ -132,12 +225,21 @@ class ReadmeFetcher:
                     url = ""
                 if url:
                     resolved[record.pluginId] = url
+                destination = PathSafeName(record.name, outputDir)
+                text = (
+                    destination.read_text(encoding="utf-8", errors="replace")
+                    if url and destination.is_file()
+                    else ""
+                )
+                fresh[str(record.pluginId)] = ReadmeCache.entryFor(record, url, text)
                 # Flushed: CI pipes stdout, and a block buffered log loses its
                 # tail when a job is cancelled or times out.
                 print(
                     f"[{count}/{len(records)}] {record.name}: {url or 'no readme'}",
                     flush=True,
                 )
+        if cache is not None:
+            cache.entries = fresh
         return resolved
 
     def _resolve(self, record, outputDir: Path) -> str:  # noqa: ANN001
@@ -233,6 +335,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("version", help='QGIS version filter, e.g. "4.2"')
     parser.add_argument("--output-dir", default="build", help="Build directory")
     parser.add_argument("--connections", type=int, default=8)
+    parser.add_argument(
+        "--readme-cache",
+        default="",
+        help="Gzipped readme cache to reuse and update (unchanged plugins are not fetched)",
+    )
+    parser.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Ignore the readme cache and fetch every readme (the cache is still rewritten)",
+    )
     args = parser.parse_args(argv)
 
     buildDir = Path(args.output_dir)
@@ -251,9 +363,14 @@ def main(argv: list[str] | None = None) -> int:
 
     records = parseCatalogue(payload)
     print(f"Catalogue: {cataloguePath} ({len(records)} plugins)")
+    cachePath = Path(args.readme_cache) if args.readme_cache else None
+    cache = ReadmeCache() if args.refresh else ReadmeCache.load(cachePath)
     readmeUrls = ReadmeFetcher(connections=args.connections).fetchAll(
-        records, buildDir / f"plugins-{args.version}"
+        records, buildDir / f"plugins-{args.version}", cache if cachePath else None
     )
+    if cachePath is not None:
+        cache.save(cachePath)
+        print(f"Readme cache: {cachePath} ({len(cache.entries)} plugins)")
     urlsPath = buildDir / f"readme-urls-{args.version}.json"
     urlsPath.write_text(
         json.dumps(readmeUrls, indent=0, sort_keys=True), encoding="utf-8"
@@ -267,3 +384,4 @@ if __name__ == "__main__":
 
 # @impl 0f87-6ae3-6986-4446
 # @impl 4be9-6ae3-f84a-d578
+# @impl 4be9-6ae4-3a55-8652
