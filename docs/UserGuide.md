@@ -158,7 +158,7 @@ Readmes and icons need the network, and are cached once seen.
 - **What you type never leaves your computer.** Your description is turned
   into a search vector locally, inside QGIS.
 - The plugin downloads the index and model from the project's GitHub
-  releases, and, for the plugins you look at, their readme (from the
+  repository, and, for the plugins you look at, their readme (from the
   plugin's code repository) and icon (from plugins.qgis.org). Those requests
   show which plugins you looked at, never what you searched for.
 - Nothing is uploaded and there is no tracking.

@@ -6,9 +6,9 @@
     "type": "ai"
   },
   "ai-release-index": {
-    "active": true,
+    "active": false,
     "id": "0f87-6ae3-6997-428c",
-    "status": "accepted",
+    "status": "superseded",
     "type": "ai"
   },
   "ai-reuse-fetcher": {
@@ -176,6 +176,12 @@
   "dec-defer-signing": {
     "active": true,
     "id": "4be9-6ae3-f33f-02f9",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-embeddings-branch": {
+    "active": true,
+    "id": "4be9-6ae3-f849-f08f",
     "status": "recorded",
     "type": "dec"
   },
@@ -389,9 +395,21 @@
     "status": "verified",
     "type": "impl"
   },
+  "impl-embeddings-branch": {
+    "active": true,
+    "id": "4be9-6ae3-f856-ec02",
+    "status": "verified",
+    "type": "impl"
+  },
   "impl-event-discipline": {
     "active": true,
     "id": "4be9-6ae3-ed5d-1c31",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-fetch-budget": {
+    "active": true,
+    "id": "4be9-6ae3-f856-eb87",
     "status": "verified",
     "type": "impl"
   },
@@ -550,6 +568,12 @@
     "id": "0f87-6ae3-6996-386d",
     "status": "confirmed",
     "type": "nreq"
+  },
+  "obs-ci-overreach": {
+    "active": true,
+    "id": "4be9-6ae3-f849-0aef",
+    "status": "recorded",
+    "type": "obs"
   },
   "obs-ci-validation": {
     "active": true,
@@ -719,9 +743,21 @@
     "status": "confirmed",
     "type": "req"
   },
+  "req-embeddings-branch": {
+    "active": true,
+    "id": "4be9-6ae3-f849-7641",
+    "status": "confirmed",
+    "type": "req"
+  },
   "req-event-discipline": {
     "active": true,
     "id": "0f87-6ae3-e355-74a5",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-fetch-budget": {
+    "active": true,
+    "id": "4be9-6ae3-f84a-d578",
     "status": "confirmed",
     "type": "req"
   },
@@ -923,6 +959,12 @@
     "status": "passing",
     "type": "test"
   },
+  "t-fetch-budget": {
+    "active": true,
+    "id": "4be9-6ae3-f856-14bc",
+    "status": "passing",
+    "type": "test"
+  },
   "t-inspect-tabs": {
     "active": true,
     "id": "0f87-6ae3-69b6-a8e4",
@@ -974,6 +1016,12 @@
   "t-search-rank-v2": {
     "active": true,
     "id": "4be9-6ae3-f13d-02ed",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-store-embeddings": {
+    "active": true,
+    "id": "4be9-6ae3-f856-9be9",
     "status": "passing",
     "type": "test"
   },

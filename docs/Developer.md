@@ -12,22 +12,22 @@ Two parts share one vector space:
   universe against the user's description, shows details, and hands every
   install, upgrade, reinstall or uninstall to the standard plugin manager;
 - **the pipeline** (`pipeline/`, run weekly by GitHub Actions) downloads the
-  official plugin catalogue and every readme, embeds them, and publishes the
-  databases, the model and an index to the fixed `embeddings` release.
+  official plugin catalogue and every readme, embeds them, and stores the
+  databases, the model and an index on the `embeddings` branch.
 
 ```
-GitHub release "embeddings"                    QGIS
+branch "embeddings"                            QGIS
 ┌──────────────────────────┐   index check   ┌─────────────────────────────┐
 │ index.json               │◀────────────────│ AssetsController            │
-│ EmbeddingModel.npz ~17MB │──── download ──▶│  verified cache in profile  │
-│ Embeddings-3.sqlite      │                 │ SearchController            │
-│ Embeddings-4.sqlite      │                 │  query → embed → hybrid rank│
+│ EmbeddingModel.<h>.npz   │──── download ──▶│  verified cache in profile  │
+│ Embeddings-3.<h>.sqlite  │                 │ SearchController            │
+│ Embeddings-4.<h>.sqlite  │                 │  query → embed → hybrid rank│
 └──────────────────────────┘                 │ DetailsController           │
         ▲                                    │  metadata now, readme async │
         │ weekly BuildEmbeddings action      │ IconController              │
         │  FetchCatalogue.py                 │  one batched job per search │
         │  BuildEmbeddings.py                │ ActionController            │
-        │  WriteReleaseIndex.py, PublishGate │  installed state from disk  │
+        │  StoreEmbeddings.py                │  installed state from disk  │
         └──────────────────────────          │  → pyplugin_installer       │
                                              └─────────────────────────────┘
 ```
@@ -78,9 +78,10 @@ action.
 Inside QGIS every download goes through `QgisBridge/NetworkTransport.py`
 (`QgsBlockingNetworkRequest`), so proxy, SSL and authentication settings
 apply, and the QGIS network cache is bypassed. The Data layer gateways
-receive that function as their transport. The pipeline uses
-`pipeline/HttpTransport.py` (urllib) instead, and tests use in-memory
-fixtures.
+receive that function as their transport, and tests use in-memory
+fixtures. The pipeline has its own urllib transport in
+`pipeline/FetchCatalogue.py`, with a byte cap and a wall clock deadline per
+download.
 
 ## Code layout and rules
 
@@ -142,21 +143,29 @@ package`.
 
 ## The pipeline
 
-`.github/workflows/BuildEmbeddings.yml` runs on a schedule: Monday 03:00 UTC
-builds QGIS 3.44, Tuesday builds QGIS 4.2, and a manual run builds both. Each
-run:
+`.github/workflows/BuildEmbeddings.yml` is one job with no QGIS and no
+release API. Monday 03:00 UTC builds QGIS 3.44, Tuesday builds QGIS 4.2, and
+a manual run builds both. Each run:
 
-1. converts the pinned static model;
-2. fetches the catalogue and readmes for the scheduled universes;
-3. builds each embeddings database;
-4. writes `index.json`, merging in the universes it did not rebuild from the
-   previous index;
-5. refuses to publish if a universe has no plugins, or its plugin count
-   moved by more than 10% from the previous release (`PublishGate.py`);
-6. uploads the binaries to the `embeddings` release, then the index last.
+1. checks out the `embeddings` branch into `store/`;
+2. converts the pinned model from Hugging Face **only when the branch has
+   none** (the first run, or after deleting it to change models), so
+   Hugging Face is not called otherwise;
+3. fetches the catalogue and readmes (`FetchCatalogue.py`): raw readme
+   guesses first, then one GitHub API call per plugin only when every guess
+   missed, and a capped package download as the last resort;
+4. builds each embeddings database (`BuildEmbeddings.py`);
+5. stores them (`StoreEmbeddings.py`): content addressed file names, the
+   universes not rebuilt carried over, the run refused if a universe has no
+   plugins or its count moved more than 10% (`PublishGate.py`), stale files
+   pruned, and `index.json` written;
+6. force pushes the branch as a single commit, so it never accumulates
+   history.
 
-The plugin reads `releases/download/embeddings/index.json`, a fixed tag, so
-another release marked *Latest* cannot break the update channel.
+The job stops after 60 minutes. The plugin reads
+`https://raw.githubusercontent.com/<repo>/embeddings/index.json`, and because
+the data files carry a content hash in their names, the raw host's cache
+can never pair a new index with an old file.
 
 ## Releasing the plugin
 

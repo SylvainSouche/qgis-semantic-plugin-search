@@ -2,9 +2,8 @@
 
 Every gateway receives its transport, a function fetching one http(s) URL
 with a byte cap: inside QGIS it is QgisBridge.NetworkTransport.qgisFetchUrl
-(QGIS network stack, proxy and authentication aware), in the pipeline
-pipeline.HttpTransport.fetchUrl, and in tests an in-memory fixture. This
-layer itself opens no connection.
+(QGIS network stack, proxy and authentication aware), and in tests an
+in-memory fixture. This layer itself opens no connection.
 
 This module is part of the Data layer: it must import neither qgis nor Qt.
 """

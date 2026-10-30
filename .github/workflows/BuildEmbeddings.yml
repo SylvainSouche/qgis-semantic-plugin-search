@@ -1,10 +1,12 @@
 name: BuildEmbeddings
 
+# Fetch the plugin metadata and readmes, compute the embeddings, store them
+# on the `embeddings` branch. Nothing else: no QGIS, no release API, and the
+# model is converted only once, when the branch has none.
+
 on:
   schedule:
-    # The two universes are spread across days: rebuilding both at once
-    # hammers the catalogue host and doubles the blast radius of a bad
-    # fetch. Monday serves QGIS 3, Tuesday QGIS 4.
+    # One universe per day keeps each run small. Monday QGIS 3, Tuesday QGIS 4.
     - cron: "0 3 * * 1" # Monday 03:00 UTC - QGIS 3.44
     - cron: "0 3 * * 2" # Tuesday 03:00 UTC - QGIS 4.2
   workflow_dispatch: # manual runs build both universes
@@ -13,170 +15,95 @@ concurrency:
   group: build-embeddings
   cancel-in-progress: false
 
-jobs:
-  plan:
-    name: Plan the universe matrix
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    outputs:
-      versions: ${{ steps.plan.outputs.versions }}
-    steps:
-      - id: plan
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          EVENT_SCHEDULE: ${{ github.event.schedule }}
-        run: |
-          # Scheduled runs rebuild exactly one universe per day; manual
-          # runs build both.
-          if [ "$EVENT_NAME" = "schedule" ]; then
-            case "$EVENT_SCHEDULE" in
-              "0 3 * * 1") VERSIONS='["3.44"]' ;;
-              "0 3 * * 2") VERSIONS='["4.2"]' ;;
-              *) VERSIONS='[]' ;;
-            esac
-          else
-            VERSIONS='["3.44", "4.2"]'
-          fi
-          echo "versions=$VERSIONS" >> "$GITHUB_OUTPUT"
-          echo "planned versions: $VERSIONS"
+permissions:
+  contents: write
 
-  model:
-    name: Convert static model
+jobs:
+  build:
+    name: Build and store the embeddings
     runs-on: ubuntu-latest
-    needs: plan
-    if: needs.plan.outputs.versions != '[]'
-    permissions:
-      contents: read
+    # A healthy run takes minutes; a hang must fail fast.
+    timeout-minutes: 60
+    env:
+      PYTHONUNBUFFERED: "1"
+      GITHUB_TOKEN: ${{ github.token }}
+      EVENT_SCHEDULE: ${{ github.event.schedule }}
     steps:
-      # Action SHAs pinned to the commits their tags pointed at when this
-      # workflow was written; bump deliberately.
+      # Action SHAs pinned to the commits their tags pointed at; bump deliberately.
       - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v5
         with:
           python-version: "3.12"
-      - name: Install numpy
-        run: python -m pip install numpy
-      - name: Fetch a commercially usable static model
+      - run: python -m pip install numpy
+
+      - name: Check out the stored embeddings
         run: |
-          mkdir -p build/model
+          mkdir -p store
+          if git fetch --depth 1 origin embeddings; then
+            git archive FETCH_HEAD | tar -x -C store
+          fi
+          ls -l store
+
+      - name: Convert the model (only when none is stored)
+        run: |
+          if ls store/EmbeddingModel.*.npz >/dev/null 2>&1; then
+            echo "Model already stored: nothing to download."
+            exit 0
+          fi
           # minishlab/potion-base-8M: MIT licensed, distilled from the
-          # Apache-2.0 all-MiniLM-L6-v2, so redistribution is allowed.
-          # The revision and the artifact checksum are pinned: a moved
-          # main branch or a changed file must fail the build.
-          curl -fL --retry 3 \
-            https://huggingface.co/minishlab/potion-base-8M/resolve/bf8b056651a2c21b8d2565580b8569da283cab23/model.safetensors \
-            -o build/model/model.safetensors
+          # Apache-2.0 all-MiniLM-L6-v2. Revision and checksum are pinned.
+          REV=bf8b056651a2c21b8d2565580b8569da283cab23
+          mkdir -p build/model
+          curl -fL --retry 3 -o build/model/model.safetensors \
+            "https://huggingface.co/minishlab/potion-base-8M/resolve/$REV/model.safetensors"
           echo "f65d0f325faadc1e121c319e2faa41170d3fa07d8c89abd48ca5358d9a223de2  build/model/model.safetensors" | sha256sum --check -
-          curl -fL --retry 3 \
-            https://huggingface.co/minishlab/potion-base-8M/resolve/bf8b056651a2c21b8d2565580b8569da283cab23/tokenizer.json \
-            -o build/model/tokenizer.json
-      - name: Convert to the distributed .npz format
-        run: |
+          curl -fL --retry 3 -o build/model/tokenizer.json \
+            "https://huggingface.co/minishlab/potion-base-8M/resolve/$REV/tokenizer.json"
           python pipeline/ConvertStaticModel.py \
             --model-dir build/model \
             --model-id static-potion-base-8M \
             --source-model "minishlab/potion-base-8M" \
             --license-note "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed" \
             --output build/EmbeddingModel.npz
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v4
-        with:
-          name: embedding-model
-          path: build/EmbeddingModel.npz
 
-  database:
-    name: Embeddings for QGIS ${{ matrix.version }}
-    runs-on: ubuntu-latest
-    needs: [plan, model]
-    permissions:
-      contents: read
-    strategy:
-      matrix:
-        version: ${{ fromJSON(needs.plan.outputs.versions) }}
-    steps:
-      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v5
-        with:
-          python-version: "3.12"
-      - run: python -m pip install numpy
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v4
-        with:
-          name: embedding-model
-          path: build
-      - name: Fetch catalogue and readmes
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: python pipeline/FetchCatalogue.py ${{ matrix.version }} --output-dir build --connections 12
-      - name: Build the embeddings database
+      - name: Fetch, embed and store
         run: |
-          python pipeline/BuildEmbeddings.py \
-            --catalogue build/plugins-${{ matrix.version }}.xml \
-            --readmes build/plugins-${{ matrix.version }} \
-            --readme-urls build/readme-urls-${{ matrix.version }}.json \
-            --model build/EmbeddingModel.npz \
-            --universe ${{ contains(matrix.version, '4.') && '4' || '3' }} \
-            --output build/Embeddings-${{ contains(matrix.version, '4.') && '4' || '3' }}.sqlite
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v4
-        with:
-          name: embeddings-${{ matrix.version }}
-          path: build/Embeddings-*.sqlite
-
-  publish:
-    name: Publish release and index
-    runs-on: ubuntu-latest
-    needs: [plan, model, database]
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v5
-        with:
-          python-version: "3.12"
-      - run: python -m pip install numpy
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v4
-        with:
-          name: embedding-model
-          path: build
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v4
-        with:
-          pattern: embeddings-*
-          merge-multiple: true
-          path: build
-      - name: Write the release index
-        env:
-          VERSIONS: ${{ needs.plan.outputs.versions }}
-        run: |
-          # Only the universes built this run are fresh; the others are
-          # carried over from the published index, whose assets stay valid
-          # under the fixed release tag.
-          DATABASE_ARGS=""
-          for v in $(echo "$VERSIONS" | jq -r '.[]'); do
+          case "$EVENT_SCHEDULE" in
+            "0 3 * * 1") VERSIONS="3.44" ;;
+            "0 3 * * 2") VERSIONS="4.2" ;;
+            *) VERSIONS="3.44 4.2" ;;
+          esac
+          if [ -f build/EmbeddingModel.npz ]; then
+            MODEL=build/EmbeddingModel.npz
+            MODEL_ARG="--model $MODEL"
+          else
+            MODEL=$(ls store/EmbeddingModel.*.npz)
+            MODEL_ARG=""
+          fi
+          DATABASES=""
+          for v in $VERSIONS; do
             u=${v%%.*}
-            DATABASE_ARGS="$DATABASE_ARGS --database $u=build/Embeddings-$u.sqlite"
+            python pipeline/FetchCatalogue.py "$v" --output-dir build --connections 12
+            python pipeline/BuildEmbeddings.py \
+              --catalogue "build/plugins-$v.xml" \
+              --readmes "build/plugins-$v" \
+              --readme-urls "build/readme-urls-$v.json" \
+              --model "$MODEL" \
+              --universe "$u" \
+              --output "build/Embeddings-$u.sqlite"
+            DATABASES="$DATABASES --database $u=build/Embeddings-$u.sqlite"
           done
-          python pipeline/WriteReleaseIndex.py \
-            --model build/EmbeddingModel.npz \
-            $DATABASE_ARGS \
-            --merge-previous-url "https://github.com/${{ github.repository }}/releases/download/embeddings/index.json" \
-            --base-url "https://github.com/${{ github.repository }}/releases/download/embeddings" \
-            --output build/index.json
-      - name: Sanity gate against the previous release
+          python pipeline/StoreEmbeddings.py --store store $DATABASES $MODEL_ARG \
+            --base-url "https://raw.githubusercontent.com/${{ github.repository }}/embeddings"
+
+      - name: Push the embeddings branch
         run: |
-          python pipeline/PublishGate.py \
-            --index build/index.json \
-            --previous-url "https://github.com/${{ github.repository }}/releases/download/embeddings/index.json"
-      - name: Publish the binaries to the embeddings release
-        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
-        with:
-          tag_name: embeddings
-          name: Embeddings database
-          make_latest: false
-          files: |
-            build/EmbeddingModel.npz
-            build/Embeddings-*.sqlite
-      - name: Publish the index last
-        env:
-          GH_TOKEN: ${{ github.token }}
-        # The index must land after the binaries it points at, or a client
-        # could fetch new checksums for still old files.
-        run: gh release upload embeddings --clobber build/index.json
+          cp pipeline/EmbeddingsBranchReadme.md store/README.md
+          cd store
+          # A single commit, force pushed: the branch never accumulates history.
+          git init -q -b embeddings
+          git add -A
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "Embeddings $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" embeddings

@@ -1,22 +1,14 @@
-"""Write the release index.json describing published assets.
+"""Build the index.json describing the stored embeddings.
 
 The index is the only file the plugin fetches first: it names the model and
 the per universe databases with checksums, sizes and build stamps, so the
 plugin can decide whether its cache is stale and verify what it downloads.
-
-Usage:
-    python pipeline/WriteReleaseIndex.py \
-        --model build/EmbeddingModel.npz \
-        --database 3=build/Embeddings-3.sqlite \
-        --database 4=build/Embeddings-4.sqlite \
-        --base-url https://github.com/OWNER/REPO/releases/latest/download \
-        --output build/index.json
+pipeline/StoreEmbeddings.py writes it into the embeddings branch.
 """
 from __future__ import annotations
 
 import hashlib
 import json
-import sys
 from pathlib import Path
 
 import numpy as np
@@ -61,42 +53,13 @@ def modelMeta(path: Path) -> dict:
     }
 
 
-def previousUniverses(previousUrl: str, transport=None) -> dict[str, dict]:
-    """Load the universe entries of the previously published index.
-
-    Returns an empty dict when there is no previous release or it cannot be
-    reached: a first publish has nothing to merge.
-    """
-    if not previousUrl:
-        return {}
-    try:
-        import json
-
-        fetch = transport
-        if fetch is None:
-            from pipeline.HttpTransport import fetchUrl
-
-            fetch = fetchUrl
-        document = json.loads(fetch(previousUrl))
-        return document.get("universes") or {}
-    except Exception:  # noqa: BLE001 - merging is best effort
-        return {}
-
-
 def buildIndex(
     modelPath: Path,
     databases: dict[str, Path],
     baseUrl: str,
     generatedAt: str,
-    previousUniversesMap: dict[str, dict] | None = None,
 ) -> dict:
-    """Build the index for the freshly built universes.
-
-    Universes of the previous release that were NOT rebuilt this run are
-    carried over verbatim: their assets are still published under the same
-    fixed tag and their checksums still match, so the index stays complete
-    when the weekly builds are spread across days.
-    """
+    """Build the index for the given model and universe databases."""
     index = {
         "format": INDEX_FORMAT,
         "generated_at": generatedAt,
@@ -117,48 +80,7 @@ def buildIndex(
             "build_stamp": meta["build_stamp"],
             "plugin_count": meta["plugin_count"],
         }
-    for universe, entry in sorted((previousUniversesMap or {}).items()):
-        if universe not in index["universes"]:
-            index["universes"][universe] = entry
     return index
 
-
-def main(argv: list[str] | None = None) -> int:
-    import argparse
-
-    import datetime
-
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model", required=True)
-    parser.add_argument("--database", action="append", required=True, help="Universe=path")
-    parser.add_argument("--base-url", required=True)
-    parser.add_argument("--output", required=True)
-    parser.add_argument(
-        "--merge-previous-url",
-        default="",
-        help="Published index whose unbuilt universes are carried over",
-    )
-    args = parser.parse_args(argv)
-
-    databases = {}
-    for entry in args.database:
-        universe, _, path = entry.partition("=")
-        databases[universe.strip()] = Path(path.strip())
-    index = buildIndex(
-        modelPath=Path(args.model),
-        databases=databases,
-        baseUrl=args.base_url.rstrip("/"),
-        generatedAt=datetime.datetime.now(datetime.timezone.utc)
-        .strftime("%Y%m%dT%H%M%SZ"),
-    )
-    outputPath = Path(args.output)
-    outputPath.parent.mkdir(parents=True, exist_ok=True)
-    outputPath.write_text(json.dumps(index, indent=2), encoding="utf-8")
-    print(f"Wrote {outputPath}")
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
 
 # @impl 0f87-6ae3-6986-d290

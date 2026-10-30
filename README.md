@@ -48,7 +48,8 @@ Please report problems and suggestions on the
 
 Every week a GitHub Action downloads the official plugin catalogue and every
 readme, turns each plugin into a vector with a compact, commercially
-licensed text embedding model, and publishes the result. The plugin
+licensed text embedding model, and stores the result in this repository's
+`embeddings` branch. The plugin
 downloads that index and the model once, turns your description into a
 vector locally, and ranks plugins by similarity, with a small boost for
 plugins whose name or tags contain your words. No AI service is called and

@@ -1,7 +1,7 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 173 objects in model
-Sources: 4 CON, 3 NREQ, 33 REQ, 8 UC
+Generated from `project-model/` · schema_version 2 · 181 objects in model
+Sources: 4 CON, 3 NREQ, 35 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
 ## Constraints
@@ -128,6 +128,16 @@ Refines: `req-natural-language-search`
 
 Refines: `req-architecture-quality`
 
+### The embeddings, the model and the index file are stored on a dedicated embeddings branch of the project repository, rewritten by each CI run as a single commit with content addressed data file names, and the plugin fetches the index from that branch through raw.githubusercontent
+
+`REQ-req-embeddings-branch` · status **confirmed** · id `4be9-6ae3-f849-7641`
+
+Supersedes 0f87-6ae3-6997-428c (Publish an index file with per universe database checksums and build dates and serve binaries through GitHub latest release download URLs so the plugin can decide whether its cache is stale).
+
+Carries forward what remained valid and states what changed.
+
+Refines: `req-pipeline-publish`
+
 ### The pipeline downloads the official plugin catalogue for each QGIS version and each plugin readme from its repository or package archive, adapting the existing fetcher
 
 `REQ-req-pipeline-fetch` · status **confirmed** · id `0f87-6ae3-6986-4446`
@@ -139,6 +149,12 @@ Refines: `req-pipeline`
 `REQ-req-pipeline-embed` · status **confirmed** · id `0f87-6ae3-6986-9d64`
 
 Refines: `req-pipeline`
+
+### The pipeline resolves each readme from raw repository guesses before at most one GitHub API call, falls back to a plugin package capped at 25 MB, bounds every download by size and wall clock time, flushes its progress, stops the job after 60 minutes, and downloads the model from Hugging Face only when none is stored
+
+`REQ-req-fetch-budget` · status **confirmed** · id `4be9-6ae3-f84a-d578`
+
+Refines: `req-pipeline-fetch`
 
 ### The pipeline stores embeddings and a metadata snapshot per QGIS version into the distributable database and publishes databases, model and an index file for update checks
 
