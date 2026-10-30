@@ -212,6 +212,7 @@ class FakeView:
     def __init__(self) -> None:
         self.results: list = []
         self.statuses: list[str] = []
+        self.summaries: list[str] = []
         self.metadata: list = []
         self.readmes: list[tuple[int, str]] = []
         self.placeholders: list[tuple[int, str]] = []
@@ -229,6 +230,9 @@ class FakeView:
 
     def showStatus(self, message: str) -> None:
         self.statuses.append(message)
+
+    def showSearchSummary(self, message: str) -> None:
+        self.summaries.append(message)
 
     def showMetadata(self, info) -> None:  # noqa: ANN001
         self.metadata.append(info)

@@ -191,7 +191,7 @@ def main() -> int:
 
     # 5. The no-store search path drives the real view end to end.
     searchController.search(dialog, "classify a drone orthophoto")
-    check("search without store reports gracefully", bool(dialog.statusLabel.text()))
+    check("search without store reports gracefully", "Preparing" in dialog.summaryLabel.text())
     check("no results shown", dialog.resultsList.count() == 0)
 
     # 6. Action buttons route through the gateway.

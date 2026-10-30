@@ -10,6 +10,19 @@ from ..Domain.SearchEngine import SearchService, visibilityPredicate
 from .ViewPorts import SearchWindowView
 
 
+PROMPT_SUMMARY = "Type a query to search plugins."
+PREPARING_SUMMARY = "Preparing the search… your query runs as soon as it is ready."
+
+
+def resultSummary(count: int) -> str:
+    """The line under the search box once a query ran."""
+    if count == 0:
+        return "No plugin found matching your query."
+    if count == 1:
+        return "1 plugin found matching your query."
+    return f"{count} plugins found matching your query."
+
+
 class SearchController:
     """Answers queries against the current store and reports the ranking."""
 
@@ -45,16 +58,20 @@ class SearchController:
         trigger), and background deliverables (icons, readmes) carry
         staleness tokens of their own and are dropped when superseded.
         """
-        if self.store is None:
-            # Normal while the plugin index downloads or the model loads:
-            # status line only. Real failures are reported by the assets
-            # side, and the query runs again once the index is active.
-            view.showStatus(
-                "Preparing the search (downloading or loading the plugin index)… "
-                "your query runs as soon as it is ready."
-            )
+        if not text.strip():
             view.showResults([])
             view.clearDetails()
+            view.showSearchSummary(PROMPT_SUMMARY)
+            view.showStatus("")
+            return
+        if self.store is None:
+            # Normal while the plugin index downloads or the model loads, not
+            # a QGIS warning: real failures are reported by the assets side,
+            # and the query runs again once the index is active.
+            view.showResults([])
+            view.clearDetails()
+            view.showSearchSummary(PREPARING_SUMMARY)
+            view.showStatus("")
             return
         results = self.searchService.search(
             self.store,
@@ -64,12 +81,14 @@ class SearchController:
             ),
         )
         view.showResults(results)
+        view.showSearchSummary(resultSummary(len(results)))
         if results:
-            view.showStatus(
-                f"{len(results)} plugin(s) match; showing relevance as a percentage."
-            )
+            view.showStatus("Relevance is shown as a percentage on the right of each plugin.")
         else:
-            view.showStatus("No plugin matches this query closely enough.")
+            view.showStatus(
+                "Try describing the task differently, or include experimental and "
+                "deprecated plugins."
+            )
 
     def resultsOf(self, text: str) -> list[SearchResult]:
         """Ranking without a view, used by tests and keyboard navigation."""
@@ -84,3 +103,4 @@ class SearchController:
         )
 
 # @impl 0f87-6ae3-a1e6-cf4c
+# @impl 4be9-6ae4-4051-90cf

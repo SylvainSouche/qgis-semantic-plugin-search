@@ -1,7 +1,7 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 190 objects in model
-Sources: 4 CON, 3 NREQ, 37 REQ, 8 UC
+Generated from `project-model/` · schema_version 2 · 194 objects in model
+Sources: 4 CON, 3 NREQ, 38 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
 ## Constraints
@@ -63,6 +63,12 @@ Refines: `req-auto-updated-assets`
 `REQ-req-readme-cache` · status **confirmed** · id `4be9-6ae4-3a55-8652`
 
 Refines: `req-fetch-budget`
+
+### Beneath the search field a line reads Type a query to search plugins while the query is empty, N plugins found matching your query after a search, No plugin found matching your query when nothing matched, and Preparing the search while the index is not ready
+
+`REQ-req-search-summary` · status **confirmed** · id `4be9-6ae4-4051-90cf`
+
+Refines: `req-window-polish`
 
 ### Each result row presents the plugin icon, a bold sans serif plugin name line and a smaller serif description line left aligned two pixels from the icon, and on the right a column with the relevance percentage, capped at 100, aligned with the name line and, for installed plugins, a muted installed or update badge beneath it
 

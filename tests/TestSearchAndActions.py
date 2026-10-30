@@ -59,7 +59,7 @@ def test_search_without_store_is_reported_not_crashing():
     controller.search(view, "anything")
     assert view.results == []
     assert view.cleared == 1
-    assert "Preparing the search" in view.statuses[-1]
+    assert view.summaries[-1].startswith("Preparing the search")
     assert not reporter.warnings, "a store still loading is not a QGIS warning"
 
 
@@ -215,3 +215,40 @@ def test_fresh_store_researches_the_same_query():
     controller.setStore(object())  # a refreshed store invalidates the query
     controller.search(view, "parcel")
     assert service.calls == ["parcel", "parcel"]
+
+
+# ------------------------------------------------------- search summary
+
+
+def summaryController(results):  # noqa: ANN001, ANN201
+    controller = SearchController(
+        engine=None, searchService=StubSearchService(results), reporter=FakeReporter()
+    )
+    controller.setStore(object())
+    return controller
+
+
+def test_an_empty_query_prompts_instead_of_searching():
+    view = FakeView()
+    service = StubSearchService([SearchResult(makeInfo(1, "A"), 0.9)])
+    controller = SearchController(engine=None, searchService=service, reporter=FakeReporter())
+    controller.setStore(object())
+    controller.search(view, "   ")
+    assert view.summaries[-1] == "Type a query to search plugins."
+    assert view.results == [] and service.calls == []
+
+
+def test_the_summary_counts_the_matching_plugins():
+    view = FakeView()
+    two = [SearchResult(makeInfo(1, "A"), 0.9), SearchResult(makeInfo(2, "B"), 0.8)]
+    summaryController(two).search(view, "contours")
+    assert view.summaries[-1] == "2 plugins found matching your query."
+    summaryController(two[:1]).search(view, "contours")
+    assert view.summaries[-1] == "1 plugin found matching your query."
+
+
+def test_no_match_is_distinct_from_no_search():
+    view = FakeView()
+    summaryController([]).search(view, "zzz")
+    assert view.summaries[-1] == "No plugin found matching your query."
+    assert "differently" in view.statuses[-1]

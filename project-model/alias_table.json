@@ -323,6 +323,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-search-summary": {
+    "active": true,
+    "id": "4be9-6ae4-4051-df7a",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-smoke-multi-install": {
     "active": true,
     "id": "0f87-6ae3-a99a-d030",
@@ -543,6 +549,12 @@
     "active": false,
     "id": "0f87-6ae3-74ce-7032",
     "status": "superseded",
+    "type": "impl"
+  },
+  "impl-search-summary": {
+    "active": true,
+    "id": "4be9-6ae4-4051-0fed",
+    "status": "verified",
     "type": "impl"
   },
   "impl-search-window": {
@@ -941,6 +953,12 @@
     "status": "confirmed",
     "type": "req"
   },
+  "req-search-summary": {
+    "active": true,
+    "id": "4be9-6ae4-4051-90cf",
+    "status": "confirmed",
+    "type": "req"
+  },
   "req-tests-without-qgis": {
     "active": true,
     "id": "0f87-6ae3-6986-4c12",
@@ -1070,6 +1088,12 @@
   "t-search-rank-v2": {
     "active": true,
     "id": "4be9-6ae3-f13d-02ed",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-search-summary": {
+    "active": true,
+    "id": "4be9-6ae4-4051-4945",
     "status": "passing",
     "type": "test"
   },

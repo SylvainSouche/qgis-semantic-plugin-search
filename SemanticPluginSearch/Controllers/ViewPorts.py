@@ -20,6 +20,10 @@ class SearchWindowView(Protocol):
         """Replace the list contents; select the first row by default."""
         ...
 
+    def showSearchSummary(self, message: str) -> None:
+        """The line under the search box: a prompt, or how many plugins matched."""
+        ...
+
     def showStatus(self, message: str) -> None:
         """Show a transient status line inside the window."""
         ...

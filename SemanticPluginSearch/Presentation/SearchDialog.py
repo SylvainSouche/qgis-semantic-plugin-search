@@ -84,7 +84,9 @@ class SearchDialog(QDialog):
         self.deprecatedBox.setToolTip(
             self.tr("Deprecated plugins are excluded unless this is checked.")
         )
-        self.countLabel = QLabel("", self)
+        # Under the search box: the prompt before any query, then how many
+        # plugins matched, so an empty list is never ambiguous.
+        self.summaryLabel = QLabel(self.tr("Type a query to search plugins."), self)
 
         self.resultsList = QListWidget(self)
         self.resultsList.setUniformItemSizes(False)
@@ -121,12 +123,12 @@ class SearchDialog(QDialog):
         queryRow.addWidget(self.queryEdit, 1)
         queryRow.addWidget(self.searchButton)
         layout.addLayout(queryRow)
+        layout.addWidget(self.summaryLabel)
         filterRow = QHBoxLayout()
         filterRow.setSpacing(12)
         filterRow.addWidget(self.experimentalBox)
         filterRow.addWidget(self.deprecatedBox)
         filterRow.addStretch(1)
-        filterRow.addWidget(self.countLabel)
         layout.addLayout(filterRow)
         layout.addWidget(self.splitter, 1)
         layout.addWidget(self.statusLabel)
@@ -238,7 +240,6 @@ class SearchDialog(QDialog):
             item.setSizeHint(QSize(0, row.sizeHint().height()))
             self.resultsList.setItemWidget(item, row)
         self.resultsList.blockSignals(False)
-        self.countLabel.setText(self.tr("{} plugin(s)").format(len(self.results)))
         self.controllers.icons.fetchFor(self.results, self.applyIcons)
         self.controllers.actions.refreshInstalled(self, self.results)
         if self.results:
@@ -348,6 +349,9 @@ class SearchDialog(QDialog):
         texts = {"installed": self.tr("installed"), "upgradeable": self.tr("update")}
         for pluginId, label in self._badgeLabels.items():
             label.setText(texts.get(badges.get(pluginId, ""), ""))
+
+    def showSearchSummary(self, message: str) -> None:
+        self.summaryLabel.setText(message)
 
     def showStatus(self, message: str) -> None:
         self.statusLabel.setText(message)

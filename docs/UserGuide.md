@@ -76,6 +76,10 @@ type: a space or punctuation mark searches immediately, and otherwise the
 search runs after a short pause. **Enter** or the **Search** button searches
 straight away.
 
+The line under the search box tells you where you are: *Type a query to
+search plugins* before you start, then how many plugins match, or *No plugin
+found matching your query* when nothing does.
+
 Tips for good results:
 
 - **Describe the task, not the tool.** *"digitize parcel boundaries from a
