@@ -154,9 +154,12 @@ $(MODEL): pipeline/ConvertStaticModel.py | _venv
 _python:
 	@test -n "$(PYTHON)" || { echo "Python 3 is required (python3 or python on the PATH)"; exit 1; }
 
+# The venv must actually run and import its packages: a venv whose Python
+# was removed or upgraded (its bin/python symlink then dangles) or that was
+# created on another machine is rebuilt from scratch with the current Python.
 _venv: _python
-	@test -x "$(PY)" || { \
-		echo "==> Creating .venv with numpy and pytest"; \
-		"$(PYTHON)" -m venv .venv && \
+	@"$(PY)" -c "import numpy, pytest" >/dev/null 2>&1 || { \
+		echo "==> (Re)creating .venv with numpy and pytest using $(PYTHON)"; \
+		"$(PYTHON)" -m venv --clear .venv && \
 		if [ -x .venv/bin/python ]; then venv=.venv/bin/python; else venv=.venv/Scripts/python; fi && \
 		"$$venv" -m pip install --quiet numpy pytest; }

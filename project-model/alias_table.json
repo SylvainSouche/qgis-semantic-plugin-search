@@ -425,6 +425,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-venv-self-heal": {
+    "active": true,
+    "id": "4be9-6ae4-5060-2d8b",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-version-correction": {
     "active": true,
     "id": "0f87-6ae3-7451-fad7",
@@ -710,6 +716,12 @@
   "obs-ci-validation": {
     "active": true,
     "id": "0f87-6ae3-945f-dcf6",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-dangling-venv": {
+    "active": true,
+    "id": "4be9-6ae4-5060-f410",
     "status": "recorded",
     "type": "obs"
   },
