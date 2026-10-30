@@ -52,13 +52,15 @@ def test_search_pushes_results_to_the_view():
 
 def test_search_without_store_is_reported_not_crashing():
     view = FakeView()
+    reporter = FakeReporter()
     controller = SearchController(
-        engine=None, searchService=StubSearchService([]), reporter=FakeReporter()
+        engine=None, searchService=StubSearchService([]), reporter=reporter
     )
     controller.search(view, "anything")
     assert view.results == []
     assert view.cleared == 1
-    assert view.statuses
+    assert "Preparing the search" in view.statuses[-1]
+    assert not reporter.warnings, "a store still loading is not a QGIS warning"
 
 
 # ----------------------------------------------------------------- actions

@@ -46,9 +46,13 @@ class SearchController:
         staleness tokens of their own and are dropped when superseded.
         """
         if self.store is None:
-            message = "No embeddings database available yet."
-            self.reporter.warn(message)
-            view.showStatus(message)
+            # Normal while the plugin index downloads or the model loads:
+            # status line only. Real failures are reported by the assets
+            # side, and the query runs again once the index is active.
+            view.showStatus(
+                "Preparing the search (downloading or loading the plugin index)… "
+                "your query runs as soon as it is ready."
+            )
             view.showResults([])
             view.clearDetails()
             return

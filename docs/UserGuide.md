@@ -175,10 +175,11 @@ that folder is safe: everything is downloaded again on the next launch.
 
 ## Troubleshooting
 
-**"No embeddings database available yet."**
-The first download has not finished, or could not start. Check your internet
-connection, or your proxy in *Settings › Options › Network*, then close and
-reopen the window.
+**"Preparing the search…" in the window's status line.**
+The plugin is downloading its index (first launch, about 22 MB) or loading
+it. Your query runs by itself as soon as it is ready, usually within
+seconds. If it stays there, check your internet connection or your proxy
+in *Settings › Options › Network*, then close and reopen the window.
 
 **"Cannot refresh the embeddings assets … using cached data."**
 The update check could not reach GitHub. Search keeps working with your
