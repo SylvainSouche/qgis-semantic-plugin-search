@@ -103,7 +103,7 @@ description. On the right:
   small boost.
 - **a badge** for plugins you already have: *installed*, or *update* when a
   newer version is available.
-- **`[exp]` or `[dep]`** for experimental or deprecated plugins.
+- *experimental* or *deprecated*, in grey beside the name, for those plugins.
 
 Experimental and deprecated plugins are hidden by default. Tick **Include
 experimental** or **Include deprecated** above the list to show them. Your

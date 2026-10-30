@@ -1,7 +1,7 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 200 objects in model
-Sources: 4 CON, 3 NREQ, 38 REQ, 8 UC
+Generated from `project-model/` · schema_version 2 · 205 objects in model
+Sources: 4 CON, 3 NREQ, 39 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
 ## Constraints
@@ -103,6 +103,12 @@ Refines: `req-architecture-quality`
 ### Install, upgrade, reinstall and uninstall actions are available in the search window and delegate to the standard plugin manager
 
 `REQ-req-action-integration` · status **confirmed** · id `0f87-6ae3-6970-313d`
+
+### No plugin's metadata can resize the panes: the result list keeps at least 280 px, neither pane collapses, every metadata field wraps and is shown as plain text, row descriptions are elided, experimental and deprecated show beside the name, and catalogue text is shown with its HTML entities decoded
+
+`REQ-req-robust-layout` · status **confirmed** · id `4be9-6ae4-4521-3222`
+
+Refines: `req-two-pane-layout`
 
 ### On first use the plugin downloads the embedding model and the database for its QGIS version and caches them without user configuration
 

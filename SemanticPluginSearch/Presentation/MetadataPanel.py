@@ -5,6 +5,7 @@ from html import escape
 from urllib.parse import urlparse
 
 
+from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QDesktopServices
 from qgis.PyQt.QtWidgets import (
     QFormLayout,
@@ -47,6 +48,20 @@ class MetadataPanel(QWidget):
         form.addRow(self.tr("Tags:"), self.tagsLabel)
         form.addRow(self.tr("Stats:"), self.statsLabel)
         form.addRow(self.tr("Links:"), self.linksView)
+
+        # Catalogue text is shown as typed: wrapped, so one long field (a
+        # 257 character author list) can never widen the panel and squeeze
+        # the result list, and plain text, so markup in it is never rendered.
+        for label in (
+            self.nameLabel,
+            self.versionLabel,
+            self.authorLabel,
+            self.descriptionLabel,
+            self.tagsLabel,
+            self.statsLabel,
+        ):
+            label.setWordWrap(True)
+            label.setTextFormat(Qt.TextFormat.PlainText)
 
         layout = QVBoxLayout(self)
         layout.addWidget(self.nameLabel)
@@ -110,3 +125,4 @@ class MetadataPanel(QWidget):
             if link
         ]
         return " · ".join(links) or "—"
+# @impl 4be9-6ae4-4521-3222

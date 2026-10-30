@@ -154,3 +154,21 @@ def test_search_survives_a_dimension_mismatch(store):
             return np.zeros(1, dtype=np.float32)
 
     assert SearchService(MismatchEngine()).search(store, "parcel") == []
+
+
+def test_stored_text_is_entity_decoded_for_older_databases(store, tmp_path):
+    """Databases built before the pipeline decoded entities still display cleanly."""
+    import sqlite3
+
+    path = tmp_path / "Embeddings-4.sqlite"  # where the store fixture built it
+    connection = sqlite3.connect(path)
+    pluginId = store.pluginIds()[0]
+    connection.execute(
+        "UPDATE plugins SET author = ?, description = ? WHERE plugin_id = ?",
+        ("Ville d&#x27;Orléans", "Filtre d&#x27;une couche", pluginId),
+    )
+    connection.commit()
+    connection.close()
+    info = SqliteVectorStore.open(path).pluginInfo(pluginId)
+    assert info.author == "Ville d'Orléans"
+    assert info.description == "Filtre d'une couche"

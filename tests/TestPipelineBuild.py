@@ -152,3 +152,19 @@ def test_publish_gate_blocks_a_collapsed_catalogue():
 
     firstPublish = checkGates(newIndex, None)
     assert firstPublish == [], "no previous release always passes"
+
+
+def test_catalogue_text_is_entity_decoded():
+    """plugins.qgis.org escapes some text twice (d&#x27;Orléans after XML parsing)."""
+    xml = (
+        b'<plugins><pyqgis_plugin name="Filtre Palantir &amp;#x27;s" version="1.2" plugin_id="9">'
+        b"<description>Filtre d&amp;#x27;une couche</description>"
+        b"<about>Permet d&amp;#x27;appliquer un filtre</about>"
+        b"<author_name>Wendy Laurent (Ville d&amp;#x27;Orl\xc3\xa9ans)</author_name>"
+        b"</pyqgis_plugin></plugins>"
+    )
+    (record,) = parseCatalogue(xml)
+    assert record.name == "Filtre Palantir 's"
+    assert record.description == "Filtre d'une couche"
+    assert record.about == "Permet d'appliquer un filtre"
+    assert record.authorName == "Wendy Laurent (Ville d'Orléans)"

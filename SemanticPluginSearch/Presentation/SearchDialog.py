@@ -35,6 +35,7 @@ from ..QgisBridge.Settings import (
     UI_SPLITTER,
 )
 from .DetailsPanel import DetailsPanel
+from .ElidedLabel import ElidedLabel
 
 LIVE_SEARCH_DELAY_MS = 300
 # A word boundary ends a thought: search at once instead of waiting.
@@ -43,6 +44,8 @@ DESCRIPTION_EXCERPT_CHARS = 110
 ICON_SIZE = 32
 SCORE_COLUMN_WIDTH = 56
 ROW_MIN_HEIGHT = 40
+RESULTS_MIN_WIDTH = 280
+DETAILS_MIN_WIDTH = 260
 
 
 class SearchDialog(QDialog):
@@ -97,6 +100,11 @@ class SearchDialog(QDialog):
         self.splitter.addWidget(self.detailsPanel)
         self.splitter.setStretchFactor(0, 2)
         self.splitter.setStretchFactor(1, 3)
+        # Neither pane may collapse, and the list keeps room for its rows
+        # whatever the selected plugin's metadata looks like.
+        self.splitter.setChildrenCollapsible(False)
+        self.resultsList.setMinimumWidth(RESULTS_MIN_WIDTH)
+        self.detailsPanel.setMinimumWidth(DETAILS_MIN_WIDTH)
 
         self.actionButtons: dict[str, QPushButton] = {}
         actionsRow = QHBoxLayout()
@@ -269,30 +277,42 @@ class SearchDialog(QDialog):
         textColumn = QVBoxLayout()
         textColumn.setSpacing(0)
         nameLabel = QLabel(result.info.name, row)
+        nameLabel.setTextFormat(Qt.TextFormat.PlainText)
         nameFont = nameLabel.font()
         nameFont.setBold(True)
         nameLabel.setFont(nameFont)
-        descriptionLabel = QLabel(self._excerpt(result.info.description), row)
+        # Experimental / deprecated as muted words beside the name: the score
+        # column is too narrow to carry them.
+        flags = [
+            text
+            for flagged, text in (
+                (result.info.experimental, self.tr("experimental")),
+                (result.info.deprecated, self.tr("deprecated")),
+            )
+            if flagged
+        ]
+        nameLine = QHBoxLayout()
+        nameLine.setSpacing(6)
+        nameLine.addWidget(nameLabel)
+        if flags:
+            flagLabel = QLabel(" · ".join(flags), row)
+            flagFont = QFont(nameFont)
+            flagFont.setBold(False)
+            flagFont.setPointSize(max(8, nameFont.pointSize() - 2))
+            flagLabel.setFont(flagFont)
+            flagLabel.setStyleSheet("color: palette(mid);")
+            nameLine.addWidget(flagLabel)
+        nameLine.addStretch(1)
+        descriptionLabel = ElidedLabel(self._excerpt(result.info.description), row)
         descriptionFont = QFont()
         descriptionFont.setStyleHint(QFont.StyleHint.Serif)
         descriptionFont.setPointSize(max(9, nameFont.pointSize() - 2))
         descriptionLabel.setFont(descriptionFont)
-        textColumn.addWidget(nameLabel)
+        textColumn.addLayout(nameLine)
         textColumn.addWidget(descriptionLabel)
         layout.addLayout(textColumn, 1)
 
-        flags = []
-        if result.info.experimental:
-            flags.append("exp")
-        if result.info.deprecated:
-            flags.append("dep")
-        scoreLabel = QLabel(
-            self.tr("{percent}%{flags}").format(
-                percent=f"{result.score * 100:.0f}",
-                flags=f"  [{' / '.join(flags)}]" if flags else "",
-            ),
-            row,
-        )
+        scoreLabel = QLabel(f"{result.score * 100:.0f}%", row)
         scoreFont = scoreLabel.font()
         scoreFont.setBold(True)
         scoreLabel.setFont(scoreFont)

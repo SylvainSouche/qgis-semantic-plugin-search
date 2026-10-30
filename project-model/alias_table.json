@@ -323,6 +323,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-robust-layout": {
+    "active": true,
+    "id": "4be9-6ae4-4520-9e19",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-scoped-enums": {
     "active": true,
     "id": "0f87-6ae3-9811-a9fe",
@@ -563,6 +569,12 @@
     "status": "verified",
     "type": "impl"
   },
+  "impl-robust-layout": {
+    "active": true,
+    "id": "4be9-6ae4-4521-fc80",
+    "status": "verified",
+    "type": "impl"
+  },
   "impl-search-ranking": {
     "active": false,
     "id": "0f87-6ae3-74ce-7032",
@@ -686,6 +698,12 @@
   "obs-pairing-attribute-error": {
     "active": true,
     "id": "4be9-6ae4-3eac-c89a",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-palantir-squeeze": {
+    "active": true,
+    "id": "4be9-6ae4-4520-56f8",
     "status": "recorded",
     "type": "obs"
   },
@@ -983,6 +1001,12 @@
     "status": "confirmed",
     "type": "req"
   },
+  "req-robust-layout": {
+    "active": true,
+    "id": "4be9-6ae4-4521-3222",
+    "status": "confirmed",
+    "type": "req"
+  },
   "req-search-summary": {
     "active": true,
     "id": "4be9-6ae4-4051-90cf",
@@ -1106,6 +1130,12 @@
   "t-repository-rules": {
     "active": true,
     "id": "4be9-6ae3-f4c1-3f19",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-robust-layout": {
+    "active": true,
+    "id": "4be9-6ae4-4521-087c",
     "status": "passing",
     "type": "test"
   },

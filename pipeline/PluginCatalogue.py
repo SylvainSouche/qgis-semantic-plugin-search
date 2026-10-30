@@ -7,6 +7,8 @@ fetcher this pipeline was adapted from.
 """
 from __future__ import annotations
 
+import html
+
 import re
 import xml.etree.ElementTree as ET
 import zlib
@@ -76,8 +78,14 @@ def _absoluteIconUrl(icon: str) -> str:
 
 
 def _text(element: ET.Element, tag: str) -> str:
+    """Element text with HTML entities decoded.
+
+    The catalogue escapes some text twice: after XML parsing it still holds
+    entities such as d&#x27;Orléans, which would show literally and pollute
+    the embedding text.
+    """
     child = element.find(tag)
-    return (child.text or "").strip() if child is not None else ""
+    return html.unescape((child.text or "").strip()) if child is not None else ""
 
 
 def _parsePluginElement(element: ET.Element) -> PluginRecord | None:
@@ -91,7 +99,7 @@ def _parsePluginElement(element: ET.Element) -> PluginRecord | None:
         numericId = zlib.crc32(pluginId.encode("utf-8"))
     return PluginRecord(
         pluginId=numericId,
-        name=element.get("name", pluginId),
+        name=html.unescape(element.get("name", pluginId)),
         version=element.get("version", ""),
         description=_text(element, "description"),
         about=_text(element, "about"),
@@ -127,3 +135,4 @@ def _toFloat(raw: str) -> float:
         return float(raw) if raw else 0.0
     except ValueError:
         return 0.0
+# @impl 4be9-6ae4-4521-3222

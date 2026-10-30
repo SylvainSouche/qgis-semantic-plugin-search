@@ -15,6 +15,7 @@ This module is part of the Data layer: it must import neither qgis nor Qt.
 """
 from __future__ import annotations
 
+import html
 import sqlite3
 from pathlib import Path
 
@@ -134,6 +135,12 @@ def readDatabaseMeta(databasePath: Path, key: str) -> str:
     return str(row[0])
 
 
+def _decoded(text: str | None) -> str:
+    """Catalogue text with HTML entities decoded (databases built before the
+    pipeline decoded them still hold d&#x27;Orléans style entities)."""
+    return html.unescape(text or "")
+
+
 def _rowToInfo(row: tuple) -> PluginInfo:
     (
         pluginId,
@@ -162,12 +169,12 @@ def _rowToInfo(row: tuple) -> PluginInfo:
     ) = row
     return PluginInfo(
         pluginId=int(pluginId),
-        name=name,
+        name=_decoded(name),
         version=version or "",
-        author=author or "",
-        description=description or "",
-        about=about or "",
-        tags=tuple(tag for tag in (tags or "").split(",") if tag),
+        author=_decoded(author),
+        description=_decoded(description),
+        about=_decoded(about),
+        tags=tuple(_decoded(tag) for tag in (tags or "").split(",") if tag),
         repository=repository or "",
         homepage=homepage or "",
         tracker=tracker or "",
@@ -185,3 +192,4 @@ def _rowToInfo(row: tuple) -> PluginInfo:
         readmeUrl=readmeUrl or "",
         updateDate=updateDate or "",
     )
+# @impl 4be9-6ae4-4521-3222

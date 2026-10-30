@@ -41,7 +41,7 @@ def test_pure_layers_limit_third_party_imports_to_numpy():
     # across Python versions (3.9 has no stdlib_module_names) and stricter.
     allowed = {
         "__future__", "abc", "collections", "configparser", "dataclasses", "datetime",
-        "hashlib", "json", "os",
+        "hashlib", "html", "json", "os",
         "pathlib", "re", "sqlite3", "tempfile", "typing", "unicodedata", "urllib",
         "numpy",
     }
