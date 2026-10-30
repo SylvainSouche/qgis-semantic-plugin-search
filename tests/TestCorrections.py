@@ -1,6 +1,7 @@
 """Regression tests for the review corrections: dimension safety (C1),
 UNK pooling consistency (C2), download caps (C5) and stamp comparison (C6).
 """
+from __future__ import annotations
 
 import numpy as np
 import pytest

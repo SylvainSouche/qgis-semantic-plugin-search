@@ -10,6 +10,7 @@ Usage:
         --index build/index.json \
         --previous-url https://github.com/OWNER/REPO/releases/download/embeddings/index.json
 """
+from __future__ import annotations
 
 import json
 import sys

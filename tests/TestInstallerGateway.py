@@ -6,6 +6,7 @@ QGIS 3 module level installer singleton).
 The minimal qgis/Qt stubs below make the QgisBridge package importable
 without QGIS, so the gateway logic is testable offline.
 """
+from __future__ import annotations
 
 import sys
 import types

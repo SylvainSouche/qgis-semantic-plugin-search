@@ -4,6 +4,7 @@ Event discipline under test: one search produces at most one background job
 and one batched GUI callback; each URL is fetched once per session; stale
 batches are dropped; per-icon failures never reach the GUI thread.
 """
+from __future__ import annotations
 
 from pathlib import Path
 
