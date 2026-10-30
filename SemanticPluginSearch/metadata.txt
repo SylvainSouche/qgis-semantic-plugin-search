@@ -5,7 +5,7 @@ qgisMinimumVersion=3.44
 qgisMaximumVersion=4.99
 description=Find QGIS plugins with natural language semantic search over plugin metadata and readmes
 about=Describe what you need in plain language, for example "classify a drone orthophoto into land cover classes" or "create contour lines from a DEM", and get the matching QGIS plugins ranked by relevance, with their metadata, readme and the usual Install, Upgrade, Reinstall and Uninstall buttons, which are carried out by the standard plugin manager. Plugins you already have are marked installed, or update when a newer version exists. Requirements: an internet connection on first use, to download a compact embedding model (about 17 MB) and the plugin index for your QGIS version (about 5 MB) from the project GitHub repository; both are cached in your profile and refreshed automatically. No other dependency: numpy, which QGIS bundles, and the Python standard library. Your query never leaves your machine: it is turned into an embedding locally.
-version=0.4.2
+version=0.4.3
 author=SylvainSouche
 email=
 tracker=https://github.com/SylvainSouche/qgis-semantic-plugin-search/issues
@@ -17,7 +17,8 @@ experimental=True
 deprecated=False
 server=False
 license=MIT
-changelog=0.4.2 - Correct search result list appearance
+changelog=0.4.3 - Correct plugin installation data refresh
+    0.4.2 - Correct search result list appearance
     0.4.1 - Fix the embeddings workflow and its integration into the plugin 
     0.4.0 - Fix the window failing to open in 0.3.0 (stale package), fix search never activating after a database update (model check error), icons now return on every search, installed plugins are recognised so Upgrade, Reinstall and Uninstall work, installed and update badges, hybrid ranking that puts exact plugin names first, downloads through the QGIS network settings (proxy, authentication), embeddings served from the repository embeddings branch
     0.3.0 - Offline first cache, pinned update channel, safer links, bounded background work, hardening
