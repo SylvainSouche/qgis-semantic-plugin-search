@@ -101,8 +101,9 @@ description. On the right:
 - **the relevance**, as a percentage: how well the plugin matches your
   description. Plugins whose name or tags literally contain your words get a
   small boost.
-- **a badge** for plugins you already have: *installed*, or *update* when a
-  newer version is available.
+- **a coloured badge** beside the name for plugins you already have: a green
+  **✓ Installed**, or an orange **↑ Update** when a newer version is
+  available.
 - *experimental* or *deprecated*, in grey beside the name, for those plugins.
 
 Experimental and deprecated plugins are hidden by default. Tick **Include

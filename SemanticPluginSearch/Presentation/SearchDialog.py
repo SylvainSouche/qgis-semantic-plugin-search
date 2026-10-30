@@ -22,6 +22,7 @@ from qgis.PyQt.QtWidgets import (
     QListWidget,
     QListWidgetItem,
     QPushButton,
+    QSizePolicy,
     QSplitter,
     QVBoxLayout,
     QWidget,
@@ -44,6 +45,12 @@ DESCRIPTION_EXCERPT_CHARS = 110
 ICON_SIZE = 32
 SCORE_COLUMN_WIDTH = 56
 ROW_MIN_HEIGHT = 40
+# Installed state pills beside the plugin name: fixed colours with white text
+# read the same on light and dark themes.
+BADGE_STYLES = {
+    "installed": ("✓ Installed", "#2e7d32"),
+    "upgradeable": ("↑ Update", "#e65100"),
+}
 RESULTS_MIN_WIDTH = 280
 DETAILS_MIN_WIDTH = 260
 
@@ -294,15 +301,27 @@ class SearchDialog(QDialog):
         nameLine = QHBoxLayout()
         nameLine.setSpacing(6)
         nameLine.addWidget(nameLabel)
+        badgeLabel = QLabel("", row)
+        badgeFont = QFont(nameFont)
+        badgeFont.setPointSize(max(8, nameFont.pointSize() - 2))
+        badgeLabel.setFont(badgeFont)
+        badgeLabel.setVisible(False)
+        # The name and the pill keep their width; the grey flags give way.
+        nameLabel.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
+        badgeLabel.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        self._badgeLabels[result.info.pluginId] = badgeLabel
+        nameLine.addWidget(badgeLabel)
         if flags:
-            flagLabel = QLabel(" · ".join(flags), row)
+            # Takes the rest of the line and elides when it runs short.
+            flagLabel = ElidedLabel(" · ".join(flags), row)
             flagFont = QFont(nameFont)
             flagFont.setBold(False)
             flagFont.setPointSize(max(8, nameFont.pointSize() - 2))
             flagLabel.setFont(flagFont)
             flagLabel.setStyleSheet("color: palette(mid);")
-            nameLine.addWidget(flagLabel)
-        nameLine.addStretch(1)
+            nameLine.addWidget(flagLabel, 1)
+        else:
+            nameLine.addStretch(1)
         descriptionLabel = ElidedLabel(self._excerpt(result.info.description), row)
         descriptionFont = QFont()
         descriptionFont.setStyleHint(QFont.StyleHint.Serif)
@@ -320,19 +339,9 @@ class SearchDialog(QDialog):
             Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop
         )
         scoreLabel.setFixedWidth(SCORE_COLUMN_WIDTH)
-        badgeLabel = QLabel("", row)
-        badgeFont = QFont(scoreFont)
-        badgeFont.setBold(False)
-        badgeFont.setPointSize(max(8, scoreFont.pointSize() - 3))
-        badgeLabel.setFont(badgeFont)
-        badgeLabel.setStyleSheet("color: palette(mid);")
-        badgeLabel.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop)
-        badgeLabel.setFixedWidth(SCORE_COLUMN_WIDTH)
-        self._badgeLabels[result.info.pluginId] = badgeLabel
         scoreColumn = QVBoxLayout()
         scoreColumn.setSpacing(0)
         scoreColumn.addWidget(scoreLabel)
-        scoreColumn.addWidget(badgeLabel)
         scoreColumn.addStretch(1)
         layout.addLayout(scoreColumn)
         return row
@@ -365,10 +374,19 @@ class SearchDialog(QDialog):
                 )
 
     def showInstalledBadges(self, badges: dict[int, str]) -> None:
-        """Muted badge under the score: installed, or update for upgradeable."""
-        texts = {"installed": self.tr("installed"), "upgradeable": self.tr("update")}
+        """Coloured pill beside the name: green installed, orange update."""
         for pluginId, label in self._badgeLabels.items():
-            label.setText(texts.get(badges.get(pluginId, ""), ""))
+            style = BADGE_STYLES.get(badges.get(pluginId, ""))
+            if style is None:
+                label.setVisible(False)
+                continue
+            text, colour = style
+            label.setText(self.tr(text))
+            label.setStyleSheet(
+                f"QLabel {{ background-color: {colour}; color: white;"
+                " border-radius: 7px; padding: 0px 6px; }"
+            )
+            label.setVisible(True)
 
     def showSearchSummary(self, message: str) -> None:
         self.summaryLabel.setText(message)
@@ -404,5 +422,5 @@ class SearchDialog(QDialog):
 
 # @impl 0f87-6ae3-6985-53e9
 
-# @impl 4be9-6ae3-f123-64dd
+# @impl 4be9-6ae4-4682-9629
 # @impl 0f87-6ae3-e355-74a5

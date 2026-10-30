@@ -167,6 +167,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-badge-pill": {
+    "active": true,
+    "id": "4be9-6ae4-4681-de2d",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-ci-accepted": {
     "active": true,
     "id": "0f87-6ae3-945f-ef3b",
@@ -996,8 +1002,14 @@
     "type": "req"
   },
   "req-result-rows-v2": {
-    "active": true,
+    "active": false,
     "id": "4be9-6ae3-f123-64dd",
+    "status": "superseded",
+    "type": "req"
+  },
+  "req-result-rows-v3": {
+    "active": true,
+    "id": "4be9-6ae4-4682-9629",
     "status": "confirmed",
     "type": "req"
   },

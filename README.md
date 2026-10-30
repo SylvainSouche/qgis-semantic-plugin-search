@@ -17,8 +17,8 @@ and ranks every plugin of the official repository by how well it matches.
   plugin's name puts it first.
 - **See everything about a plugin at a glance**: icon, description, version,
   compatibility, rating, links and its readme.
-- **Know what you already have.** Installed plugins carry an *installed*
-  badge, or *update* when a newer version exists.
+- **Know what you already have.** Installed plugins carry a green
+  *✓ Installed* badge, or an orange *↑ Update* one when a newer version exists.
 - **Install, upgrade, reinstall or uninstall** from the same window. The
   standard QGIS plugin manager does the work, as usual.
 - **Private by design.** What you type never leaves your computer.

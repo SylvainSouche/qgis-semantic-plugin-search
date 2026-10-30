@@ -1,6 +1,6 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 205 objects in model
+Generated from `project-model/` · schema_version 2 · 207 objects in model
 Sources: 4 CON, 3 NREQ, 39 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
@@ -74,11 +74,11 @@ Refines: `req-fetch-budget`
 
 Refines: `req-window-polish`
 
-### Each result row presents the plugin icon, a bold sans serif plugin name line and a smaller serif description line left aligned two pixels from the icon, and on the right a column with the relevance percentage, capped at 100, aligned with the name line and, for installed plugins, a muted installed or update badge beneath it
+### Each result row presents the plugin icon, a bold sans serif plugin name line and a smaller serif description line left aligned two pixels from the icon, and the relevance percentage, capped at 100, right aligned on the name line; installed plugins carry a green check mark Installed pill beside the name, plugins with a newer version an orange Update pill, and experimental or deprecated plugins a muted word after it
 
-`REQ-req-result-rows-v2` · status **confirmed** · id `4be9-6ae3-f123-64dd`
+`REQ-req-result-rows-v3` · status **confirmed** · id `4be9-6ae4-4682-9629`
 
-Supersedes 0f87-6ae3-ab0f-ea79 (Each result row presents the plugin icon, a bold sans serif plugin name line and a smaller serif description line left aligned two pixels from the icon, and the similarity percentage right aligned in a third column aligned with the name line).
+Supersedes 4be9-6ae3-f123-64dd (Each result row presents the plugin icon, a bold sans serif plugin name line and a smaller serif description line left aligned two pixels from the icon, and on the right a column with the relevance percentage, capped at 100, aligned with the name line and, for installed plugins, a muted installed or update badge beneath it).
 
 Carries forward what remained valid and states what changed.
 
