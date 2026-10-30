@@ -128,14 +128,16 @@ make test        # pytest suite, no QGIS needed (ARGS="-k ranking" to filter)
 make smoke       # load and exercise the plugin headless in every installed QGIS
 make fetch       # catalogue and readmes into data/ (QGIS_VERSIONS="3.44 4.2")
 make embed       # model and per-universe databases into build/, fetching first if needed
-make dist        # run the tests, then build dist/SemanticPluginSearch.<version>.zip
+make dist        # package checks (standard library only, no venv), then dist/SemanticPluginSearch.<version>.zip
 make version VERSION=0.4.1 COMMENT="What changed"   # set the version and its changelog entry
 make increment INC=rel COMMENT="What changed"       # bump maj, min or rel (0.4.0 -> 1.0.0, 0.5.0, 0.4.1)
 make clean       # remove build/ (except build/ddd), dist/ and caches; keeps data/ and .venv/
 make clean-all   # also remove data/ and .venv/
 ```
 
-`make test` creates `.venv` with numpy and pytest on first use. CI runs the
+`make test`, `fetch` and `embed` create `.venv` with numpy and pytest on first use;
+`dist`, `version` and `increment` only need a system Python (`python3`, or
+`python` as on Cygwin and Windows). CI runs the
 suite and ruff on Python 3.9 and 3.12.
 
 `make smoke` boots each QGIS found in `/Applications` with its own Python,
@@ -192,8 +194,10 @@ version.
    `metadata.txt` and adds the changelog entry. Without `COMMENT`, the entry
    reads `<version> - TODO describe this release`: replace the TODO with
    what changed.
-2. `make dist`, which refuses to package if a test fails, including while
-   the changelog entry still says TODO.
+2. `make test`, then `make dist`. `make dist` runs `tools/PackageCheck.py`
+   (repository rules, LICENSE, no binaries, QGIS network stack only, every
+   private attribute defined, changelog entry not a TODO) and refuses to
+   package on any problem; it needs no venv.
 3. `make smoke` on QGIS 3 and QGIS 4.
 4. Upload the zip to plugins.qgis.org. The repository rules (mandatory
    metadata, LICENSE in the package, no binaries, QGIS network stack, Qt6

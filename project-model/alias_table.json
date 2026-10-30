@@ -191,6 +191,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-dist-without-venv": {
+    "active": true,
+    "id": "4be9-6ae4-4ed4-a665",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-embeddings-branch": {
     "active": true,
     "id": "4be9-6ae3-f849-f08f",
@@ -558,8 +564,14 @@
     "type": "impl"
   },
   "impl-package-guard-v2": {
-    "active": true,
+    "active": false,
     "id": "4be9-6ae4-41dd-6771",
+    "status": "superseded",
+    "type": "impl"
+  },
+  "impl-package-guard-v3": {
+    "active": true,
+    "id": "4be9-6ae4-4ed4-a8d8",
     "status": "verified",
     "type": "impl"
   },
@@ -1002,8 +1014,14 @@
     "type": "req"
   },
   "req-package-guard-v2": {
-    "active": true,
+    "active": false,
     "id": "4be9-6ae4-41dc-de55",
+    "status": "superseded",
+    "type": "req"
+  },
+  "req-package-guard-v3": {
+    "active": true,
+    "id": "4be9-6ae4-4ed4-e450",
     "status": "confirmed",
     "type": "req"
   },

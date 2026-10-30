@@ -1,6 +1,6 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 223 objects in model
+Generated from `project-model/` · schema_version 2 · 227 objects in model
 Sources: 4 CON, 3 NREQ, 42 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
@@ -290,11 +290,11 @@ Refines: `req-result-presentation`
 
 `REQ-req-gitignore-generated` · status **confirmed** · id `0f87-6ae3-7f88-fc1b`
 
-### make dist runs the full test suite first and refuses to package when it fails, including while the current version's changelog entry is still a TODO, and the suite statically requires every private attribute a plugin class reads to be defined
+### make dist runs the package checks of tools/PackageCheck.py with the system Python and no venv, and refuses to package on any problem, among them a current version changelog entry still a TODO and a private attribute a plugin class reads without defining it; the test suite runs the same checks
 
-`REQ-req-package-guard-v2` · status **confirmed** · id `4be9-6ae4-41dc-de55`
+`REQ-req-package-guard-v3` · status **confirmed** · id `4be9-6ae4-4ed4-e450`
 
-Supersedes 4be9-6ae3-f12c-682d (make package runs the full test suite first and refuses to package when it fails, and the suite statically requires every private attribute a plugin class reads to be defined).
+Supersedes 4be9-6ae4-41dc-de55 (make dist runs the full test suite first and refuses to package when it fails, including while the current version's changelog entry is still a TODO, and the suite statically requires every private attribute a plugin class reads to be defined).
 
 Carries forward what remained valid and states what changed.
 

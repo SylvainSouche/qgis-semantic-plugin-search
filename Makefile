@@ -5,7 +5,7 @@
 # @impl 4be9-6ae4-471f-260f
 
 .DEFAULT_GOAL := help
-.PHONY: help test smoke fetch embed dist version increment clean clean-all _venv
+.PHONY: help test smoke fetch embed dist version increment clean clean-all _python _venv
 
 PLUGIN := SemanticPluginSearch
 DATA_DIR := data
@@ -14,7 +14,11 @@ DIST_DIR := dist
 MODEL := $(BUILD_DIR)/EmbeddingModel.npz
 MODEL_ID ?= static-potion-base-8M
 HF_BASE ?= https://huggingface.co/minishlab/potion-base-8M/resolve/bf8b056651a2c21b8d2565580b8569da283cab23
-PY := .venv/bin/python
+# System Python: python3 where it exists, else python (Cygwin, Windows).
+PYTHON := $(shell command -v python3 2>/dev/null || command -v python 2>/dev/null)
+# Venv Python, for the targets that need numpy (test, fetch, embed): bin/ on
+# Unix and Cygwin's Python, Scripts/ for a Windows Python. Evaluated when used.
+PY = $(or $(wildcard .venv/bin/python),$(wildcard .venv/Scripts/python.exe),$(wildcard .venv/Scripts/python),.venv/bin/python)
 # The current version, read from metadata.txt. `make version VERSION=x.y.z`
 # overrides it on the command line to set a new one.
 CURRENT_VERSION := $(shell sed -n 's/^version=\(.*\)/\1/p' $(PLUGIN)/metadata.txt)
@@ -53,7 +57,7 @@ help: ## Show this help and how to install the plugin
 	@echo "     embeddings database for your QGIS version into <profile>/semantic-search/."
 
 test: _venv ## Run the test suite (no QGIS needed); ARGS passes pytest options
-	$(PY) -m pytest $(ARGS)
+	"$(PY)" -m pytest $(ARGS)
 
 QGIS_APPS ?= $(wildcard /Applications/QGIS*.app /Applications/MacPorts/QGIS*.app)
 # The MacPorts QGIS3 cannot be smoke tested on this machine: its Qt5
@@ -100,9 +104,10 @@ embed: _venv $(MODEL) ## Embed the fetched plugins into per universe databases; 
 	done
 	@echo "==> Databases:"; ls -lh $(BUILD_DIR)/Embeddings-*.sqlite
 
-# @impl 4be9-6ae4-41dc-de55
-dist: test ## Run the tests, then package the plugin as dist/<plugin>.<version>.zip, ready for QGIS
+# @impl 4be9-6ae4-4ed4-e450
+dist: _python ## Check, then package the plugin as dist/<plugin>.<version>.zip (no venv needed)
 	@test -n "$(CURRENT_VERSION)" || { echo "Cannot read the version from $(PLUGIN)/metadata.txt"; exit 1; }
+	@"$(PYTHON)" tools/PackageCheck.py
 	@command -v zip >/dev/null || { echo "zip is required"; exit 1; }
 	@mkdir -p $(DIST_DIR)
 	@rm -f $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip
@@ -111,13 +116,13 @@ dist: test ## Run the tests, then package the plugin as dist/<plugin>.<version>.
 	@echo "==> Packaged $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip"
 	@ls -lh $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip
 
-version: _venv ## Set the plugin version: make version VERSION=0.4.1 COMMENT="What changed"
+version: _python ## Set the plugin version: make version VERSION=0.4.1 COMMENT="What changed"
 	@test "$(origin VERSION)" = "command line" || { echo "Usage: make version VERSION=x.y.z [COMMENT=\"...\"] (current: $(CURRENT_VERSION))"; exit 1; }
-	@$(PY) tools/SetVersion.py --set $(VERSION) --comment "$$COMMENT"
+	@"$(PYTHON)" tools/SetVersion.py --set $(VERSION) --comment "$$COMMENT"
 
-increment: _venv ## Bump the plugin version: make increment INC=maj|min|rel COMMENT="What changed"
+increment: _python ## Bump the plugin version: make increment INC=maj|min|rel COMMENT="What changed"
 	@test -n "$(INC)" || { echo "Usage: make increment INC=maj|min|rel [COMMENT=\"...\"] (current: $(CURRENT_VERSION))"; exit 1; }
-	@$(PY) tools/SetVersion.py --increment $(INC) --comment "$$COMMENT"
+	@"$(PYTHON)" tools/SetVersion.py --increment $(INC) --comment "$$COMMENT"
 
 clean: ## Remove generated files (build/ except the model tooling, dist/, caches); keeps data/ and .venv/
 	@if [ -d $(BUILD_DIR) ]; then \
@@ -146,7 +151,12 @@ $(MODEL): pipeline/ConvertStaticModel.py | _venv
 		--license-note "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed" \
 		--output $(MODEL)
 
-_venv:
-	@test -x $(PY) || { \
+_python:
+	@test -n "$(PYTHON)" || { echo "Python 3 is required (python3 or python on the PATH)"; exit 1; }
+
+_venv: _python
+	@test -x "$(PY)" || { \
 		echo "==> Creating .venv with numpy and pytest"; \
-		python3 -m venv .venv && .venv/bin/pip install --quiet numpy pytest; }
+		"$(PYTHON)" -m venv .venv && \
+		if [ -x .venv/bin/python ]; then venv=.venv/bin/python; else venv=.venv/Scripts/python; fi && \
+		"$$venv" -m pip install --quiet numpy pytest; }
