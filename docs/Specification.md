@@ -1,7 +1,7 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 209 objects in model
-Sources: 4 CON, 3 NREQ, 39 REQ, 8 UC
+Generated from `project-model/` · schema_version 2 · 214 objects in model
+Sources: 4 CON, 3 NREQ, 40 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
 ## Constraints
@@ -67,6 +67,12 @@ Refines: `req-auto-updated-assets`
 `REQ-req-readme-cache` · status **confirmed** · id `4be9-6ae4-3a55-8652`
 
 Refines: `req-fetch-budget`
+
+### Before an install, upgrade or reinstall the plugin lists are fetched and published like the plugin manager does, and when the plugin manager still does not offer the plugin the error says why, naming the Show also experimental plugins or Show also deprecated plugins setting when that is the reason
+
+`REQ-req-install-explained` · status **confirmed** · id `4be9-6ae4-4926-4fb9`
+
+Refines: `req-action-integration`
 
 ### Beneath the search field a line reads Type a query to search plugins while the query is empty, N plugins found matching your query after a search, No plugin found matching your query when nothing matched, and Preparing the search while the index is not ready
 

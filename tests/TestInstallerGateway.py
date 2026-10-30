@@ -166,11 +166,16 @@ class FakeEntity:
 
 
 class FakeRepositories:
-    def __init__(self, ready: bool, known: set, pluginToServe: str = "") -> None:  # noqa: ANN001
+    """Like installer_data.repositories: a fetch fills the repository cache,
+    which only a plugins.rebuild() publishes in plugins.all()."""
+
+    def __init__(self, ready: bool, known: set, pluginToServe: str = "", **flags) -> None:  # noqa: ANN001, ANN003
         self.ready = ready
         self.known = known
         self.pluginToServe = pluginToServe
+        self.flags = flags
         self.requested = []
+        self.repoCache: dict[str, list] = {}
 
     def allEnabled(self):  # noqa: ANN202
         return {"official": {}, "third-party": {}}
@@ -180,16 +185,32 @@ class FakeRepositories:
 
     def requestFetching(self, key):  # noqa: ANN001, ANN002
         self.requested.append(key)
-        if self.pluginToServe:
-            self.known.add(self.pluginToServe)  # like xmlDownloaded
+        if self.pluginToServe:  # like xmlDownloaded: into the repository cache
+            entry = {"id": self.pluginToServe, "experimental": False, "deprecated": False}
+            entry.update(self.flags)
+            self.repoCache.setdefault(key, []).append(entry)
 
 
 class FakeInstallerDataModule:
-    def __init__(self, known: set, repositories) -> None:  # noqa: ANN001
+    def __init__(self, known: set, repositories, allowExperimental=False) -> None:  # noqa: ANN001
         self._known = known
         self.repositories = repositories
+        self.rebuilds = 0
+
+        def rebuild() -> None:
+            # Like installer_data.Plugins.rebuild: experimental and deprecated
+            # plugins only when the plugin manager settings allow them.
+            self.rebuilds += 1
+            for plugins in repositories.repoCache.values():
+                for plugin in plugins:
+                    if plugin["deprecated"] or (plugin["experimental"] and not allowExperimental):
+                        continue
+                    self._known.add(plugin["id"])
+
         self.plugins = types.SimpleNamespace(
-            all=lambda: {key: {} for key in self._known}
+            all=lambda: {key: {} for key in self._known},
+            rebuild=rebuild,
+            repoCache=repositories.repoCache,
         )
 
 
@@ -223,7 +244,42 @@ def test_ensure_installer_data_fetches_when_unknown():
     gateway = makeGateway()
     gateway._ensureInstallerData("SomePlugin", timeout=1.0)
     assert sorted(data.repositories.requested) == ["official", "third-party"]
+    assert data.rebuilds == 1, "the fetched lists are published like the plugin manager does"
     teardownStubModules()
+
+
+def test_an_experimental_plugin_explains_the_plugin_manager_setting():
+    """Regression: installing the experimental Layer Order Plus on QGIS 3.44
+    failed with "not in the fetched plugin lists"."""
+    known: set = set()
+    data = FakeInstallerDataModule(
+        known,
+        FakeRepositories(True, known, pluginToServe="layer_order_plus", experimental=True),
+    )
+    package = installStubModule("pyplugin_installer", installer_data=data)
+    package.instance = lambda: None
+    gateway = makeGateway()
+    try:
+        gateway._ensureInstallerData("layer_order_plus", timeout=1.0)
+        message = ""
+    except RuntimeError as error:
+        message = str(error)
+    teardownStubModules()
+    assert "experimental" in message and "Show also experimental plugins" in message
+
+
+def test_an_experimental_plugin_installs_when_the_manager_allows_it():
+    known: set = set()
+    data = FakeInstallerDataModule(
+        known,
+        FakeRepositories(True, known, pluginToServe="layer_order_plus", experimental=True),
+        allowExperimental=True,
+    )
+    package = installStubModule("pyplugin_installer", installer_data=data)
+    package.instance = lambda: None
+    makeGateway()._ensureInstallerData("layer_order_plus", timeout=1.0)
+    teardownStubModules()
+    assert "layer_order_plus" in known
 
 
 def test_ensure_installer_data_fails_clearly_when_absent():
@@ -236,7 +292,7 @@ def test_ensure_installer_data_fails_clearly_when_absent():
         raised = False
     except RuntimeError as error:
         raised = True
-        assert "not in the fetched plugin lists" in str(error)
+        assert "not in the plugin lists" in str(error)
     assert raised
     teardownStubModules()
 

@@ -95,11 +95,12 @@ class PluginInstallerGateway(PluginManagerGateway):
             if not repositories.fetchingInProgress():
                 break
             _spin(0.15)
-        if key not in installer_data.plugins.all():
-            raise RuntimeError(
-                f"'{key}' is not in the fetched plugin lists; "
-                "open the plugin manager once to refresh them."
-            )
+        # The fetched lists land in the repository cache; like the plugin
+        # manager, rebuild to publish them in plugins.all().
+        installer_data.plugins.rebuild()
+        if key in installer_data.plugins.all():
+            return
+        raise RuntimeError(_whyNotInstallable(installer_data, key))
 
     def installedPlugins(self) -> dict[str, InstalledPlugin]:
         """Read the plugin folders QGIS loads from, user profile first.
@@ -161,4 +162,39 @@ class PluginInstallerGateway(PluginManagerGateway):
         self.reporter.info(
             f"Please {operation} '{pluginName}' in the plugin manager."
         )
+
+
+def _whyNotInstallable(installer_data, key: str) -> str:  # noqa: ANN001 - module
+    """Explain why the installer does not offer the plugin.
+
+    The installer only publishes experimental (and deprecated) plugins when
+    the plugin manager's "Show also experimental plugins" (and "Show also
+    deprecated plugins") settings are ticked; the search window can show
+    them anyway, so say which setting is needed instead of a bare KeyError.
+    """
+    cached = [
+        plugin
+        for plugins in getattr(installer_data.plugins, "repoCache", {}).values()
+        for plugin in plugins
+        if plugin.get("id") == key
+    ]
+    if cached:
+        if all(plugin.get("experimental") for plugin in cached):
+            return (
+                f"'{key}' is experimental: the plugin manager installs it only when "
+                "'Show also experimental plugins' is ticked in its Settings tab."
+            )
+        if all(plugin.get("deprecated") for plugin in cached):
+            return (
+                f"'{key}' is deprecated: the plugin manager installs it only when "
+                "'Show also deprecated plugins' is ticked in its Settings tab."
+            )
+    return (
+        f"'{key}' is not in the plugin lists the plugin manager fetched; "
+        "open the plugin manager once to refresh them, and check that it is "
+        "available for this QGIS version."
+    )
+
+
 # @impl 4be9-6ae3-f12c-0110
+# @impl 4be9-6ae4-4926-4fb9

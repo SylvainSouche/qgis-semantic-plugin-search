@@ -200,6 +200,14 @@ On some QGIS versions the plugin manager has to be opened once to load its
 plugin list. Open *Plugins › Manage and Install Plugins…*, close it, and try
 again.
 
+**Installing an experimental (or deprecated) plugin fails.**
+The QGIS plugin manager only installs experimental plugins when *Show also
+experimental plugins* is ticked in its *Settings* tab, and deprecated ones
+when *Show also deprecated plugins* is ticked. The search window shows them
+when you tick *Include experimental* or *Include deprecated*, but the
+installation itself follows the plugin manager setting. Tick it there, then
+install again.
+
 **A plugin you expected is missing.**
 It may be experimental or deprecated (tick the matching box), not yet in the
 weekly index, or not compatible with your QGIS version.
