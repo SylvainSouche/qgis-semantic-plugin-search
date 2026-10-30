@@ -1,7 +1,7 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 214 objects in model
-Sources: 4 CON, 3 NREQ, 40 REQ, 8 UC
+Generated from `project-model/` · schema_version 2 · 219 objects in model
+Sources: 4 CON, 3 NREQ, 41 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
 ## Constraints
@@ -61,6 +61,12 @@ Refines: `req-auto-updated-assets`
 `REQ-req-atomic-cache-update` · status **confirmed** · id `0f87-6ae3-6985-9c48`
 
 Refines: `req-auto-updated-assets`
+
+### A plugin published only as an experimental version is installed, upgraded or reinstalled in that experimental version, while a plugin with a stable version gets the stable one, as the plugin manager does
+
+`REQ-req-install-experimental-version` · status **confirmed** · id `4be9-6ae4-4b88-00cf`
+
+Refines: `req-action-integration`
 
 ### A run fetches only the readmes of plugins that are new or whose version or repository changed, plus cached misses older than 28 days, reusing the others from a Readmes-<universe>.json.gz cache on the embeddings branch that holds exactly the current catalogue; a manual run can force a full refresh
 

@@ -221,6 +221,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-install-experimental-version": {
+    "active": true,
+    "id": "4be9-6ae4-4b88-4171",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-install-rebuild": {
     "active": true,
     "id": "4be9-6ae4-4926-ced3",
@@ -473,6 +479,12 @@
     "status": "verified",
     "type": "impl"
   },
+  "impl-install-experimental-version": {
+    "active": true,
+    "id": "4be9-6ae4-4b89-83f5",
+    "status": "verified",
+    "type": "impl"
+  },
   "impl-install-explained": {
     "active": true,
     "id": "4be9-6ae4-4926-82d7",
@@ -695,6 +707,12 @@
     "status": "recorded",
     "type": "obs"
   },
+  "obs-install-protocol-empty": {
+    "active": true,
+    "id": "4be9-6ae4-4b88-48ef",
+    "status": "recorded",
+    "type": "obs"
+  },
   "obs-installed-lookup": {
     "active": true,
     "id": "4be9-6ae3-f11b-516c",
@@ -884,6 +902,12 @@
   "req-hybrid-ranking": {
     "active": true,
     "id": "4be9-6ae3-f123-5b3c",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-install-experimental-version": {
+    "active": true,
+    "id": "4be9-6ae4-4b88-00cf",
     "status": "confirmed",
     "type": "req"
   },
@@ -1130,6 +1154,12 @@
   "t-inspect-tabs": {
     "active": true,
     "id": "0f87-6ae3-69b6-a8e4",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-install-experimental-version": {
+    "active": true,
+    "id": "4be9-6ae4-4b89-da54",
     "status": "passing",
     "type": "test"
   },

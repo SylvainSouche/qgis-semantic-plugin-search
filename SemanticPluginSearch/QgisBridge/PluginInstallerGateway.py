@@ -12,6 +12,7 @@ asm-installer-reachable in the project model).
 """
 from __future__ import annotations
 
+import inspect
 import time
 
 from qgis.PyQt.QtCore import QEventLoop, QTimer
@@ -40,13 +41,13 @@ class PluginInstallerGateway(PluginManagerGateway):
     def install(self, plugin: PluginInfo) -> None:
         key = self._installerKey(plugin)
         self._ensureInstallerData(key)
-        self._call("installPlugin", key)
+        self._call("installPlugin", key, versioned=True)
 
     def upgrade(self, plugin: PluginInfo) -> None:
         # Upgrading is an install of the newer version over the existing one.
         key = self._installerKey(plugin)
         self._ensureInstallerData(key)
-        self._call("installPlugin", key)
+        self._call("installPlugin", key, versioned=True)
 
     def reinstall(self, plugin: PluginInfo) -> None:
         key = self._installerKey(plugin)
@@ -54,10 +55,10 @@ class PluginInstallerGateway(PluginManagerGateway):
         installer = self._resolve()
         if installer is not None and hasattr(installer, "reinstallPlugin"):
             # QGIS 3.x dedicated entry point.
-            self._call("reinstallPlugin", key)
+            self._call("reinstallPlugin", key, versioned=True)
         else:
             # QGIS 4.x: installing over an existing installation reinstalls.
-            self._call("installPlugin", key)
+            self._call("installPlugin", key, versioned=True)
 
     def uninstall(self, plugin: PluginInfo) -> None:
         # Uninstalling an installed plugin needs no repository data: the
@@ -145,13 +146,13 @@ class PluginInstallerGateway(PluginManagerGateway):
         except Exception:  # noqa: BLE001 - nothing matches on this QGIS
             return None
 
-    def _call(self, operation: str, pluginName: str) -> None:
+    def _call(self, operation: str, pluginName: str, versioned: bool = False) -> None:
         installer = self._resolve()
         method = getattr(installer, operation, None) if installer is not None else None
         if method is None:
             self._openManagerFallback(pluginName, operation)
             return
-        method(pluginName)
+        method(pluginName, **(_versionOptions(pluginName, method) if versioned else {}))
 
     def _openManagerFallback(self, pluginName: str, operation: str) -> None:
         # Unknown installer API on this QGIS version: open the manager so the
@@ -196,5 +197,31 @@ def _whyNotInstallable(installer_data, key: str) -> str:  # noqa: ANN001 - modul
     )
 
 
+def _versionOptions(key: str, method) -> dict:  # noqa: ANN001 - installer method
+    """stable=False for a plugin that only has an experimental version.
+
+    installPlugin(key) installs the stable version by default; for a plugin
+    published only as experimental its stable download URL is empty and the
+    installer fails with 'Protocol "" is unknown'. The plugin manager passes
+    stable=False in that case, and so do we, when the method accepts it.
+    A plugin with a stable version keeps the stable default, as in the
+    plugin manager.
+    """
+    try:
+        from pyplugin_installer import installer_data
+
+        entry = installer_data.plugins.all().get(key) or {}
+    except Exception:  # noqa: BLE001 - no installer data: keep the defaults
+        return {}
+    if entry.get("download_url_stable") or not entry.get("download_url_experimental"):
+        return {}
+    try:
+        accepted = inspect.signature(method).parameters
+    except (TypeError, ValueError):
+        return {}
+    return {"stable": False} if "stable" in accepted else {}
+
+
 # @impl 4be9-6ae3-f12c-0110
 # @impl 4be9-6ae4-4926-4fb9
+# @impl 4be9-6ae4-4b88-00cf

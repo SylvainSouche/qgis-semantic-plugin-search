@@ -152,8 +152,9 @@ class Recording:
     def __init__(self) -> None:
         self.calls = []
 
-    def installPlugin(self, key, quiet=False):  # noqa: ANN001, ANN002
-        self.calls.append(("installPlugin", key))
+    def installPlugin(self, key, quiet=False, stable=True):  # noqa: ANN001, ANN002
+        call = ("installPlugin", key) if stable else ("installPlugin", key, "experimental")
+        self.calls.append(call)
 
     def uninstallPlugin(self, key, quiet=False):  # noqa: ANN001, ANN002
         self.calls.append(("uninstallPlugin", key))
@@ -192,8 +193,9 @@ class FakeRepositories:
 
 
 class FakeInstallerDataModule:
-    def __init__(self, known: set, repositories, allowExperimental=False) -> None:  # noqa: ANN001
+    def __init__(self, known: set, repositories, allowExperimental=False, entries=None) -> None:  # noqa: ANN001
         self._known = known
+        self.entries = dict(entries or {})
         self.repositories = repositories
         self.rebuilds = 0
 
@@ -208,7 +210,7 @@ class FakeInstallerDataModule:
                     self._known.add(plugin["id"])
 
         self.plugins = types.SimpleNamespace(
-            all=lambda: {key: {} for key in self._known},
+            all=lambda: {key: self.entries.get(key, {}) for key in self._known},
             rebuild=rebuild,
             repoCache=repositories.repoCache,
         )
@@ -363,3 +365,54 @@ def test_unresolvable_installer_opens_the_manager():
     assert iface.shown, "the plugin manager opens as the fallback"
     assert any("plugin manager" in m for m in gateway.reporter.infos)
     teardownStubModules()
+
+
+EXPERIMENTAL_ONLY = {
+    "download_url": "https://plugins.qgis.org/plugins/layer_order_plus/version/1.0.0/download/",
+    "download_url_stable": "",
+    "download_url_experimental": "https://plugins.qgis.org/plugins/layer_order_plus/version/1.0.0/download/",
+}
+
+
+def installWith(entries, recorder):  # noqa: ANN001, ANN201
+    data = FakeInstallerDataModule(
+        set(entries), FakeRepositories(True, set()), entries=entries
+    )
+    package = installStubModule("pyplugin_installer", installer_data=data)
+    package.instance = lambda: recorder
+    return makeGateway()
+
+
+def test_an_experimental_only_plugin_installs_its_experimental_version():
+    """Regression: Layer Order Plus failed with 'Protocol "" is unknown', the
+    installer defaulting to the stable download URL, empty for it."""
+    recorder = Recording()
+    gateway = installWith({"layer_order_plus": EXPERIMENTAL_ONLY}, recorder)
+    entity = FakeEntity("Layer Order Plus", "layer_order_plus.1.0.0.zip")
+    gateway.install(entity)
+    gateway.upgrade(entity)
+    gateway.reinstall(entity)
+    teardownStubModules()
+    assert recorder.calls == [("installPlugin", "layer_order_plus", "experimental")] * 3
+
+
+def test_a_plugin_with_a_stable_version_keeps_the_stable_default():
+    recorder = Recording()
+    entry = dict(EXPERIMENTAL_ONLY, download_url_stable="https://x.test/stable.zip")
+    gateway = installWith({"both": entry}, recorder)
+    gateway.install(FakeEntity("Both", "both.1.0.zip"))
+    teardownStubModules()
+    assert recorder.calls == [("installPlugin", "both")]
+
+
+def test_an_installer_without_the_stable_option_is_called_as_before():
+    calls = []
+
+    class OldInstaller:
+        def installPlugin(self, key, quiet=False):  # noqa: ANN001, ANN002
+            calls.append(key)
+
+    gateway = installWith({"layer_order_plus": EXPERIMENTAL_ONLY}, OldInstaller())
+    gateway.install(FakeEntity("Layer Order Plus", "layer_order_plus.1.0.0.zip"))
+    teardownStubModules()
+    assert calls == ["layer_order_plus"]
