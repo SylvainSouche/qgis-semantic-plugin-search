@@ -122,8 +122,10 @@ make test        # pytest suite, no QGIS needed (ARGS="-k ranking" to filter)
 make smoke       # load and exercise the plugin headless in every installed QGIS
 make fetch       # catalogue and readmes into data/ (QGIS_VERSIONS="3.44 4.2")
 make embed       # model and per-universe databases into build/, fetching first if needed
-make package     # run the tests, then build dist/SemanticPluginSearch.<version>.zip
-make clean       # remove build/, dist/ and caches; keeps data/ and .venv/
+make dist        # run the tests, then build dist/SemanticPluginSearch.<version>.zip
+make version VERSION=0.4.1   # set the version, adding a changelog entry to fill in
+make increment inc=rel       # bump maj, min or rel (0.4.0 -> 1.0.0, 0.5.0, 0.4.1)
+make clean       # remove build/ (except build/ddd), dist/ and caches; keeps data/ and .venv/
 make clean-all   # also remove data/ and .venv/
 ```
 
@@ -138,8 +140,7 @@ from disk. Set `SMOKE_DB` to an embeddings database to include the real
 search checks.
 
 To try a working copy in QGIS, copy or symlink `SemanticPluginSearch/` into
-the profile's `python/plugins/` folder, or install the zip from `make
-package`.
+the profile's `python/plugins/` folder, or install the zip from `make dist`.
 
 ## The pipeline
 
@@ -173,9 +174,12 @@ can never pair a new index with an old file.
 
 ## Releasing the plugin
 
-1. Bump `version` in `SemanticPluginSearch/metadata.txt` and add a
-   `changelog` line that starts with that version.
-2. `make package`, which refuses to package if a test fails.
+1. `make increment inc=rel` (or `min`, `maj`, or `make version
+   VERSION=x.y.z`). This sets the version in `metadata.txt` and adds a
+   `<version> - TODO describe this release` changelog entry: replace the
+   TODO with what changed.
+2. `make dist`, which refuses to package if a test fails, including while
+   the changelog entry still says TODO.
 3. `make smoke` on QGIS 3 and QGIS 4.
 4. Upload the zip to plugins.qgis.org. The repository rules (mandatory
    metadata, LICENSE in the package, no binaries, QGIS network stack, Qt6

@@ -58,7 +58,11 @@ def test_versions_cover_qgis_3_and_4():
 
 def test_changelog_and_category_follow_the_rules():
     general = metadata()
-    assert general.get("changelog", "").strip().startswith(general["version"])
+    changelog = general.get("changelog", "").strip()
+    assert changelog.startswith(general["version"])
+    assert "TODO" not in changelog.splitlines()[0], (
+        "describe this release in the changelog entry make version/increment added"
+    )
     assert general.get("category", "Raster") in CATEGORIES
 
 

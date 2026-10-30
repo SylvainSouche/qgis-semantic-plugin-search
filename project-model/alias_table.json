@@ -239,6 +239,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-make-dist-version": {
+    "active": true,
+    "id": "4be9-6ae4-41db-fd2d",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-makefile": {
     "active": true,
     "id": "0f87-6ae3-7ce1-1c69",
@@ -456,8 +462,14 @@
     "type": "impl"
   },
   "impl-makefile": {
-    "active": true,
+    "active": false,
     "id": "0f87-6ae3-7ce1-c703",
+    "status": "superseded",
+    "type": "impl"
+  },
+  "impl-makefile-v2": {
+    "active": true,
+    "id": "4be9-6ae4-41dd-280e",
     "status": "verified",
     "type": "impl"
   },
@@ -480,8 +492,14 @@
     "type": "impl"
   },
   "impl-package-guard": {
-    "active": true,
+    "active": false,
     "id": "4be9-6ae3-f13e-712f",
+    "status": "superseded",
+    "type": "impl"
+  },
+  "impl-package-guard-v2": {
+    "active": true,
+    "id": "4be9-6ae4-41dd-6771",
     "status": "verified",
     "type": "impl"
   },
@@ -828,8 +846,14 @@
     "type": "req"
   },
   "req-makefile-targets": {
-    "active": true,
+    "active": false,
     "id": "0f87-6ae3-7ce1-fb2e",
+    "status": "superseded",
+    "type": "req"
+  },
+  "req-makefile-targets-v2": {
+    "active": true,
+    "id": "4be9-6ae4-41db-88b2",
     "status": "confirmed",
     "type": "req"
   },
@@ -864,8 +888,14 @@
     "type": "req"
   },
   "req-package-guard": {
-    "active": true,
+    "active": false,
     "id": "4be9-6ae3-f12c-682d",
+    "status": "superseded",
+    "type": "req"
+  },
+  "req-package-guard-v2": {
+    "active": true,
+    "id": "4be9-6ae4-41dc-de55",
     "status": "confirmed",
     "type": "req"
   },
@@ -1094,6 +1124,12 @@
   "t-search-summary": {
     "active": true,
     "id": "4be9-6ae4-4051-4945",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-set-version": {
+    "active": true,
+    "id": "4be9-6ae4-41de-e0cb",
     "status": "passing",
     "type": "test"
   },

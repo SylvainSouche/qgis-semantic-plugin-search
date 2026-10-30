@@ -2,10 +2,10 @@
 #
 # Naming convention: UpperCamelCase classes and modules, Qt style camelCase
 # methods, matching the surrounding PyQt ecosystem.
-# @impl 0f87-6ae3-7ce1-c703
+# @impl 4be9-6ae4-41db-88b2
 
 .DEFAULT_GOAL := help
-.PHONY: help test smoke fetch embed package clean clean-all _venv
+.PHONY: help test smoke fetch embed dist version increment clean clean-all _venv
 
 PLUGIN := SemanticPluginSearch
 DATA_DIR := data
@@ -15,12 +15,17 @@ MODEL := $(BUILD_DIR)/EmbeddingModel.npz
 MODEL_ID ?= static-potion-base-8M
 HF_BASE ?= https://huggingface.co/minishlab/potion-base-8M/resolve/bf8b056651a2c21b8d2565580b8569da283cab23
 PY := .venv/bin/python
-VERSION := $(shell sed -n 's/^version=\(.*\)/\1/p' $(PLUGIN)/metadata.txt)
+# The current version, read from metadata.txt. `make version VERSION=x.y.z`
+# overrides it on the command line to set a new one.
+CURRENT_VERSION := $(shell sed -n 's/^version=\(.*\)/\1/p' $(PLUGIN)/metadata.txt)
+VERSION ?= $(CURRENT_VERSION)
+# Model tooling kept in build/ across `make clean` (discovery-driven dev scripts).
+KEEP_IN_BUILD := ddd ddd-scripts.tgz
 QGIS_VERSIONS ?= 3.44 4.2
 FETCH_CONNECTIONS ?= 8
 
 help: ## Show this help and how to install the plugin
-	@echo "QGIS Semantic Plugin Search $(VERSION)"
+	@echo "QGIS Semantic Plugin Search $(CURRENT_VERSION)"
 	@echo
 	@echo "Targets:"
 	@awk -F ':.*## ' '/^[a-zA-Z0-9_-]+:.*## / { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
@@ -29,11 +34,13 @@ help: ## Show this help and how to install the plugin
 	@echo "  QGIS_VERSIONS=$(QGIS_VERSIONS)   version filter used by fetch and embed"
 	@echo "  FETCH_CONNECTIONS=$(FETCH_CONNECTIONS)     parallel readme downloads"
 	@echo "  ARGS=\"-k ranking\"        extra pytest arguments for 'test'"
+	@echo "  VERSION=0.4.1            new version for 'version'"
+	@echo "  inc=maj|min|rel          part to bump for 'increment'"
 	@echo
 	@echo "Install in QGIS:"
-	@echo "  1. make package"
+	@echo "  1. make dist"
 	@echo "  2. In QGIS: Plugins > Manage and Install Plugins > Install from ZIP,"
-	@echo "     and pick dist/$(PLUGIN).$(VERSION).zip"
+	@echo "     and pick dist/$(PLUGIN).$(CURRENT_VERSION).zip"
 	@echo "  Or copy the $(PLUGIN)/ folder into the profile plugins directory:"
 	@echo "     macOS   ~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/"
 	@echo "     Linux   ~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/"
@@ -89,22 +96,33 @@ embed: _venv $(MODEL) ## Embed the fetched plugins into per universe databases; 
 	done
 	@echo "==> Databases:"; ls -lh $(BUILD_DIR)/Embeddings-*.sqlite
 
-# @impl 4be9-6ae3-f12c-682d
-package: test ## Run the tests, then package the plugin as a zip in dist/, ready for QGIS
-	@test -n "$(VERSION)" || { echo "Cannot read the version from $(PLUGIN)/metadata.txt"; exit 1; }
+# @impl 4be9-6ae4-41dc-de55
+dist: test ## Run the tests, then package the plugin as dist/<plugin>.<version>.zip, ready for QGIS
+	@test -n "$(CURRENT_VERSION)" || { echo "Cannot read the version from $(PLUGIN)/metadata.txt"; exit 1; }
 	@command -v zip >/dev/null || { echo "zip is required"; exit 1; }
 	@mkdir -p $(DIST_DIR)
-	@rm -f $(DIST_DIR)/$(PLUGIN).$(VERSION).zip
-	@zip -rq $(DIST_DIR)/$(PLUGIN).$(VERSION).zip $(PLUGIN) \
+	@rm -f $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip
+	@zip -rq $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip $(PLUGIN) \
 		-x "*__pycache__*" -x "*.pyc" -x "*.DS_Store"
-	@echo "==> Packaged $(DIST_DIR)/$(PLUGIN).$(VERSION).zip"
-	@ls -lh $(DIST_DIR)/$(PLUGIN).$(VERSION).zip
+	@echo "==> Packaged $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip"
+	@ls -lh $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip
 
-clean: ## Remove generated files (build/, dist/, caches); keeps data/ and .venv/
-	@rm -rf $(BUILD_DIR) $(DIST_DIR) .pytest_cache .ruff_cache
+version: _venv ## Set the plugin version: make version VERSION=0.4.1 (adds a changelog entry to fill in)
+	@test "$(origin VERSION)" = "command line" || { echo "Usage: make version VERSION=x.y.z (current: $(CURRENT_VERSION))"; exit 1; }
+	@$(PY) tools/SetVersion.py --set $(VERSION)
+
+increment: _venv ## Bump the plugin version: make increment inc=maj|min|rel (adds a changelog entry to fill in)
+	@test -n "$(inc)" || { echo "Usage: make increment inc=maj|min|rel (current: $(CURRENT_VERSION))"; exit 1; }
+	@$(PY) tools/SetVersion.py --increment $(inc)
+
+clean: ## Remove generated files (build/ except the model tooling, dist/, caches); keeps data/ and .venv/
+	@if [ -d $(BUILD_DIR) ]; then \
+		find $(BUILD_DIR) -mindepth 1 -maxdepth 1 $(foreach keep,$(KEEP_IN_BUILD),! -name $(keep)) -exec rm -rf {} +; \
+	fi
+	@rm -rf $(DIST_DIR) .pytest_cache .ruff_cache
 	@find . -path ./.venv -prune -o -type d -name '__pycache__' -exec rm -rf {} +
-	@find . -path ./.venv -prune -o -type f -name '*.pyc' -delete
-	@echo "==> Removed build, dist and caches (kept $(DATA_DIR)/ and .venv/)"
+	@find . -path ./.venv -prune -o -type f -name '*.pyc' -exec rm -f {} +
+	@echo "==> Removed build, dist and caches (kept $(DATA_DIR)/, .venv/ and $(BUILD_DIR)/ddd)"
 
 clean-all: ## Remove everything clean removes, plus data/ (fetched plugins data) and .venv/
 	@$(MAKE) --no-print-directory clean

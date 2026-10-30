@@ -73,4 +73,4 @@ def test_every_private_self_attribute_read_is_defined():
                     relative = path.relative_to(PLUGIN_ROOT.parent)
                     problems.append(f"{relative}:{line} {cls.name} reads self.{name}")
     assert not problems, "undefined private attributes:\n" + "\n".join(problems)
-# @impl 4be9-6ae3-f12c-682d
+# @impl 4be9-6ae4-41dc-de55
