@@ -1,9 +1,10 @@
 """Asset orchestration: keep the cached model and database current.
 
-On window opening this controller checks the published index in the
-background, downloads anything stale or missing for the running QGIS
-universe, and hands the fresh store back in one atomic step. Every failure
-leaves the previous cache untouched and usable.
+Opening the window loads the LOCAL cache immediately (offline safe, no
+round trip) and then checks the published index in the background; the
+fresh store is only handed back when something actually changed, so the
+user's selection never jumps after a no-op refresh. Every failure leaves
+the previous cache untouched and usable.
 
 This module is part of the Controllers layer: it must import neither qgis nor Qt.
 """
@@ -15,7 +16,11 @@ from pathlib import Path
 from typing import Callable
 
 from ..Data.AssetGateways import ChecksumMismatch, TransportError
-from ..Data.SqliteVectorStore import DatabaseMissingError, SqliteVectorStore
+from ..Data.SqliteVectorStore import (
+    DatabaseMissingError,
+    SqliteVectorStore,
+    readDatabaseMeta,
+)
 from ..Domain.Entities import RemoteIndex
 from ..Domain.Ports import (
     AssetGateway,
@@ -49,31 +54,47 @@ class AssetsController:
         self.onStoreReady = onStoreReady
 
     def refresh(self) -> None:
-        """Check the index and update the cache for this QGIS universe."""
+        """Load the cache at once, then check the index in the background.
+
+        Two jobs, one event each: the cached store reaches the window
+        without any network round trip (offline first), and the refresh
+        only re-delivers when a download changed something.
+        """
+        self.runner.submit(
+            self._loadCachedTask, self.onStoreReady, lambda error: None
+        )
         self.runner.submit(self._refreshTask, self._onRefreshed, self._onRefreshFailed)
 
-    def _refreshTask(self) -> PluginVectorStore:
+    def _loadCachedTask(self) -> PluginVectorStore:
+        return SqliteVectorStore.open(
+            self.paths.databasePath(self.versionProvider.universe())
+        )
+
+    def _refreshTask(self) -> PluginVectorStore | None:
         index = self.gateway.fetchIndex()
         universe = self.versionProvider.universe()
-        self.ensureModel(index)
-        self.ensureDatabase(index, universe)
+        modelChanged = self.ensureModel(index)
+        databaseChanged = self.ensureDatabase(index, universe)
+        if not (modelChanged or databaseChanged):
+            return None
         return SqliteVectorStore.open(self.paths.databasePath(universe))
 
-    def ensureModel(self, index: RemoteIndex) -> None:
-        """Download the embedding model when missing or different from published."""
+    def ensureModel(self, index: RemoteIndex) -> bool:
+        """Download the embedding model when missing or stale; True if so."""
         modelPath = self.paths.modelPath()
         stampPath = self.paths.cacheDir() / MODEL_STAMP_NAME
         if modelPath.is_file() and _stampMatches(stampPath, index.model.sha256):
-            return
+            return False
         self.reporter.info("Downloading the embedding model…")
         self.gateway.downloadVerified(index.model, modelPath)
         stampPath.parent.mkdir(parents=True, exist_ok=True)
         stampPath.write_text(
             json.dumps({"sha256": index.model.sha256}), encoding="utf-8"
         )
+        return True
 
-    def ensureDatabase(self, index: RemoteIndex, universe: str) -> None:
-        """Download the universe database when missing or older than published."""
+    def ensureDatabase(self, index: RemoteIndex, universe: str) -> bool:
+        """Download the universe database when missing or stale; True if so."""
         release = index.universes.get(universe)
         if release is None:
             raise RuntimeError(f"No published database for QGIS {universe}.")
@@ -81,16 +102,18 @@ class AssetsController:
         if databasePath.is_file():
             localStamp = _localBuildStamp(databasePath)
             if localStamp and not _stampIsNewer(localStamp, release.buildStamp):
-                return
+                return False
             self.reporter.info(
                 f"Updating the embeddings database (build {release.buildStamp})…"
             )
         else:
             self.reporter.info("Downloading the embeddings database (first run only)…")
         self.gateway.downloadVerified(release.database, databasePath)
+        return True
 
-    def _onRefreshed(self, store: PluginVectorStore) -> None:
-        self.onStoreReady(store)
+    def _onRefreshed(self, store: PluginVectorStore | None) -> None:
+        if store is not None:
+            self.onStoreReady(store)
 
     def _onRefreshFailed(self, error: Exception) -> None:
         if isinstance(error, ChecksumMismatch):
@@ -99,7 +122,11 @@ class AssetsController:
             self.reporter.error(
                 f"Downloaded embeddings asset failed its integrity check: {error}"
             )
-        elif isinstance(error, (TransportError, DatabaseMissingError)):
+        elif isinstance(error, DatabaseMissingError):
+            # No cache yet: the refresh job downloads it and reports its own
+            # outcome; nothing to add here.
+            return
+        elif isinstance(error, TransportError):
             self.reporter.warn(
                 f"Cannot refresh the embeddings assets ({error}); using cached data."
             )
@@ -133,8 +160,9 @@ def _stampMatches(stampPath: Path, sha256: str) -> bool:
 
 
 def _localBuildStamp(databasePath: Path) -> str:
+    """Read only the build stamp, without loading the whole store."""
     try:
-        return SqliteVectorStore.open(databasePath).buildStamp()
+        return readDatabaseMeta(databasePath, "build_stamp")
     except (DatabaseMissingError, ValueError, OSError):
         return ""
 

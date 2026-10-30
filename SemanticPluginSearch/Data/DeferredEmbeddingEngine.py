@@ -26,6 +26,14 @@ class DeferredEmbeddingEngine:
         """Size the placeholder vectors to the store dimension."""
         self._expectedDimension = int(dimension)
 
+    def modelId(self) -> str | None:
+        """The loaded model id, or None while nothing is loaded."""
+        return self.engine.modelId() if self.engine is not None else None
+
+    def reset(self) -> None:
+        """Drop the loaded model so the next query reloads the file."""
+        self.engine = None
+
     def ensureLoaded(self) -> bool:
         if self.engine is not None:
             return True

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import re
 import xml.etree.ElementTree as ET
+import zlib
 from dataclasses import dataclass
 
 
@@ -86,7 +87,8 @@ def _parsePluginElement(element: ET.Element) -> PluginRecord | None:
     try:
         numericId = int(element.get("plugin_id", pluginId))
     except ValueError:
-        numericId = abs(hash(pluginId)) % (10**9)
+        # A stable fallback id: hash() changes with PYTHONHASHSEED.
+        numericId = zlib.crc32(pluginId.encode("utf-8"))
     return PluginRecord(
         pluginId=numericId,
         name=element.get("name", pluginId),

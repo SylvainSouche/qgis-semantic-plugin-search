@@ -53,7 +53,7 @@ class SqliteVectorStore(PluginVectorStore):
         self._matrix = matrix
 
     @staticmethod
-    def open(path: Path) -> "SqliteVectorStore":
+    def open(path: Path) -> SqliteVectorStore:
         """Open the database at path or raise DatabaseMissingError."""
         if not path.is_file():
             raise DatabaseMissingError(str(path))
@@ -118,6 +118,20 @@ class SqliteVectorStore(PluginVectorStore):
 
     def meta(self) -> dict[str, str]:
         return dict(self._meta)
+
+
+def readDatabaseMeta(databasePath: Path, key: str) -> str:
+    """Read one meta value without loading the whole store."""
+    connection = sqlite3.connect(f"file:{databasePath}?mode=ro", uri=True)
+    try:
+        row = connection.execute(
+            "SELECT value FROM meta WHERE key = ?", (key,)
+        ).fetchone()
+    finally:
+        connection.close()
+    if row is None:
+        raise ValueError(f"meta key not found: {key}")
+    return str(row[0])
 
 
 def _rowToInfo(row: tuple) -> PluginInfo:

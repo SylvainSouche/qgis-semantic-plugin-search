@@ -53,9 +53,21 @@
     "status": "assumed",
     "type": "asm"
   },
+  "cand-ci-qgis-smoke": {
+    "active": true,
+    "id": "0f87-6ae3-e6f9-515e",
+    "status": "open",
+    "type": "cand"
+  },
   "cand-configurable-settings": {
     "active": true,
     "id": "0f87-6ae3-b62e-5936",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-golden-query-eval": {
+    "active": true,
+    "id": "0f87-6ae3-e6f9-8631",
     "status": "open",
     "type": "cand"
   },
@@ -71,9 +83,27 @@
     "status": "open",
     "type": "cand"
   },
+  "cand-installed-badge": {
+    "active": true,
+    "id": "0f87-6ae3-e6f9-54e1",
+    "status": "open",
+    "type": "cand"
+  },
   "cand-multilingual-model": {
     "active": true,
     "id": "0f87-6ae3-b62e-1a1e",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-relative-cutoff": {
+    "active": true,
+    "id": "0f87-6ae3-e6f9-6d78",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-signed-releases": {
+    "active": true,
+    "id": "0f87-6ae3-e6f9-bdfe",
     "status": "open",
     "type": "cand"
   },
@@ -122,6 +152,12 @@
   "dec-engineering-rules": {
     "active": true,
     "id": "0f87-6ae3-6956-371e",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-event-discipline": {
+    "active": true,
+    "id": "0f87-6ae3-e355-8355",
     "status": "recorded",
     "type": "dec"
   },
@@ -212,6 +248,12 @@
   "dec-review-fixes": {
     "active": true,
     "id": "0f87-6ae3-b62e-3aa5",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-review-two-fixes": {
+    "active": true,
+    "id": "0f87-6ae3-e6f9-5a9f",
     "status": "recorded",
     "type": "dec"
   },
@@ -473,6 +515,12 @@
     "status": "recorded",
     "type": "obs"
   },
+  "obs-second-review": {
+    "active": true,
+    "id": "0f87-6ae3-e6f9-963a",
+    "status": "recorded",
+    "type": "obs"
+  },
   "obs-smoke-both-families": {
     "active": true,
     "id": "0f87-6ae3-a99a-36dd",
@@ -530,6 +578,12 @@
   "req-db-version-match": {
     "active": true,
     "id": "0f87-6ae3-6985-6264",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-event-discipline": {
+    "active": true,
+    "id": "0f87-6ae3-e355-74a5",
     "status": "confirmed",
     "type": "req"
   },

@@ -10,7 +10,6 @@ from SemanticPluginSearch.Data.AssetGateways import _VerifiedDownloader
 from SemanticPluginSearch.Data.DeferredEmbeddingEngine import DeferredEmbeddingEngine
 from SemanticPluginSearch.Data.StaticModelLoader import NpzStaticModel
 from SemanticPluginSearch.Domain.EmbeddingEngine import StaticEmbeddingEngine
-from SemanticPluginSearch.Domain.SearchEngine import SearchService
 from SemanticPluginSearch.Controllers.AssetsController import _stampIsNewer
 from tests.conftest import fixtureTokenizer
 
@@ -61,7 +60,7 @@ def test_unk_tokens_do_not_pollute_the_average(modelPath):
 
 def test_verified_downloader_enforces_a_size_cap(tmp_path):
     downloader = _VerifiedDownloader(
-        transport=lambda url: b"x" * 60, maxBytes=50
+        transport=lambda url, maxBytes=None: b"x" * 60, maxBytes=50
     )
     remote = RemoteFile(url="https://x.test/big.npz", sha256="", bytes=0)
     with pytest.raises(TransportError, match="too large"):

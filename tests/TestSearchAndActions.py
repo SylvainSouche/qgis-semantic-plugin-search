@@ -3,12 +3,10 @@ delegated to the manager gateway (t-actions-delegate, nreq-no-own-install).
 """
 from __future__ import annotations
 
-import pytest
 
 from SemanticPluginSearch.Controllers.ActionController import ActionController
 from SemanticPluginSearch.Controllers.SearchController import SearchController
 from SemanticPluginSearch.Domain.Entities import ActionStates, PluginInfo, SearchResult
-from SemanticPluginSearch.Domain.SearchEngine import SearchService
 from tests.conftest import FakePluginManagerGateway, FakeReporter, FakeView
 
 
@@ -19,9 +17,13 @@ class StubSearchService:
         self.results = results
         self.calls: list[str] = []
 
-    def search(self, store, text, limit: int = 30) -> list[SearchResult]:  # noqa: ANN001
+    def search(self, store, text, limit: int = 30, infos=None, predicate=None):  # noqa: ANN001, ANN202
         self.calls.append(text)
-        return self.results
+        return [
+            result
+            for result in self.results
+            if predicate is None or predicate(result.info)
+        ]
 
 
 def makeInfo(pluginId: int, name: str, experimental=False, deprecated=False) -> PluginInfo:  # noqa: ANN001
@@ -180,3 +182,33 @@ def test_results_of_applies_the_filters():
     assert [r.info.name for r in controller.resultsOf("q")] == ["Standard"]
     controller.setFilters(True, True)
     assert [r.info.name for r in controller.resultsOf("q")] == ["Standard", "Trial"]
+
+
+# ------------------------------------------------------- query suppression
+
+
+def test_every_search_event_runs_even_with_the_same_text():
+    """Query multiplication is prevented at the view (debounce); the
+    controller runs every event because filters and stores may have
+    changed between two identical texts."""
+    view = FakeView()
+    service = StubSearchService([SearchResult(makeInfo(1, "A"), 0.9)])
+    controller = SearchController(engine=None, searchService=service, reporter=FakeReporter())
+    controller.store = object()
+    controller.search(view, "parcel")
+    controller.search(view, "parcel")
+    assert service.calls == ["parcel", "parcel"]
+    controller.setFilters(True, False)
+    controller.search(view, "parcel")
+    assert service.calls == ["parcel", "parcel", "parcel"]
+
+
+def test_fresh_store_researches_the_same_query():
+    view = FakeView()
+    service = StubSearchService([SearchResult(makeInfo(1, "A"), 0.9)])
+    controller = SearchController(engine=None, searchService=service, reporter=FakeReporter())
+    controller.store = object()
+    controller.search(view, "parcel")
+    controller.setStore(object())  # a refreshed store invalidates the query
+    controller.search(view, "parcel")
+    assert service.calls == ["parcel", "parcel"]

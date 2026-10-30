@@ -19,24 +19,30 @@ class DetailsController:
         self.readmeGateway = readmeGateway
         self.runner = runner
         self._displayedPluginId: int | None = None
+        self._inflightReadmes: set[int] = set()
 
     def showDetails(self, view: SearchWindowView, info: PluginInfo) -> None:
         """Display metadata for the plugin and start its readme fetch."""
         self._displayedPluginId = info.pluginId
         view.showMetadata(info)
         if info.readmeUrl or info.repository:
-            view.showReadmePlaceholder(info.pluginId, "Loading readme…")
-            self.runner.submit(
-                lambda: self.readmeGateway.fetchReadme(info),
-                lambda text: self._onReadme(view, info, text),
-                lambda error: self._onReadmeFailure(view, info, error),
-            )
+            if info.pluginId not in self._inflightReadmes:
+                # One background fetch per plugin at a time: reselecting the
+                # same row never multiplies identical jobs.
+                view.showReadmePlaceholder(info.pluginId, "Loading readme…")
+                self._inflightReadmes.add(info.pluginId)
+                self.runner.submit(
+                    lambda: self.readmeGateway.fetchReadme(info),
+                    lambda text, info=info: self._onReadme(view, info, text),
+                    lambda error, info=info: self._onReadmeFailure(view, info, error),
+                )
         else:
             view.showReadmePlaceholder(
                 info.pluginId, "No readme is available for this plugin."
             )
 
     def _onReadme(self, view: SearchWindowView, info: PluginInfo, text: str) -> None:
+        self._inflightReadmes.discard(info.pluginId)
         # The job completed after the selection moved on: drop the result.
         if self._displayedPluginId != info.pluginId:
             return
@@ -45,6 +51,7 @@ class DetailsController:
     def _onReadmeFailure(
         self, view: SearchWindowView, info: PluginInfo, error: Exception
     ) -> None:
+        self._inflightReadmes.discard(info.pluginId)
         if self._displayedPluginId != info.pluginId:
             return
         view.showReadmePlaceholder(

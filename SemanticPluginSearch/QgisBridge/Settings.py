@@ -13,19 +13,20 @@ from qgis.PyQt.QtCore import QSettings
 ORGANIZATION = "SemanticPluginSearch"
 APPLICATION = "SemanticPluginSearch"
 INDEX_URL_KEY = "embeddings/indexUrl"
+RELEASE_TAG = "embeddings"
 UI_PREFIX = f"{ORGANIZATION}/ui"
 UI_INCLUDE_EXPERIMENTAL = f"{UI_PREFIX}/includeExperimental"
 UI_INCLUDE_DEPRECATED = f"{UI_PREFIX}/includeDeprecated"
 UI_GEOMETRY = f"{UI_PREFIX}/geometry"
 UI_SPLITTER = f"{UI_PREFIX}/splitter"
-# Placeholder repository: replace once the project GitHub repository is
-# chosen; see README.md.
 DEFAULT_REPOSITORY = "SylvainSouche/qgis-semantic-plugin-search"
 
 
 def defaultIndexUrl() -> str:
+    # The fixed "embeddings" tag, not releases/latest: any other release
+    # marked Latest would otherwise break the update channel.
     return (
-        f"https://github.com/{DEFAULT_REPOSITORY}/releases/latest/download/index.json"
+        f"https://github.com/{DEFAULT_REPOSITORY}/releases/download/embeddings/index.json"
     )
 
 

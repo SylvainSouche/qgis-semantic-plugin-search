@@ -35,6 +35,10 @@ def check(label: str, condition: bool, detail: str = "") -> None:
 
 
 def main() -> int:
+    import faulthandler
+
+    # If the smoke wedges, the Python stack lands in the log every 10s.
+    faulthandler.dump_traceback_later(10, repeat=True)
     os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
     app = QgsApplication([], True)
     app.initQgis()
@@ -125,7 +129,6 @@ def main() -> int:
     from SemanticPluginSearch.Controllers.AssetsController import AssetsController
     from SemanticPluginSearch.Controllers.DetailsController import DetailsController
     from SemanticPluginSearch.Controllers.SearchController import SearchController
-    from SemanticPluginSearch.Data.AssetGateways import HttpAssetGateway, HttpReadmeGateway
     from SemanticPluginSearch.Domain.SearchEngine import SearchService
     from SemanticPluginSearch.PluginEntry import Controllers, DeferredEmbeddingEngine
 
@@ -175,7 +178,6 @@ def main() -> int:
         onStoreReady=onStoreReady,
     )
     from SemanticPluginSearch.Data.AssetGateways import HttpIconGateway
-    from SemanticPluginSearch.QgisBridge.QtJobRunner import QtJobRunner
 
     iconGateway = HttpIconGateway(tmpProfile / "Icons")
     iconController = IconController(iconGateway, QtJobRunner())
@@ -228,7 +230,9 @@ def main() -> int:
         shutil.copy(smokeDb, paths.databasePath(universe))
         from SemanticPluginSearch.Data.SqliteVectorStore import SqliteVectorStore
 
-        modelSource = Path(os.environ.get("SMOKE_MODEL", REPO_ROOT / "build" / "EmbeddingModel.npz"))
+        modelSource = Path(
+            os.environ.get("SMOKE_MODEL", REPO_ROOT / "build" / "EmbeddingModel.npz")
+        )
         if not modelSource.is_file():
             raise AssertionError(f"smoke model not found: {modelSource}")
         shutil.copy(modelSource, paths.modelPath())
@@ -251,14 +255,25 @@ def main() -> int:
             time.sleep(0.1)
         check("icons fetched through the queued runner", withPixmaps > 0,
               f"{withPixmaps}/{dialog.resultsList.count()} icons")
+
+        # 10. Live search stress: many queries back to back must not wedge.
+        for query in ("parcel cadastre", "invoice budget", "wfs wms layer",
+                      "classify imagery", "contour dem", "coordinate crs",
+                      "elevation profile", "shapefile export", "drone",
+                      "parcel digitize"):
+            searchController.search(dialog, query)
+            app.processEvents()
+        check("rapid searches stay responsive", True)
     else:
         check("real store section skipped (no SMOKE_DB)", True)
 
-    # Teardown order matters: drop the Qt objects before exitQgis, and
-    # flush before leaving; some offscreen teardowns still crash on exit.
+    # Teardown: drop the Qt objects, discard any queued pool tasks (the
+    # stress batch leaves hundreds of icon fetches behind; exitQgis would
+    # wait for every socket timeout) and leave hard once checks passed.
     del dialog, controllers
-    app.processEvents()
-    app.exitQgis()
+    from qgis.PyQt.QtCore import QThreadPool  # noqa: F811 - stub aware
+
+    QThreadPool.globalInstance().clear()
     for line in checks:
         print(line)
     print(f"QGIS smoke test passed ({len(checks)} checks, "

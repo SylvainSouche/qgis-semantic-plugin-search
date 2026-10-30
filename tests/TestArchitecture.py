@@ -108,7 +108,9 @@ def test_qt_and_qgis_enums_use_scoped_access():
                 offenders.append(
                     f"{path}:{line}: {match.group(0)} - use {scopedForm}"
                 )
-    assert offenders == [], "Unscoped enum access (breaks on PyQt6/QGIS 4):\n" + "\n".join(offenders)
+    assert offenders == [], (
+        "Unscoped enum access (breaks on PyQt6/QGIS 4):\n" + "\n".join(offenders)
+    )
 
 
 def test_message_bar_is_only_touched_by_the_thread_safe_reporter():

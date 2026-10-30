@@ -6,16 +6,21 @@ on:
     - cron: "0 3 * * 1"
   workflow_dispatch:
 
-permissions:
-  contents: write
+concurrency:
+  group: build-embeddings
+  cancel-in-progress: false
 
 jobs:
   model:
     name: Convert static model
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      # Action SHAs pinned to the commits their tags pointed at when this
+      # workflow was written; bump deliberately.
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v5
         with:
           python-version: "3.12"
       - name: Install numpy
@@ -25,11 +30,14 @@ jobs:
           mkdir -p build/model
           # minishlab/potion-base-8M: MIT licensed, distilled from the
           # Apache-2.0 all-MiniLM-L6-v2, so redistribution is allowed.
+          # The revision and the artifact checksum are pinned: a moved
+          # main branch or a changed file must fail the build.
           curl -fL --retry 3 \
-            https://huggingface.co/minishlab/potion-base-8M/resolve/main/model.safetensors \
+            https://huggingface.co/minishlab/potion-base-8M/resolve/bf8b056651a2c21b8d2565580b8569da283cab23/model.safetensors \
             -o build/model/model.safetensors
+          echo "f65d0f325faadc1e121c319e2faa41170d3fa07d8c89abd48ca5358d9a223de2  build/model/model.safetensors" | sha256sum --check -
           curl -fL --retry 3 \
-            https://huggingface.co/minishlab/potion-base-8M/resolve/main/tokenizer.json \
+            https://huggingface.co/minishlab/potion-base-8M/resolve/bf8b056651a2c21b8d2565580b8569da283cab23/tokenizer.json \
             -o build/model/tokenizer.json
       - name: Convert to the distributed .npz format
         run: |
@@ -39,7 +47,7 @@ jobs:
             --source-model "minishlab/potion-base-8M" \
             --license-note "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed" \
             --output build/EmbeddingModel.npz
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v4
         with:
           name: embedding-model
           path: build/EmbeddingModel.npz
@@ -48,16 +56,18 @@ jobs:
     name: Embeddings for QGIS ${{ matrix.version }}
     runs-on: ubuntu-latest
     needs: model
+    permissions:
+      contents: read
     strategy:
       matrix:
         version: ["3.44", "4.2"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v5
         with:
           python-version: "3.12"
       - run: python -m pip install numpy
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v4
         with:
           name: embedding-model
           path: build
@@ -74,7 +84,7 @@ jobs:
             --model build/EmbeddingModel.npz \
             --universe ${{ contains(matrix.version, '4.') && '4' || '3' }} \
             --output build/Embeddings-${{ contains(matrix.version, '4.') && '4' || '3' }}.sqlite
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v4
         with:
           name: embeddings-${{ matrix.version }}
           path: build/Embeddings-*.sqlite
@@ -83,21 +93,23 @@ jobs:
     name: Publish release and index
     runs-on: ubuntu-latest
     needs: [model, database]
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v5
         with:
           python-version: "3.12"
       - run: python -m pip install numpy
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v4
         with:
           name: embedding-model
           path: build
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v4
         with:
           name: embeddings-3.44
           path: build
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v4
         with:
           name: embeddings-4.2
           path: build
@@ -107,16 +119,26 @@ jobs:
             --model build/EmbeddingModel.npz \
             --database 3=build/Embeddings-3.sqlite \
             --database 4=build/Embeddings-4.sqlite \
-            --base-url "https://github.com/${{ github.repository }}/releases/latest/download" \
+            --base-url "https://github.com/${{ github.repository }}/releases/download/embeddings" \
             --output build/index.json
-      - name: Publish to the embeddings release
-        uses: softprops/action-gh-release@v2
+      - name: Sanity gate against the previous release
+        run: |
+          python pipeline/PublishGate.py \
+            --index build/index.json \
+            --previous-url "https://github.com/${{ github.repository }}/releases/download/embeddings/index.json"
+      - name: Publish the binaries to the embeddings release
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
           tag_name: embeddings
           name: Embeddings database
-          make_latest: true
+          make_latest: false
           files: |
             build/EmbeddingModel.npz
             build/Embeddings-3.sqlite
             build/Embeddings-4.sqlite
-            build/index.json
+      - name: Publish the index last
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # The index must land after the binaries it points at, or a client
+        # could fetch new checksums for still old files.
+        run: gh release upload embeddings --clobber build/index.json

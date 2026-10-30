@@ -1,6 +1,11 @@
 """Metadata form of the right panel."""
 from __future__ import annotations
 
+from html import escape
+from urllib.parse import urlparse
+
+
+from qgis.PyQt.QtGui import QDesktopServices
 from qgis.PyQt.QtWidgets import (
     QFormLayout,
     QLabel,
@@ -31,7 +36,9 @@ class MetadataPanel(QWidget):
         self.statsLabel = QLabel(self)
         self.aboutCaption = QLabel(self.tr("About:"))
         self.linksView = QTextBrowser(self)
-        self.linksView.setOpenExternalLinks(True)
+        self.linksView.setOpenLinks(False)
+        self.linksView.setOpenExternalLinks(False)
+        self.linksView.anchorClicked.connect(self._openLink)
         self.linksView.setMaximumHeight(70)
 
         form = QFormLayout()
@@ -79,14 +86,27 @@ class MetadataPanel(QWidget):
         return f"{info.downloads} downloads{vote}"
 
     @staticmethod
-    def _linksHtml(info: PluginInfo) -> str:
-        links = []
-        if info.homepage:
-            links.append(f'<a href="{info.homepage}">Homepage</a>')
-        if info.repository:
-            links.append(f'<a href="{info.repository}">Repository</a>')
-        if info.tracker:
-            links.append(f'<a href="{info.tracker}">Tracker</a>')
-        if info.downloadUrl:
-            links.append(f'<a href="{info.downloadUrl}">Download</a>')
+    def _link(label: str, url: str) -> str:
+        """An escaped link, only for web schemes the OS should open."""
+        if urlparse(url).scheme.lower() not in ("http", "https"):
+            return ""
+        return f'<a href="{escape(url, quote=True)}">{escape(label)}</a>'
+
+    def _openLink(self, url) -> None:  # noqa: ANN001 - QUrl
+        """Only web schemes reach the OS; catalogue text is not trusted."""
+        if url.scheme().lower() in ("http", "https"):
+            QDesktopServices.openUrl(url)
+
+    @classmethod
+    def _linksHtml(cls, info: PluginInfo) -> str:
+        links = [
+            link
+            for link in (
+                cls._link("Homepage", info.homepage),
+                cls._link("Repository", info.repository),
+                cls._link("Tracker", info.tracker),
+                cls._link("Download", info.downloadUrl),
+            )
+            if link
+        ]
         return " · ".join(links) or "—"

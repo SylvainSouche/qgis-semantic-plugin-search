@@ -51,6 +51,8 @@ class SemanticPluginSearchPlugin:
     def __init__(self, iface) -> None:  # noqa: ANN001 - QgisInterface
         self.iface = iface
         self.engine = None
+        self.reporter = None
+        self.runner = None
         self.action: QAction | None = None
         self.dialog = None  # SearchDialog, created on first open
         self.controllers: Controllers | None = None
@@ -74,18 +76,24 @@ class SemanticPluginSearchPlugin:
 
     def unload(self) -> None:
         if self.action is not None:
+            self.action.triggered.disconnect(self.openDialog)
             self.iface.removePluginMenu("&Semantic Plugin Search", self.action)
             self.iface.removeToolBarIcon(self.action)
+            self.action.deleteLater()
+            self.action = None
         if self.dialog is not None:
             self.dialog.close()
+            self.dialog.deleteLater()
             self.dialog = None
+        self.controllers = None
+        self.engine = None
 
     def openDialog(self) -> None:
         if self.dialog is None:
             self.controllers = self._buildControllers()
             from .Presentation.SearchDialog import SearchDialog
 
-            self.dialog = SearchDialog(self.controllers)
+            self.dialog = SearchDialog(self.controllers, self.iface.mainWindow())
         self.dialog.show()
         self.dialog.raise_()
         self.dialog.activateWindow()
@@ -94,9 +102,11 @@ class SemanticPluginSearchPlugin:
 
     def _buildControllers(self) -> Controllers:
         reporter = MessageBarReporter(self.iface)
+        self.reporter = reporter
         paths = ProfilePathsProvider()
         versionProvider = QgisVersionProvider()
         runner = QtJobRunner()
+        self.runner = runner
         gateway = HttpAssetGateway(indexUrl=configuredIndexUrl())
         readmeGateway = HttpReadmeGateway()
         actionsGateway = PluginInstallerGateway(self.iface, reporter)
@@ -135,6 +145,36 @@ class SemanticPluginSearchPlugin:
         if self.engine is not None:
             # Size placeholder embeddings to the database before it is usable.
             self.engine.setExpectedDimension(store.modelDim())
+            # Load and validate the pairing off the GUI thread: parsing the
+            # 17 MB npz must never freeze the window, and a model that does
+            # not match the database must not rank anything.
+            self.runner.submit(
+                lambda: self._validatedStore(store),
+                lambda validated: self._activate(validated),
+                lambda error: self.reporter.error(
+                    f"The embedding model does not match the embeddings "
+                    f"database; search stays paused until the next update: {error}"
+                ),
+            )
+            return
+        self._activate(store)
+
+    def _validatedStore(self, store):  # noqa: ANN001, ANN202
+        self.engine.ensureLoaded()
+        loadedModelId = self.engine.modelId()
+        if loadedModelId is not None and loadedModelId != store.modelId():
+            self.engine.reset()
+            self.engine.ensureLoaded()
+            if self.engine.modelId() != store.modelId():
+                raise RuntimeError(
+                    f"model {self.engine.modelId()!r} cannot rank "
+                    f"database {store.modelId()!r}"
+                )
+        return store
+
+    def _activate(self, store) -> None:  # noqa: ANN001
+        if self.controllers is None or self.dialog is None:
+            return
         self.controllers.search.setStore(store)
         # Re-run the current query against the fresh store.
         self.controllers.search.search(self.dialog, self.dialog.queryEdit.text())

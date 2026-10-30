@@ -36,13 +36,9 @@ from ..QgisBridge.Settings import (
 )
 from .DetailsPanel import DetailsPanel
 
-ACTION_LABELS = (
-    ("install", "Install"),
-    ("upgrade", "Upgrade"),
-    ("reinstall", "Reinstall"),
-    ("uninstall", "Uninstall"),
-)
 LIVE_SEARCH_DELAY_MS = 300
+# A word boundary ends a thought: search at once instead of waiting.
+SEPARATORS = " \t\n.,;:!?()[]{}\"'-_/\\"
 DESCRIPTION_EXCERPT_CHARS = 110
 ICON_SIZE = 32
 SCORE_COLUMN_WIDTH = 56
@@ -102,8 +98,13 @@ class SearchDialog(QDialog):
         self.actionButtons: dict[str, QPushButton] = {}
         actionsRow = QHBoxLayout()
         actionsRow.addStretch(1)
-        for action, label in ACTION_LABELS:
-            button = QPushButton(self.tr(label), self)
+        for action, labelText in (
+            ("install", self.tr("Install")),
+            ("upgrade", self.tr("Upgrade")),
+            ("reinstall", self.tr("Reinstall")),
+            ("uninstall", self.tr("Uninstall")),
+        ):
+            button = QPushButton(labelText, self)
             button.setEnabled(False)
             self.actionButtons[action] = button
             actionsRow.addWidget(button)
@@ -147,8 +148,17 @@ class SearchDialog(QDialog):
 
     # ------------------------------------------------------- Qt callbacks
 
-    def _onQueryEdited(self, _text: str) -> None:
-        self.liveSearchTimer.start()
+    def _onQueryEdited(self, text: str) -> None:
+        """Debounce mid word typing; a separator ends a word, search at once.
+
+        The pending timer is restarted on every keystroke, so at most one
+        search is ever pending; a newer search supersedes the older one and
+        background deliverables (icons, readmes) carry staleness tokens.
+        """
+        if text and text[-1] in SEPARATORS:
+            self._onSearchRequested()
+        else:
+            self.liveSearchTimer.start()
 
     def _onSearchRequested(self) -> None:
         self.liveSearchTimer.stop()
@@ -227,7 +237,7 @@ class SearchDialog(QDialog):
             self.resultsList.setItemWidget(item, row)
         self.resultsList.blockSignals(False)
         self.countLabel.setText(self.tr("{} plugin(s)").format(len(self.results)))
-        self.controllers.icons.fetchFor(self.results, self._showIcon)
+        self.controllers.icons.fetchFor(self.results, self.applyIcons)
         if self.results:
             # Default the details to the first result when nothing is selected.
             self.resultsList.setCurrentRow(0)
@@ -259,7 +269,7 @@ class SearchDialog(QDialog):
         nameFont.setBold(True)
         nameLabel.setFont(nameFont)
         descriptionLabel = QLabel(self._excerpt(result.info.description), row)
-        descriptionFont = QFont("Times New Roman")
+        descriptionFont = QFont()
         descriptionFont.setStyleHint(QFont.StyleHint.Serif)
         descriptionFont.setPointSize(max(9, nameFont.pointSize() - 2))
         descriptionLabel.setFont(descriptionFont)
@@ -296,21 +306,25 @@ class SearchDialog(QDialog):
             text = text[:DESCRIPTION_EXCERPT_CHARS].rstrip() + "…"
         return text
 
-    def _showIcon(self, pluginId: int, payload: bytes) -> None:
-        """Icon bytes arrived from the background fetch; replace the slot."""
-        label = self._iconLabels.get(pluginId)
-        if label is None:
-            return  # the rows were rebuilt since the fetch started
-        pixmap = QPixmap()
-        if pixmap.loadFromData(payload):
-            label.setPixmap(
-                pixmap.scaled(
-                    ICON_SIZE,
-                    ICON_SIZE,
-                    Qt.AspectRatioMode.KeepAspectRatio,
-                    Qt.TransformationMode.SmoothTransformation,
+    def applyIcons(self, icons: list[tuple[int, bytes]]) -> None:
+        """A batch of fetched icons arrived; replace the slots in one pass.
+
+        Icons whose rows were rebuilt since the fetch started are dropped.
+        """
+        for pluginId, payload in icons:
+            label = self._iconLabels.get(pluginId)
+            if label is None:
+                continue
+            pixmap = QPixmap()
+            if pixmap.loadFromData(payload):
+                label.setPixmap(
+                    pixmap.scaled(
+                        ICON_SIZE,
+                        ICON_SIZE,
+                        Qt.AspectRatioMode.KeepAspectRatio,
+                        Qt.TransformationMode.SmoothTransformation,
+                    )
                 )
-            )
 
     def showStatus(self, message: str) -> None:
         self.statusLabel.setText(message)

@@ -194,7 +194,10 @@ class FakeInstallerDataModule:
 
 def test_installer_key_derives_from_file_name():
     gateway = makeGateway()
-    assert gateway._installerKey(FakeEntity("TopoProfile Studio", "topoprofilestudio.1.0.0.zip")) == "topoprofilestudio"
+    key = gateway._installerKey(
+        FakeEntity("TopoProfile Studio", "topoprofilestudio.1.0.0.zip")
+    )
+    assert key == "topoprofilestudio"
     assert gateway._installerKey(FakeEntity("QuickWKT", "QuickWKT.3.4.zip")) == "QuickWKT"
     assert gateway._installerKey(FakeEntity("OnlyName")) == "OnlyName"
 
@@ -239,7 +242,10 @@ def test_ensure_installer_data_fails_clearly_when_absent():
 
 def test_qgis4_instance_entry_point_is_used():
     recorder = Recording()
-    package = installStubModule("pyplugin_installer", installer_data=FakeInstallerDataModule({"SomePlugin"}, FakeRepositories(True, set())))
+    package = installStubModule(
+        "pyplugin_installer",
+        installer_data=FakeInstallerDataModule({"SomePlugin"}, FakeRepositories(True, set())),
+    )
     package.instance = lambda: recorder
     gateway = makeGateway()
     gateway.install(FakeEntity("SomePlugin"))

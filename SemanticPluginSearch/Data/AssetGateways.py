@@ -23,6 +23,7 @@ INDEX_FORMAT = "qgis-semantic-search-index-v1"
 USER_AGENT = "QGIS-SemanticPluginSearch"
 DOWNLOAD_TIMEOUT = 60
 MAX_README_BYTES = 400_000
+MAX_ASSET_BYTES = 50_000_000
 
 
 class TransportError(RuntimeError):
@@ -41,12 +42,26 @@ class ReadmeUnavailable(LookupError):
     """No readme could be retrieved for a plugin."""
 
 
-def fetchUrl(url: str, timeout: int = DOWNLOAD_TIMEOUT) -> bytes:
-    """Fetch a URL with a plain urllib transport."""
+def fetchUrl(url: str, timeout: int = DOWNLOAD_TIMEOUT, maxBytes: int = MAX_ASSET_BYTES) -> bytes:
+    """Fetch an http(s) URL with a bounded read (never file:// or friends)."""
+    if not url.lower().startswith(("http://", "https://")):
+        raise TransportError(f"unsupported URL scheme: {url}")
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
-            return response.read()
+            chunks = []
+            received = 0
+            while True:
+                chunk = response.read(65536)
+                if not chunk:
+                    break
+                received += len(chunk)
+                if received > maxBytes:
+                    raise TransportError(
+                        f"download too large for {url}: {received} > {maxBytes}"
+                    )
+                chunks.append(chunk)
+            return b"".join(chunks)
     except (urllib.error.URLError, TimeoutError, OSError) as error:
         raise TransportError(f"{url}: {error}") from error
 
@@ -108,7 +123,7 @@ class _VerifiedDownloader:
         self.maxBytes = maxBytes
 
     def downloadVerified(self, remoteFile: RemoteFile, destination: Path) -> None:
-        payload = self.transport(remoteFile.url)
+        payload = self.transport(remoteFile.url, maxBytes=self.maxBytes)
         if len(payload) > self.maxBytes:
             raise TransportError(
                 f"download too large for {remoteFile.url}:"
@@ -158,7 +173,7 @@ class HttpIconGateway:
         if path.is_file():
             payload = path.read_bytes()
         else:
-            payload = self.transport(url)[: self.MAX_ICON_BYTES]
+            payload = self.transport(url, maxBytes=self.MAX_ICON_BYTES)
             _assertImage(payload, url)
             path.write_bytes(payload)
         self.cache[url] = payload
@@ -192,7 +207,7 @@ class HttpReadmeGateway(ReadmeGateway):
             return self.cache[info.pluginId]
         for url in self._candidateUrls(info):
             try:
-                payload = self.transport(url)
+                payload = self.transport(url, maxBytes=self.maxBytes)
             except TransportError:
                 continue
             if payload:

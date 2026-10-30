@@ -42,7 +42,7 @@ class NpzStaticModel(StaticModelData):
         self._tokenizerId = tokenizerId
 
     @staticmethod
-    def load(path: Path) -> "NpzStaticModel":
+    def load(path: Path) -> NpzStaticModel:
         """Load and validate a model file, converting vectors to float32."""
         with np.load(path, allow_pickle=False) as archive:
             try:

@@ -36,6 +36,10 @@ class SearchWindowView(Protocol):
         """Show a placeholder in the readme tab (loading, failure, absence)."""
         ...
 
+    def applyIcons(self, icons: list[tuple[int, bytes]]) -> None:
+        """Apply fetched icon images in one batch, keyed by plugin id."""
+        ...
+
     def setActionStates(self, states: ActionStates) -> None:
         """Enable or disable the manager action buttons."""
         ...

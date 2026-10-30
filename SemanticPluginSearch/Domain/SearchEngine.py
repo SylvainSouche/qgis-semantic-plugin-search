@@ -4,10 +4,26 @@ This module is part of the Domain layer: it must import neither qgis nor Qt.
 """
 from __future__ import annotations
 
+from collections.abc import Callable
+
 import numpy as np
 
 from .Entities import PluginInfo, SearchResult
 from .Ports import EmbeddingEngine, PluginVectorStore
+
+
+def visibilityPredicate(
+    includeExperimental: bool = False,
+    includeDeprecated: bool = False,
+) -> Callable[[PluginInfo], bool]:
+    """The visibility rule as a predicate, applied before the result cut."""
+
+    def keep(info: PluginInfo) -> bool:
+        return (includeExperimental or not info.experimental) and (
+            includeDeprecated or not info.deprecated
+        )
+
+    return keep
 
 
 def filterResults(
@@ -19,12 +35,8 @@ def filterResults(
 
     A plugin flagged both experimental and deprecated needs both toggles.
     """
-    return [
-        result
-        for result in results
-        if (includeExperimental or not result.info.experimental)
-        and (includeDeprecated or not result.info.deprecated)
-    ]
+    keep = visibilityPredicate(includeExperimental, includeDeprecated)
+    return [result for result in results if keep(result.info)]
 
 
 class SearchService:
@@ -40,11 +52,14 @@ class SearchService:
         text: str,
         limit: int = 30,
         infos: dict[int, PluginInfo] | None = None,
+        predicate: Callable[[PluginInfo], bool] | None = None,
     ) -> list[SearchResult]:
         """Return at most limit results ordered by descending similarity.
 
-        Plugins whose text produced no known token carry a zero vector and
-        score zero, which the minScore floor filters out.
+        The predicate filters BEFORE the limit so hiding categories never
+        shrinks the visible result count. Plugins whose text produced no
+        known token carry a zero vector and score zero, which the minScore
+        floor filters out.
         """
         query = self.engine.embedQuery(text)
         matrix = store.embeddings()
@@ -53,7 +68,7 @@ class SearchService:
         if not np.any(query) or query.shape[0] != matrix.shape[1]:
             return []
         scores = matrix @ query
-        order = np.argsort(-scores)
+        order = np.argsort(-scores, kind="stable")
         results: list[SearchResult] = []
         for index in order:
             score = float(scores[index])
@@ -61,7 +76,7 @@ class SearchService:
                 break
             pluginId = store.pluginIds()[int(index)]
             info = (infos or {}).get(pluginId) or store.pluginInfo(pluginId)
-            if info is None:
+            if info is None or (predicate is not None and not predicate(info)):
                 continue
             results.append(SearchResult(info=info, score=score))
             if len(results) >= limit:

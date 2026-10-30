@@ -1,21 +1,16 @@
-"""Icon fetch orchestration and the icon gateway cache
-(req-result-rows icon path)."""
+"""Batched icon fetch orchestration (req-result-rows icon path).
+
+Event discipline under test: one search produces at most one background job
+and one batched GUI callback; each URL is fetched once per session; stale
+batches are dropped; per-icon failures never reach the GUI thread.
+"""
 
 from pathlib import Path
 
 from SemanticPluginSearch.Controllers.IconController import IconController
 from SemanticPluginSearch.Data.AssetGateways import HttpIconGateway
 from SemanticPluginSearch.Domain.Entities import PluginInfo, SearchResult
-from tests.conftest import InlineRunner
-
-
-class FakeIconGateway:
-    def __init__(self) -> None:
-        self.fetched: list[str] = []
-
-    def fetchIcon(self, url: str) -> bytes:
-        self.fetched.append(url)
-        return b"png:" + url.encode()
+from tests.conftest import FakeIconGateway, InlineRunner, ManualRunner
 
 
 def makeResult(pluginId: int, iconUrl: str = "") -> SearchResult:
@@ -25,21 +20,65 @@ def makeResult(pluginId: int, iconUrl: str = "") -> SearchResult:
     )
 
 
-def test_fetches_only_plugins_with_icon_url():
-    fetched = []
-    controller = IconController(FakeIconGateway(), InlineRunner())
+def test_one_batched_callback_per_result_batch():
+    gateway = FakeIconGateway()
+    controller = IconController(gateway, InlineRunner())
+    batches = []
     controller.fetchFor(
         [makeResult(1, "https://x.test/a.png"), makeResult(2), makeResult(3, "https://x.test/c.png")],
-        lambda pluginId, payload: fetched.append((pluginId, payload)),
+        lambda batch: batches.append(batch),
     )
-    assert sorted(pluginId for pluginId, _ in fetched) == [1, 3]
-    assert fetched[0][1] == b"png:https://x.test/a.png"
+    # One callback, both icons, in a single delivery.
+    assert len(batches) == 1
+    assert sorted(batches[0]) == [(1, b"png:https://x.test/a.png"), (3, b"png:https://x.test/c.png")]
+
+
+def test_urls_are_fetched_once_per_session():
+    gateway = FakeIconGateway()
+    controller = IconController(gateway, InlineRunner())
+    results = [makeResult(1, "https://x.test/a.png")]
+    batches = []
+    controller.fetchFor(results, lambda batch: batches.append(batch))
+    controller.fetchFor(results, lambda batch: batches.append(batch))
+    assert batches != [] and len(batches) == 1, "second batch is fully served"
+    assert gateway.fetched == ["https://x.test/a.png"]
+
+
+def test_stale_batch_is_dropped_entirely():
+    gateway = FakeIconGateway()
+    runner = ManualRunner()
+    controller = IconController(gateway, runner)
+    first: list = []
+    second: list = []
+    controller.fetchFor([makeResult(1, "https://x.test/a.png")], lambda b: first.append(b))
+    controller.fetchFor([makeResult(2, "https://x.test/b.png")], lambda b: second.append(b))
+    runner.completeNext()  # batch one finishes after batch two started
+    assert first == [], "stale batch must not reach the view"
+    runner.completeNext()
+    assert second == [[(2, b"png:https://x.test/b.png")]]
+
+
+def test_per_icon_failures_are_skipped_not_raised():
+    class FailingIconGateway:
+        def fetchIcon(self, url: str) -> bytes:  # noqa: ANN001, ANN202
+            if url.endswith("a.png"):
+                raise RuntimeError("broken icon")
+            return b"png"
+
+    gateway = FailingIconGateway()
+    controller = IconController(gateway, InlineRunner())
+    batches = []
+    controller.fetchFor(
+        [makeResult(1, "https://x.test/a.png"), makeResult(2, "https://x.test/ok.png")],
+        lambda batch: batches.append(batch),
+    )
+    assert batches == [[(2, b"png")]]
 
 
 def test_gateway_caches_on_disk_and_memory(tmp_path: Path):
     calls = []
 
-    def transport(url: str) -> bytes:
+    def transport(url: str, maxBytes: int | None = None) -> bytes:  # noqa: ANN001, ANN202
         calls.append(url)
         return b"\x89PNG fake"
 
@@ -53,20 +92,13 @@ def test_gateway_caches_on_disk_and_memory(tmp_path: Path):
 
 
 def test_gateway_rejects_non_image_payload(tmp_path: Path):
-    gateway = HttpIconGateway(tmp_path / "Icons", transport=lambda url: b"<html>404</html>")
+    gateway = HttpIconGateway(
+        tmp_path / "Icons",
+        transport=lambda url, maxBytes=None: b"<html>404</html>",
+    )
     try:
         gateway.fetchIcon("https://x.test/broken.png")
         raised = False
     except ValueError:
         raised = True
     assert raised
-
-
-def test_stale_icon_callback_is_ignored_by_the_view_contract():
-    # The controller marshals per plugin id; the view drops unknown ids
-    # (covered in the real view by _showIcon). Here: the id travels intact.
-    seen = []
-    controller = IconController(FakeIconGateway(), InlineRunner())
-    controller.fetchFor([makeResult(7, "https://x.test/seven.png")],
-                        lambda pluginId, payload: seen.append(pluginId))
-    assert seen == [7]

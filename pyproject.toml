@@ -16,3 +16,7 @@ target-version = "py39"
 [tool.ruff.lint]
 select = ["E", "F", "W", "B", "UP"]
 ignore = ["N802", "N803", "N806", "UP007"]
+
+[tool.ruff.lint.per-file-ignores]
+# The fixture catalogue template embeds long XML lines.
+"tests/conftest.py" = ["E501"]

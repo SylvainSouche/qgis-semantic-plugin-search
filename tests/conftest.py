@@ -315,6 +315,17 @@ class FakePluginManagerGateway:
         return ActionStates(canInstall=True)
 
 
+class FakeIconGateway:
+    """Records icon fetches; serves deterministic bytes; can fail per url."""
+
+    def __init__(self) -> None:
+        self.fetched: list[str] = []
+
+    def fetchIcon(self, url: str) -> bytes:  # noqa: D102
+        self.fetched.append(url)
+        return b"png:" + url.encode()
+
+
 class FakePaths:
     def __init__(self, root: Path) -> None:
         self.root = root / "cache"

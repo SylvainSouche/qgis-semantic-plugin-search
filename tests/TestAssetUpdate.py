@@ -11,7 +11,6 @@ import pytest
 from pipeline.PluginCatalogue import parseCatalogue
 from SemanticPluginSearch.Controllers.AssetsController import AssetsController
 from SemanticPluginSearch.Data.AssetGateways import HttpAssetGateway, TransportError
-from SemanticPluginSearch.Data.SqliteVectorStore import SqliteVectorStore
 from SemanticPluginSearch.Data.StaticModelLoader import NpzStaticModel
 from pipeline.BuildEmbeddings import EmbeddingDatabaseWriter
 from pipeline.WriteReleaseIndex import buildIndex
@@ -35,7 +34,7 @@ class SimulatedGithub:
         self.downloads: list[str] = []
         self.failOnUrl: str | None = None
 
-    def transport(self, url: str) -> bytes:
+    def transport(self, url: str, maxBytes: int | None = None) -> bytes:
         if url == self.failOnUrl:
             raise TransportError("network unreachable")
         if url == self.indexUrl:
@@ -57,8 +56,8 @@ def published(tmp_path, modelPath, catalogueAndReadmes):
     writer.build(records, readmeDir, "4", newDb, "20261029T120000Z", "fixture")
     payloads = {
         f"model://{modelPath.name}": modelPath.read_bytes(),
-        f"db://old.sqlite": oldDb.read_bytes(),
-        f"db://new.sqlite": newDb.read_bytes(),
+        "db://old.sqlite": oldDb.read_bytes(),
+        "db://new.sqlite": newDb.read_bytes(),
     }
     oldIndex = buildIndex(
         modelPath=modelPath,
@@ -162,7 +161,8 @@ def reporterOf(controller: AssetsController) -> FakeReporter:
     return controller.reporter  # type: ignore[return-value]
 
 
-def test_offline_falls_back_to_the_cache(tmp_path, published):
+def test_offline_delivers_the_cached_store(tmp_path, published):
+    ready = []
     simulated = SimulatedGithub(
         "index://latest/index.json", published["new"], published["payloads"]
     )
@@ -173,7 +173,7 @@ def test_offline_falls_back_to_the_cache(tmp_path, published):
         versionProvider=FakeVersionProvider("4"),
         runner=InlineRunner(),
         reporter=FakeReporter(),
-        onStoreReady=lambda store: None,
+        onStoreReady=ready.append,
     )
     controller.refresh()  # bootstrap while online
     cachedBytes = paths.databasePath("4").read_bytes()
@@ -182,8 +182,30 @@ def test_offline_falls_back_to_the_cache(tmp_path, published):
     controller.refresh()
     assert controller.reporter.warnings, "offline refresh must warn"
     assert paths.databasePath("4").read_bytes() == cachedBytes
-    store = SqliteVectorStore.open(paths.databasePath("4"))
-    assert store.pluginCount() == len(FIXTURE_PLUGINS)
+    # F1: the cached store must reach the window even when offline.
+    assert ready, "onStoreReady must fire with the cached store"
+    assert ready[-1].pluginCount() == len(FIXTURE_PLUGINS)
+    assert ready[-1].buildStamp() == "20261029T120000Z"
+
+
+def test_noop_refresh_does_not_redeliver_the_store(tmp_path, published):
+    ready = []
+    simulated = SimulatedGithub(
+        "index://latest/index.json", published["new"], published["payloads"]
+    )
+    controller = AssetsController(
+        gateway=makeGateway(simulated),
+        paths=FakePaths(tmp_path),
+        versionProvider=FakeVersionProvider("4"),
+        runner=InlineRunner(),
+        reporter=FakeReporter(),
+        onStoreReady=ready.append,
+    )
+    controller.refresh()  # bootstrap: cached load + download delivery
+    deliveries = len(ready)
+    assert deliveries >= 1
+    controller.refresh()  # nothing changed: the cached load only
+    assert len(ready) == deliveries + 1, "the refresh adds no second delivery"
 
 
 def test_no_database_for_the_running_universe_is_reported(tmp_path, published):

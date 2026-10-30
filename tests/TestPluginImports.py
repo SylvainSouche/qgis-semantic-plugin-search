@@ -74,7 +74,8 @@ def test_relative_imports_resolve():
             target = tuple(part for part in target if part)
             resolved = moduleFile(target)
             if resolved is None:
-                offenders.append(f"{path}: from {'.' * node.level}{node.module or ''} -> module not found")
+                importPath = f"{'.' * node.level}{node.module or ''}"
+                offenders.append(f"{path}: from {importPath} -> module not found")
                 continue
             if resolved.is_dir():
                 # from package import submodule: check each name is a module
@@ -82,7 +83,10 @@ def test_relative_imports_resolve():
                     if alias.name == "*":
                         continue
                     if moduleFile((*target, alias.name)) is None:
-                        offenders.append(f"{path}: {alias.name} not found in package {'.'.join(target)}")
+                        packageName = ".".join(target)
+                        offenders.append(
+                            f"{path}: {alias.name} not found in package {packageName}"
+                        )
                 continue
             names = topLevelNames(ast.parse(resolved.read_text(encoding="utf-8")))
             for alias in node.names:

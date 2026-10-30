@@ -12,7 +12,6 @@ from collections.abc import Callable
 
 from qgis.PyQt.QtCore import QObject, Qt, QRunnable, QThreadPool, pyqtSignal
 
-from ..Domain.Ports import JobRunner
 
 
 class _Task(QRunnable):
@@ -21,7 +20,7 @@ class _Task(QRunnable):
         work: Callable,
         on_success: Callable,
         on_failure: Callable,
-        runner: "QtJobRunner",
+        runner: QtJobRunner,
     ) -> None:
         super().__init__()
         self.work = work
@@ -44,9 +43,14 @@ class QtJobRunner(QObject):
     succeeded = pyqtSignal(object)
     failed = pyqtSignal(object)
 
+    MAX_WORKER_THREADS = 4
+
     def __init__(self, parent: QObject | None = None) -> None:
         super().__init__(parent)
-        self._pool = QThreadPool.globalInstance()
+        # A dedicated bounded pool: the global instance is shared with QGIS
+        # and must never starve behind our background fetches.
+        self._pool = QThreadPool(self)
+        self._pool.setMaxThreadCount(self.MAX_WORKER_THREADS)
         self.succeeded.connect(self._dispatchSuccess, Qt.ConnectionType.QueuedConnection)
         self.failed.connect(self._dispatchFailure, Qt.ConnectionType.QueuedConnection)
 

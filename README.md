@@ -57,7 +57,7 @@ queries and plugins live in the same vector space.
 | `SemanticPluginSearch/QgisBridge/` | The only QGIS-aware code: paths, message bar, installer delegation, threading |
 | `pipeline/` | GitHub side: fetch catalogue/readmes, build embeddings, convert model, write index |
 | `.github/workflows/` | Weekly `BuildEmbeddings` + `Tests` |
-| `tests/` | Full functional suite, runs without QGIS (46 tests) |
+| `tests/` | Full functional suite, runs without QGIS |
 | `project-model/` | Discovery-driven development model: requirements, decisions, tests, links (see `project-model/index.md`) |
 | `data/` | Downloaded catalogues and readmes (local, git-ignored) — the seed and fixture source for the pipeline |
 
@@ -157,10 +157,11 @@ python3.12 -m venv .venv && .venv/bin/pip install numpy pytest
 ```
 
 The suite covers the full functional scope without QGIS: ranking,
-embedding, database build, asset update flow (bootstrap, stale check,
-offline fallback, checksum rejection with atomic replace), details
-orchestration with stale-fetch dropping, action delegation, pipeline build
-and the architecture scans.
+embedding, database build, asset update flow (cached-first delivery,
+bootstrap, stale check, offline fallback, checksum rejection with atomic
+replace), details orchestration with stale-fetch dropping, action
+delegation and installer-API resolution, pipeline build and gate, and the
+architecture scans (import isolation, scoped enums, thread-safe reporting).
 
 ## Specification & status
 
@@ -168,7 +169,7 @@ Requirements, decisions, use cases and their links to code live in
 `project-model/` (regenerate views with the discovery-driven-dev tooling;
 start from `project-model/index.md`). Current honest state:
 
-- all 19 leaf requirements have implementations; 45 tests pass;
+- every leaf requirement has an implementation; the full suite passes;
 - Qt views and the `pyplugin_installer` delegation are written but only
   verifiable inside QGIS (assumption `asm-installer-reachable` in the
   model); a first in-QGIS pass is the next step;

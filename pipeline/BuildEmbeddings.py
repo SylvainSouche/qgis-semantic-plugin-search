@@ -22,6 +22,7 @@ from pathlib import Path
 
 import numpy as np
 
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 
@@ -38,8 +39,11 @@ class EmbeddingDatabaseWriter:
     """Writes the distributable SQLite embeddings database."""
 
     def __init__(self, model: NpzStaticModel, tokenizer: WordPieceTokenizer) -> None:
+        from SemanticPluginSearch.Domain.EmbeddingEngine import StaticEmbeddingEngine
+
         self.model = model
         self.tokenizer = tokenizer
+        self.engine = StaticEmbeddingEngine(tokenizer, model)
         self.readmeUrls: dict[int, str] = {}
 
     def build(
@@ -71,21 +75,10 @@ class EmbeddingDatabaseWriter:
         return len(rows)
 
     def embedRecord(self, record: PluginRecord, readmeDir: Path) -> np.ndarray:
+        """Embed through the SHARED domain engine: documents and queries
+        must never drift into different vector spaces."""
         text = preparePluginText(record, self._readmeOf(record, readmeDir))
-        # [UNK] is a placeholder, not a meaning: exclude it from the average,
-        # exactly like the plugin side does for queries.
-        unkId = self.tokenizer.vocabulary.get(self.tokenizer.unkToken)
-        tokenIds = [
-            tokenId for tokenId in self.tokenizer.encode(text) if tokenId != unkId
-        ]
-        if not tokenIds:
-            return np.zeros(self.model.dimension(), dtype=np.float32)
-        matrix = self.model.vectors()
-        mean = matrix[tokenIds].mean(axis=0)
-        norm = float(np.linalg.norm(mean))
-        if norm == 0.0:
-            return np.zeros(self.model.dimension(), dtype=np.float32)
-        return mean / norm
+        return self.engine.embedQuery(text)
 
     @staticmethod
     def _readmeOf(record: PluginRecord, readmeDir: Path) -> str | None:

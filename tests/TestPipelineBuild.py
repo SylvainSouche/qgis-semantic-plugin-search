@@ -134,3 +134,21 @@ def test_release_index_binds_checksums_and_stamps(modelPath, catalogueAndReadmes
     assert release["build_stamp"] == "20261029T120000Z"
     assert release["plugin_count"] == len(FIXTURE_PLUGINS)
     json.dumps(index)  # must be serializable
+
+
+def test_publish_gate_blocks_a_collapsed_catalogue():
+    from pipeline.PublishGate import checkGates
+
+    newIndex = {"universes": {"4": {"plugin_count": 100}}}
+    previous = {"4": 1500}
+    violations = checkGates(newIndex, previous)
+    assert violations and "deviates" in violations[0]
+
+    within = checkGates({"universes": {"4": {"plugin_count": 1400}}}, previous)
+    assert within == []
+
+    zero = checkGates({"universes": {"4": {"plugin_count": 0}}}, previous)
+    assert zero and "plugin count is 0" in zero[0]
+
+    firstPublish = checkGates(newIndex, None)
+    assert firstPublish == [], "no previous release always passes"

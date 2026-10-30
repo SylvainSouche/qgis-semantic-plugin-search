@@ -48,7 +48,9 @@ class ActionController:
             return
         view.showStatus(f"{label} handed to the plugin manager.")
 
-    def refreshStates(self, view: SearchWindowView, info: PluginInfo | None, availableVersion: str) -> None:
+    def refreshStates(
+        self, view: SearchWindowView, info: PluginInfo | None, availableVersion: str
+    ) -> None:
         """Ask the manager which actions apply to the current selection."""
         if info is None:
             view.setActionStates(ActionStates())

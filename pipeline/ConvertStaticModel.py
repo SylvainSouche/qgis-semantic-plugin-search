@@ -101,7 +101,11 @@ def main(argv: list[str] | None = None) -> int:
     import argparse
 
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model-dir", required=True, help="Directory with model.safetensors and tokenizer.json")
+    parser.add_argument(
+        "--model-dir",
+        required=True,
+        help="Directory with model.safetensors and tokenizer.json",
+    )
     parser.add_argument("--model-id", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument(

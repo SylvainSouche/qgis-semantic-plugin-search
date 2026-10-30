@@ -1,4 +1,4 @@
-"""Icon orchestration: background fetch of the row icons.
+"""Icon orchestration: one batched background fetch per result batch.
 
 This module is part of the Controllers layer: it must import neither qgis nor Qt.
 """
@@ -11,26 +11,53 @@ from ..Domain.Ports import JobRunner
 
 
 class IconController:
-    """Fetches each result icon off the GUI thread, with a local cache."""
+    """Fetches result icons in ONE background job per result batch.
+
+    Event discipline (every dispatch is treated as multithreaded and
+    re-entrant safe): one search produces at most one fetch job and one
+    batched GUI callback; each URL is fetched at most once per session;
+    callbacks from superseded batches are dropped here, before any view
+    update; failures are skipped, never re-raised on the GUI thread.
+    """
 
     def __init__(self, iconGateway, runner: JobRunner) -> None:  # noqa: ANN001
         self.iconGateway = iconGateway
         self.runner = runner
+        self._generation = 0
+        self._served: set[str] = set()
 
-    def fetchFor(self, results: list[SearchResult], onIcon: Callable[[int, bytes], None]) -> None:
-        """Fetch icons for every result that has an icon URL.
+    def fetchFor(
+        self, results: list[SearchResult], onIcons: Callable[[list[tuple[int, bytes]]], None]
+    ) -> None:
+        """Fetch the missing icons of the batch and deliver them at once.
 
-        onIcon is called per icon on the GUI thread (the runner marshals);
-        icons without a URL and failed fetches are silently skipped: a row
-        simply keeps its empty icon slot.
+        onIcons receives a list of (pluginId, iconBytes) on the GUI thread in
+        a single call. Icons without a URL, failures and stale batches are
+        silently skipped: a row simply keeps its empty icon slot.
         """
-        for result in results:
-            url = result.info.iconUrl
-            if not url:
-                continue
-            pluginId = result.info.pluginId
-            self.runner.submit(
-                lambda url=url: self.iconGateway.fetchIcon(url),
-                lambda payload, pluginId=pluginId: onIcon(pluginId, payload),
-                lambda error, pluginId=pluginId: None,
-            )
+        wanted: list[tuple[int, str]] = [
+            (result.info.pluginId, result.info.iconUrl)
+            for result in results
+            if result.info.iconUrl and result.info.iconUrl not in self._served
+        ]
+        if not wanted:
+            return
+        self._generation += 1
+        generation = self._generation
+        urls = [url for _pluginId, url in wanted]
+
+        def task() -> list[tuple[int, bytes]]:
+            batch: list[tuple[int, bytes]] = []
+            for pluginId, url in wanted:
+                try:
+                    batch.append((pluginId, self.iconGateway.fetchIcon(url)))
+                except Exception:  # noqa: BLE001 - one icon failing is not fatal
+                    continue
+            return batch
+
+        def deliver(batch: list[tuple[int, bytes]]) -> None:
+            self._served.update(urls)
+            if generation == self._generation and batch:
+                onIcons(batch)
+
+        self.runner.submit(task, deliver, lambda error: None)
