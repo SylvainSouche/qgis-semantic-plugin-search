@@ -1,4 +1,9 @@
-"""User reporting through the QGIS message bar.
+"""User reporting through the QGIS message bar, and a popup for every error.
+
+Errors must never hide in the message bar or the log panel: each one also
+opens a dialog. The dialog is non modal (show, not exec), so several errors
+never stack nested event loops, and it is parented to the active window so
+it appears above the search window when that is in front.
 
 The reporter is called from worker threads (the asset refresh runs in the
 thread pool), and widgets may only be touched from the GUI thread: pushing
@@ -13,6 +18,7 @@ from __future__ import annotations
 from qgis.core import Qgis
 from qgis.gui import QgisInterface
 from qgis.PyQt.QtCore import QObject, Qt, pyqtSignal
+from qgis.PyQt.QtWidgets import QApplication, QMessageBox
 
 from ..Domain.Ports import Reporter
 
@@ -47,6 +53,17 @@ class _MessageBarBridge(QObject):
         self.iface.messageBar().pushMessage(
             TITLE, message, level=Qgis.MessageLevel.Critical, duration=8
         )
+        self._popup(message)
+
+    def _popup(self, message: str) -> None:
+        parent = QApplication.activeWindow() or self.iface.mainWindow()
+        box = QMessageBox(parent)
+        box.setIcon(QMessageBox.Icon.Critical)
+        box.setWindowTitle(TITLE)
+        box.setText(message)
+        box.setStandardButtons(QMessageBox.StandardButton.Ok)
+        box.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
+        box.show()
 
 
 class MessageBarReporter(Reporter):
@@ -67,3 +84,4 @@ class MessageBarReporter(Reporter):
 
 
 Reporter.register(MessageBarReporter)
+# @impl 4be9-6ae4-4c75-c7ae

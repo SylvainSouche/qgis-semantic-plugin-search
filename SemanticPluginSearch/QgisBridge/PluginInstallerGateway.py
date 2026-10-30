@@ -13,8 +13,10 @@ asm-installer-reachable in the project model).
 from __future__ import annotations
 
 import inspect
+import re
 import time
 
+from qgis.core import Qgis
 from qgis.PyQt.QtCore import QEventLoop, QTimer
 from qgis.gui import QgisInterface
 
@@ -22,6 +24,7 @@ from ..Data.InstalledPlugins import scanInstalledPlugins
 from ..Domain.Entities import InstalledPlugin, PluginInfo
 from ..Domain.Installed import installerKey
 from ..Domain.Ports import PluginManagerGateway, Reporter
+from .Reporter import TITLE
 
 
 def _spin(seconds: float) -> None:
@@ -152,7 +155,12 @@ class PluginInstallerGateway(PluginManagerGateway):
         if method is None:
             self._openManagerFallback(pluginName, operation)
             return
-        method(pluginName, **(_versionOptions(pluginName, method) if versioned else {}))
+        # The installer reports its own failures to the QGIS message bar only;
+        # catch them so they reach the user as this plugin's error popup.
+        with _InstallerFailures() as failures:
+            method(pluginName, **(_versionOptions(pluginName, method) if versioned else {}))
+        if failures.messages:
+            raise RuntimeError(" ".join(failures.messages))
 
     def _openManagerFallback(self, pluginName: str, operation: str) -> None:
         # Unknown installer API on this QGIS version: open the manager so the
@@ -222,6 +230,49 @@ def _versionOptions(key: str, method) -> dict:  # noqa: ANN001 - installer metho
     return {"stable": False} if "stable" in accepted else {}
 
 
+class _InstallerFailures:
+    """Collects the critical messages QGIS logs while an installer call runs.
+
+    pyplugin_installer pushes "Plugin installation failed: ..." to the
+    plugin manager's message bar, which logs it; the call itself returns
+    normally. Messages of this plugin (prefixed with its title) are ignored.
+    The installer runs on the GUI thread, so the log signal is delivered
+    synchronously while the call is in progress.
+    """
+
+    def __init__(self) -> None:
+        self.messages: list[str] = []
+        self._log = None
+
+    def __enter__(self) -> _InstallerFailures:
+        try:
+            from qgis.core import QgsApplication
+
+            self._log = QgsApplication.messageLog()
+            self._log.messageReceived.connect(self._collect)
+        except Exception:  # noqa: BLE001 - no log available: report nothing extra
+            self._log = None
+        return self
+
+    def __exit__(self, *exc) -> None:  # noqa: ANN002
+        if self._log is not None:
+            try:
+                self._log.messageReceived.disconnect(self._collect)
+            except Exception:  # noqa: BLE001  # nosec B110
+                pass
+
+    def _collect(self, *args) -> None:  # noqa: ANN002 - (message, tag, level)
+        if len(args) != 3:
+            return
+        message, _tag, level = args
+        if level != Qgis.MessageLevel.Critical:
+            return
+        text = " ".join(re.sub(r"<[^>]+>", "", str(message)).split())
+        if text and not text.startswith(TITLE) and text not in self.messages:
+            self.messages.append(text)
+
+
 # @impl 4be9-6ae3-f12c-0110
 # @impl 4be9-6ae4-4926-4fb9
 # @impl 4be9-6ae4-4b88-00cf
+# @impl 4be9-6ae4-4c75-c7ae

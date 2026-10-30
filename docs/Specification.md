@@ -1,7 +1,7 @@
 # Semantic Plugin Search — specification
 
-Generated from `project-model/` · schema_version 2 · 219 objects in model
-Sources: 4 CON, 3 NREQ, 41 REQ, 8 UC
+Generated from `project-model/` · schema_version 2 · 223 objects in model
+Sources: 4 CON, 3 NREQ, 42 REQ, 8 UC
 Generated 2026-10-30. Regenerate rather than edit — hand edits are lost and drift silently.
 
 ## Constraints
@@ -101,6 +101,12 @@ Refines: `req-window-polish`
 `REQ-req-qgis-network-stack` · status **confirmed** · id `4be9-6ae3-f4ad-b6ea`
 
 Refines: `req-auto-updated-assets`
+
+### Every error the user should know about opens a popup each time, including failures the QGIS plugin installer only reports to its message bar; popups never block QGIS, and the message bar keeps the history
+
+`REQ-req-error-popups` · status **confirmed** · id `4be9-6ae4-4c75-c7ae`
+
+Refines: `req-architecture-quality`
 
 ### GitHub Actions periodically rebuild per QGIS version embedding databases from the full plugin catalogue and readmes and publish them with an update index
 

@@ -179,6 +179,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-commit-increments": {
+    "active": true,
+    "id": "4be9-6ae4-4d0a-596f",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-defer-signing": {
     "active": true,
     "id": "4be9-6ae3-f33f-02f9",
@@ -200,6 +206,12 @@
   "dec-engineering-rules": {
     "active": true,
     "id": "0f87-6ae3-6956-371e",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-error-popups": {
+    "active": true,
+    "id": "4be9-6ae4-4c75-dfef",
     "status": "recorded",
     "type": "dec"
   },
@@ -452,6 +464,12 @@
   "impl-embeddings-branch": {
     "active": true,
     "id": "4be9-6ae3-f856-ec02",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-error-popups": {
+    "active": true,
+    "id": "4be9-6ae4-4c75-2dde",
     "status": "verified",
     "type": "impl"
   },
@@ -875,6 +893,12 @@
     "status": "confirmed",
     "type": "req"
   },
+  "req-error-popups": {
+    "active": true,
+    "id": "4be9-6ae4-4c75-c7ae",
+    "status": "confirmed",
+    "type": "req"
+  },
   "req-event-discipline": {
     "active": true,
     "id": "0f87-6ae3-e355-74a5",
@@ -1136,6 +1160,12 @@
   "t-engine-embedding": {
     "active": true,
     "id": "0f87-6ae3-69be-e07c",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-error-popups": {
+    "active": true,
+    "id": "4be9-6ae4-4c75-13fd",
     "status": "passing",
     "type": "test"
   },

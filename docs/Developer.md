@@ -111,6 +111,12 @@ These rules are enforced by tests, not by convention:
 - the plugin folder meets the QGIS plugin repository rules
   (`TestPluginRepositoryRules`).
 
+Errors always reach the user in a popup: anything reported through
+`Reporter.error` opens a non-blocking error dialog (and is kept in the
+message bar), and failures that QGIS's plugin installer only logs are
+captured during the call and reported the same way. Warnings, such as an
+offline update check, stay in the message bar.
+
 Naming is CamelCase: UpperCamelCase classes and modules, Qt-style camelCase
 methods.
 
@@ -171,6 +177,13 @@ The job stops after 60 minutes. The plugin reads
 `https://raw.githubusercontent.com/<repo>/embeddings/index.json`, and because
 the data files carry a content hash in their names, the raw host's cache
 can never pair a new index with an old file.
+
+## Committing
+
+Every commit bumps the plugin version with its changelog entry, in the same
+commit: `make increment INC=rel COMMENT="..."` for fixes, `INC=min` for new
+features, `INC=maj` for breaking changes. `make dist` then packages that
+version.
 
 ## Releasing the plugin
 

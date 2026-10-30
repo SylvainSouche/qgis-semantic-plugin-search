@@ -48,6 +48,9 @@ if "qgis" not in sys.modules or not hasattr(sys.modules.get("qgis"), "_stubbed")
         class ConnectionType:  # noqa: N801
             QueuedConnection = 0
 
+        class WidgetAttribute:  # noqa: N801
+            WA_DeleteOnClose = 55
+
     class _QSettings:
         def value(self, *args, **kwargs):  # noqa: ANN002, ANN003
             return None
@@ -89,9 +92,57 @@ if "qgis" not in sys.modules or not hasattr(sys.modules.get("qgis"), "_stubbed")
 
     _qtgui.QIcon = _QIcon
 
+    _qtwidgets = types.ModuleType("qgis.PyQt.QtWidgets")
+
+    class _QApplication:  # noqa: N801
+        @staticmethod
+        def activeWindow():  # noqa: ANN205
+            return None
+
+    class _QMessageBox:  # noqa: N801
+        """Records the error popups the reporter opens."""
+
+        shown: list = []
+
+        class Icon:  # noqa: N801
+            Critical = 3
+
+        class StandardButton:  # noqa: N801
+            Ok = 1024
+
+        def __init__(self, parent=None) -> None:  # noqa: ANN001
+            self.parent = parent
+            self.text = ""
+            self.title = ""
+
+        def setIcon(self, icon) -> None:  # noqa: ANN001
+            self.icon = icon
+
+        def setWindowTitle(self, title: str) -> None:
+            self.title = title
+
+        def setText(self, text: str) -> None:
+            self.text = text
+
+        def setStandardButtons(self, buttons) -> None:  # noqa: ANN001
+            pass
+
+        def setAttribute(self, attribute) -> None:  # noqa: ANN001
+            pass
+
+        def show(self) -> None:
+            _QMessageBox.shown.append(self)
+
+        def exec(self) -> int:
+            raise AssertionError("error popups must not block (show, not exec)")
+
+    _qtwidgets.QApplication = _QApplication
+    _qtwidgets.QMessageBox = _QMessageBox
+
     _pyqt = types.ModuleType("qgis.PyQt")
     _pyqt.QtCore = _qtcore
     _pyqt.QtGui = _qtgui
+    _pyqt.QtWidgets = _qtwidgets
     _qgis.PyQt = _pyqt
 
     _gui = types.ModuleType("qgis.gui")
@@ -114,6 +165,7 @@ if "qgis" not in sys.modules or not hasattr(sys.modules.get("qgis"), "_stubbed")
             "qgis.PyQt": _pyqt,
             "qgis.PyQt.QtCore": _qtcore,
             "qgis.PyQt.QtGui": _qtgui,
+            "qgis.PyQt.QtWidgets": _qtwidgets,
         }
     )
 
@@ -416,3 +468,79 @@ def test_an_installer_without_the_stable_option_is_called_as_before():
     gateway.install(FakeEntity("Layer Order Plus", "layer_order_plus.1.0.0.zip"))
     teardownStubModules()
     assert calls == ["layer_order_plus"]
+
+
+# ------------------------------------------------- errors reach the user
+
+
+class FakeLogSignal:
+    def __init__(self) -> None:
+        self.slots = []
+
+    def connect(self, slot) -> None:  # noqa: ANN001
+        self.slots.append(slot)
+
+    def disconnect(self, slot) -> None:  # noqa: ANN001
+        self.slots.remove(slot)
+
+    def emit(self, *args) -> None:  # noqa: ANN002
+        for slot in list(self.slots):
+            slot(*args)
+
+
+def test_an_installer_failure_logged_by_qgis_becomes_an_error():
+    """Regression: 'Plugin installation failed: Protocol "" is unknown' only
+    showed in the QGIS message bar; the call itself returned normally."""
+    core = sys.modules["qgis.core"]
+    log = types.SimpleNamespace(messageReceived=FakeLogSignal())
+    previous = getattr(core.QgsApplication, "messageLog", None)
+    core.QgsApplication.messageLog = staticmethod(lambda: log)
+
+    class FailingInstaller:
+        def installPlugin(self, key, quiet=False, stable=True):  # noqa: ANN001, ANN002
+            critical = core.Qgis.MessageLevel.Critical
+            log.messageReceived.emit("Fetching", "Plugins", core.Qgis.MessageLevel.Info)
+            log.messageReceived.emit(
+                "<b>Plugin installation failed</b><b>:</b> Protocol \"\" is unknown",
+                "Messages",
+                critical,
+            )
+            log.messageReceived.emit("Semantic Plugin Search : ours", "Messages", critical)
+
+    try:
+        gateway = installWith({"layer_order_plus": EXPERIMENTAL_ONLY}, FailingInstaller())
+        try:
+            gateway.install(FakeEntity("Layer Order Plus", "layer_order_plus.1.0.0.zip"))
+            message = ""
+        except RuntimeError as error:
+            message = str(error)
+    finally:
+        teardownStubModules()
+        if previous is None:
+            del core.QgsApplication.messageLog
+        else:
+            core.QgsApplication.messageLog = previous
+    assert message == 'Plugin installation failed: Protocol "" is unknown'
+    assert log.messageReceived.slots == [], "the log is released after the call"
+
+
+def test_every_error_opens_a_non_blocking_popup():
+    from qgis.PyQt.QtWidgets import QMessageBox
+
+    from SemanticPluginSearch.QgisBridge.Reporter import _MessageBarBridge
+
+    pushed = []
+    iface = types.SimpleNamespace(
+        messageBar=lambda: types.SimpleNamespace(
+            pushMessage=lambda title, text, level, duration: pushed.append((text, level))
+        ),
+        mainWindow=lambda: "main window",
+    )
+    bridge = _MessageBarBridge.__new__(_MessageBarBridge)
+    bridge.iface = iface
+    QMessageBox.shown.clear()
+    bridge._pushError("Installing X failed: boom")
+    bridge._pushWarn("offline")
+    assert [box.text for box in QMessageBox.shown] == ["Installing X failed: boom"]
+    assert QMessageBox.shown[0].parent == "main window"
+    assert len(pushed) == 2, "the message bar keeps the history"
