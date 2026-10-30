@@ -20,13 +20,20 @@ that reached QGIS before:
 - every private attribute a class reads is defined (the 0.3.0 package
   shipped MetadataPanel connecting self._openLink before it existed).
 
-Usage: python tools/PackageCheck.py   (exit 1 on any problem)
+Usage:
+    python tools/PackageCheck.py              check only (exit 1 on any problem)
+    python tools/PackageCheck.py --zip dist   check, then write dist/<plugin>.<version>.zip
+
+The zip is built with Python's zipfile, so packaging needs no zip command
+(absent by default on Cygwin and Windows).
 """
 from __future__ import annotations
 
 import ast
 import configparser
+import os
 import sys
+import zipfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -192,7 +199,38 @@ def allProblems(pluginRoot: Path = PLUGIN_ROOT) -> list[str]:
     )
 
 
-def main() -> int:
+def packagedFiles(pluginRoot: Path = PLUGIN_ROOT) -> list[Path]:
+    """Files that go into the zip: no caches, compiled or hidden files."""
+    return sorted(
+        path
+        for path in pluginRoot.rglob("*")
+        if path.is_file()
+        and "__pycache__" not in path.parts
+        and path.suffix != ".pyc"
+        and not any(part.startswith(".") for part in path.relative_to(pluginRoot).parts)
+    )
+
+
+def buildZip(distDir: Path, pluginRoot: Path = PLUGIN_ROOT) -> Path:
+    """Write <distDir>/<plugin folder>.<version>.zip, the folder at its root."""
+    version = metadata(pluginRoot).get("version", "").strip()
+    distDir.mkdir(parents=True, exist_ok=True)
+    target = distDir / f"{pluginRoot.name}.{version}.zip"
+    partial = target.with_suffix(".zip.partial")
+    with zipfile.ZipFile(partial, "w", zipfile.ZIP_DEFLATED) as archive:
+        for path in packagedFiles(pluginRoot):
+            archive.write(path, (Path(pluginRoot.name) / path.relative_to(pluginRoot)).as_posix())
+    os.replace(partial, target)
+    return target
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Check, and optionally zip, the plugin folder.")
+    parser.add_argument("--zip", metavar="DIST_DIR", help="write the plugin zip into this folder")
+    args = parser.parse_args(argv)
+
     problems = allProblems()
     if missingEmail():
         print("warning: metadata.txt email is empty; plugins.qgis.org requires it for upload")
@@ -202,6 +240,9 @@ def main() -> int:
             print(f"  - {problem}", file=sys.stderr)
         return 1
     print("==> Package check passed")
+    if args.zip:
+        target = buildZip(Path(args.zip))
+        print(f"==> Packaged {target.as_posix()} ({target.stat().st_size // 1024} KB)")
     return 0
 
 

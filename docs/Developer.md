@@ -136,8 +136,11 @@ make clean-all   # also remove data/ and .venv/
 ```
 
 `make test`, `fetch` and `embed` create `.venv` with numpy and pytest on first use;
-`dist`, `version` and `increment` only need a system Python (`python3`, or
-`python` as on Cygwin and Windows). CI runs the
+`dist`, `version` and `increment` only need a system Python 3.9 or later:
+the first of `python3` and `python` that actually runs (on Windows and
+Cygwin `python3` is often the Microsoft Store placeholder, which is
+skipped). `make dist` builds the zip with Python itself, so no `zip`
+command is needed. CI runs the
 suite and ruff on Python 3.9 and 3.12.
 
 `make smoke` boots each QGIS found in `/Applications` with its own Python,

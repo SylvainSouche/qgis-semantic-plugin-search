@@ -185,6 +185,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-cygwin-make": {
+    "active": true,
+    "id": "4be9-6ae4-50c4-5cf8",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-defer-signing": {
     "active": true,
     "id": "4be9-6ae3-f33f-02f9",
@@ -716,6 +722,12 @@
   "obs-ci-validation": {
     "active": true,
     "id": "0f87-6ae3-945f-dcf6",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-cygwin-make": {
+    "active": true,
+    "id": "4be9-6ae4-50c4-5457",
     "status": "recorded",
     "type": "obs"
   },

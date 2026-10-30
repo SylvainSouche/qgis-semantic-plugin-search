@@ -14,8 +14,12 @@ DIST_DIR := dist
 MODEL := $(BUILD_DIR)/EmbeddingModel.npz
 MODEL_ID ?= static-potion-base-8M
 HF_BASE ?= https://huggingface.co/minishlab/potion-base-8M/resolve/bf8b056651a2c21b8d2565580b8569da283cab23
-# System Python: python3 where it exists, else python (Cygwin, Windows).
-PYTHON := $(shell command -v python3 2>/dev/null || command -v python 2>/dev/null)
+# System Python: the first of python3 and python that actually runs Python
+# 3.9+. On Windows and Cygwin, python3 is often the Microsoft Store
+# placeholder: it exists on the PATH but only prints "Python was not found".
+PYTHON := $(shell for p in python3 python; do \
+	"$$p" -c "import sys; sys.exit(sys.version_info < (3, 9))" >/dev/null 2>&1 && { command -v "$$p"; break; }; \
+	done)
 # Venv Python, for the targets that need numpy (test, fetch, embed): bin/ on
 # Unix and Cygwin's Python, Scripts/ for a Windows Python. Evaluated when used.
 PY = $(or $(wildcard .venv/bin/python),$(wildcard .venv/Scripts/python.exe),$(wildcard .venv/Scripts/python),.venv/bin/python)
@@ -106,15 +110,7 @@ embed: _venv $(MODEL) ## Embed the fetched plugins into per universe databases; 
 
 # @impl 4be9-6ae4-4ed4-e450
 dist: _python ## Check, then package the plugin as dist/<plugin>.<version>.zip (no venv needed)
-	@test -n "$(CURRENT_VERSION)" || { echo "Cannot read the version from $(PLUGIN)/metadata.txt"; exit 1; }
-	@"$(PYTHON)" tools/PackageCheck.py
-	@command -v zip >/dev/null || { echo "zip is required"; exit 1; }
-	@mkdir -p $(DIST_DIR)
-	@rm -f $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip
-	@zip -rq $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip $(PLUGIN) \
-		-x "*__pycache__*" -x "*.pyc" -x "*.DS_Store"
-	@echo "==> Packaged $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip"
-	@ls -lh $(DIST_DIR)/$(PLUGIN).$(CURRENT_VERSION).zip
+	@"$(PYTHON)" tools/PackageCheck.py --zip $(DIST_DIR)
 
 version: _python ## Set the plugin version: make version VERSION=0.4.1 COMMENT="What changed"
 	@test "$(origin VERSION)" = "command line" || { echo "Usage: make version VERSION=x.y.z [COMMENT=\"...\"] (current: $(CURRENT_VERSION))"; exit 1; }
@@ -152,7 +148,7 @@ $(MODEL): pipeline/ConvertStaticModel.py | _venv
 		--output $(MODEL)
 
 _python:
-	@test -n "$(PYTHON)" || { echo "Python 3 is required (python3 or python on the PATH)"; exit 1; }
+	@test -n "$(PYTHON)" || { echo "Python 3.9 or later is required (python3 or python on the PATH)"; exit 1; }
 
 # The venv must actually run and import its packages: a venv whose Python
 # was removed or upgraded (its bin/python symlink then dangles) or that was

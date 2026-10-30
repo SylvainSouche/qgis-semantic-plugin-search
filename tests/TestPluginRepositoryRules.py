@@ -43,3 +43,17 @@ def test_a_todo_changelog_entry_is_refused(tmp_path):
     )
     problems = PackageCheck.metadataProblems(plugin)
     assert any("TODO" in problem for problem in problems)
+
+
+def test_the_zip_holds_the_plugin_folder_without_caches(tmp_path):
+    import zipfile
+
+    target = PackageCheck.buildZip(tmp_path)
+    version = PackageCheck.metadata().get("version")
+    assert target.name == f"SemanticPluginSearch.{version}.zip"
+    with zipfile.ZipFile(target) as archive:
+        names = archive.namelist()
+    assert "SemanticPluginSearch/metadata.txt" in names
+    assert "SemanticPluginSearch/LICENSE" in names
+    assert all(name.startswith("SemanticPluginSearch/") for name in names)
+    assert not [name for name in names if "__pycache__" in name or name.endswith(".pyc")]
