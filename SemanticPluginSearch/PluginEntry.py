@@ -14,6 +14,7 @@ try:  # QAction lives in QtGui on PyQt6 (QGIS 4) and QtWidgets on PyQt5 (QGIS 3)
     from qgis.PyQt.QtGui import QAction  # noqa: F811
 except ImportError:  # pragma: no cover - QGIS 3 / PyQt5
     pass
+# @impl 0f87-6ae3-6986-bc9f
 
 from .Controllers.ActionController import ActionController
 from .Controllers.AssetsController import AssetsController
@@ -21,6 +22,7 @@ from .Controllers.DetailsController import DetailsController
 from .Controllers.IconController import IconController
 from .Controllers.SearchController import SearchController
 from .Data.AssetGateways import HttpAssetGateway, HttpIconGateway, HttpReadmeGateway
+from .QgisBridge.NetworkTransport import qgisFetchUrl
 from .Data.DeferredEmbeddingEngine import DeferredEmbeddingEngine
 from .Domain.SearchEngine import SearchService
 from .QgisBridge import (
@@ -107,8 +109,8 @@ class SemanticPluginSearchPlugin:
         versionProvider = QgisVersionProvider()
         runner = QtJobRunner()
         self.runner = runner
-        gateway = HttpAssetGateway(indexUrl=configuredIndexUrl())
-        readmeGateway = HttpReadmeGateway()
+        gateway = HttpAssetGateway(indexUrl=configuredIndexUrl(), transport=qgisFetchUrl)
+        readmeGateway = HttpReadmeGateway(transport=qgisFetchUrl)
         actionsGateway = PluginInstallerGateway(self.iface, reporter)
         engine = DeferredEmbeddingEngine(paths)
         self.engine = engine
@@ -129,7 +131,7 @@ class SemanticPluginSearchPlugin:
             onStoreReady=self._onStoreReady,
         )
         iconController = IconController(
-            HttpIconGateway(paths.cacheDir() / "Icons"), runner
+            HttpIconGateway(paths.cacheDir() / "Icons", transport=qgisFetchUrl), runner
         )
         return Controllers(
             searchController,
@@ -178,3 +180,4 @@ class SemanticPluginSearchPlugin:
         self.controllers.search.setStore(store)
         # Re-run the current query against the fresh store.
         self.controllers.search.search(self.dialog, self.dialog.queryEdit.text())
+# @impl 4be9-6ae3-f4ad-b6ea

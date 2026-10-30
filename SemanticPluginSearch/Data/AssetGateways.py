@@ -1,8 +1,10 @@
 """HTTP access to the project published assets and readmes.
 
-Both gateways use only urllib, so the plugin needs nothing beyond the
-standard library for its network layer. The transport is injectable for
-tests (the fixture transport serves file:// style content from memory).
+Every gateway receives its transport, a function fetching one http(s) URL
+with a byte cap: inside QGIS it is QgisBridge.NetworkTransport.qgisFetchUrl
+(QGIS network stack, proxy and authentication aware), in the pipeline
+pipeline.HttpTransport.fetchUrl, and in tests an in-memory fixture. This
+layer itself opens no connection.
 
 This module is part of the Data layer: it must import neither qgis nor Qt.
 """
@@ -12,8 +14,6 @@ import hashlib
 import json
 import os
 import tempfile
-import urllib.error
-import urllib.request
 from pathlib import Path
 
 from ..Domain.Entities import PluginInfo, RemoteFile, RemoteIndex, UniverseRelease
@@ -21,7 +21,6 @@ from ..Domain.Ports import AssetGateway, ReadmeGateway
 
 INDEX_FORMAT = "qgis-semantic-search-index-v1"
 USER_AGENT = "QGIS-SemanticPluginSearch"
-DOWNLOAD_TIMEOUT = 60
 MAX_README_BYTES = 400_000
 MAX_ASSET_BYTES = 50_000_000
 
@@ -40,30 +39,6 @@ class IndexFormatError(ValueError):
 
 class ReadmeUnavailable(LookupError):
     """No readme could be retrieved for a plugin."""
-
-
-def fetchUrl(url: str, timeout: int = DOWNLOAD_TIMEOUT, maxBytes: int = MAX_ASSET_BYTES) -> bytes:
-    """Fetch an http(s) URL with a bounded read (never file:// or friends)."""
-    if not url.lower().startswith(("http://", "https://")):
-        raise TransportError(f"unsupported URL scheme: {url}")
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            chunks = []
-            received = 0
-            while True:
-                chunk = response.read(65536)
-                if not chunk:
-                    break
-                received += len(chunk)
-                if received > maxBytes:
-                    raise TransportError(
-                        f"download too large for {url}: {received} > {maxBytes}"
-                    )
-                chunks.append(chunk)
-            return b"".join(chunks)
-    except (urllib.error.URLError, TimeoutError, OSError) as error:
-        raise TransportError(f"{url}: {error}") from error
 
 
 def parseIndexDocument(document: bytes | dict) -> RemoteIndex:
@@ -101,7 +76,7 @@ def parseIndexDocument(document: bytes | dict) -> RemoteIndex:
 class HttpAssetGateway(AssetGateway):
     """Concrete index fetching gateway; the index URL comes from settings."""
 
-    def __init__(self, indexUrl: str, transport=fetchUrl) -> None:
+    def __init__(self, indexUrl: str, transport) -> None:  # noqa: ANN001
         self.indexUrl = indexUrl
         self.transport = transport
         self.downloader = _VerifiedDownloader(transport)
@@ -118,7 +93,7 @@ class _VerifiedDownloader:
 
     MAX_ASSET_BYTES = 50_000_000
 
-    def __init__(self, transport=fetchUrl, maxBytes: int = MAX_ASSET_BYTES) -> None:
+    def __init__(self, transport, maxBytes: int = MAX_ASSET_BYTES) -> None:  # noqa: ANN001
         self.transport = transport
         self.maxBytes = maxBytes
 
@@ -159,7 +134,7 @@ class HttpIconGateway:
 
     MAX_ICON_BYTES = 300_000
 
-    def __init__(self, cacheDir: Path, transport=fetchUrl) -> None:
+    def __init__(self, cacheDir: Path, transport) -> None:  # noqa: ANN001
         self.cacheDir = Path(cacheDir)
         self.cacheDir.mkdir(parents=True, exist_ok=True)
         self.transport = transport
@@ -197,7 +172,7 @@ def _assertImage(payload: bytes, url: str) -> None:
 class HttpReadmeGateway(ReadmeGateway):
     """Fetches readme text, preferring the URL resolved by the pipeline."""
 
-    def __init__(self, transport=fetchUrl, maxBytes: int = MAX_README_BYTES) -> None:
+    def __init__(self, transport, maxBytes: int = MAX_README_BYTES) -> None:  # noqa: ANN001
         self.transport = transport
         self.maxBytes = maxBytes
         self.cache: dict[int, str] = {}

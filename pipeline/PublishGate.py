@@ -22,7 +22,7 @@ TOLERANCE = 0.10
 def loadPreviousCounts(previousUrl: str) -> dict[str, int] | None:
     """Fetch the previous index counts; None when there is nothing to compare."""
     try:
-        from SemanticPluginSearch.Data.AssetGateways import fetchUrl
+        from pipeline.HttpTransport import fetchUrl
 
         document = json.loads(fetchUrl(previousUrl))
     except Exception:  # noqa: BLE001 - no previous release or unreachable: pass

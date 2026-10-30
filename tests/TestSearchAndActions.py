@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from SemanticPluginSearch.Controllers.ActionController import ActionController
 from SemanticPluginSearch.Controllers.SearchController import SearchController
-from SemanticPluginSearch.Domain.Entities import ActionStates, PluginInfo, SearchResult
+from SemanticPluginSearch.Domain.Entities import PluginInfo, SearchResult
 from tests.conftest import FakePluginManagerGateway, FakeReporter, FakeView
 
 
@@ -108,12 +108,13 @@ def test_gateway_failure_is_surfaced_not_raised():
     assert any("failed" in message.lower() for message in view.statuses)
 
 
-def test_action_states_come_from_the_gateway():
+def test_action_states_come_from_the_installed_snapshot():
+    from SemanticPluginSearch.Domain.Entities import InstalledPlugin
+
     view = FakeView()
-    gateway = FakePluginManagerGateway()
-    gateway.nextStates = ActionStates(canUpgrade=True, installedVersion="1.0.0")
+    gateway = FakePluginManagerGateway({"X": InstalledPlugin("X", "X", "1.0.0")})
     controller = ActionController(gateway, FakeReporter())
-    controller.refreshStates(view, makeInfo(1, "X"), "2.0.0")
+    controller.refreshStates(view, PluginInfo(pluginId=1, name="X", version="2.0.0"))
     assert view.actionStates[-1].canUpgrade is True
     assert view.actionStates[-1].canInstall is False
 
@@ -121,7 +122,7 @@ def test_action_states_come_from_the_gateway():
 def test_action_states_without_selection_disable_everything():
     view = FakeView()
     controller = ActionController(FakePluginManagerGateway(), FakeReporter())
-    controller.refreshStates(view, None, "1.0.0")
+    controller.refreshStates(view, None)
     states = view.actionStates[-1]
     assert not states.canInstall and not states.canUpgrade
     assert not states.canReinstall and not states.canUninstall

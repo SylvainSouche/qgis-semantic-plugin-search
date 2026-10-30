@@ -74,7 +74,7 @@ def previousUniverses(previousUrl: str, transport=None) -> dict[str, dict]:
 
         fetch = transport
         if fetch is None:
-            from SemanticPluginSearch.Data.AssetGateways import fetchUrl
+            from pipeline.HttpTransport import fetchUrl
 
             fetch = fetchUrl
         document = json.loads(fetch(previousUrl))

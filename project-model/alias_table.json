@@ -2,31 +2,31 @@
   "ai-model-choice": {
     "active": true,
     "id": "0f87-6ae3-6996-ef8b",
-    "status": "proposed",
+    "status": "accepted",
     "type": "ai"
   },
   "ai-release-index": {
     "active": true,
     "id": "0f87-6ae3-6997-428c",
-    "status": "proposed",
+    "status": "accepted",
     "type": "ai"
   },
   "ai-reuse-fetcher": {
     "active": true,
     "id": "0f87-6ae3-6997-82b8",
-    "status": "proposed",
+    "status": "accepted",
     "type": "ai"
   },
   "ai-sqlite-db": {
     "active": true,
     "id": "0f87-6ae3-6997-117e",
-    "status": "proposed",
+    "status": "accepted",
     "type": "ai"
   },
   "ai-static-embeddings": {
     "active": true,
     "id": "0f87-6ae3-6996-518f",
-    "status": "proposed",
+    "status": "accepted",
     "type": "ai"
   },
   "asm-installer-api-versions": {
@@ -53,10 +53,28 @@
     "status": "assumed",
     "type": "asm"
   },
-  "cand-ci-qgis-smoke": {
+  "cand-attest-full-verify": {
     "active": true,
-    "id": "0f87-6ae3-e6f9-515e",
+    "id": "4be9-6ae3-f33f-ae43",
     "status": "open",
+    "type": "cand"
+  },
+  "cand-attest-identity-check": {
+    "active": true,
+    "id": "4be9-6ae3-f33f-a635",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-attest-server-only": {
+    "active": true,
+    "id": "4be9-6ae3-f33f-59d9",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-ci-qgis-smoke": {
+    "active": false,
+    "id": "0f87-6ae3-e6f9-515e",
+    "status": "rejected",
     "type": "cand"
   },
   "cand-configurable-settings": {
@@ -74,7 +92,7 @@
   "cand-hybrid-ranking": {
     "active": true,
     "id": "0f87-6ae3-b62e-feed",
-    "status": "open",
+    "status": "accepted",
     "type": "cand"
   },
   "cand-incremental-updates": {
@@ -86,6 +104,12 @@
   "cand-installed-badge": {
     "active": true,
     "id": "0f87-6ae3-e6f9-54e1",
+    "status": "accepted",
+    "type": "cand"
+  },
+  "cand-installed-filter": {
+    "active": true,
+    "id": "4be9-6ae3-f12c-676d",
     "status": "open",
     "type": "cand"
   },
@@ -104,13 +128,13 @@
   "cand-signed-releases": {
     "active": true,
     "id": "0f87-6ae3-e6f9-bdfe",
-    "status": "open",
+    "status": "accepted",
     "type": "cand"
   },
   "cand-version-compat-filter": {
-    "active": true,
+    "active": false,
     "id": "0f87-6ae3-b62e-f4a4",
-    "status": "open",
+    "status": "rejected",
     "type": "cand"
   },
   "con-commercial-models": {
@@ -122,6 +146,12 @@
   "con-light-engine": {
     "active": true,
     "id": "0f87-6ae3-6956-5e6b",
+    "status": "recorded",
+    "type": "con"
+  },
+  "con-qgis-repository-rules": {
+    "active": true,
+    "id": "4be9-6ae3-f4ac-6896",
     "status": "recorded",
     "type": "con"
   },
@@ -140,6 +170,12 @@
   "dec-ci-accepted": {
     "active": true,
     "id": "0f87-6ae3-945f-ef3b",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-defer-signing": {
+    "active": true,
+    "id": "4be9-6ae3-f33f-02f9",
     "status": "recorded",
     "type": "dec"
   },
@@ -233,6 +269,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-repository-compliance": {
+    "active": true,
+    "id": "4be9-6ae3-f4ad-bf8b",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-repository-identity": {
     "active": true,
     "id": "0f87-6ae3-8fc9-118a",
@@ -281,6 +323,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-takeover-fixes": {
+    "active": true,
+    "id": "4be9-6ae3-f11b-7cad",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-thread-safe-reporter": {
     "active": true,
     "id": "0f87-6ae3-9c6d-100c",
@@ -290,6 +338,12 @@
   "dec-ui-layout": {
     "active": true,
     "id": "0f87-6ae3-6956-17f5",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-user-choices-1030": {
+    "active": true,
+    "id": "4be9-6ae3-f11b-6189",
     "status": "recorded",
     "type": "dec"
   },
@@ -335,9 +389,27 @@
     "status": "verified",
     "type": "impl"
   },
+  "impl-event-discipline": {
+    "active": true,
+    "id": "4be9-6ae3-ed5d-1c31",
+    "status": "verified",
+    "type": "impl"
+  },
   "impl-gitignore": {
     "active": true,
     "id": "0f87-6ae3-7f93-edfd",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-hybrid-ranking": {
+    "active": true,
+    "id": "4be9-6ae3-f13d-18de",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-installed-state": {
+    "active": true,
+    "id": "4be9-6ae3-f13e-584c",
     "status": "verified",
     "type": "impl"
   },
@@ -365,6 +437,12 @@
     "status": "verified",
     "type": "impl"
   },
+  "impl-package-guard": {
+    "active": true,
+    "id": "4be9-6ae3-f13e-712f",
+    "status": "verified",
+    "type": "impl"
+  },
   "impl-pipeline-build": {
     "active": true,
     "id": "0f87-6ae3-74ce-025b",
@@ -374,6 +452,12 @@
   "impl-pipeline-fetch": {
     "active": true,
     "id": "0f87-6ae3-74ce-32bf",
+    "status": "verified",
+    "type": "impl"
+  },
+  "impl-qgis-network": {
+    "active": true,
+    "id": "4be9-6ae3-f4c1-bf11",
     "status": "verified",
     "type": "impl"
   },
@@ -401,6 +485,12 @@
     "status": "verified",
     "type": "impl"
   },
+  "impl-repository-metadata": {
+    "active": true,
+    "id": "4be9-6ae3-f4c1-f01e",
+    "status": "verified",
+    "type": "impl"
+  },
   "impl-result-rows": {
     "active": true,
     "id": "0f87-6ae3-af18-207b",
@@ -408,9 +498,9 @@
     "type": "impl"
   },
   "impl-search-ranking": {
-    "active": true,
+    "active": false,
     "id": "0f87-6ae3-74ce-7032",
-    "status": "verified",
+    "status": "superseded",
     "type": "impl"
   },
   "impl-search-window": {
@@ -473,9 +563,21 @@
     "status": "recorded",
     "type": "obs"
   },
+  "obs-icons-skipped": {
+    "active": true,
+    "id": "4be9-6ae3-f11b-3c77",
+    "status": "recorded",
+    "type": "obs"
+  },
   "obs-inqgis-load-failure": {
     "active": true,
     "id": "0f87-6ae3-95fd-9d3c",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-installed-lookup": {
+    "active": true,
+    "id": "4be9-6ae3-f11b-516c",
     "status": "recorded",
     "type": "obs"
   },
@@ -515,6 +617,12 @@
     "status": "recorded",
     "type": "obs"
   },
+  "obs-repository-gaps": {
+    "active": true,
+    "id": "4be9-6ae3-f4ad-9d83",
+    "status": "recorded",
+    "type": "obs"
+  },
   "obs-review-corrections": {
     "active": true,
     "id": "0f87-6ae3-b62e-7a99",
@@ -527,9 +635,27 @@
     "status": "recorded",
     "type": "obs"
   },
+  "obs-signing-ci-only": {
+    "active": true,
+    "id": "4be9-6ae3-f33f-6711",
+    "status": "recorded",
+    "type": "obs"
+  },
   "obs-smoke-both-families": {
     "active": true,
     "id": "0f87-6ae3-a99a-36dd",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-stale-package": {
+    "active": true,
+    "id": "4be9-6ae3-f11b-158e",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-user-test-030": {
+    "active": true,
+    "id": "4be9-6ae3-f11a-42ad",
     "status": "recorded",
     "type": "obs"
   },
@@ -582,9 +708,9 @@
     "type": "req"
   },
   "req-cosine-ranking": {
-    "active": true,
+    "active": false,
     "id": "0f87-6ae3-6985-5a6f",
-    "status": "confirmed",
+    "status": "superseded",
     "type": "req"
   },
   "req-db-version-match": {
@@ -611,6 +737,18 @@
     "status": "confirmed",
     "type": "req"
   },
+  "req-hybrid-ranking": {
+    "active": true,
+    "id": "4be9-6ae3-f123-5b3c",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-installed-state": {
+    "active": true,
+    "id": "4be9-6ae3-f12c-0110",
+    "status": "confirmed",
+    "type": "req"
+  },
   "req-makefile-targets": {
     "active": true,
     "id": "0f87-6ae3-7ce1-fb2e",
@@ -623,6 +761,12 @@
     "status": "confirmed",
     "type": "req"
   },
+  "req-model-signature": {
+    "active": true,
+    "id": "4be9-6ae3-f12c-523c",
+    "status": "deferred",
+    "type": "req"
+  },
   "req-mvc-isolation": {
     "active": true,
     "id": "0f87-6ae3-6986-f061",
@@ -632,6 +776,12 @@
   "req-natural-language-search": {
     "active": true,
     "id": "0f87-6ae3-6970-f113",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-package-guard": {
+    "active": true,
+    "id": "4be9-6ae3-f12c-682d",
     "status": "confirmed",
     "type": "req"
   },
@@ -668,7 +818,7 @@
   "req-portability-v2": {
     "active": true,
     "id": "0f87-6ae3-746d-1a0c",
-    "status": "proposed",
+    "status": "confirmed",
     "type": "req"
   },
   "req-pyqt5-pyqt6": {
@@ -677,9 +827,21 @@
     "status": "confirmed",
     "type": "req"
   },
+  "req-qgis-network-stack": {
+    "active": true,
+    "id": "4be9-6ae3-f4ad-b6ea",
+    "status": "confirmed",
+    "type": "req"
+  },
   "req-query-embedding-local": {
     "active": true,
     "id": "0f87-6ae3-6985-7c77",
+    "status": "confirmed",
+    "type": "req"
+  },
+  "req-repository-metadata": {
+    "active": true,
+    "id": "4be9-6ae3-f4ad-668c",
     "status": "confirmed",
     "type": "req"
   },
@@ -690,8 +852,14 @@
     "type": "req"
   },
   "req-result-rows": {
-    "active": true,
+    "active": false,
     "id": "0f87-6ae3-ab0f-ea79",
+    "status": "superseded",
+    "type": "req"
+  },
+  "req-result-rows-v2": {
+    "active": true,
+    "id": "4be9-6ae3-f123-64dd",
     "status": "confirmed",
     "type": "req"
   },
@@ -749,9 +917,39 @@
     "status": "passing",
     "type": "test"
   },
+  "t-event-discipline": {
+    "active": true,
+    "id": "4be9-6ae3-ed5d-2705",
+    "status": "passing",
+    "type": "test"
+  },
   "t-inspect-tabs": {
     "active": true,
     "id": "0f87-6ae3-69b6-a8e4",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-installed-state": {
+    "active": true,
+    "id": "4be9-6ae3-f13e-a34c",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-manual-review-1030": {
+    "active": true,
+    "id": "4be9-6ae3-f13e-6931",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-network-transport": {
+    "active": true,
+    "id": "4be9-6ae3-f4c1-6adf",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-package-guard": {
+    "active": true,
+    "id": "4be9-6ae3-f13e-680e",
     "status": "passing",
     "type": "test"
   },
@@ -761,9 +959,21 @@
     "status": "passing",
     "type": "test"
   },
-  "t-search-rank": {
+  "t-repository-rules": {
     "active": true,
+    "id": "4be9-6ae3-f4c1-3f19",
+    "status": "passing",
+    "type": "test"
+  },
+  "t-search-rank": {
+    "active": false,
     "id": "0f87-6ae3-69b6-03d5",
+    "status": "superseded",
+    "type": "test"
+  },
+  "t-search-rank-v2": {
+    "active": true,
+    "id": "4be9-6ae3-f13d-02ed",
     "status": "passing",
     "type": "test"
   },
@@ -797,6 +1007,12 @@
     "status": "confirmed",
     "type": "uc"
   },
+  "uc-find-by-name": {
+    "active": true,
+    "id": "4be9-6ae3-f4ad-99af",
+    "status": "confirmed",
+    "type": "uc"
+  },
   "uc-inspect": {
     "active": true,
     "id": "0f87-6ae3-695e-7151",
@@ -812,6 +1028,12 @@
   "uc-search": {
     "active": true,
     "id": "0f87-6ae3-695e-9458",
+    "status": "confirmed",
+    "type": "uc"
+  },
+  "uc-see-installed": {
+    "active": true,
+    "id": "4be9-6ae3-f4ad-e49b",
     "status": "confirmed",
     "type": "uc"
   }

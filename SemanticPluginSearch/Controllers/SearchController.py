@@ -62,7 +62,7 @@ class SearchController:
         view.showResults(results)
         if results:
             view.showStatus(
-                f"{len(results)} plugin(s) match; showing similarity as a percentage."
+                f"{len(results)} plugin(s) match; showing relevance as a percentage."
             )
         else:
             view.showStatus("No plugin matches this query closely enough.")

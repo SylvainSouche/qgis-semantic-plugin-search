@@ -44,6 +44,11 @@ class SearchWindowView(Protocol):
         """Enable or disable the manager action buttons."""
         ...
 
+    def showInstalledBadges(self, badges: dict[int, str]) -> None:
+        """Badge the rows of installed plugins (installed or upgradeable);
+        rows absent from the mapping lose their badge."""
+        ...
+
     def clearDetails(self) -> None:
         """Reset the right panel, e.g. when no result exists."""
         ...

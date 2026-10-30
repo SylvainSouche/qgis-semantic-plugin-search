@@ -1,5 +1,5 @@
 """Search ranking against a store built by the real pipeline
-(t-search-rank, req-cosine-ranking).
+(t-search-rank, req-hybrid-ranking).
 """
 from __future__ import annotations
 
@@ -72,14 +72,38 @@ def test_ml_query_ranks_classifier_plugin_first(store, searchService):
     assert results[0].info.name == "OrthoClassifier"
 
 
-def test_scores_are_cosine_similarities(store, searchService):
+def test_semantic_part_is_the_cosine_similarity(store, searchService):
     results = searchService.search(store, "digitize parcel boundaries")
     query = searchService.engine.embedQuery("digitize parcel boundaries")
-    expected = float(store.embeddings()[store.pluginIds().index(results[0].info.pluginId)] @ query)
-    assert results[0].score == pytest.approx(expected, abs=1e-6)
+    for result in results:
+        row = store.pluginIds().index(result.info.pluginId)
+        assert result.semantic == pytest.approx(float(store.embeddings()[row] @ query), abs=1e-6)
+        assert result.score >= min(result.semantic, 1.0) - 1e-6
     assert all(
         results[i].score >= results[i + 1].score for i in range(len(results) - 1)
     )
+
+
+def test_hybrid_score_is_cosine_when_nothing_matches_literally(store, searchService):
+    # "lots" and "orthophoto" are absent from ParcelDigitizer name and tags
+    # but its description has no literal hit either for this query.
+    results = searchService.search(store, "drone imagery")
+    for result in results:
+        if result.info.name == "InvoiceReporter":
+            assert result.score == pytest.approx(result.semantic, abs=1e-6)
+
+
+def test_exact_plugin_name_ranks_that_plugin_first(store, searchService):
+    for name in ("ShapeExporter", "shape exporter", "weblayerloader"):
+        results = searchService.search(store, name)
+        assert results and results[0].info.name.lower().replace(" ", "") == name.lower().replace(
+            " ", ""
+        ), name
+
+
+def test_name_words_lift_a_plugin_over_a_description_only_match(store, searchService):
+    results = searchService.search(store, "invoice")
+    assert results[0].info.name == "InvoiceReporter"
 
 
 def test_unknown_vocabulary_query_yields_no_results(store, searchService):

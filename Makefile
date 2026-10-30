@@ -13,7 +13,7 @@ BUILD_DIR := build
 DIST_DIR := dist
 MODEL := $(BUILD_DIR)/EmbeddingModel.npz
 MODEL_ID ?= static-potion-base-8M
-HF_BASE ?= https://huggingface.co/minishlab/potion-base-8M/resolve/main
+HF_BASE ?= https://huggingface.co/minishlab/potion-base-8M/resolve/bf8b056651a2c21b8d2565580b8569da283cab23
 PY := .venv/bin/python
 VERSION := $(shell sed -n 's/^version=\(.*\)/\1/p' $(PLUGIN)/metadata.txt)
 QGIS_VERSIONS ?= 3.44 4.2
@@ -89,7 +89,8 @@ embed: _venv $(MODEL) ## Embed the fetched plugins into per universe databases; 
 	done
 	@echo "==> Databases:"; ls -lh $(BUILD_DIR)/Embeddings-*.sqlite
 
-package: ## Package the plugin as a zip in dist/, ready for QGIS
+# @impl 4be9-6ae3-f12c-682d
+package: test ## Run the tests, then package the plugin as a zip in dist/, ready for QGIS
 	@test -n "$(VERSION)" || { echo "Cannot read the version from $(PLUGIN)/metadata.txt"; exit 1; }
 	@command -v zip >/dev/null || { echo "zip is required"; exit 1; }
 	@mkdir -p $(DIST_DIR)

@@ -65,3 +65,4 @@ class DetailsController:
         return self._displayedPluginId
 
 # @impl 0f87-6ae3-6985-9f7c
+# @impl 0f87-6ae3-e355-74a5

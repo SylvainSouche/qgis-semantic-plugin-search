@@ -1,19 +1,23 @@
+; @impl 4be9-6ae3-f4ad-668c
 [general]
 name=Semantic Plugin Search
 qgisMinimumVersion=3.44
-qgisMaximumVersion=4.99.99
+qgisMaximumVersion=4.99
 description=Find QGIS plugins with natural language semantic search over plugin metadata and readmes
-about=Semantic Plugin Search indexes every plugin of the QGIS repository with text embeddings and lets you describe what you are looking for in plain language, for example "classify a drone orthophoto into land cover classes". The plugin downloads a compact embedding model and a per QGIS version embeddings database from the project releases, ranks all plugins by semantic similarity to your query, and shows metadata and readmes. Install, Upgrade, Reinstall and Uninstall buttons defer to the standard plugin manager. Your query never leaves your machine.
-version=0.3.0
+about=Describe what you need in plain language, for example "classify a drone orthophoto into land cover classes" or "create contour lines from a DEM", and get the matching QGIS plugins ranked by relevance, with their metadata, readme and the usual Install, Upgrade, Reinstall and Uninstall buttons, which are carried out by the standard plugin manager. Plugins you already have are marked installed, or update when a newer version exists. Requirements: an internet connection on first use, to download a compact embedding model (about 17 MB) and the plugin index for your QGIS version (about 5 MB) from the project GitHub releases; both are cached in your profile and refreshed automatically. No other dependency: numpy, which QGIS bundles, and the Python standard library. Your query never leaves your machine: it is turned into an embedding locally.
+version=0.4.0
 author=SylvainSouche
 email=
 tracker=https://github.com/SylvainSouche/qgis-semantic-plugin-search/issues
 repository=https://github.com/SylvainSouche/qgis-semantic-plugin-search
 homepage=https://github.com/SylvainSouche/qgis-semantic-plugin-search
 icon=assets/Icon.svg
-category=Plugins
 tags=semantic search,embeddings,plugin manager,discovery,nlp
 experimental=True
 deprecated=False
 server=False
 license=MIT
+changelog=0.4.0 - Fix the window failing to open in 0.3.0 (stale package), icons now return on every search, installed plugins are recognised so Upgrade, Reinstall and Uninstall work, installed and update badges, hybrid ranking that puts exact plugin names first, downloads through the QGIS network settings (proxy, authentication)
+    0.3.0 - Offline first cache, pinned update channel, safer links, bounded background work, hardening
+    0.2.0 - Plugin icons in the results, QGIS 3 and QGIS 4 installer support, experimental and deprecated filters, live search
+    0.1.0 - First release: natural language plugin search with local embeddings

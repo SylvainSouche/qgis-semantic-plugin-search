@@ -152,10 +152,8 @@ def main() -> int:
         def uninstall(self, pluginName):  # noqa: ANN002, ANN202
             self.last = ("uninstall", pluginName)
 
-        def actionStates(self, pluginName, availableVersion):  # noqa: ANN002, ANN202
-            from SemanticPluginSearch.Domain.Entities import ActionStates
-
-            return ActionStates(canInstall=True)
+        def installedPlugins(self):  # noqa: ANN202
+            return {}
 
     tmpProfile = Path(tempfile.mkdtemp(prefix="smoke-profile-"))
     paths = ProfilePathsProvider(rootDir=tmpProfile)
@@ -178,8 +176,10 @@ def main() -> int:
         onStoreReady=onStoreReady,
     )
     from SemanticPluginSearch.Data.AssetGateways import HttpIconGateway
+    from SemanticPluginSearch.QgisBridge.NetworkTransport import qgisFetchUrl
 
-    iconGateway = HttpIconGateway(tmpProfile / "Icons")
+    # Real icons through the real QGIS network stack (QgsBlockingNetworkRequest).
+    iconGateway = HttpIconGateway(tmpProfile / "Icons", transport=qgisFetchUrl)
     iconController = IconController(iconGateway, QtJobRunner())
     controllers = Controllers(
         searchController, detailsController, actionController, assetsController, iconController
@@ -264,8 +264,33 @@ def main() -> int:
             searchController.search(dialog, query)
             app.processEvents()
         check("rapid searches stay responsive", True)
+
+        # 11. A repeated search rebuilds its rows: icons must come back
+        # (regression: only the first search ever showed icons).
+        searchController.search(dialog, "create contour lines from a DEM")
+        deadline = time.time() + 30
+        while time.time() < deadline:
+            app.processEvents()
+            again = sum(
+                1 for label in dialog._iconLabels.values()
+                if label.pixmap() is not None and not label.pixmap().isNull()
+            )
+            if again:
+                break
+            time.sleep(0.1)
+        check("icons return on a repeated search", again > 0,
+              f"{again}/{dialog.resultsList.count()} icons")
     else:
         check("real store section skipped (no SMOKE_DB)", True)
+
+    # 12. The real installer gateway reads the installed plugins from disk:
+    # the bundled processing plugin must appear with a version.
+    from SemanticPluginSearch.QgisBridge.PluginInstallerGateway import PluginInstallerGateway
+
+    installed = PluginInstallerGateway(None, FakeReporter()).installedPlugins()
+    processing = installed.get("processing")
+    check("installed plugins read from disk", processing is not None and bool(processing.version),
+          f"{len(installed)} installed, processing={processing}")
 
     # Teardown: drop the Qt objects, discard any queued pool tasks (the
     # stress batch leaves hundreds of icon fetches behind; exitQgis would

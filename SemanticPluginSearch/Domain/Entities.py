@@ -41,10 +41,16 @@ class PluginInfo:
 
 @dataclass(frozen=True)
 class SearchResult:
-    """One ranked hit: the plugin and its cosine similarity to the query."""
+    """One ranked hit: the plugin, its ranking score and its cosine similarity.
+
+    score is the hybrid ranking score, the cosine similarity plus the lexical
+    boost (Domain.LexicalBoost), capped at 1.0; semantic is the cosine part
+    alone. Results built without a boost carry score as their semantic part.
+    """
 
     info: PluginInfo
     score: float
+    semantic: float | None = None
 
 
 @dataclass(frozen=True)
@@ -74,6 +80,15 @@ class RemoteIndex:
     modelId: str
     modelDim: int
     universes: dict[str, UniverseRelease] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class InstalledPlugin:
+    """One plugin folder found on disk: its installer key and metadata."""
+
+    key: str
+    name: str = ""
+    version: str = ""
 
 
 @dataclass(frozen=True)

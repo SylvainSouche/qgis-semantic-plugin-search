@@ -17,7 +17,9 @@ import time
 from qgis.PyQt.QtCore import QEventLoop, QTimer
 from qgis.gui import QgisInterface
 
-from ..Domain.Entities import ActionStates, PluginInfo
+from ..Data.InstalledPlugins import scanInstalledPlugins
+from ..Domain.Entities import InstalledPlugin, PluginInfo
+from ..Domain.Installed import installerKey
 from ..Domain.Ports import PluginManagerGateway, Reporter
 
 
@@ -64,15 +66,8 @@ class PluginInstallerGateway(PluginManagerGateway):
 
     @staticmethod
     def _installerKey(plugin: PluginInfo) -> str:
-        """The key pyplugin_installer knows the plugin by.
-
-        The installer derives keys from the package file name (e.g.
-        topoprofilestudio.1.0.0.zip gives topoprofilestudio), not from the
-        display name, so the two can differ in case and spacing.
-        """
-        if plugin.fileName:
-            return plugin.fileName.partition(".")[0]
-        return plugin.name
+        """The key pyplugin_installer knows the plugin by (Domain.Installed)."""
+        return installerKey(plugin)
 
     def _ensureInstallerData(self, key: str, timeout: float = 30.0) -> None:
         """Make the installer's plugin dictionary contain the key.
@@ -106,17 +101,27 @@ class PluginInstallerGateway(PluginManagerGateway):
                 "open the plugin manager once to refresh them."
             )
 
-    def actionStates(self, pluginName: str, availableVersion: str) -> ActionStates:
-        installed = _installedVersion(pluginName)
-        if not installed:
-            return ActionStates(canInstall=True)
-        upgradeable = _versionIsNewer(availableVersion, installed)
-        return ActionStates(
-            canUpgrade=upgradeable,
-            canReinstall=True,
-            canUninstall=True,
-            installedVersion=installed,
-        )
+    def installedPlugins(self) -> dict[str, InstalledPlugin]:
+        """Read the plugin folders QGIS loads from, user profile first.
+
+        qgis.utils.plugin_paths is read at call time (QGIS rebinds its module
+        globals), and the folders are scanned rather than trusting
+        qgis.utils.plugins (loaded instances only, keyed by folder, without a
+        version) or plugins_metadata_parser (never pruned on uninstall).
+        """
+        import qgis.utils
+
+        paths = list(getattr(qgis.utils, "plugin_paths", []) or [])
+        if not paths:
+            # QGIS fills plugin_paths during its Python startup; a bare
+            # application (headless scripts, the smoke test) leaves it empty.
+            from qgis.core import QgsApplication
+
+            paths = [
+                QgsApplication.qgisSettingsDirPath().rstrip("/") + "/python/plugins",
+                QgsApplication.pkgDataPath().rstrip("/") + "/python/plugins",
+            ]
+        return scanInstalledPlugins(paths)
 
     def _resolve(self):
         """The installer instance for this QGIS version, or None.
@@ -129,7 +134,8 @@ class PluginInstallerGateway(PluginManagerGateway):
             from pyplugin_installer import instance
 
             return instance()
-        except Exception:  # noqa: BLE001 - try the QGIS 3 spelling next
+        # Not QGIS 4: fall through to the QGIS 3 spelling below.
+        except Exception:  # noqa: BLE001  # nosec B110
             pass
         try:
             from pyplugin_installer.installer import installer  # QGIS 3 singleton
@@ -155,26 +161,4 @@ class PluginInstallerGateway(PluginManagerGateway):
         self.reporter.info(
             f"Please {operation} '{pluginName}' in the plugin manager."
         )
-
-
-def _installedVersion(pluginName: str) -> str:
-    import qgis.utils
-
-    plugin = qgis.utils.plugins.get(pluginName)
-    if plugin is not None:
-        return str(getattr(plugin, "version", "") or "")
-    metadata = getattr(qgis.utils, "plugin_metadata", {}).get(pluginName)
-    if metadata is not None:
-        return str(getattr(metadata, "version", "") or "")
-    return ""
-
-
-def _versionIsNewer(candidate: str, installed: str) -> bool:
-    def parts(version: str) -> tuple[int, ...]:
-        chunks = []
-        for chunk in version.split("."):
-            digits = "".join(character for character in chunk if character.isdigit())
-            chunks.append(int(digits) if digits else 0)
-        return tuple(chunks)
-
-    return parts(candidate or "0") > parts(installed or "0")
+# @impl 4be9-6ae3-f12c-0110

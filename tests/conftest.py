@@ -216,6 +216,7 @@ class FakeView:
         self.readmes: list[tuple[int, str]] = []
         self.placeholders: list[tuple[int, str]] = []
         self.actionStates: list = []
+        self.badges: list[dict] = []
         self.cleared = 0
         self.detailsDriver = None  # set to (details, view) to mimic wiring
 
@@ -240,6 +241,9 @@ class FakeView:
 
     def setActionStates(self, states) -> None:  # noqa: ANN001
         self.actionStates.append(states)
+
+    def showInstalledBadges(self, badges) -> None:  # noqa: ANN001
+        self.badges.append(dict(badges))
 
     def clearDetails(self) -> None:
         self.cleared += 1
@@ -291,9 +295,9 @@ class ManualRunner:
 class FakePluginManagerGateway:
     """Records delegation calls; performs nothing itself."""
 
-    def __init__(self) -> None:
+    def __init__(self, installed=None) -> None:  # noqa: ANN001
         self.calls: list[tuple[str, str]] = []
-        self.nextStates = None
+        self.installed = dict(installed or {})
 
     def install(self, plugin) -> None:  # noqa: ANN001
         self.calls.append(("install", plugin.name))
@@ -307,12 +311,8 @@ class FakePluginManagerGateway:
     def uninstall(self, plugin) -> None:  # noqa: ANN001
         self.calls.append(("uninstall", plugin.name))
 
-    def actionStates(self, pluginName: str, availableVersion: str):  # noqa: ANN001
-        if self.nextStates is not None:
-            return self.nextStates
-        from SemanticPluginSearch.Domain.Entities import ActionStates
-
-        return ActionStates(canInstall=True)
+    def installedPlugins(self):  # noqa: ANN201
+        return dict(self.installed)
 
 
 class FakeIconGateway:

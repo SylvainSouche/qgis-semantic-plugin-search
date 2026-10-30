@@ -1,8 +1,8 @@
 """Batched icon fetch orchestration (req-result-rows icon path).
 
 Event discipline under test: one search produces at most one background job
-and one batched GUI callback; each URL is fetched once per session; stale
-batches are dropped; per-icon failures never reach the GUI thread.
+and one batched GUI callback; every batch delivers all its icons; stale
+batches are dropped; failing URLs are not retried; per-icon failures never reach the GUI thread.
 """
 from __future__ import annotations
 
@@ -34,15 +34,51 @@ def test_one_batched_callback_per_result_batch():
     assert sorted(batches[0]) == [(1, b"png:https://x.test/a.png"), (3, b"png:https://x.test/c.png")]
 
 
-def test_urls_are_fetched_once_per_session():
+def test_every_batch_delivers_its_icons_even_when_seen_before():
+    """Rows are rebuilt on every search: a repeat plugin needs its icon again.
+
+    Regression: the second search used to skip URLs already fetched, leaving
+    the rebuilt rows with empty icon slots (no icons after the first search
+    in QGIS 4.2.3).
+    """
     gateway = FakeIconGateway()
     controller = IconController(gateway, InlineRunner())
     results = [makeResult(1, "https://x.test/a.png")]
     batches = []
     controller.fetchFor(results, lambda batch: batches.append(batch))
     controller.fetchFor(results, lambda batch: batches.append(batch))
-    assert batches != [] and len(batches) == 1, "second batch is fully served"
-    assert gateway.fetched == ["https://x.test/a.png"]
+    assert batches == [[(1, b"png:https://x.test/a.png")]] * 2
+
+
+def test_icons_of_a_dropped_stale_batch_reach_the_next_batch():
+    gateway = FakeIconGateway()
+    runner = ManualRunner()
+    controller = IconController(gateway, runner)
+    first: list = []
+    second: list = []
+    controller.fetchFor([makeResult(1, "https://x.test/a.png")], lambda b: first.append(b))
+    controller.fetchFor([makeResult(1, "https://x.test/a.png")], lambda b: second.append(b))
+    runner.completeNext()
+    runner.completeNext()
+    assert first == []
+    assert second == [[(1, b"png:https://x.test/a.png")]]
+
+
+def test_failing_urls_are_not_retried():
+    class FailingIconGateway:
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def fetchIcon(self, url: str) -> bytes:  # noqa: ANN001, ANN202
+            self.calls += 1
+            raise RuntimeError("broken icon")
+
+    gateway = FailingIconGateway()
+    controller = IconController(gateway, InlineRunner())
+    results = [makeResult(1, "https://x.test/a.png")]
+    controller.fetchFor(results, lambda batch: None)
+    controller.fetchFor(results, lambda batch: None)
+    assert gateway.calls == 1
 
 
 def test_stale_batch_is_dropped_entirely():

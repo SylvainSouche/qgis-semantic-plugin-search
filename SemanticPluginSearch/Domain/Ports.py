@@ -15,7 +15,7 @@ from typing import TypeVar
 
 import numpy as np
 
-from .Entities import ActionStates, PluginInfo, RemoteFile, RemoteIndex
+from .Entities import InstalledPlugin, PluginInfo, RemoteFile, RemoteIndex
 
 T = TypeVar("T")
 
@@ -127,8 +127,11 @@ class PluginManagerGateway(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def actionStates(self, pluginName: str, availableVersion: str) -> ActionStates:
-        """Report which actions the manager currently offers for the plugin."""
+    def installedPlugins(self) -> dict[str, InstalledPlugin]:
+        """A fresh snapshot of the installed plugins, keyed by installer key.
+
+        The Domain (Domain.Installed) turns it into action states and badges.
+        """
         raise NotImplementedError
 
 

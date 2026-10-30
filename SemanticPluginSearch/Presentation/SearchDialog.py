@@ -53,6 +53,7 @@ class SearchDialog(QDialog):
         self.controllers = controllers
         self.results: list[SearchResult] = []
         self._iconLabels: dict[int, QLabel] = {}
+        self._badgeLabels: dict[int, QLabel] = {}
         self.setWindowTitle(self.tr("Semantic Plugin Search"))
         self.setWindowIcon(self._pluginIcon())
         self._buildUi()
@@ -180,7 +181,7 @@ class SearchDialog(QDialog):
         info = self._infoOf(current.data(Qt.ItemDataRole.UserRole))
         if info is not None:
             self.controllers.details.showDetails(self, info)
-            self.controllers.actions.refreshStates(self, info, info.version)
+            self.controllers.actions.refreshStates(self, info)
 
     def _onAction(self, action: str) -> None:
         item = self.resultsList.currentItem()
@@ -225,6 +226,7 @@ class SearchDialog(QDialog):
     def showResults(self, results: list[SearchResult]) -> None:
         self.results = list(results)
         self._iconLabels.clear()
+        self._badgeLabels.clear()
         self.resultsList.blockSignals(True)
         self.resultsList.clear()
         for result in self.results:
@@ -238,6 +240,7 @@ class SearchDialog(QDialog):
         self.resultsList.blockSignals(False)
         self.countLabel.setText(self.tr("{} plugin(s)").format(len(self.results)))
         self.controllers.icons.fetchFor(self.results, self.applyIcons)
+        self.controllers.actions.refreshInstalled(self, self.results)
         if self.results:
             # Default the details to the first result when nothing is selected.
             self.resultsList.setCurrentRow(0)
@@ -296,7 +299,21 @@ class SearchDialog(QDialog):
             Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop
         )
         scoreLabel.setFixedWidth(SCORE_COLUMN_WIDTH)
-        layout.addWidget(scoreLabel)
+        badgeLabel = QLabel("", row)
+        badgeFont = QFont(scoreFont)
+        badgeFont.setBold(False)
+        badgeFont.setPointSize(max(8, scoreFont.pointSize() - 3))
+        badgeLabel.setFont(badgeFont)
+        badgeLabel.setStyleSheet("color: palette(mid);")
+        badgeLabel.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop)
+        badgeLabel.setFixedWidth(SCORE_COLUMN_WIDTH)
+        self._badgeLabels[result.info.pluginId] = badgeLabel
+        scoreColumn = QVBoxLayout()
+        scoreColumn.setSpacing(0)
+        scoreColumn.addWidget(scoreLabel)
+        scoreColumn.addWidget(badgeLabel)
+        scoreColumn.addStretch(1)
+        layout.addLayout(scoreColumn)
         return row
 
     @staticmethod
@@ -325,6 +342,12 @@ class SearchDialog(QDialog):
                         Qt.TransformationMode.SmoothTransformation,
                     )
                 )
+
+    def showInstalledBadges(self, badges: dict[int, str]) -> None:
+        """Muted badge under the score: installed, or update for upgradeable."""
+        texts = {"installed": self.tr("installed"), "upgradeable": self.tr("update")}
+        for pluginId, label in self._badgeLabels.items():
+            label.setText(texts.get(badges.get(pluginId, ""), ""))
 
     def showStatus(self, message: str) -> None:
         self.statusLabel.setText(message)
@@ -357,4 +380,5 @@ class SearchDialog(QDialog):
 
 # @impl 0f87-6ae3-6985-53e9
 
-# @impl 0f87-6ae3-ab0f-ea79
+# @impl 4be9-6ae3-f123-64dd
+# @impl 0f87-6ae3-e355-74a5

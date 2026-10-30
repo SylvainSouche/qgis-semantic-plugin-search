@@ -69,9 +69,9 @@ class SqliteVectorStore(PluginVectorStore):
                 )
             infos: dict[int, PluginInfo] = {}
             pluginIds: list[int] = []
-            for row in connection.execute(
-                f"SELECT {_PLUGIN_COLUMNS} FROM plugins ORDER BY plugin_id"
-            ):
+            # _PLUGIN_COLUMNS is a module constant, never user input.
+            query = f"SELECT {_PLUGIN_COLUMNS} FROM plugins ORDER BY plugin_id"
+            for row in connection.execute(query):
                 info = _rowToInfo(row)
                 infos[info.pluginId] = info
                 pluginIds.append(info.pluginId)
