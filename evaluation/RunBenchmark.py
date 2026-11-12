@@ -127,6 +127,32 @@ def queryMilliseconds(vectors: EncodedVectors, texts: list[str]) -> float:
     return round(1000 * (time.perf_counter() - started) / max(len(texts), 1), 2)
 
 
+def languageMatrix(vectors: EncodedVectors, tasks: list[dict], languages: list[str]) -> dict:
+    """How well the model aligns the same need across query languages.
+
+    For each pair (a, b): top1 is the share of needs whose sentence in a has
+    its own translation in b as the most similar of the needs' sentences in
+    b; margin is the mean cosine of matching pairs minus the mean cosine of
+    the other pairs. A language aligned with itself scores top1 1.0.
+    """
+    embedded = {}
+    for lang in languages:
+        rows = [vectors.query(q[lang]) for q in tasks]
+        embedded[lang] = np.stack([r if r is not None else np.zeros(vectors.documents.shape[1])
+                                   for r in rows])
+    out: dict = {}
+    count = len(tasks)
+    for a in languages:
+        out[a] = {}
+        for b in languages:
+            similarity = embedded[a] @ embedded[b].T
+            top1 = float(np.mean(np.argmax(similarity, axis=1) == np.arange(count)))
+            matching = float(np.mean(np.diag(similarity)))
+            others = float((similarity.sum() - np.trace(similarity)) / (count * count - count))
+            out[a][b] = {"top1": round(top1, 3), "margin": round(matching - others, 3)}
+    return out
+
+
 def benchmarkUniverse(candidate: dict, universe: str, queries: dict, judgments: dict,
                       judged: dict) -> tuple[dict, dict, list]:
     corpus = loadCorpus(universe)
@@ -154,6 +180,7 @@ def benchmarkUniverse(candidate: dict, universe: str, queries: dict, judgments: 
     if universe == "3":
         pluginLanguage = [textLanguage(t) for t in corpus.texts]
         position = {info.name: i for i, info in enumerate(corpus.infos)}
+        out["languageMatrix"] = languageMatrix(vectors, tasks, queries["languages"])
         out["cross"] = {}
         for lang in queries["languages"]:
             texts = {q["id"]: q[lang] for q in tasks}

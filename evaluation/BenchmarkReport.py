@@ -84,6 +84,18 @@ def report(folder: Path) -> str:
                "language (lower is better: it measures language capture).", "",
                table(["model", "EU kept", "ru", "zh", "ja", "same-lang", "native needs, native",
                       "native needs, English"], cross), ""]
+    for r in results:
+        matrix = r["universes"]["3"].get("languageMatrix")
+        if not matrix:
+            continue
+        langs = list(matrix)
+        md += [f"## Language matrix: {r['candidate']['id']}", "",
+               "Row: language of a need's sentence; column: language of the 40 sentences it is "
+               "compared with. Cell: share of needs whose own translation is the most similar "
+               "(top-1), then the cosine margin of matching over non-matching pairs.", "",
+               table(["query \\ target", *langs],
+                     [[a, *(f"{matrix[a][b]['top1']:.0%} ({matrix[a][b]['margin']:+.2f})"
+                            for b in langs)] for a in langs]), ""]
     md += ["## Size and speed", "",
            "Parameters of the embedding table or network; document time embeds the whole "
            "catalogue on the CI runner's CPU; query time is per query.", "",

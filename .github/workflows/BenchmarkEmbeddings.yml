@@ -5,13 +5,15 @@ name: BenchmarkEmbeddings
 # run uses the same pinned snapshot, needs, queries and judgments. Models are
 # listed in evaluation/Candidates.json. Runs by hand (workflow_dispatch, once
 # this file is on the default branch) or when the candidate list or this
-# workflow changes on a dev branch.
+# workflow changes on a dev branch: then only new or changed candidates run,
+# or the ones a commit message line "benchmark: id1 id2" names.
 
 on:
   push:
     branches: ["dev/**"]
     paths:
       - evaluation/Candidates.json
+      - evaluation/RunBenchmark.py
       - .github/workflows/BenchmarkEmbeddings.yml
   workflow_dispatch:
     inputs:
@@ -51,6 +53,14 @@ jobs:
           current = json.load(open("evaluation/Candidates.json"))["candidates"]
           known = [c["id"] for c in current]
           requested = os.environ["REQUESTED"].split()
+          if os.environ["EVENT"] == "push" and not requested:
+              # A commit message line "benchmark: id1 id2" reruns those candidates.
+              message = subprocess.run(["git", "log", "-1", "--format=%B"],
+                                       capture_output=True, text=True).stdout
+              for line in message.splitlines():
+                  if line.lower().startswith("benchmark:"):
+                      requested = ["shipped"] + [c for c in line.split(":", 1)[1].split()
+                                                 if c != "shipped"]
           if os.environ["EVENT"] == "push" and not requested:
               # On push, only new or changed candidates, plus the shipped reference.
               try:
