@@ -1,5 +1,5 @@
 {
- "about": "Golden queries, one per task need. Each task has a set of plugins that do it (Judgments.json). 'en' states the task; it is also the author's own sentence and the source of the eight translations. 'generated' holds the sentence and the keyword list written by an independent model from the task alone (see 'generator' and QueryPrompt.txt): the sentence is what it would type into a plain language search box, the keywords what it would type into a keyword search box, in order, each added when the results so far are not good enough. 'authorKeywords' are the evaluation author's keyword lists, kept for comparison: they were written after seeing the catalogue. 'native' queries are region specific needs whose best plugins are often documented in that region's language; each carries the native wording and an English one. 'matrixLanguages' lists every language each need is written in: the cross language search evaluation uses 'languages'; the embedding benchmark's language matrix uses them all, including the gis-glossary project's languages (Norwegian Bokmål and Nynorsk, Icelandic, Danish, Polish, Slovenian, Greek, Romanian, Bulgarian, Slovak, Swedish), translated by Claude; Icelandic and Nynorsk are the least certain.",
+ "about": "Golden queries, one per task need. Each task has a set of plugins that do it (Judgments.json). 'en' states the task; it is also the author's own sentence and the source of the eight translations. 'generated' holds the sentence and the keyword list written by an independent model from the task alone (see 'generator' and QueryPrompt.txt): the sentence is what it would type into a plain language search box, the keywords what it would type into a keyword search box, in order, each added when the results so far are not good enough. 'authorKeywords' are the evaluation author's keyword lists, kept for comparison: they were written after seeing the catalogue. 'native' queries are region specific needs whose best plugins are often documented in that region's language; each carries the native wording and an English one. 'matrixLanguages' lists every language each need is written in: the cross language search evaluation uses 'languages'; the embedding benchmark's language matrix uses them all, including the gis-glossary project's languages (Norwegian Bokmål and Nynorsk, Icelandic, Danish, Polish, Slovenian, Greek, Romanian, Bulgarian, Slovak, Swedish), and Arabic (Modern Standard), translated by Claude; Icelandic and Nynorsk are the least certain. Together they are the languages the plugin aims to serve.",
  "languages": [
   "en",
   "fr",
@@ -45,7 +45,8 @@
    "sk": "vytvoriť vrstevnice z digitálneho modelu reliéfu",
    "el": "δημιουργία ισοϋψών καμπυλών από ψηφιακό μοντέλο εδάφους",
    "ro": "crearea curbelor de nivel dintr-un model digital al terenului",
-   "bg": "създаване на хоризонтали от цифров модел на релефа"
+   "bg": "създаване на хоризонтали от цифров модел на релефа",
+   "ar": "إنشاء خطوط كنتور من نموذج ارتفاع رقمي"
   },
   {
    "id": "T02",
@@ -82,7 +83,8 @@
    "sk": "klasifikovať ortofoto z dronu do tried krajinnej pokrývky",
    "el": "ταξινόμηση ορθοφωτογραφίας drone σε κατηγορίες κάλυψης γης",
    "ro": "clasificarea unei ortofotografii de dronă în clase de acoperire a terenului",
-   "bg": "класифициране на ортофото от дрон в класове на земното покритие"
+   "bg": "класифициране на ортофото от дрон в класове на земното покритие",
+   "ar": "تصنيف صورة جوية متعامدة من طائرة مسيّرة إلى فئات الغطاء الأرضي"
   },
   {
    "id": "T03",
@@ -118,7 +120,8 @@
    "sk": "exportovať môj projekt do interaktívnej webovej mapy",
    "el": "εξαγωγή του έργου μου σε διαδραστικό διαδικτυακό χάρτη",
    "ro": "exportarea proiectului meu într-o hartă web interactivă",
-   "bg": "експортиране на проекта ми в интерактивна уеб карта"
+   "bg": "експортиране на проекта ми в интерактивна уеб карта",
+   "ar": "تصدير مشروعي إلى خريطة ويب تفاعلية"
   },
   {
    "id": "T04",
@@ -154,7 +157,8 @@
    "sk": "geokódovať zoznam adries",
    "el": "γεωκωδικοποίηση λίστας διευθύνσεων",
    "ro": "geocodarea unei liste de adrese",
-   "bg": "геокодиране на списък с адреси"
+   "bg": "геокодиране на списък с адреси",
+   "ar": "الترميز الجغرافي لقائمة من عناوين الشوارع"
   },
   {
    "id": "T05",
@@ -190,7 +194,8 @@
    "sk": "stiahnuť údaje OpenStreetMap pre moju oblasť",
    "el": "λήψη δεδομένων OpenStreetMap για την περιοχή μου",
    "ro": "descărcarea datelor OpenStreetMap pentru zona mea",
-   "bg": "изтегляне на данни от OpenStreetMap за моя район"
+   "bg": "изтегляне на данни от OpenStreetMap за моя район",
+   "ar": "تنزيل بيانات OpenStreetMap لمنطقتي"
   },
   {
    "id": "T06",
@@ -226,7 +231,8 @@
    "sk": "pridať satelitný snímok ako podkladovú mapu",
    "el": "προσθήκη δορυφορικού υποβάθρου ως φόντου",
    "ro": "adăugarea unei hărți de fundal cu imagini satelitare",
-   "bg": "добавяне на сателитна основа като фон"
+   "bg": "добавяне на сателитна основа като фон",
+   "ar": "إضافة خريطة أساس من صور الأقمار الصناعية كخلفية"
   },
   {
    "id": "T07",
@@ -262,7 +268,8 @@
    "sk": "vypočítať najkratšiu cestu po cestnej sieti",
    "el": "υπολογισμός της συντομότερης διαδρομής σε οδικό δίκτυο",
    "ro": "calcularea celui mai scurt drum pe o rețea rutieră",
-   "bg": "изчисляване на най-краткия път по пътна мрежа"
+   "bg": "изчисляване на най-краткия път по пътна мрежа",
+   "ar": "حساب أقصر مسار على شبكة طرق"
   },
   {
    "id": "T08",
@@ -298,7 +305,8 @@
    "sk": "nakresliť izochróny oblasti dosiahnuteľnej do 10 minút autom",
    "el": "σχεδίαση ισόχρονων καμπυλών της περιοχής που είναι προσβάσιμη σε 10 λεπτά με αυτοκίνητο",
    "ro": "desenarea izocronelor zonei accesibile în 10 minute cu mașina",
-   "bg": "изчертаване на изохрони на района, достижим за 10 минути с кола"
+   "bg": "изчертаване на изохрони на района, достижим за 10 минути с кола",
+   "ar": "رسم خطوط التساوي الزمني للمنطقة التي يمكن الوصول إليها خلال 10 دقائق بالسيارة"
   },
   {
    "id": "T09",
@@ -334,7 +342,8 @@
    "sk": "vypočítať NDVI z pásiem Sentinel-2",
    "el": "υπολογισμός NDVI από τα κανάλια του Sentinel-2",
    "ro": "calcularea NDVI din benzile Sentinel-2",
-   "bg": "изчисляване на NDVI от каналите на Sentinel-2"
+   "bg": "изчисляване на NDVI от каналите на Sentinel-2",
+   "ar": "حساب مؤشر NDVI من نطاقات Sentinel-2"
   },
   {
    "id": "T10",
@@ -370,7 +379,8 @@
    "sk": "stiahnuť satelitné snímky Sentinel-2",
    "el": "λήψη δορυφορικών εικόνων Sentinel-2",
    "ro": "descărcarea imaginilor satelitare Sentinel-2",
-   "bg": "изтегляне на сателитни изображения от Sentinel-2"
+   "bg": "изтегляне на сателитни изображения от Sentinel-2",
+   "ar": "تنزيل صور الأقمار الصناعية Sentinel-2"
   },
   {
    "id": "T11",
@@ -406,7 +416,8 @@
    "sk": "georeferencovať naskenovanú historickú mapu",
    "el": "γεωαναφορά ενός σαρωμένου ιστορικού χάρτη",
    "ro": "georeferențierea unei hărți istorice scanate",
-   "bg": "геореференциране на сканирана историческа карта"
+   "bg": "геореференциране на сканирана историческа карта",
+   "ar": "إسناد جغرافي لخريطة تاريخية ممسوحة ضوئيًا"
   },
   {
    "id": "T12",
@@ -442,7 +453,8 @@
    "sk": "vymedziť povodie z výškových údajov",
    "el": "οριοθέτηση λεκάνης απορροής από υψομετρικά δεδομένα",
    "ro": "delimitarea unui bazin hidrografic din date altimetrice",
-   "bg": "определяне на водосборен басейн от данни за надморска височина"
+   "bg": "определяне на водосборен басейн от данни за надморска височина",
+   "ar": "تحديد حوض تصريف من بيانات الارتفاع"
   },
   {
    "id": "T13",
@@ -478,7 +490,8 @@
    "sk": "skontrolovať topologické chyby v polygónovej vrstve",
    "el": "έλεγχος τοπολογικών σφαλμάτων σε επίπεδο πολυγώνων",
    "ro": "verificarea erorilor de topologie într-un strat de poligoane",
-   "bg": "проверка за топологични грешки в полигонен слой"
+   "bg": "проверка за топологични грешки в полигонен слой",
+   "ar": "التحقق من أخطاء الطوبولوجيا في طبقة مضلعات"
   },
   {
    "id": "T14",
@@ -514,7 +527,8 @@
    "sk": "importovať záznamy trás GPS zo súboru GPX",
    "el": "εισαγωγή διαδρομών GPS από αρχείο GPX",
    "ro": "importarea traseelor GPS dintr-un fișier GPX",
-   "bg": "импортиране на GPS следи от GPX файл"
+   "bg": "импортиране на GPS следи от GPX файл",
+   "ar": "استيراد مسارات GPS من ملف GPX"
   },
   {
    "id": "T15",
@@ -551,7 +565,8 @@
    "sk": "kresliť čiary s presnými dĺžkami a uhlami ako v CAD",
    "el": "σχεδίαση γραμμών με ακριβή μήκη και γωνίες όπως στο CAD",
    "ro": "desenarea liniilor cu lungimi și unghiuri exacte ca în CAD",
-   "bg": "чертане на линии с точни дължини и ъгли като в CAD"
+   "bg": "чертане на линии с точни дължини и ъгли като в CAD",
+   "ar": "رسم خطوط بأطوال وزوايا دقيقة كما في برامج CAD"
   },
   {
    "id": "T16",
@@ -587,7 +602,8 @@
    "sk": "publikovať moje vrstvy na GeoServer",
    "el": "δημοσίευση των επιπέδων μου σε GeoServer",
    "ro": "publicarea straturilor mele pe un GeoServer",
-   "bg": "публикуване на моите слоеве в GeoServer"
+   "bg": "публикуване на моите слоеве в GeoServer",
+   "ar": "نشر طبقاتي على خادم GeoServer"
   },
   {
    "id": "T17",
@@ -623,7 +639,8 @@
    "sk": "spúšťať dopyty SQL v databáze PostGIS",
    "el": "εκτέλεση ερωτημάτων SQL σε βάση δεδομένων PostGIS",
    "ro": "rularea interogărilor SQL pe o bază de date PostGIS",
-   "bg": "изпълнение на SQL заявки в база данни PostGIS"
+   "bg": "изпълнение на SQL заявки в база данни PostGIS",
+   "ar": "تنفيذ استعلامات SQL على قاعدة بيانات PostGIS"
   },
   {
    "id": "T18",
@@ -659,7 +676,8 @@
    "sk": "vytvoriť teplotnú mapu hustoty bodov",
    "el": "δημιουργία θερμικού χάρτη πυκνότητας σημείων",
    "ro": "realizarea unei hărți de căldură a densității punctelor",
-   "bg": "създаване на топлинна карта на гъстотата на точките"
+   "bg": "създаване на топлинна карта на гъстотата на точките",
+   "ar": "إنشاء خريطة حرارية لكثافة النقاط"
   },
   {
    "id": "T19",
@@ -695,7 +713,8 @@
    "sk": "zobraziť budovy v 3D",
    "el": "προβολή κτιρίων σε 3D",
    "ro": "afișarea clădirilor în 3D",
-   "bg": "показване на сгради в 3D"
+   "bg": "показване на сгради в 3D",
+   "ar": "عرض المباني بشكل ثلاثي الأبعاد"
   },
   {
    "id": "T20",
@@ -731,7 +750,8 @@
    "sk": "importovať výkres DXF z AutoCADu",
    "el": "εισαγωγή σχεδίου DXF από το AutoCAD",
    "ro": "importarea unui desen DXF din AutoCAD",
-   "bg": "импортиране на DXF чертеж от AutoCAD"
+   "bg": "импортиране на DXF чертеж от AutoCAD",
+   "ar": "استيراد رسم DXF من AutoCAD"
   },
   {
    "id": "T21",
@@ -767,7 +787,8 @@
    "sk": "vidieť zábery z úrovne ulice na mieste, kam kliknem",
    "el": "προβολή εικόνων σε επίπεδο δρόμου στο σημείο που κάνω κλικ",
    "ro": "vizualizarea imaginilor de la nivelul străzii în locul unde dau clic",
-   "bg": "преглед на улични изображения на мястото, където щракна"
+   "bg": "преглед на улични изображения на мястото, където щракна",
+   "ar": "مشاهدة صور الشوارع في الموقع الذي أنقر عليه"
   },
   {
    "id": "T22",
@@ -803,7 +824,8 @@
    "sk": "nakresliť výškový profil pozdĺž línie",
    "el": "σχεδίαση υψομετρικής τομής κατά μήκος μιας γραμμής",
    "ro": "desenarea unui profil altimetric de-a lungul unei linii",
-   "bg": "изчертаване на височинен профил по линия"
+   "bg": "изчертаване на височинен профил по линия",
+   "ar": "رسم مقطع ارتفاعي على امتداد خط"
   },
   {
    "id": "T23",
@@ -839,7 +861,8 @@
    "sk": "naplánovať letovú trasu dronu na mapovanie",
    "el": "σχεδιασμός διαδρομής πτήσης drone για χαρτογράφηση",
    "ro": "planificarea traseului de zbor al unei drone pentru cartografiere",
-   "bg": "планиране на полетен маршрут на дрон за картографиране"
+   "bg": "планиране на полетен маршрут на дрон за картографиране",
+   "ar": "تخطيط مسار طيران لطائرة مسيّرة لأعمال المسح ورسم الخرائط"
   },
   {
    "id": "T24",
@@ -875,7 +898,8 @@
    "sk": "interpolovať merania teploty do rastrového povrchu",
    "el": "παρεμβολή μετρήσεων θερμοκρασίας σε επιφάνεια raster",
    "ro": "interpolarea măsurătorilor de temperatură într-o suprafață raster",
-   "bg": "интерполиране на температурни измервания в растерна повърхнина"
+   "bg": "интерполиране на температурни измервания в растерна повърхнина",
+   "ar": "استيفاء قياسات درجات الحرارة إلى سطح نقطي"
   },
   {
    "id": "T25",
@@ -911,7 +935,8 @@
    "sk": "zistiť zmeny medzi dvoma satelitnými snímkami z rôznych dátumov",
    "el": "ανίχνευση αλλαγών μεταξύ δύο δορυφορικών εικόνων διαφορετικών ημερομηνιών",
    "ro": "detectarea schimbărilor între două imagini satelitare din date diferite",
-   "bg": "откриване на промени между две сателитни изображения от различни дати"
+   "bg": "откриване на промени между две сателитни изображения от различни дати",
+   "ar": "اكتشاف التغيرات بين صورتين فضائيتين ملتقطتين في تاريخين مختلفين"
   },
   {
    "id": "T26",
@@ -948,7 +973,8 @@
    "sk": "zbierať údaje v teréne na telefóne a synchronizovať ich späť",
    "el": "συλλογή δεδομένων στο πεδίο με κινητό και συγχρονισμός τους",
    "ro": "colectarea datelor pe teren cu telefonul și sincronizarea lor înapoi",
-   "bg": "събиране на данни на терен с телефон и синхронизирането им обратно"
+   "bg": "събиране на данни на терен с телефон и синхронизирането им обратно",
+   "ar": "جمع البيانات في الميدان على الهاتف ومزامنتها"
   },
   {
    "id": "T27",
@@ -984,7 +1010,8 @@
    "sk": "simulovať záplavy z rieky a hĺbku zaplavenia",
    "el": "προσομοίωση πλημμύρας ποταμού και βάθους κατάκλυσης",
    "ro": "simularea inundațiilor râurilor și a adâncimii apei",
-   "bg": "симулиране на речни наводнения и дълбочина на заливане"
+   "bg": "симулиране на речни наводнения и дълбочина на заливане",
+   "ar": "محاكاة فيضان الأنهار وعمق الغمر"
   },
   {
    "id": "T28",
@@ -1020,7 +1047,8 @@
    "sk": "rozdeliť polygón na časti s rovnakou plochou",
    "el": "διαίρεση πολυγώνου σε τμήματα ίσου εμβαδού",
    "ro": "împărțirea unui poligon în părți cu suprafață egală",
-   "bg": "разделяне на полигон на части с еднаква площ"
+   "bg": "разделяне на полигон на части с еднаква площ",
+   "ar": "تقسيم مضلع إلى أجزاء متساوية المساحة"
   },
   {
    "id": "T29",
@@ -1056,7 +1084,8 @@
    "sk": "vytvoriť mriežku šesťuholníkov nad mojím záujmovým územím",
    "el": "δημιουργία πλέγματος εξαγώνων πάνω από την περιοχή μελέτης μου",
    "ro": "crearea unei grile de hexagoane peste zona mea de studiu",
-   "bg": "създаване на мрежа от шестоъгълници върху изследвания район"
+   "bg": "създаване на мрежа от шестоъгълници върху изследвания район",
+   "ar": "إنشاء شبكة من الأشكال السداسية فوق منطقة الدراسة"
   },
   {
    "id": "T30",
@@ -1091,7 +1120,8 @@
    "sk": "exportovať atribútovú tabuľku do tabuľky Excel",
    "el": "εξαγωγή του πίνακα ιδιοτήτων σε υπολογιστικό φύλλο Excel",
    "ro": "exportarea tabelului de atribute într-o foaie de calcul Excel",
-   "bg": "експортиране на атрибутната таблица в електронна таблица Excel"
+   "bg": "експортиране на атрибутната таблица в електронна таблица Excel",
+   "ar": "تصدير جدول السمات إلى جدول بيانات Excel"
   },
   {
    "id": "T31",
@@ -1128,7 +1158,8 @@
    "sk": "požiadať AI asistenta, aby mi napísal skripty na spracovanie",
    "el": "να ζητήσω από βοηθό τεχνητής νοημοσύνης να γράψει σενάρια επεξεργασίας",
    "ro": "să cer unui asistent AI să scrie scripturi de procesare",
-   "bg": "да помоля AI асистент да ми напише скриптове за обработка"
+   "bg": "да помоля AI асистент да ми напише скриптове за обработка",
+   "ar": "أن أطلب من مساعد ذكاء اصطناعي كتابة نصوص برمجية للمعالجة"
   },
   {
    "id": "T32",
@@ -1164,7 +1195,8 @@
    "sk": "odhadnúť solárny potenciál striech",
    "el": "εκτίμηση του ηλιακού δυναμικού των στεγών",
    "ro": "estimarea potențialului solar al acoperișurilor",
-   "bg": "оценка на слънчевия потенциал на покривите"
+   "bg": "оценка на слънчевия потенциал на покривите",
+   "ar": "تقدير إمكانات الطاقة الشمسية لأسطح المباني"
   },
   {
    "id": "T33",
@@ -1201,7 +1233,8 @@
    "sk": "načítať služby WMS a WFS z katalógu",
    "el": "φόρτωση υπηρεσιών WMS και WFS από κατάλογο",
    "ro": "încărcarea serviciilor WMS și WFS dintr-un catalog",
-   "bg": "зареждане на WMS и WFS услуги от каталог"
+   "bg": "зареждане на WMS и WFS услуги от каталог",
+   "ar": "تحميل خدمات WMS وWFS من فهرس"
   },
   {
    "id": "T34",
@@ -1237,7 +1270,8 @@
    "sk": "priradiť body GPS k cestám, na ktorých boli zaznamenané",
    "el": "αντιστοίχιση σημείων GPS στους δρόμους όπου καταγράφηκαν",
    "ro": "potrivirea punctelor GPS cu drumurile pe care au fost înregistrate",
-   "bg": "съпоставяне на GPS точки с пътищата, по които са записани"
+   "bg": "съпоставяне на GPS точки с пътищата, по които са записани",
+   "ar": "مطابقة نقاط GPS مع الطرق التي سُجّلت عليها"
   },
   {
    "id": "T35",
@@ -1273,7 +1307,8 @@
    "sk": "analyzovať cestovné poriadky verejnej dopravy z GTFS",
    "el": "ανάλυση δρομολογίων δημόσιων συγκοινωνιών από GTFS",
    "ro": "analiza orarelor transportului public din GTFS",
-   "bg": "анализ на разписанията на обществения транспорт от GTFS"
+   "bg": "анализ на разписанията на обществения транспорт от GTFS",
+   "ar": "تحليل جداول مواعيد النقل العام من GTFS"
   },
   {
    "id": "T36",
@@ -1309,7 +1344,8 @@
    "sk": "animovať vrstvu v čase pomocou časového posúvača",
    "el": "κινούμενη απεικόνιση επιπέδου στον χρόνο με χρονικό ρυθμιστικό",
    "ro": "animarea unui strat în timp cu un cursor temporal",
-   "bg": "анимиране на слой във времето с времеви плъзгач"
+   "bg": "анимиране на слой във времето с времеви плъзгач",
+   "ar": "تحريك طبقة عبر الزمن باستخدام شريط تمرير زمني"
   },
   {
    "id": "T37",
@@ -1345,7 +1381,8 @@
    "sk": "spracovať mračno bodov lidar na digitálny model terénu",
    "el": "επεξεργασία νέφους σημείων lidar σε ψηφιακό μοντέλο εδάφους",
    "ro": "procesarea unui nor de puncte lidar într-un model digital al terenului",
-   "bg": "обработка на облак от точки от лидар в цифров модел на терена"
+   "bg": "обработка на облак от точки от лидар в цифров модел на терена",
+   "ar": "معالجة سحابة نقاط ليدار لإنتاج نموذج رقمي للتضاريس"
   },
   {
    "id": "T38",
@@ -1382,7 +1419,8 @@
    "sk": "vyplniť atribút pre veľa vybraných prvkov naraz",
    "el": "συμπλήρωση ιδιότητας για πολλά επιλεγμένα στοιχεία ταυτόχρονα",
    "ro": "completarea unui atribut pentru multe entități selectate deodată",
-   "bg": "попълване на атрибут за много избрани обекти наведнъж"
+   "bg": "попълване на атрибут за много избрани обекти наведнъж",
+   "ar": "تعبئة سمة لعدد كبير من العناصر المحددة دفعة واحدة"
   },
   {
    "id": "T39",
@@ -1418,7 +1456,8 @@
    "sk": "skopírovať súradnice kliknutého bodu do schránky",
    "el": "αντιγραφή συντεταγμένων σημείου που επιλέγω στο πρόχειρο",
    "ro": "copierea coordonatelor unui punct pe care dau clic în clipboard",
-   "bg": "копиране на координатите на щракната точка в клипборда"
+   "bg": "копиране на координатите на щракната точка в клипборда",
+   "ar": "نسخ إحداثيات نقطة أنقر عليها إلى الحافظة"
   },
   {
    "id": "T40",
@@ -1453,7 +1492,8 @@
    "sk": "spravovať a upravovať metaúdaje mojich vrstiev",
    "el": "διαχείριση και επεξεργασία των μεταδεδομένων των επιπέδων μου",
    "ro": "gestionarea și editarea metadatelor straturilor mele",
-   "bg": "управление и редактиране на метаданните на моите слоеве"
+   "bg": "управление и редактиране на метаданните на моите слоеве",
+   "ar": "إدارة البيانات الوصفية لطبقاتي وتحريرها"
   }
  ],
  "native": [
@@ -1581,6 +1621,7 @@
   "pt",
   "ru",
   "zh",
-  "ja"
+  "ja",
+  "ar"
  ]
 }

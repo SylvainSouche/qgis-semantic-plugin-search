@@ -394,6 +394,25 @@ compared, built on GitHub by `evaluation/BuildVocabularyModels.py`:
 Both run through the plugin's own tokenizer and engine. Any of them could
 ship as an ordinary model file, readable by released plugin versions too.
 
+Language matrix. The plugin aims to serve 21 languages:
+
+- English, French, Spanish, German, Italian and Portuguese;
+- Norwegian (Bokmål and Nynorsk), Icelandic, Danish and Swedish;
+- Polish, Slovenian, Slovak, Romanian, Bulgarian and Greek;
+- Russian, Chinese, Japanese and Arabic.
+
+The 40 needs are written in all of them (`matrixLanguages` in
+`Queries.json`; translated by Claude, Icelandic and Nynorsk least certain).
+For each pair of languages, the benchmark measures:
+
+- the share of needs whose own translation is the most similar of the 40
+  sentences in the other language;
+- the cosine margin of matching over non-matching pairs.
+
+It compares queries with each other, so it needs no relevance judgments.
+The cross-language search scores above still use the original nine
+languages.
+
 Running it:
 
 - Push a change to `evaluation/Candidates.json` or the workflow on a `dev/`

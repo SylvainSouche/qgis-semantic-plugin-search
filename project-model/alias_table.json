@@ -467,6 +467,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-target-languages": {
+    "active": true,
+    "id": "0f87-6af5-e22d-5da9",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-thread-safe-reporter": {
     "active": true,
     "id": "0f87-6ae3-9c6d-100c",
