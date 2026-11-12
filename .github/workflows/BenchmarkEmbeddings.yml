@@ -17,6 +17,10 @@ on:
       - evaluation/Judgments.json
       - evaluation/SearchEvaluation.py
       - evaluation/RunBenchmark.py
+      - evaluation/BuildVocabularyModels.py
+      - SemanticPluginSearch/Domain/**
+      - SemanticPluginSearch/Data/**
+      - pipeline/ConvertStaticModel.py
       - .github/workflows/BenchmarkEmbeddings.yml
   workflow_dispatch:
     inputs:
