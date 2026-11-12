@@ -146,8 +146,9 @@ def testJudgmentsCoverEveryQuery():
         grades = judgments["judgments"][qid].values()
         assert any(g > 0 for g in grades), qid
         assert set(grades) <= {1, 2}, qid
+    assert set(queries["languages"]) <= set(queries["matrixLanguages"])
     for query in queries["queries"]:
-        assert all(query.get(lang) for lang in queries["languages"]), query["id"]
+        assert all(query.get(lang) for lang in queries["matrixLanguages"]), query["id"]
         for keywords in (query["generated"]["keywords"], query["authorKeywords"]):
             assert 1 <= len(keywords) <= 4 and all(keywords), query["id"]
         assert query["generated"]["sentence"], query["id"]

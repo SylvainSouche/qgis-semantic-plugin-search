@@ -1,5 +1,5 @@
 {
- "about": "Golden queries, one per task need. Each task has a set of plugins that do it (Judgments.json). 'en' states the task; it is also the author's own sentence and the source of the eight translations. 'generated' holds the sentence and the keyword list written by an independent model from the task alone (see 'generator' and QueryPrompt.txt): the sentence is what it would type into a plain language search box, the keywords what it would type into a keyword search box, in order, each added when the results so far are not good enough. 'authorKeywords' are the evaluation author's keyword lists, kept for comparison: they were written after seeing the catalogue. 'native' queries are region specific needs whose best plugins are often documented in that region's language; each carries the native wording and an English one.",
+ "about": "Golden queries, one per task need. Each task has a set of plugins that do it (Judgments.json). 'en' states the task; it is also the author's own sentence and the source of the eight translations. 'generated' holds the sentence and the keyword list written by an independent model from the task alone (see 'generator' and QueryPrompt.txt): the sentence is what it would type into a plain language search box, the keywords what it would type into a keyword search box, in order, each added when the results so far are not good enough. 'authorKeywords' are the evaluation author's keyword lists, kept for comparison: they were written after seeing the catalogue. 'native' queries are region specific needs whose best plugins are often documented in that region's language; each carries the native wording and an English one. 'matrixLanguages' lists every language each need is written in: the cross language search evaluation uses 'languages'; the embedding benchmark's language matrix uses them all, including the gis-glossary project's languages (Norwegian Bokmål and Nynorsk, Icelandic, Danish, Polish, Slovenian, Greek, Romanian, Bulgarian, Slovak, Swedish), translated by Claude; Icelandic and Nynorsk are the least certain.",
  "languages": [
   "en",
   "fr",
@@ -34,7 +34,18 @@
    "it": "creare curve di livello da un DEM",
    "ru": "построить изолинии рельефа по ЦМР",
    "zh": "从数字高程模型生成等高线",
-   "ja": "DEMから等高線を作成する"
+   "ja": "DEMから等高線を作成する",
+   "nb": "lage koter fra en høydemodell",
+   "nn": "lage koter frå ein høgdemodell",
+   "is": "búa til hæðarlínur úr hæðarlíkani",
+   "da": "lave højdekurver ud fra en højdemodel",
+   "sv": "skapa höjdkurvor från en höjdmodell",
+   "pl": "utworzyć warstwice z numerycznego modelu terenu",
+   "sl": "izdelati plastnice iz digitalnega modela višin",
+   "sk": "vytvoriť vrstevnice z digitálneho modelu reliéfu",
+   "el": "δημιουργία ισοϋψών καμπυλών από ψηφιακό μοντέλο εδάφους",
+   "ro": "crearea curbelor de nivel dintr-un model digital al terenului",
+   "bg": "създаване на хоризонтали от цифров модел на релефа"
   },
   {
    "id": "T02",
@@ -60,7 +71,18 @@
    "it": "classificare un'ortofoto da drone in classi di copertura del suolo",
    "ru": "классифицировать ортофотоплан с дрона по классам земного покрова",
    "zh": "将无人机正射影像分类为土地覆盖类型",
-   "ja": "ドローンのオルソ画像を土地被覆クラスに分類する"
+   "ja": "ドローンのオルソ画像を土地被覆クラスに分類する",
+   "nb": "klassifisere et droneortofoto i arealdekkeklasser",
+   "nn": "klassifisere eit droneortofoto i arealdekkeklassar",
+   "is": "flokka drónaréttmynd í landþekjuflokka",
+   "da": "klassificere et droneortofoto i arealdækkeklasser",
+   "sv": "klassificera ett drönarortofoto i marktäckeklasser",
+   "pl": "sklasyfikować ortofotomapę z drona na klasy pokrycia terenu",
+   "sl": "razvrstiti ortofoto posnetek z drona v razrede pokrovnosti tal",
+   "sk": "klasifikovať ortofoto z dronu do tried krajinnej pokrývky",
+   "el": "ταξινόμηση ορθοφωτογραφίας drone σε κατηγορίες κάλυψης γης",
+   "ro": "clasificarea unei ortofotografii de dronă în clase de acoperire a terenului",
+   "bg": "класифициране на ортофото от дрон в класове на земното покритие"
   },
   {
    "id": "T03",
@@ -85,7 +107,18 @@
    "it": "esportare il mio progetto in una mappa web interattiva",
    "ru": "экспортировать проект в интерактивную веб-карту",
    "zh": "将我的项目导出为交互式网页地图",
-   "ja": "プロジェクトをインタラクティブなWebマップに書き出す"
+   "ja": "プロジェクトをインタラクティブなWebマップに書き出す",
+   "nb": "eksportere prosjektet mitt til et interaktivt nettkart",
+   "nn": "eksportere prosjektet mitt til eit interaktivt nettkart",
+   "is": "flytja verkefnið mitt út í gagnvirkt vefkort",
+   "da": "eksportere mit projekt til et interaktivt webkort",
+   "sv": "exportera mitt projekt till en interaktiv webbkarta",
+   "pl": "wyeksportować mój projekt do interaktywnej mapy internetowej",
+   "sl": "izvoziti moj projekt v interaktivni spletni zemljevid",
+   "sk": "exportovať môj projekt do interaktívnej webovej mapy",
+   "el": "εξαγωγή του έργου μου σε διαδραστικό διαδικτυακό χάρτη",
+   "ro": "exportarea proiectului meu într-o hartă web interactivă",
+   "bg": "експортиране на проекта ми в интерактивна уеб карта"
   },
   {
    "id": "T04",
@@ -110,7 +143,18 @@
    "it": "geocodificare un elenco di indirizzi",
    "ru": "геокодировать список адресов",
    "zh": "对一组街道地址进行地理编码",
-   "ja": "住所のリストをジオコーディングする"
+   "ja": "住所のリストをジオコーディングする",
+   "nb": "geokode en liste med gateadresser",
+   "nn": "geokode ei liste med gateadresser",
+   "is": "hnitsetja lista yfir heimilisföng",
+   "da": "geokode en liste med adresser",
+   "sv": "geokoda en lista med gatuadresser",
+   "pl": "zgeokodować listę adresów",
+   "sl": "geokodirati seznam naslovov",
+   "sk": "geokódovať zoznam adries",
+   "el": "γεωκωδικοποίηση λίστας διευθύνσεων",
+   "ro": "geocodarea unei liste de adrese",
+   "bg": "геокодиране на списък с адреси"
   },
   {
    "id": "T05",
@@ -135,7 +179,18 @@
    "it": "scaricare i dati OpenStreetMap della mia zona",
    "ru": "скачать данные OpenStreetMap для моей территории",
    "zh": "下载我所在区域的OpenStreetMap数据",
-   "ja": "自分の地域のOpenStreetMapデータをダウンロードする"
+   "ja": "自分の地域のOpenStreetMapデータをダウンロードする",
+   "nb": "laste ned OpenStreetMap-data for området mitt",
+   "nn": "laste ned OpenStreetMap-data for området mitt",
+   "is": "sækja OpenStreetMap-gögn fyrir svæðið mitt",
+   "da": "downloade OpenStreetMap-data for mit område",
+   "sv": "ladda ner OpenStreetMap-data för mitt område",
+   "pl": "pobrać dane OpenStreetMap dla mojego obszaru",
+   "sl": "prenesti podatke OpenStreetMap za moje območje",
+   "sk": "stiahnuť údaje OpenStreetMap pre moju oblasť",
+   "el": "λήψη δεδομένων OpenStreetMap για την περιοχή μου",
+   "ro": "descărcarea datelor OpenStreetMap pentru zona mea",
+   "bg": "изтегляне на данни от OpenStreetMap за моя район"
   },
   {
    "id": "T06",
@@ -160,7 +215,18 @@
    "it": "aggiungere una mappa di base con immagini satellitari come sfondo",
    "ru": "добавить спутниковую подложку в качестве фона",
    "zh": "添加卫星影像底图作为背景",
-   "ja": "衛星画像のベースマップを背景に追加する"
+   "ja": "衛星画像のベースマップを背景に追加する",
+   "nb": "legge til et bakgrunnskart med satellittbilder",
+   "nn": "leggje til eit bakgrunnskart med satellittbilete",
+   "is": "bæta við gervitunglamynd sem bakgrunnskorti",
+   "da": "tilføje et satellitbillede som baggrundskort",
+   "sv": "lägga till en satellitbild som bakgrundskarta",
+   "pl": "dodać podkład z obrazów satelitarnych jako tło",
+   "sl": "dodati satelitski posnetek kot podlago",
+   "sk": "pridať satelitný snímok ako podkladovú mapu",
+   "el": "προσθήκη δορυφορικού υποβάθρου ως φόντου",
+   "ro": "adăugarea unei hărți de fundal cu imagini satelitare",
+   "bg": "добавяне на сателитна основа като фон"
   },
   {
    "id": "T07",
@@ -185,7 +251,18 @@
    "it": "calcolare il percorso più breve su una rete stradale",
    "ru": "найти кратчайший путь по дорожной сети",
    "zh": "计算道路网络上的最短路径",
-   "ja": "道路ネットワーク上の最短経路を計算する"
+   "ja": "道路ネットワーク上の最短経路を計算する",
+   "nb": "beregne korteste vei langs et veinett",
+   "nn": "rekne ut kortaste veg langs eit vegnett",
+   "is": "reikna stystu leið eftir vegakerfi",
+   "da": "beregne den korteste vej langs et vejnet",
+   "sv": "beräkna kortaste vägen längs ett vägnät",
+   "pl": "obliczyć najkrótszą ścieżkę w sieci drogowej",
+   "sl": "izračunati najkrajšo pot po cestnem omrežju",
+   "sk": "vypočítať najkratšiu cestu po cestnej sieti",
+   "el": "υπολογισμός της συντομότερης διαδρομής σε οδικό δίκτυο",
+   "ro": "calcularea celui mai scurt drum pe o rețea rutieră",
+   "bg": "изчисляване на най-краткия път по пътна мрежа"
   },
   {
    "id": "T08",
@@ -210,7 +287,18 @@
    "it": "disegnare le isocrone dell'area raggiungibile in 10 minuti in auto",
    "ru": "построить изохроны зоны доступности за 10 минут на машине",
    "zh": "绘制驾车10分钟可达范围的等时线",
-   "ja": "車で10分以内に到達できる範囲の等時線を描く"
+   "ja": "車で10分以内に到達できる範囲の等時線を描く",
+   "nb": "tegne isokroner for området som kan nås innen 10 minutter med bil",
+   "nn": "teikne isokronar for området som kan nåast innan 10 minutt med bil",
+   "is": "teikna jafntímalínur svæðisins sem næst innan 10 mínútna á bíl",
+   "da": "tegne isokroner for det område, der kan nås inden for 10 minutter i bil",
+   "sv": "rita isokroner för området som nås inom 10 minuter med bil",
+   "pl": "narysować izochrony obszaru osiągalnego w ciągu 10 minut samochodem",
+   "sl": "narisati izokrone območja, dosegljivega v 10 minutah z avtomobilom",
+   "sk": "nakresliť izochróny oblasti dosiahnuteľnej do 10 minút autom",
+   "el": "σχεδίαση ισόχρονων καμπυλών της περιοχής που είναι προσβάσιμη σε 10 λεπτά με αυτοκίνητο",
+   "ro": "desenarea izocronelor zonei accesibile în 10 minute cu mașina",
+   "bg": "изчертаване на изохрони на района, достижим за 10 минути с кола"
   },
   {
    "id": "T09",
@@ -235,7 +323,18 @@
    "it": "calcolare l'NDVI dalle bande Sentinel-2",
    "ru": "рассчитать NDVI по каналам Sentinel-2",
    "zh": "利用Sentinel-2波段计算NDVI",
-   "ja": "Sentinel-2のバンドからNDVIを計算する"
+   "ja": "Sentinel-2のバンドからNDVIを計算する",
+   "nb": "beregne NDVI fra Sentinel-2-bånd",
+   "nn": "rekne ut NDVI frå Sentinel-2-band",
+   "is": "reikna NDVI úr Sentinel-2 böndum",
+   "da": "beregne NDVI ud fra Sentinel-2-bånd",
+   "sv": "beräkna NDVI från Sentinel-2-band",
+   "pl": "obliczyć NDVI z kanałów Sentinel-2",
+   "sl": "izračunati NDVI iz kanalov Sentinel-2",
+   "sk": "vypočítať NDVI z pásiem Sentinel-2",
+   "el": "υπολογισμός NDVI από τα κανάλια του Sentinel-2",
+   "ro": "calcularea NDVI din benzile Sentinel-2",
+   "bg": "изчисляване на NDVI от каналите на Sentinel-2"
   },
   {
    "id": "T10",
@@ -260,7 +359,18 @@
    "it": "scaricare immagini satellitari Sentinel-2",
    "ru": "скачать спутниковые снимки Sentinel-2",
    "zh": "下载Sentinel-2卫星影像",
-   "ja": "Sentinel-2の衛星画像をダウンロードする"
+   "ja": "Sentinel-2の衛星画像をダウンロードする",
+   "nb": "laste ned Sentinel-2-satellittbilder",
+   "nn": "laste ned Sentinel-2-satellittbilete",
+   "is": "sækja Sentinel-2 gervitunglamyndir",
+   "da": "downloade Sentinel-2-satellitbilleder",
+   "sv": "ladda ner Sentinel-2-satellitbilder",
+   "pl": "pobrać zobrazowania satelitarne Sentinel-2",
+   "sl": "prenesti satelitske posnetke Sentinel-2",
+   "sk": "stiahnuť satelitné snímky Sentinel-2",
+   "el": "λήψη δορυφορικών εικόνων Sentinel-2",
+   "ro": "descărcarea imaginilor satelitare Sentinel-2",
+   "bg": "изтегляне на сателитни изображения от Sentinel-2"
   },
   {
    "id": "T11",
@@ -285,7 +395,18 @@
    "it": "georeferenziare una mappa storica scansionata",
    "ru": "привязать отсканированную историческую карту",
    "zh": "对扫描的历史地图进行地理配准",
-   "ja": "スキャンした古地図をジオリファレンスする"
+   "ja": "スキャンした古地図をジオリファレンスする",
+   "nb": "georeferere et skannet historisk kart",
+   "nn": "georeferere eit skanna historisk kart",
+   "is": "hnitsetja skannað sögulegt kort",
+   "da": "georeferere et scannet historisk kort",
+   "sv": "georeferera en skannad historisk karta",
+   "pl": "zgeoreferować zeskanowaną mapę historyczną",
+   "sl": "georeferencirati skeniran zgodovinski zemljevid",
+   "sk": "georeferencovať naskenovanú historickú mapu",
+   "el": "γεωαναφορά ενός σαρωμένου ιστορικού χάρτη",
+   "ro": "georeferențierea unei hărți istorice scanate",
+   "bg": "геореференциране на сканирана историческа карта"
   },
   {
    "id": "T12",
@@ -310,7 +431,18 @@
    "it": "delimitare un bacino idrografico dai dati di elevazione",
    "ru": "выделить водосборный бассейн по данным о рельефе",
    "zh": "利用高程数据划分流域",
-   "ja": "標高データから流域を抽出する"
+   "ja": "標高データから流域を抽出する",
+   "nb": "avgrense et nedbørfelt fra høydedata",
+   "nn": "avgrense eit nedbørfelt frå høgdedata",
+   "is": "afmarka vatnasvið út frá hæðargögnum",
+   "da": "afgrænse et afstrømningsopland ud fra højdedata",
+   "sv": "avgränsa ett avrinningsområde från höjddata",
+   "pl": "wyznaczyć zlewnię na podstawie danych wysokościowych",
+   "sl": "določiti povodje iz višinskih podatkov",
+   "sk": "vymedziť povodie z výškových údajov",
+   "el": "οριοθέτηση λεκάνης απορροής από υψομετρικά δεδομένα",
+   "ro": "delimitarea unui bazin hidrografic din date altimetrice",
+   "bg": "определяне на водосборен басейн от данни за надморска височина"
   },
   {
    "id": "T13",
@@ -335,7 +467,18 @@
    "it": "controllare gli errori topologici in un layer di poligoni",
    "ru": "проверить ошибки топологии в полигональном слое",
    "zh": "检查面图层中的拓扑错误",
-   "ja": "ポリゴンレイヤのトポロジーエラーをチェックする"
+   "ja": "ポリゴンレイヤのトポロジーエラーをチェックする",
+   "nb": "kontrollere topologifeil i et polygonlag",
+   "nn": "kontrollere topologifeil i eit polygonlag",
+   "is": "athuga grannfræðivillur í flákalagi",
+   "da": "kontrollere topologifejl i et polygonlag",
+   "sv": "kontrollera topologifel i ett polygonlager",
+   "pl": "sprawdzić błędy topologii w warstwie poligonowej",
+   "sl": "preveriti topološke napake v poligonskem sloju",
+   "sk": "skontrolovať topologické chyby v polygónovej vrstve",
+   "el": "έλεγχος τοπολογικών σφαλμάτων σε επίπεδο πολυγώνων",
+   "ro": "verificarea erorilor de topologie într-un strat de poligoane",
+   "bg": "проверка за топологични грешки в полигонен слой"
   },
   {
    "id": "T14",
@@ -360,7 +503,18 @@
    "it": "importare tracce GPS da un file GPX",
    "ru": "импортировать GPS-треки из файла GPX",
    "zh": "从GPX文件导入GPS轨迹",
-   "ja": "GPXファイルからGPSトラックを読み込む"
+   "ja": "GPXファイルからGPSトラックを読み込む",
+   "nb": "importere GPS-spor fra en GPX-fil",
+   "nn": "importere GPS-spor frå ei GPX-fil",
+   "is": "flytja inn GPS-ferla úr GPX-skrá",
+   "da": "importere GPS-spor fra en GPX-fil",
+   "sv": "importera GPS-spår från en GPX-fil",
+   "pl": "zaimportować ślady GPS z pliku GPX",
+   "sl": "uvoziti sledi GPS iz datoteke GPX",
+   "sk": "importovať záznamy trás GPS zo súboru GPX",
+   "el": "εισαγωγή διαδρομών GPS από αρχείο GPX",
+   "ro": "importarea traseelor GPS dintr-un fișier GPX",
+   "bg": "импортиране на GPS следи от GPX файл"
   },
   {
    "id": "T15",
@@ -386,7 +540,18 @@
    "it": "disegnare linee con lunghezze e angoli esatti come in CAD",
    "ru": "чертить линии с точными длинами и углами как в САПР",
    "zh": "像CAD一样按精确长度和角度绘制线",
-   "ja": "CADのように正確な長さと角度で線を描く"
+   "ja": "CADのように正確な長さと角度で線を描く",
+   "nb": "tegne linjer med nøyaktige lengder og vinkler som i CAD",
+   "nn": "teikne linjer med nøyaktige lengder og vinklar som i CAD",
+   "is": "teikna línur með nákvæmri lengd og hornum eins og í CAD",
+   "da": "tegne linjer med præcise længder og vinkler som i CAD",
+   "sv": "rita linjer med exakta längder och vinklar som i CAD",
+   "pl": "rysować linie o dokładnych długościach i kątach jak w CAD",
+   "sl": "risati črte z natančnimi dolžinami in koti kot v CAD",
+   "sk": "kresliť čiary s presnými dĺžkami a uhlami ako v CAD",
+   "el": "σχεδίαση γραμμών με ακριβή μήκη και γωνίες όπως στο CAD",
+   "ro": "desenarea liniilor cu lungimi și unghiuri exacte ca în CAD",
+   "bg": "чертане на линии с точни дължини и ъгли като в CAD"
   },
   {
    "id": "T16",
@@ -411,7 +576,18 @@
    "it": "pubblicare i miei layer su un GeoServer",
    "ru": "опубликовать мои слои на GeoServer",
    "zh": "将我的图层发布到GeoServer",
-   "ja": "レイヤをGeoServerに公開する"
+   "ja": "レイヤをGeoServerに公開する",
+   "nb": "publisere lagene mine til en GeoServer",
+   "nn": "publisere laga mine til ein GeoServer",
+   "is": "birta lögin mín á GeoServer",
+   "da": "publicere mine lag til en GeoServer",
+   "sv": "publicera mina lager till en GeoServer",
+   "pl": "opublikować moje warstwy na GeoServerze",
+   "sl": "objaviti svoje sloje na GeoServer",
+   "sk": "publikovať moje vrstvy na GeoServer",
+   "el": "δημοσίευση των επιπέδων μου σε GeoServer",
+   "ro": "publicarea straturilor mele pe un GeoServer",
+   "bg": "публикуване на моите слоеве в GeoServer"
   },
   {
    "id": "T17",
@@ -436,7 +612,18 @@
    "it": "eseguire query SQL su un database PostGIS",
    "ru": "выполнять SQL-запросы к базе данных PostGIS",
    "zh": "在PostGIS数据库上运行SQL查询",
-   "ja": "PostGISデータベースでSQLクエリを実行する"
+   "ja": "PostGISデータベースでSQLクエリを実行する",
+   "nb": "kjøre SQL-spørringer mot en PostGIS-database",
+   "nn": "køyre SQL-spørjingar mot ein PostGIS-database",
+   "is": "keyra SQL-fyrirspurnir á PostGIS-gagnagrunn",
+   "da": "køre SQL-forespørgsler på en PostGIS-database",
+   "sv": "köra SQL-frågor mot en PostGIS-databas",
+   "pl": "wykonywać zapytania SQL w bazie danych PostGIS",
+   "sl": "izvajati poizvedbe SQL v bazi PostGIS",
+   "sk": "spúšťať dopyty SQL v databáze PostGIS",
+   "el": "εκτέλεση ερωτημάτων SQL σε βάση δεδομένων PostGIS",
+   "ro": "rularea interogărilor SQL pe o bază de date PostGIS",
+   "bg": "изпълнение на SQL заявки в база данни PostGIS"
   },
   {
    "id": "T18",
@@ -461,7 +648,18 @@
    "it": "creare una mappa di calore della densità di punti",
    "ru": "построить тепловую карту плотности точек",
    "zh": "制作点密度热力图",
-   "ja": "点密度のヒートマップを作る"
+   "ja": "点密度のヒートマップを作る",
+   "nb": "lage et varmekart over punkttetthet",
+   "nn": "lage eit varmekart over punkttettleik",
+   "is": "gera hitakort af þéttleika punkta",
+   "da": "lave et heatmap over punkttæthed",
+   "sv": "göra en värmekarta över punkttäthet",
+   "pl": "utworzyć mapę ciepła gęstości punktów",
+   "sl": "izdelati toplotni zemljevid gostote točk",
+   "sk": "vytvoriť teplotnú mapu hustoty bodov",
+   "el": "δημιουργία θερμικού χάρτη πυκνότητας σημείων",
+   "ro": "realizarea unei hărți de căldură a densității punctelor",
+   "bg": "създаване на топлинна карта на гъстотата на точките"
   },
   {
    "id": "T19",
@@ -486,7 +684,18 @@
    "it": "visualizzare gli edifici in 3D",
    "ru": "показать здания в 3D",
    "zh": "以三维方式显示建筑物",
-   "ja": "建物を3Dで表示する"
+   "ja": "建物を3Dで表示する",
+   "nb": "vise bygninger i 3D",
+   "nn": "vise bygningar i 3D",
+   "is": "sýna byggingar í þrívídd",
+   "da": "vise bygninger i 3D",
+   "sv": "visa byggnader i 3D",
+   "pl": "wyświetlić budynki w 3D",
+   "sl": "prikazati stavbe v 3D",
+   "sk": "zobraziť budovy v 3D",
+   "el": "προβολή κτιρίων σε 3D",
+   "ro": "afișarea clădirilor în 3D",
+   "bg": "показване на сгради в 3D"
   },
   {
    "id": "T20",
@@ -511,7 +720,18 @@
    "it": "importare un disegno DXF da AutoCAD",
    "ru": "импортировать чертёж DXF из AutoCAD",
    "zh": "导入AutoCAD的DXF图纸",
-   "ja": "AutoCADのDXF図面を読み込む"
+   "ja": "AutoCADのDXF図面を読み込む",
+   "nb": "importere en DXF-tegning fra AutoCAD",
+   "nn": "importere ei DXF-teikning frå AutoCAD",
+   "is": "flytja inn DXF-teikningu úr AutoCAD",
+   "da": "importere en DXF-tegning fra AutoCAD",
+   "sv": "importera en DXF-ritning från AutoCAD",
+   "pl": "zaimportować rysunek DXF z AutoCAD-a",
+   "sl": "uvoziti risbo DXF iz AutoCAD-a",
+   "sk": "importovať výkres DXF z AutoCADu",
+   "el": "εισαγωγή σχεδίου DXF από το AutoCAD",
+   "ro": "importarea unui desen DXF din AutoCAD",
+   "bg": "импортиране на DXF чертеж от AutoCAD"
   },
   {
    "id": "T21",
@@ -536,7 +756,18 @@
    "it": "vedere immagini a livello stradale nel punto in cui clicco",
    "ru": "смотреть панорамы улиц в точке, где я щёлкаю",
    "zh": "在我点击的位置查看街景图像",
-   "ja": "クリックした場所のストリートビュー画像を見る"
+   "ja": "クリックした場所のストリートビュー画像を見る",
+   "nb": "se gatebilder der jeg klikker",
+   "nn": "sjå gatebilete der eg klikkar",
+   "is": "sjá götumyndir þar sem ég smelli",
+   "da": "se gadebilleder der, hvor jeg klikker",
+   "sv": "se gatubilder där jag klickar",
+   "pl": "zobaczyć zdjęcia z poziomu ulicy w klikniętym miejscu",
+   "sl": "videti ulične posnetke na kraju, kamor kliknem",
+   "sk": "vidieť zábery z úrovne ulice na mieste, kam kliknem",
+   "el": "προβολή εικόνων σε επίπεδο δρόμου στο σημείο που κάνω κλικ",
+   "ro": "vizualizarea imaginilor de la nivelul străzii în locul unde dau clic",
+   "bg": "преглед на улични изображения на мястото, където щракна"
   },
   {
    "id": "T22",
@@ -561,7 +792,18 @@
    "it": "tracciare un profilo altimetrico lungo una linea",
    "ru": "построить профиль высот вдоль линии",
    "zh": "沿一条线绘制高程剖面",
-   "ja": "線に沿って標高断面図を描く"
+   "ja": "線に沿って標高断面図を描く",
+   "nb": "tegne en høydeprofil langs en linje",
+   "nn": "teikne ein høgdeprofil langs ei linje",
+   "is": "teikna hæðarsnið eftir línu",
+   "da": "tegne en højdeprofil langs en linje",
+   "sv": "rita en höjdprofil längs en linje",
+   "pl": "narysować profil wysokościowy wzdłuż linii",
+   "sl": "narisati višinski profil vzdolž črte",
+   "sk": "nakresliť výškový profil pozdĺž línie",
+   "el": "σχεδίαση υψομετρικής τομής κατά μήκος μιας γραμμής",
+   "ro": "desenarea unui profil altimetric de-a lungul unei linii",
+   "bg": "изчертаване на височинен профил по линия"
   },
   {
    "id": "T23",
@@ -586,7 +828,18 @@
    "it": "pianificare il piano di volo per un rilievo con drone",
    "ru": "спланировать маршрут полёта дрона для аэросъёмки",
    "zh": "为无人机测绘规划航线",
-   "ja": "ドローン測量の飛行ルートを計画する"
+   "ja": "ドローン測量の飛行ルートを計画する",
+   "nb": "planlegge en flyrute for kartlegging med drone",
+   "nn": "planleggje ei flyrute for kartlegging med drone",
+   "is": "skipuleggja flugleið fyrir kortlagningu með dróna",
+   "da": "planlægge en flyverute til kortlægning med drone",
+   "sv": "planera en flygrutt för kartläggning med drönare",
+   "pl": "zaplanować trasę lotu drona do kartowania",
+   "sl": "načrtovati pot leta drona za kartiranje",
+   "sk": "naplánovať letovú trasu dronu na mapovanie",
+   "el": "σχεδιασμός διαδρομής πτήσης drone για χαρτογράφηση",
+   "ro": "planificarea traseului de zbor al unei drone pentru cartografiere",
+   "bg": "планиране на полетен маршрут на дрон за картографиране"
   },
   {
    "id": "T24",
@@ -611,7 +864,18 @@
    "it": "interpolare misure di temperatura in una superficie raster",
    "ru": "интерполировать измерения температуры в растровую поверхность",
    "zh": "将温度测量值插值为栅格表面",
-   "ja": "気温の観測値をラスタ面に内挿する"
+   "ja": "気温の観測値をラスタ面に内挿する",
+   "nb": "interpolere temperaturmålinger til en rasterflate",
+   "nn": "interpolere temperaturmålingar til ei rasterflate",
+   "is": "brúa hitamælingar yfir í rastaflöt",
+   "da": "interpolere temperaturmålinger til en rasterflade",
+   "sv": "interpolera temperaturmätningar till en rasteryta",
+   "pl": "interpolować pomiary temperatury do powierzchni rastrowej",
+   "sl": "interpolirati meritve temperature v rastrsko ploskev",
+   "sk": "interpolovať merania teploty do rastrového povrchu",
+   "el": "παρεμβολή μετρήσεων θερμοκρασίας σε επιφάνεια raster",
+   "ro": "interpolarea măsurătorilor de temperatură într-o suprafață raster",
+   "bg": "интерполиране на температурни измервания в растерна повърхнина"
   },
   {
    "id": "T25",
@@ -636,7 +900,18 @@
    "it": "rilevare i cambiamenti tra due immagini satellitari di date diverse",
    "ru": "выявить изменения между двумя космоснимками разных дат",
    "zh": "检测两幅不同日期卫星影像之间的变化",
-   "ja": "撮影日の異なる2枚の衛星画像の変化を検出する"
+   "ja": "撮影日の異なる2枚の衛星画像の変化を検出する",
+   "nb": "oppdage endringer mellom to satellittbilder tatt på ulike datoer",
+   "nn": "oppdage endringar mellom to satellittbilete tekne på ulike datoar",
+   "is": "greina breytingar milli tveggja gervitunglamynda frá ólíkum dögum",
+   "da": "finde ændringer mellem to satellitbilleder taget på forskellige datoer",
+   "sv": "upptäcka förändringar mellan två satellitbilder tagna vid olika datum",
+   "pl": "wykryć zmiany między dwoma zdjęciami satelitarnymi z różnych dat",
+   "sl": "zaznati spremembe med dvema satelitskima posnetkoma iz različnih datumov",
+   "sk": "zistiť zmeny medzi dvoma satelitnými snímkami z rôznych dátumov",
+   "el": "ανίχνευση αλλαγών μεταξύ δύο δορυφορικών εικόνων διαφορετικών ημερομηνιών",
+   "ro": "detectarea schimbărilor între două imagini satelitare din date diferite",
+   "bg": "откриване на промени между две сателитни изображения от различни дати"
   },
   {
    "id": "T26",
@@ -662,7 +937,18 @@
    "it": "raccogliere dati sul campo con il telefono e sincronizzarli",
    "ru": "собирать данные в поле на телефоне и синхронизировать их",
    "zh": "用手机在野外采集数据并同步回来",
-   "ja": "スマートフォンで現地調査データを収集して同期する"
+   "ja": "スマートフォンで現地調査データを収集して同期する",
+   "nb": "samle inn data i felt på telefonen og synkronisere dem tilbake",
+   "nn": "samle inn data i felt på telefonen og synkronisere dei tilbake",
+   "is": "safna gögnum á vettvangi í síma og samstilla þau til baka",
+   "da": "indsamle data i felten på en telefon og synkronisere dem tilbage",
+   "sv": "samla in data i fält på en telefon och synkronisera tillbaka den",
+   "pl": "zbierać dane w terenie na telefonie i synchronizować je z powrotem",
+   "sl": "zbirati podatke na terenu s telefonom in jih sinhronizirati nazaj",
+   "sk": "zbierať údaje v teréne na telefóne a synchronizovať ich späť",
+   "el": "συλλογή δεδομένων στο πεδίο με κινητό και συγχρονισμός τους",
+   "ro": "colectarea datelor pe teren cu telefonul și sincronizarea lor înapoi",
+   "bg": "събиране на данни на терен с телефон и синхронизирането им обратно"
   },
   {
    "id": "T27",
@@ -687,7 +973,18 @@
    "it": "simulare la piena di un fiume e la profondità di allagamento",
    "ru": "смоделировать паводок на реке и глубину затопления",
    "zh": "模拟河流洪水及淹没深度",
-   "ja": "河川の洪水と浸水深をシミュレーションする"
+   "ja": "河川の洪水と浸水深をシミュレーションする",
+   "nb": "simulere elveflom og oversvømmelsesdybde",
+   "nn": "simulere elveflaum og overfløymingsdjupn",
+   "is": "herma eftir flóðum í ám og vatnsdýpt",
+   "da": "simulere oversvømmelse fra vandløb og vanddybde",
+   "sv": "simulera översvämning från vattendrag och vattendjup",
+   "pl": "symulować wezbrania rzeki i głębokość zalewu",
+   "sl": "simulirati poplave rek in globino poplavljanja",
+   "sk": "simulovať záplavy z rieky a hĺbku zaplavenia",
+   "el": "προσομοίωση πλημμύρας ποταμού και βάθους κατάκλυσης",
+   "ro": "simularea inundațiilor râurilor și a adâncimii apei",
+   "bg": "симулиране на речни наводнения и дълбочина на заливане"
   },
   {
    "id": "T28",
@@ -712,7 +1009,18 @@
    "it": "suddividere un poligono in parti di uguale superficie",
    "ru": "разделить полигон на части равной площади",
    "zh": "将一个面分割成面积相等的几部分",
-   "ja": "ポリゴンを等しい面積に分割する"
+   "ja": "ポリゴンを等しい面積に分割する",
+   "nb": "dele et polygon i deler med likt areal",
+   "nn": "dele eit polygon i delar med likt areal",
+   "is": "skipta fláka í hluta með jafnt flatarmál",
+   "da": "opdele en polygon i dele med samme areal",
+   "sv": "dela en polygon i delar med lika stor area",
+   "pl": "podzielić poligon na części o równej powierzchni",
+   "sl": "razdeliti poligon na dele z enako površino",
+   "sk": "rozdeliť polygón na časti s rovnakou plochou",
+   "el": "διαίρεση πολυγώνου σε τμήματα ίσου εμβαδού",
+   "ro": "împărțirea unui poligon în părți cu suprafață egală",
+   "bg": "разделяне на полигон на части с еднаква площ"
   },
   {
    "id": "T29",
@@ -737,7 +1045,18 @@
    "it": "creare una griglia di esagoni sulla mia area di studio",
    "ru": "создать сетку шестиугольников на территории исследования",
    "zh": "在研究区上创建六边形格网",
-   "ja": "調査範囲に六角形のグリッドを作成する"
+   "ja": "調査範囲に六角形のグリッドを作成する",
+   "nb": "lage et rutenett av sekskanter over studieområdet mitt",
+   "nn": "lage eit rutenett av sekskantar over studieområdet mitt",
+   "is": "búa til sexhyrninganet yfir rannsóknarsvæðið mitt",
+   "da": "lave et net af sekskanter over mit undersøgelsesområde",
+   "sv": "skapa ett rutnät av hexagoner över mitt studieområde",
+   "pl": "utworzyć siatkę sześciokątów na moim obszarze badań",
+   "sl": "izdelati mrežo šestkotnikov nad mojim območjem raziskave",
+   "sk": "vytvoriť mriežku šesťuholníkov nad mojím záujmovým územím",
+   "el": "δημιουργία πλέγματος εξαγώνων πάνω από την περιοχή μελέτης μου",
+   "ro": "crearea unei grile de hexagoane peste zona mea de studiu",
+   "bg": "създаване на мрежа от шестоъгълници върху изследвания район"
   },
   {
    "id": "T30",
@@ -761,7 +1080,18 @@
    "it": "esportare la tabella degli attributi in un foglio Excel",
    "ru": "экспортировать таблицу атрибутов в Excel",
    "zh": "将属性表导出为Excel表格",
-   "ja": "属性テーブルをExcelに書き出す"
+   "ja": "属性テーブルをExcelに書き出す",
+   "nb": "eksportere attributtabellen til et Excel-regneark",
+   "nn": "eksportere attributtabellen til eit Excel-rekneark",
+   "is": "flytja eigindatöfluna út í Excel-töflureikni",
+   "da": "eksportere attributtabellen til et Excel-regneark",
+   "sv": "exportera attributtabellen till ett Excel-kalkylblad",
+   "pl": "wyeksportować tabelę atrybutów do arkusza Excel",
+   "sl": "izvoziti atributno tabelo v preglednico Excel",
+   "sk": "exportovať atribútovú tabuľku do tabuľky Excel",
+   "el": "εξαγωγή του πίνακα ιδιοτήτων σε υπολογιστικό φύλλο Excel",
+   "ro": "exportarea tabelului de atribute într-o foaie de calcul Excel",
+   "bg": "експортиране на атрибутната таблица в електронна таблица Excel"
   },
   {
    "id": "T31",
@@ -787,7 +1117,18 @@
    "it": "chiedere a un assistente IA di scrivere script di elaborazione",
    "ru": "попросить ИИ-ассистента написать скрипты обработки",
    "zh": "让AI助手帮我编写处理脚本",
-   "ja": "AIアシスタントに処理スクリプトを書いてもらう"
+   "ja": "AIアシスタントに処理スクリプトを書いてもらう",
+   "nb": "be en AI-assistent skrive prosesseringsskript for meg",
+   "nn": "be ein KI-assistent skrive prosesseringsskript for meg",
+   "is": "biðja gervigreindaraðstoðarmann að skrifa vinnsluforskriftir fyrir mig",
+   "da": "bede en AI-assistent om at skrive behandlingsscripts for mig",
+   "sv": "be en AI-assistent skriva bearbetningsskript åt mig",
+   "pl": "poprosić asystenta AI o napisanie skryptów przetwarzania",
+   "sl": "prositi pomočnika z umetno inteligenco, da mi napiše skripte za obdelavo",
+   "sk": "požiadať AI asistenta, aby mi napísal skripty na spracovanie",
+   "el": "να ζητήσω από βοηθό τεχνητής νοημοσύνης να γράψει σενάρια επεξεργασίας",
+   "ro": "să cer unui asistent AI să scrie scripturi de procesare",
+   "bg": "да помоля AI асистент да ми напише скриптове за обработка"
   },
   {
    "id": "T32",
@@ -812,7 +1153,18 @@
    "it": "stimare il potenziale solare dei tetti",
    "ru": "оценить солнечный потенциал крыш",
    "zh": "估算屋顶的太阳能潜力",
-   "ja": "屋根の太陽光発電ポテンシャルを推定する"
+   "ja": "屋根の太陽光発電ポテンシャルを推定する",
+   "nb": "beregne solpotensialet for hustak",
+   "nn": "rekne ut solpotensialet for hustak",
+   "is": "meta sólarorkugetu þaka",
+   "da": "vurdere solpotentialet på tage",
+   "sv": "uppskatta solpotentialen för hustak",
+   "pl": "oszacować potencjał słoneczny dachów",
+   "sl": "oceniti sončni potencial streh",
+   "sk": "odhadnúť solárny potenciál striech",
+   "el": "εκτίμηση του ηλιακού δυναμικού των στεγών",
+   "ro": "estimarea potențialului solar al acoperișurilor",
+   "bg": "оценка на слънчевия потенциал на покривите"
   },
   {
    "id": "T33",
@@ -838,7 +1190,18 @@
    "it": "caricare servizi WMS e WFS da un catalogo",
    "ru": "загрузить сервисы WMS и WFS из каталога",
    "zh": "从目录加载WMS和WFS服务",
-   "ja": "カタログからWMSとWFSサービスを読み込む"
+   "ja": "カタログからWMSとWFSサービスを読み込む",
+   "nb": "laste inn WMS- og WFS-tjenester fra en katalog",
+   "nn": "laste inn WMS- og WFS-tenester frå ein katalog",
+   "is": "hlaða inn WMS- og WFS-þjónustum úr skrá",
+   "da": "indlæse WMS- og WFS-tjenester fra et katalog",
+   "sv": "läsa in WMS- och WFS-tjänster från en katalog",
+   "pl": "wczytać usługi WMS i WFS z katalogu",
+   "sl": "naložiti storitve WMS in WFS iz kataloga",
+   "sk": "načítať služby WMS a WFS z katalógu",
+   "el": "φόρτωση υπηρεσιών WMS και WFS από κατάλογο",
+   "ro": "încărcarea serviciilor WMS și WFS dintr-un catalog",
+   "bg": "зареждане на WMS и WFS услуги от каталог"
   },
   {
    "id": "T34",
@@ -863,7 +1226,18 @@
    "it": "agganciare i punti GPS alle strade su cui sono stati registrati",
    "ru": "привязать GPS-точки к дорогам, по которым они записаны",
    "zh": "将GPS点匹配到其记录时所在的道路",
-   "ja": "GPSの点を記録された道路にマッチングする"
+   "ja": "GPSの点を記録された道路にマッチングする",
+   "nb": "koble GPS-punkter til veiene de ble registrert på",
+   "nn": "kople GPS-punkt til vegane dei vart registrerte på",
+   "is": "para GPS-punkta við vegina sem þeir voru skráðir á",
+   "da": "matche GPS-punkter med de veje, de blev registreret på",
+   "sv": "matcha GPS-punkter mot vägarna de registrerades på",
+   "pl": "dopasować punkty GPS do dróg, na których je zarejestrowano",
+   "sl": "povezati točke GPS s cestami, na katerih so bile zabeležene",
+   "sk": "priradiť body GPS k cestám, na ktorých boli zaznamenané",
+   "el": "αντιστοίχιση σημείων GPS στους δρόμους όπου καταγράφηκαν",
+   "ro": "potrivirea punctelor GPS cu drumurile pe care au fost înregistrate",
+   "bg": "съпоставяне на GPS точки с пътищата, по които са записани"
   },
   {
    "id": "T35",
@@ -888,7 +1262,18 @@
    "it": "analizzare gli orari del trasporto pubblico da GTFS",
    "ru": "анализировать расписания общественного транспорта GTFS",
    "zh": "分析GTFS公共交通时刻表",
-   "ja": "GTFSの公共交通時刻表を分析する"
+   "ja": "GTFSの公共交通時刻表を分析する",
+   "nb": "analysere rutetider for kollektivtrafikk fra GTFS",
+   "nn": "analysere rutetidene for kollektivtrafikk frå GTFS",
+   "is": "greina tímatöflur almenningssamgangna úr GTFS",
+   "da": "analysere køreplaner for kollektiv trafik fra GTFS",
+   "sv": "analysera kollektivtrafikens tidtabeller från GTFS",
+   "pl": "analizować rozkłady jazdy transportu publicznego z GTFS",
+   "sl": "analizirati vozne rede javnega prevoza iz GTFS",
+   "sk": "analyzovať cestovné poriadky verejnej dopravy z GTFS",
+   "el": "ανάλυση δρομολογίων δημόσιων συγκοινωνιών από GTFS",
+   "ro": "analiza orarelor transportului public din GTFS",
+   "bg": "анализ на разписанията на обществения транспорт от GTFS"
   },
   {
    "id": "T36",
@@ -913,7 +1298,18 @@
    "it": "animare un layer nel tempo con un cursore temporale",
    "ru": "анимировать слой во времени с помощью ползунка",
    "zh": "用时间滑块按时间动画显示图层",
-   "ja": "タイムスライダーでレイヤを時系列アニメーションする"
+   "ja": "タイムスライダーでレイヤを時系列アニメーションする",
+   "nb": "animere et lag over tid med en tidsglidebryter",
+   "nn": "animere eit lag over tid med ein tidsglidebrytar",
+   "is": "lífga lag yfir tíma með tímasleða",
+   "da": "animere et lag over tid med en tidsskyder",
+   "sv": "animera ett lager över tid med ett tidsreglage",
+   "pl": "animować warstwę w czasie za pomocą suwaka czasu",
+   "sl": "animirati sloj skozi čas z drsnikom časa",
+   "sk": "animovať vrstvu v čase pomocou časového posúvača",
+   "el": "κινούμενη απεικόνιση επιπέδου στον χρόνο με χρονικό ρυθμιστικό",
+   "ro": "animarea unui strat în timp cu un cursor temporal",
+   "bg": "анимиране на слой във времето с времеви плъзгач"
   },
   {
    "id": "T37",
@@ -938,7 +1334,18 @@
    "it": "elaborare una nuvola di punti lidar per ottenere un modello digitale del terreno",
    "ru": "обработать облако точек лидара в цифровую модель рельефа",
    "zh": "将激光雷达点云处理为数字地形模型",
-   "ja": "LiDAR点群から数値地形モデルを作成する"
+   "ja": "LiDAR点群から数値地形モデルを作成する",
+   "nb": "behandle en lidar-punktsky til en digital terrengmodell",
+   "nn": "handsame ei lidar-punktsky til ein digital terrengmodell",
+   "is": "vinna lidar-punktaský í stafrænt landlíkan",
+   "da": "behandle en lidar-punktsky til en digital terrænmodel",
+   "sv": "bearbeta ett lidar-punktmoln till en digital terrängmodell",
+   "pl": "przetworzyć chmurę punktów lidar na numeryczny model terenu",
+   "sl": "obdelati oblak točk lidar v digitalni model reliefa",
+   "sk": "spracovať mračno bodov lidar na digitálny model terénu",
+   "el": "επεξεργασία νέφους σημείων lidar σε ψηφιακό μοντέλο εδάφους",
+   "ro": "procesarea unui nor de puncte lidar într-un model digital al terenului",
+   "bg": "обработка на облак от точки от лидар в цифров модел на терена"
   },
   {
    "id": "T38",
@@ -964,7 +1371,18 @@
    "it": "compilare un attributo per molti elementi selezionati in una volta",
    "ru": "заполнить атрибут сразу для многих выбранных объектов",
    "zh": "一次为多个选中要素填写属性",
-   "ja": "選択した多数の地物の属性を一括入力する"
+   "ja": "選択した多数の地物の属性を一括入力する",
+   "nb": "fylle ut et attributt for mange valgte objekter samtidig",
+   "nn": "fylle ut ein attributt for mange valde objekt samstundes",
+   "is": "fylla út eigind fyrir mörg valin fyrirbæri í einu",
+   "da": "udfylde en attribut for mange valgte objekter på én gang",
+   "sv": "fylla i ett attribut för många markerade objekt samtidigt",
+   "pl": "wypełnić atrybut dla wielu zaznaczonych obiektów naraz",
+   "sl": "izpolniti atribut za veliko izbranih objektov hkrati",
+   "sk": "vyplniť atribút pre veľa vybraných prvkov naraz",
+   "el": "συμπλήρωση ιδιότητας για πολλά επιλεγμένα στοιχεία ταυτόχρονα",
+   "ro": "completarea unui atribut pentru multe entități selectate deodată",
+   "bg": "попълване на атрибут за много избрани обекти наведнъж"
   },
   {
    "id": "T39",
@@ -989,7 +1407,18 @@
    "it": "copiare negli appunti le coordinate di un punto cliccato",
    "ru": "скопировать координаты точки щелчка в буфер обмена",
    "zh": "将点击点的坐标复制到剪贴板",
-   "ja": "クリックした地点の座標をクリップボードにコピーする"
+   "ja": "クリックした地点の座標をクリップボードにコピーする",
+   "nb": "kopiere koordinatene til et klikket punkt til utklippstavlen",
+   "nn": "kopiere koordinatane til eit klikka punkt til utklippstavla",
+   "is": "afrita hnit smellts punkts á klippiborðið",
+   "da": "kopiere koordinaterne for et klikket punkt til udklipsholderen",
+   "sv": "kopiera koordinaterna för en klickad punkt till urklipp",
+   "pl": "skopiować współrzędne klikniętego punktu do schowka",
+   "sl": "kopirati koordinate kliknjene točke v odložišče",
+   "sk": "skopírovať súradnice kliknutého bodu do schránky",
+   "el": "αντιγραφή συντεταγμένων σημείου που επιλέγω στο πρόχειρο",
+   "ro": "copierea coordonatelor unui punct pe care dau clic în clipboard",
+   "bg": "копиране на координатите на щракната точка в клипборда"
   },
   {
    "id": "T40",
@@ -1013,7 +1442,18 @@
    "it": "gestire e modificare i metadati dei miei layer",
    "ru": "управлять метаданными моих слоёв и редактировать их",
    "zh": "管理和编辑我的图层元数据",
-   "ja": "レイヤのメタデータを管理・編集する"
+   "ja": "レイヤのメタデータを管理・編集する",
+   "nb": "administrere og redigere metadataene til lagene mine",
+   "nn": "administrere og redigere metadataa til laga mine",
+   "is": "stjórna og breyta lýsigögnum laganna minna",
+   "da": "administrere og redigere metadata for mine lag",
+   "sv": "hantera och redigera metadata för mina lager",
+   "pl": "zarządzać metadanymi moich warstw i je edytować",
+   "sl": "upravljati in urejati metapodatke svojih slojev",
+   "sk": "spravovať a upravovať metaúdaje mojich vrstiev",
+   "el": "διαχείριση και επεξεργασία των μεταδεδομένων των επιπέδων μου",
+   "ro": "gestionarea și editarea metadatelor straturilor mele",
+   "bg": "управление и редактиране на метаданните на моите слоеве"
   }
  ],
  "native": [
@@ -1120,5 +1560,27 @@
   "prompt": "QueryPrompt.txt (short sentence version: fewer than 10 words)",
   "date": "2026-11-12",
   "how": "one independent call per task; the prompt's {task} is the task's 'en' text and nothing else is given: no plugin names, no catalogue, no other task"
- }
+ },
+ "matrixLanguages": [
+  "en",
+  "fr",
+  "es",
+  "de",
+  "it",
+  "nb",
+  "nn",
+  "is",
+  "da",
+  "pl",
+  "sl",
+  "el",
+  "ro",
+  "bg",
+  "sk",
+  "sv",
+  "pt",
+  "ru",
+  "zh",
+  "ja"
+ ]
 }

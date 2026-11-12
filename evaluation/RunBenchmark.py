@@ -180,7 +180,8 @@ def benchmarkUniverse(candidate: dict, universe: str, queries: dict, judgments: 
     if universe == "3":
         pluginLanguage = [textLanguage(t) for t in corpus.texts]
         position = {info.name: i for i, info in enumerate(corpus.infos)}
-        out["languageMatrix"] = languageMatrix(vectors, tasks, queries["languages"])
+        out["languageMatrix"] = languageMatrix(
+            vectors, tasks, queries.get("matrixLanguages", queries["languages"]))
         out["cross"] = {}
         for lang in queries["languages"]:
             texts = {q["id"]: q[lang] for q in tasks}
