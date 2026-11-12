@@ -39,14 +39,32 @@ jobs:
       candidates: ${{ steps.list.outputs.candidates }}
     steps:
       - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
+        with:
+          fetch-depth: 2
       - id: list
         env:
-          REQUESTED: ${{ inputs.candidates || 'all' }}
+          REQUESTED: ${{ inputs.candidates || '' }}
+          EVENT: ${{ github.event_name }}
         run: |
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
-          import json, os
-          known = [c["id"] for c in json.load(open("evaluation/Candidates.json"))["candidates"]]
+          import json, os, subprocess
+          current = json.load(open("evaluation/Candidates.json"))["candidates"]
+          known = [c["id"] for c in current]
           requested = os.environ["REQUESTED"].split()
+          if os.environ["EVENT"] == "push" and not requested:
+              # On push, only new or changed candidates, plus the shipped reference.
+              try:
+                  before = json.loads(subprocess.run(
+                      ["git", "show", "HEAD~1:evaluation/Candidates.json"],
+                      capture_output=True, text=True, check=True).stdout)["candidates"]
+              except Exception:
+                  before = []
+              def comparable(c):
+                  return {k: v for k, v in c.items() if k != "note"}
+              previous = {c["id"]: comparable(c) for c in before}
+              requested = ["shipped"] + [c["id"] for c in current
+                                         if previous.get(c["id"]) != comparable(c)
+                                         and c["id"] != "shipped"]
           chosen = known if requested in ([], ["all"]) else requested
           unknown = [c for c in chosen if c not in known]
           if unknown:
@@ -58,7 +76,8 @@ jobs:
     name: Benchmark ${{ matrix.candidate }}
     needs: plan
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # A base size transformer embeds the catalogue on CPU in tens of minutes.
+    timeout-minutes: 150
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -80,10 +99,15 @@ jobs:
           if [ "$CANDIDATE" != "shipped" ]; then
             # CPU wheels only: no CUDA download.
             python -m pip install --quiet torch --index-url https://download.pytorch.org/whl/cpu
-            python -m pip install --quiet sentence-transformers model2vec huggingface_hub
+            python -m pip install --quiet sentence-transformers "model2vec[distill]" huggingface_hub
           fi
       - name: Extract the pinned snapshot
         run: make eval-data
+      - name: Build the candidate's model (vocabulary candidates only)
+        run: |
+          if python -c "import json,os,sys; c=[x for x in json.load(open('evaluation/Candidates.json'))['candidates'] if x['id']==os.environ['CANDIDATE']][0]; sys.exit(0 if c['kind']=='npz' else 1)"; then
+            python evaluation/BuildVocabularyModels.py --candidate "$CANDIDATE"
+          fi
       - name: Benchmark
         run: |
           case "$UNIVERSES" in "3"|"4"|"3 4"|"4 3") ;; *) echo "bad universes: $UNIVERSES"; exit 1;; esac

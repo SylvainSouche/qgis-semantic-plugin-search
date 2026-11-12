@@ -174,6 +174,54 @@ def testCandidatesAreWellFormed():
     ids = [c["id"] for c in candidates["candidates"]]
     assert len(ids) == len(set(ids)) and "shipped" in ids
     for candidate in candidates["candidates"]:
-        assert candidate["kind"] in {"shipped", "model2vec", "sentence-transformers"}
+        assert candidate["kind"] in {"shipped", "model2vec", "sentence-transformers", "npz"}
         assert candidate["class"] in {"static", "transformer"}
-        assert candidate["kind"] == "shipped" or candidate["model"]
+        if candidate["kind"] == "npz":
+            assert candidate["build"] in {"distill", "append"} and candidate["teacher"]
+            if candidate["build"] == "append" or candidate.get("vocabulary"):
+                assert (EVALUATION_DIR / candidate["vocabulary"]).is_file()
+        elif candidate["kind"] != "shipped":
+            assert candidate["model"]
+
+
+def testGisVocabularyHoldsSplitLowercaseWords():
+    import csv
+
+    with (EVALUATION_DIR / "GisVocabulary.tsv").open(encoding="utf-8") as stream:
+        rows = list(csv.DictReader(stream, delimiter="\t"))
+    assert len(rows) > 1000
+    for row in rows:
+        assert row["word"] == row["word"].lower() and len(row["word"]) >= 4
+        assert len(row["pieces_today"].split()) >= 2, row["word"]
+        assert row["sources"]
+
+
+def testAppendedRowsLandInPotionSpaceThroughTheFittedMap(monkeypatch):
+    import numpy as np
+
+    import BuildVocabularyModels as builder
+
+    rng = np.random.default_rng(3)
+    tokens = [f"tok{i}" for i in range(400)]
+    potion = rng.normal(size=(400, 8)).astype(np.float32)
+    rotation = np.linalg.qr(rng.normal(size=(12, 12)))[0][:, :8]
+    teacherOf = {t: (potion[i] @ rotation.T) for i, t in enumerate(tokens)}
+    newWord = rng.normal(size=8).astype(np.float32)
+    teacherOf["contour"] = newWord @ rotation.T
+
+    class FakeModel:
+        def vocabulary(self):
+            return {t: i for i, t in enumerate(tokens)}
+
+        def vectors(self):
+            return potion
+
+    monkeypatch.setattr(builder.NpzStaticModel, "load", staticmethod(lambda path: FakeModel()))
+    monkeypatch.setattr(builder, "distill", lambda teacher, words, dims: (
+        list(teacherOf), np.stack(list(teacherOf.values()))))
+    allTokens, vectors, facts = builder.buildAppended({"teacher": "t"}, ["contour", "tok3"])
+    assert allTokens[-1] == "contour" and len(allTokens) == 401, "known tokens are not added"
+    row = vectors[-1]
+    assert row @ newWord / np.linalg.norm(row) / np.linalg.norm(newWord) > 0.99
+    assert np.linalg.norm(row) == pytest.approx(np.median(np.linalg.norm(potion, axis=1)), rel=1e-4)
+    assert facts["mapFitHeldOutCosine"] > 0.99

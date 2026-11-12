@@ -177,7 +177,7 @@ $(MODEL): pipeline/ConvertStaticModel.py | _venv
 		--model-dir $(BUILD_DIR)/model-src \
 		--model-id $(MODEL_ID) \
 		--source-model "minishlab/potion-base-8M" \
-		--license-note "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed" \
+		--license-note "MIT (potion-base-8M), distilled from BAAI/bge-base-en-v1.5 (MIT); commercial use allowed" \
 		--output $(MODEL)
 
 _python:

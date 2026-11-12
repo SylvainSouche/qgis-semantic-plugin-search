@@ -32,6 +32,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from RunEvaluation import evaluateRun, judgedShare, mean, summary  # noqa: E402
 from SearchEvaluation import (  # noqa: E402
     CUTOFF_NDCG,
+    REPO_ROOT,
     SNAPSHOT_COMMIT,
     Corpus,
     EncodedVectors,
@@ -63,6 +64,19 @@ def buildVectors(candidate: dict, corpus: Corpus) -> tuple[EncodedVectors, dict]
         vectors = EncodedVectors(corpus.store.embeddings(), corpus.engine.embedQuery)
         facts = {"parameters": len(corpus.model.vocabulary()) * int(vectors.documents.shape[1]),
                  "revision": SNAPSHOT_COMMIT}
+    elif kind == "npz":
+        from SemanticPluginSearch.Data.StaticModelLoader import NpzStaticModel  # noqa: PLC0415
+        from SemanticPluginSearch.Domain.EmbeddingEngine import StaticEmbeddingEngine  # noqa: PLC0415
+        from SemanticPluginSearch.Domain.WordPieceTokenizer import WordPieceTokenizer  # noqa: PLC0415
+
+        path = REPO_ROOT / "build" / "vocabulary-models" / f"{candidate['id']}.npz"
+        model = NpzStaticModel.load(path)
+        engine = StaticEmbeddingEngine(WordPieceTokenizer(model.vocabulary()), model)
+        vectors = EncodedVectors(np.stack([engine.embedQuery(t) for t in corpus.texts]),
+                                 engine.embedQuery)
+        built = path.with_suffix(".facts.json")
+        facts = {"parameters": len(model.vocabulary()) * model.dimension(),
+                 **(json.loads(built.read_text()) if built.is_file() else {})}
     elif kind == "model2vec":
         from model2vec import StaticModel  # noqa: PLC0415
 
@@ -89,8 +103,10 @@ def buildVectors(candidate: dict, corpus: Corpus) -> tuple[EncodedVectors, dict]
         raise SystemExit(f"unknown candidate kind {kind!r}")
     facts["documentSeconds"] = round(time.perf_counter() - started, 1)
     facts["dimensions"] = int(vectors.documents.shape[1])
-    if kind != "shipped":
+    if kind not in ("shipped", "npz"):
         facts["revision"] = resolvedRevision(candidate["model"])
+    elif kind == "npz":
+        facts["revision"] = resolvedRevision(candidate["teacher"])
     return vectors, facts
 
 

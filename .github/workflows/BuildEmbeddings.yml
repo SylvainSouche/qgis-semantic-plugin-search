@@ -60,7 +60,7 @@ jobs:
             exit 0
           fi
           # minishlab/potion-base-8M: MIT licensed, distilled from the
-          # Apache-2.0 all-MiniLM-L6-v2. Revision and checksum are pinned.
+          # MIT BAAI/bge-base-en-v1.5. Revision and checksum are pinned.
           REV=bf8b056651a2c21b8d2565580b8569da283cab23
           mkdir -p build/model
           curl -fL --retry 3 -o build/model/model.safetensors \
@@ -72,7 +72,7 @@ jobs:
             --model-dir build/model \
             --model-id static-potion-base-8M \
             --source-model "minishlab/potion-base-8M" \
-            --license-note "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed" \
+            --license-note "MIT (potion-base-8M), distilled from BAAI/bge-base-en-v1.5 (MIT); commercial use allowed" \
             --dtype int8 \
             --output build/EmbeddingModel.npz
 

@@ -293,7 +293,7 @@ precision@10 0.633, close to BM25 alone.
 | ja | 0.021–0.158 | 4 % | 96 % | 47 % | 2.22 |
 | ru | 0.002–0.134 | 0 % | 100 % | 0 % | 5.94 |
 
-The vocabulary is the English BERT WordPiece of all-MiniLM-L6-v2, and it
+The vocabulary is the English uncased BERT WordPiece (29,528 tokens), and it
 explains the three regimes:
 
 - **Latin script European languages** are never unknown but are cut into
@@ -345,6 +345,8 @@ and judgments.
 | static, English | potion-base-8M (shipped), potion-base-32M, potion-retrieval-32M, static-retrieval-mrl-en-v1 | same engine as today: a larger table or a retrieval-tuned one |
 | static, multilingual | potion-multilingual-128M, static-similarity-mrl-multilingual-v1 | the cross-language failure; still numpy only, but a larger download and possibly another tokenizer |
 | transformer (ceiling) | all-MiniLM-L6-v2, paraphrase-multilingual-MiniLM-L12-v2, multilingual-e5-small, bge-small-en-v1.5 | what a neural model would gain; not shippable under `con-light-engine` |
+| static, GIS vocabulary | distill-bge-base (control), distill-bge-base-gis, potion-base-8M-gis | GIS words as whole tokens instead of pieces (con + ##tour, lid + ##ar); see below |
+| transformer (teacher) | bge-base-en-v1.5 | the model potion-base-8M was distilled from |
 
 How a candidate is measured:
 
@@ -368,6 +370,29 @@ Reading the results:
 - To make a promising model's numbers exact, judge its `unjudged.json`
   pairs into `Judgments.json` and run the workflow again. The shipped
   model's own English runs stay fully judged.
+
+GIS vocabulary. The shipped model splits many GIS words into generic
+pieces: *contour* becomes con + tour, *lidar* lid + ar, *hillshade*
+hills + had + e. Even *qgis* and *plugin* are split.
+`evaluation/GisVocabulary.tsv` lists 2,466 such words, of which 1,477
+appear in plugin texts. They are taken from the English terms of the
+gis-glossary project (`evaluation/BuildGisVocabulary.py`; sources and terms
+of reuse in `GisVocabulary.ATTRIBUTION.md`). Two ways of adding them are
+compared, built on GitHub by `evaluation/BuildVocabularyModels.py`:
+
+- **distill-bge-base-gis**: a fresh model2vec distillation of
+  bge-base-en-v1.5 with the words as whole tokens.
+  - Its control, **distill-bge-base**, is the same distillation without
+    them.
+  - Both lack the further training (Tokenlearn) that made potion. The
+    control separates that loss from the vocabulary's gain.
+- **potion-base-8M-gis**: potion unchanged, plus one row per word.
+  - Each row is the teacher's vector for the word, carried into potion's
+    space by a linear map fitted on the tokens both vocabularies share.
+  - It is given potion's median token length.
+
+Both run through the plugin's own tokenizer and engine. Any of them could
+ship as an ordinary model file, readable by released plugin versions too.
 
 Running it:
 

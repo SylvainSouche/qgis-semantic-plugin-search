@@ -1,8 +1,14 @@
 {
   "ai-model-choice": {
-    "active": true,
+    "active": false,
     "id": "0f87-6ae3-6996-ef8b",
-    "status": "accepted",
+    "status": "superseded",
+    "type": "ai"
+  },
+  "ai-model-choice-bge": {
+    "active": true,
+    "id": "0f87-6af5-cc6e-2909",
+    "status": "proposed",
     "type": "ai"
   },
   "ai-release-index": {
@@ -269,6 +275,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-gis-vocabulary-benchmark": {
+    "active": true,
+    "id": "0f87-6af5-cc6e-c44f",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-github-pipeline": {
     "active": true,
     "id": "0f87-6ae3-6955-80be",
@@ -356,6 +368,12 @@
   "dec-plugin-license-mit": {
     "active": true,
     "id": "0f87-6ae3-7f88-5bb3",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-potion-teacher-correction": {
+    "active": true,
+    "id": "0f87-6af5-cc6e-a74d",
     "status": "recorded",
     "type": "dec"
   },

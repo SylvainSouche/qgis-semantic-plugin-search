@@ -1,0 +1,2467 @@
+word	sources	plugin_docs	pieces_today
+qgis	qgis-gui,qgis-manual	3690	q ##gis
+plugin	qgis-gui,qgis-manual	3663	plug ##in
+plugins	qgis-gui,qgis-manual	1835	plug ##ins
+github	qgis-gui	1029	gi ##th ##ub
+raster	iate,iso-mlgt,qgis-gui,qgis-manual	1006	ras ##ter
+toolbar	qgis-gui,qgis-manual	821	tool ##bar
+polygon	iso-mlgt,qgis-gui,qgis-manual	767	poly ##gon
+workflow	iso-mlgt,qgis-manual	509	work ##flow
+dialog	qgis-gui,qgis-manual	496	dial ##og
+geopackage	qgis-gui,qgis-manual	462	geo ##pack ##age
+polygons	qgis-gui,qgis-manual	451	poly ##gon ##s
+dependencies	qgis-gui,qgis-manual	444	depend ##encies
+macos	qgis-gui	442	mac ##os
+toolbox	qgis-gui,qgis-manual	392	tool ##box
+shapefile	qgis-gui,qgis-manual	367	shape ##fi ##le
+datasets	qgis-gui,qgis-manual	365	data ##set ##s
+workflows	qgis-manual	341	work ##flow ##s
+epsg	qgis-gui	332	eps ##g
+gdal	qgis-gui,qgis-manual	329	g ##dal
+rasters	qgis-gui,qgis-manual	297	ras ##ters
+visualization	qgis-gui	286	visual ##ization
+geotiff	qgis-gui	283	geo ##ti ##ff
+dataset	iso-mlgt,qgis-gui,qgis-manual	277	data ##set
+json	qgis-gui,qgis-manual	272	j ##son
+optionally	qgis-gui	269	optional ##ly
+geospatial	iate,qgis-gui	262	geo ##sp ##ati ##al
+pyqgis	qgis-gui	260	p ##y ##q ##gis
+geometries	iso-mlgt,qgis-gui,qgis-manual	255	geo ##met ##ries
+geojson	qgis-gui,qgis-manual	252	geo ##js ##on
+browse	qgis-gui	240	brows ##e
+numpy	qgis-gui	234	nu ##mp ##y
+calculates	qgis-gui	229	calculate ##s
+configure	qgis-gui,qgis-manual	217	con ##fi ##gur ##e
+gpkg	qgis-gui	207	gp ##k ##g
+docs	qgis-gui	206	doc ##s
+symbology	qgis-gui,qgis-manual	199	symbol ##ogy
+openstreetmap	qgis-gui,qgis-manual	197	opens ##tree ##tma ##p
+changelog	qgis-gui	191	change ##log
+compile	qgis-gui	163	com ##pile
+customize	qgis-gui,qgis-manual	163	custom ##ize
+postgis	qgis-gui	161	post ##gis
+ctrl	qgis-gui	157	ct ##rl
+downloading	qgis-gui,qgis-manual	147	download ##ing
+upload	qgis-gui,qgis-manual	147	up ##load
+toggle	qgis-gui	144	to ##ggle
+delete	qgis-gui,qgis-manual	142	del ##ete
+offline	qgis-gui,qgis-manual	140	off ##line
+calculator	qgis-gui,qgis-manual	134	cal ##cula ##tor
+computes	qgis-gui	134	compute ##s
+editable	qgis-gui	132	edit ##able
+detects	qgis-gui	130	detect ##s
+cookbook	qgis-gui	129	cook ##book
+installer	qgis-gui	128	install ##er
+landsat	qgis-gui	128	lands ##at
+wgs84	qgis-gui	124	w ##gs ##8 ##4
+bounding	iate,qgis-gui,qgis-manual	122	bound ##ing
+cartography	iate,qgis-gui,qgis-manual	121	cart ##ography
+widget	qgis-gui,qgis-manual	120	wi ##dget
+layouts	qgis-gui,qgis-manual	119	layout ##s
+basemap	qgis-gui	118	base ##ma ##p
+cadastral	iate,qgis-gui	118	cad ##ast ##ral
+grids	qgis-gui,qgis-manual	118	grid ##s
+numeric	qgis-gui	117	nu ##meric
+georeferenced	iate,qgis-gui	115	geo ##re ##ference ##d
+homepage	qgis-gui	115	home ##page
+pyqt	qgis-gui	115	p ##y ##q ##t
+rectangle	qgis-gui	115	rec ##tangle
+ndvi	qgis-gui	114	n ##d ##vi
+esri	qgis-gui,qgis-manual	113	es ##ri
+optimized	qgis-gui	113	opt ##imi ##zed
+exporting	qgis-gui,qgis-manual	112	export ##ing
+checkbox	qgis-gui	110	check ##box
+digitizing	qgis-gui,qgis-manual	110	digit ##izing
+fallback	qgis-gui	110	fall ##back
+metrics	qgis-gui,qgis-manual	107	metric ##s
+arcgis	qgis-gui,qgis-manual	105	arc ##gis
+tabs	qgis-gui,qgis-manual	104	tab ##s
+cadastre	iate,qgis-gui	102	cad ##ast ##re
+overlay	qgis-gui,qgis-manual	101	over ##lay
+queries	qgis-gui,qgis-manual	98	que ##ries
+refresh	qgis-gui	98	ref ##resh
+shapefiles	qgis-gui	97	shape ##fi ##les
+installs	qgis-gui	95	install ##s
+folders	qgis-gui	94	folder ##s
+nodata	qgis-gui,qgis-manual	92	nod ##ata
+copernicus	iate	91	cope ##rn ##icus
+downloader	qgis-gui	91	download ##er
+reload	qgis-gui	91	re ##load
+reprojection	qgis-gui	91	rep ##ro ##ject ##ion
+edits	qgis-gui	90	edit ##s
+postgresql	qgis-gui,qgis-manual	90	post ##gre ##s ##q ##l
+runtime	qgis-gui	90	run ##time
+defaults	qgis-gui	89	default ##s
+presets	qgis-gui	89	pre ##set ##s
+interpolation	iate,qgis-gui,qgis-manual	88	inter ##pol ##ation
+schema	iso-mlgt,qgis-gui	88	sc ##hema
+validate	qgis-gui,qgis-manual	88	valid ##ate
+contour	iate,qgis-gui,qgis-manual	87	con ##tour
+azimuth	iso-mlgt,qgis-gui	86	az ##im ##uth
+seamless	iso-mlgt	83	seam ##less
+fixes	qgis-gui,qgis-manual	82	fix ##es
+cartographic	iate,qgis-gui	80	cart ##ographic
+lidar	iate,iso-mlgt,qgis-gui	80	lid ##ar
+clipping	qgis-gui	77	clip ##ping
+cursor	qgis-gui	77	cu ##rso ##r
+rename	qgis-gui,qgis-manual	77	ren ##ame
+validated	qgis-gui	77	valid ##ated
+init	qgis-gui	76	in ##it
+clipboard	qgis-gui,qgis-manual	75	clip ##board
+login	qgis-gui	75	log ##in
+polyline	qgis-gui	75	poly ##line
+username	qgis-gui	75	user ##name
+segmentation	qgis-gui	74	segment ##ation
+basemaps	qgis-gui	73	base ##ma ##ps
+urls	qgis-gui	71	ur ##ls
+xlsx	qgis-gui	71	xl ##s ##x
+importing	qgis-gui,qgis-manual	70	import ##ing
+wmts	qgis-gui,qgis-manual	70	w ##mt ##s
+apis	qgis-gui	69	api ##s
+attribution	qgis-gui	68	at ##tri ##bution
+geocoding	iate,iso-mlgt,qgis-gui	68	geo ##co ##ding
+converter	iso-mlgt,qgis-gui	67	convert ##er
+workspace	qgis-gui,qgis-manual	67	works ##pace
+templates	qgis-gui	66	template ##s
+config	qgis-gui,qgis-manual	65	con ##fi ##g
+stac	qgis-gui,qgis-manual	65	st ##ac
+contours	qgis-gui,qgis-manual	64	con ##tour ##s
+menus	qgis-gui,qgis-manual	64	menu ##s
+backend	qgis-gui	63	back ##end
+dialogs	qgis-gui	63	dial ##og ##s
+shortcuts	qgis-gui,qgis-manual	63	short ##cut ##s
+spacing	qgis-gui,qgis-manual	63	spa ##cing
+centroid	qgis-gui	62	centro ##id
+endpoint	qgis-gui	62	end ##point
+geoprocessing	qgis-gui,qgis-manual	62	geo ##pro ##ces ##sing
+georeferencing	iate,iso-mlgt,qgis-gui,qgis-manual	62	geo ##re ##fer ##en ##cing
+identifier	iso-mlgt,qgis-gui	62	id ##ent ##ifier
+predefined	qgis-gui	61	pre ##de ##fine ##d
+interactively	qgis-gui,qgis-manual	60	interactive ##ly
+readable	qgis-gui	60	read ##able
+tiff	qgis-gui	60	ti ##ff
+dynamically	qgis-gui	59	dynamic ##ally
+renderer	qgis-gui,qgis-manual	59	render ##er
+simplify	qgis-gui,qgis-manual	59	sim ##plify
+sqlite	qgis-gui	59	sql ##ite
+updating	iate,qgis-gui,qgis-manual	59	up ##dating
+visualizing	qgis-manual	59	visual ##izing
+reproject	qgis-gui,qgis-manual	58	rep ##ro ##ject
+ubuntu	qgis-gui	58	u ##bu ##nt ##u
+dist	qgis-gui	57	di ##st
+endpoints	qgis-gui	57	end ##points
+mercator	qgis-gui	56	mer ##cat ##or
+opacity	qgis-gui	56	op ##ac ##ity
+preset	qgis-gui	56	pre ##set
+slider	qgis-gui	56	slide ##r
+unzip	qgis-gui	56	un ##zi ##p
+functionalities	qgis-manual	55	functional ##ities
+disable	qgis-gui	53	di ##sable
+linestring	qgis-gui	53	lines ##tri ##ng
+repositories	qgis-gui	53	rep ##osi ##tori ##es
+reuse	qgis-gui	53	re ##use
+usgs	qgis-gui	53	us ##gs
+blob	qgis-gui	52	b ##lo ##b
+extracting	qgis-gui	52	extract ##ing
+duplicates	qgis-gui,qgis-manual	51	duplicate ##s
+extents	iso-mlgt,qgis-gui,qgis-manual	51	extent ##s
+filename	qgis-gui	51	file ##name
+histogram	qgis-gui,qgis-manual	51	his ##to ##gram
+locale	iso-mlgt,qgis-gui	51	local ##e
+shortcut	qgis-gui,qgis-manual	51	short ##cut
+admin	qgis-gui	50	ad ##min
+hillshade	qgis-gui,qgis-manual	50	hills ##had ##e
+normalized	qgis-gui	50	normal ##ized
+overlaps	qgis-gui	50	overlap ##s
+cached	qgis-gui	49	cache ##d
+calibration	iso-mlgt	49	cal ##ib ##ration
+multipart	qgis-gui,qgis-manual	49	multi ##par ##t
+clustering	qgis-gui,qgis-manual	48	cluster ##ing
+customization	qgis-gui,qgis-manual	48	custom ##ization
+fetched	qgis-gui	48	fetch ##ed
+hover	qgis-gui	48	hove ##r
+reflectance	qgis-gui	48	reflect ##ance
+overwrite	qgis-gui,qgis-manual	47	over ##write
+resampling	qgis-gui,qgis-manual	47	res ##amp ##ling
+widgets	qgis-gui,qgis-manual	47	wi ##dgets
+buffers	qgis-gui,qgis-manual	46	buffer ##s
+comma	qgis-gui	46	com ##ma
+simplifies	qgis-gui	46	sim ##pl ##ifies
+zonal	iso-mlgt,qgis-gui,qgis-manual	46	z ##onal
+delineation	iate	45	del ##ine ##ation
+exporter	qgis-gui	45	export ##er
+geodata	iate,iso-mlgt	45	geo ##da ##ta
+popup	qgis-gui	45	pop ##up
+orthophoto	iate	44	or ##th ##op ##hot ##o
+masking	qgis-gui	43	mask ##ing
+multispectral	qgis-gui	42	multi ##sp ##ect ##ral
+nested	qgis-gui	42	nest ##ed
+picker	qgis-gui	42	pick ##er
+streamlines	qgis-gui	42	stream ##lines
+weighting	qgis-gui	42	weight ##ing
+digitize	qgis-gui,qgis-manual	41	digit ##ize
+reprojected	qgis-gui	41	rep ##ro ##jected
+validates	qgis-gui	41	valid ##ates
+enum	qgis-gui	40	en ##um
+jpeg	qgis-gui	40	jp ##eg
+override	qgis-gui,qgis-manual	40	over ##ride
+rasterio	qgis-gui	40	ras ##ter ##io
+tabular	qgis-gui	40	tab ##ular
+analyzes	qgis-gui	39	analyze ##s
+gnss	qgis-gui,qgis-manual	39	g ##ns ##s
+overlays	qgis-gui	39	over ##lay ##s
+renders	qgis-gui	39	render ##s
+autocad	qgis-gui	38	auto ##ca ##d
+datum	iate,iso-mlgt,qgis-gui,qgis-manual	38	dat ##um
+debug	qgis-gui	38	de ##bu ##g
+interpolated	qgis-gui	38	inter ##pol ##ated
+spatialite	qgis-gui,qgis-manual	38	spatial ##ite
+timestamp	iso-mlgt,qgis-gui	38	times ##tam ##p
+modis	qgis-gui	37	mod ##is
+parsing	qgis-gui	37	par ##sing
+topo	qgis-gui	37	top ##o
+checker	qgis-gui,qgis-manual	36	check ##er
+deprecated	iso-mlgt,qgis-gui	36	de ##pre ##cated
+executable	iso-mlgt,qgis-gui	36	ex ##ec ##utable
+locator	iso-mlgt,qgis-gui,qgis-manual	36	lo ##cat ##or
+nominatim	qgis-gui,qgis-manual	36	no ##mina ##ti ##m
+spatially	qgis-gui	36	spatial ##ly
+spreadsheet	iate,qgis-gui,qgis-manual	36	spreads ##hee ##t
+summaries	qgis-gui	36	sum ##mar ##ies
+uploading	qgis-gui	36	up ##loading
+bbox	qgis-gui	35	bb ##ox
+formatting	qgis-gui,qgis-manual	35	format ##ting
+gaussian	qgis-gui,qgis-manual	35	ga ##uss ##ian
+classifies	qgis-gui	34	class ##ifies
+debugging	qgis-gui,qgis-manual	34	de ##bu ##gging
+modeler	qgis-gui,qgis-manual	34	model ##er
+modulo	qgis-gui	34	mod ##ulo
+multipolygon	qgis-gui	34	multi ##pol ##y ##gon
+overpass	qgis-gui	34	over ##pass
+synchronization	qgis-gui	34	sync ##hr ##oni ##zation
+browsing	qgis-manual	33	brows ##ing
+lookup	qgis-gui	33	look ##up
+simplification	qgis-gui	33	sim ##pl ##ification
+bindings	qgis-manual	32	binding ##s
+installable	qgis-gui	32	install ##able
+annotation	iate,iso-mlgt,qgis-gui,qgis-manual	31	ann ##ota ##tion
+caching	qgis-gui	31	ca ##ching
+catalogs	qgis-gui,qgis-manual	31	catalog ##s
+centroids	qgis-gui,qgis-manual	31	centro ##ids
+easting	iso-mlgt,qgis-gui	31	east ##ing
+ellipsoid	iate,iso-mlgt,qgis-gui	31	el ##lip ##so ##id
+geocode	qgis-gui	31	geo ##code
+headers	qgis-gui	31	header ##s
+overwritten	qgis-gui	31	over ##written
+schemas	qgis-gui	31	sc ##hema ##s
+unchecked	qgis-gui	31	un ##che ##cked
+append	qgis-gui	30	app ##end
+ascii	qgis-gui	30	as ##ci ##i
+fonts	qgis-gui,qgis-manual	30	font ##s
+helper	qgis-gui	30	help ##er
+merges	qgis-gui	30	merge ##s
+mosaics	qgis-gui	30	mosaic ##s
+planar	iso-mlgt,qgis-gui	30	plan ##ar
+srtm	qgis-gui	30	sr ##tm
+toolbars	qgis-gui,qgis-manual	30	tool ##bar ##s
+widths	qgis-gui,qgis-manual	30	width ##s
+directories	qgis-gui	29	director ##ies
+finder	iate,qgis-gui	29	find ##er
+geodatabase	qgis-gui	29	geo ##da ##ta ##base
+hotspot	qgis-gui	29	hot ##sp ##ot
+multiband	qgis-gui,qgis-manual	29	multi ##band
+northing	iso-mlgt,qgis-gui	29	north ##ing
+outliers	qgis-gui	29	out ##lier ##s
+parser	qgis-gui	29	par ##ser
+spline	qgis-gui	29	sp ##line
+toolset	qgis-gui	29	tools ##et
+tooltips	qgis-gui	29	tool ##tip ##s
+uncheck	qgis-gui	29	un ##che ##ck
+zoomed	qgis-gui	29	zoom ##ed
+binaries	qgis-gui,qgis-manual	28	bin ##aries
+delimited	iate,qgis-gui,qgis-manual	28	del ##imi ##ted
+encrypted	qgis-gui	28	en ##cr ##yp ##ted
+geocoder	qgis-gui,qgis-manual	28	geo ##code ##r
+georeference	qgis-gui	28	geo ##re ##ference
+heatmap	qgis-gui,qgis-manual	28	heat ##ma ##p
+identifiers	qgis-gui	28	id ##ent ##ifiers
+mapbox	qgis-gui	28	map ##box
+mapper	qgis-gui	28	map ##per
+provenance	iso-mlgt	28	proven ##ance
+unsupported	qgis-gui	28	un ##su ##pp ##orted
+waypoints	qgis-gui	28	way ##points
+deleting	qgis-gui,qgis-manual	27	del ##eti ##ng
+evaluates	qgis-gui	27	evaluate ##s
+executes	qgis-gui	27	execute ##s
+fetching	qgis-gui,qgis-manual	27	fetch ##ing
+geodesy	iate	27	geo ##des ##y
+geophysics	iate	27	geo ##physics
+isochrone	iate	27	iso ##ch ##rone
+separator	qgis-gui	27	sep ##arat ##or
+sidecar	qgis-gui	27	side ##car
+tokens	qgis-gui	27	token ##s
+annotations	qgis-gui,qgis-manual	26	ann ##ota ##tions
+auth	qgis-gui,qgis-manual	26	au ##th
+categorical	qgis-gui	26	cat ##egorical
+keyword	qgis-gui	26	key ##word
+keywords	qgis-gui	26	key ##words
+overrides	qgis-gui	26	over ##ride ##s
+polylines	qgis-gui	26	poly ##lines
+proj	qgis-gui	26	pro ##j
+resize	qgis-gui,qgis-manual	26	res ##ize
+attachments	qgis-gui	25	attachment ##s
+bilinear	qgis-gui	25	bi ##line ##ar
+formatted	qgis-gui	25	format ##ted
+geodetic	iate,iso-mlgt,qgis-gui	25	geo ##de ##tic
+gridded	iso-mlgt,qgis-gui	25	grid ##ded
+indexes	iate,qgis-gui,qgis-manual	25	index ##es
+leaflet	qgis-gui	25	leaf ##let
+redo	qgis-gui,qgis-manual	25	red ##o
+refinement	iso-mlgt,qgis-gui	25	ref ##ine ##ment
+reprojects	qgis-gui	25	rep ##ro ##ject ##s
+roughness	qgis-gui,qgis-manual	25	rough ##ness
+shading	qgis-gui,qgis-manual	25	sha ##ding
+tooltip	qgis-gui	25	tool ##tip
+checkboxes	qgis-gui	24	check ##box ##es
+datetime	qgis-gui	24	date ##time
+digitized	qgis-gui	24	digit ##ized
+ellipsoidal	iate,iso-mlgt,qgis-gui	24	el ##lip ##so ##idal
+offsets	qgis-gui	24	offset ##s
+parse	qgis-gui	24	par ##se
+permissions	qgis-gui	24	permission ##s
+populate	qgis-gui	24	pop ##ulate
+reopen	qgis-gui	24	re ##open
+reorder	qgis-gui	24	re ##ord ##er
+validating	qgis-gui	24	valid ##ating
+aggregated	qgis-gui	23	aggregate ##d
+geodesic	iate,iso-mlgt,qgis-gui,qgis-manual	23	geo ##des ##ic
+geophysical	iate	23	geo ##physical
+rectangles	qgis-gui,qgis-manual	23	rec ##tangle ##s
+uninstall	qgis-gui	23	un ##ins ##tal ##l
+zooming	qgis-gui	23	zoom ##ing
+adjusts	qgis-gui	22	adjust ##s
+analysing	qgis-gui,qgis-manual	22	anal ##ys ##ing
+boolean	qgis-gui,qgis-manual	22	boo ##lean
+calibrated	iso-mlgt	22	cal ##ib ##rated
+classifier	iso-mlgt	22	class ##ifier
+exif	qgis-gui	22	ex ##if
+georeferencer	qgis-gui,qgis-manual	22	geo ##re ##ference ##r
+geoserver	qgis-gui	22	geo ##ser ##ver
+multiples	qgis-gui	22	multiple ##s
+uploads	qgis-gui	22	up ##load ##s
+versioning	qgis-gui	22	version ##ing
+accessing	qgis-gui	21	access ##ing
+buffered	qgis-gui	21	buffer ##ed
+photogrammetry	iate	21	photo ##gram ##metry
+postgres	qgis-gui	21	post ##gre ##s
+querying	qgis-gui	21	query ##ing
+timeout	qgis-gui	21	time ##out
+aliases	qgis-gui	20	alias ##es
+compress	qgis-gui	20	com ##press
+credential	qgis-gui	20	cr ##ede ##ntial
+crss	qgis-gui	20	cr ##ss
+exaggeration	qgis-gui	20	ex ##agger ##ation
+flatgeobuf	qgis-gui	20	flat ##ge ##ob ##uf
+geos	qgis-gui	20	geo ##s
+insensitive	qgis-gui	20	ins ##ens ##itive
+javascript	qgis-gui	20	java ##script
+multipoint	qgis-gui	20	multi ##point
+namespace	iso-mlgt,qgis-gui	20	names ##pace
+outlier	qgis-gui	20	out ##lier
+percentages	qgis-gui	20	percentage ##s
+resampled	qgis-gui	20	res ##amp ##led
+specifying	qgis-gui	20	specify ##ing
+swir	qgis-gui	20	sw ##ir
+viewport	qgis-gui	20	view ##port
+waypoint	iso-mlgt,qgis-gui	20	way ##point
+contextual	qgis-gui,qgis-manual	19	context ##ual
+declination	qgis-gui	19	dec ##lina ##tion
+discard	qgis-gui	19	disc ##ard
+openlayers	qgis-gui	19	open ##layer ##s
+pasted	qgis-gui	19	paste ##d
+percentile	qgis-gui,qgis-manual	19	percent ##ile
+retrieves	qgis-gui	19	retrieve ##s
+scatter	qgis-gui	19	sc ##atter
+searchable	qgis-gui	19	search ##able
+smoother	qgis-gui	19	smooth ##er
+spatiotemporal	iso-mlgt,qgis-gui	19	spat ##iot ##em ##por ##al
+thumbnail	qgis-gui	19	thumb ##nail
+viewshed	qgis-gui	19	views ##hed
+affine	iso-mlgt,qgis-gui,qgis-manual	18	af ##fine
+aggregates	qgis-gui,qgis-manual	18	aggregate ##s
+collapsible	qgis-gui	18	col ##la ##ps ##ible
+dangles	qgis-gui	18	dan ##gles
+float32	qgis-gui	18	float ##32
+freehand	qgis-gui	18	free ##hand
+interpolate	qgis-gui,qgis-manual	18	inter ##pol ##ate
+iterations	qgis-gui	18	iteration ##s
+multilinestring	qgis-gui	18	multi ##lines ##tri ##ng
+parquet	qgis-gui	18	par ##quet
+pasting	qgis-gui,qgis-manual	18	past ##ing
+sqrt	qgis-gui	18	sq ##rt
+synchronize	qgis-gui	18	sync ##hr ##oni ##ze
+toggles	qgis-gui	18	to ##ggles
+toggling	qgis-gui	18	to ##gg ##ling
+voronoi	qgis-gui,qgis-manual	18	vo ##ron ##oi
+bookmarks	qgis-gui,qgis-manual	17	book ##marks
+buffering	qgis-gui	17	buffer ##ing
+cancels	qgis-gui	17	cancel ##s
+combobox	qgis-gui	17	combo ##box
+configuring	qgis-manual	17	con ##fi ##gur ##ing
+deactivate	qgis-gui	17	dea ##ct ##ivate
+deletes	qgis-gui	17	del ##ete ##s
+duplicated	qgis-gui,qgis-manual	17	duplicate ##d
+ellipse	qgis-gui	17	el ##lip ##se
+generalization	iso-mlgt,qgis-gui	17	general ##ization
+geom	qgis-gui	17	geo ##m
+hexagon	qgis-gui	17	he ##xa ##gon
+incremental	qgis-gui	17	inc ##rem ##ental
+initialize	qgis-gui	17	initial ##ize
+oauth2	qgis-gui,qgis-manual	17	o ##au ##th ##2
+odbl	qgis-gui	17	o ##db ##l
+retry	qgis-gui	17	re ##try
+solver	qgis-gui	17	solve ##r
+yyyy	qgis-gui	17	y ##y ##y ##y
+deletion	qgis-gui	16	del ##eti ##on
+exec	qgis-gui	16	ex ##ec
+gcps	qgis-gui,qgis-manual	16	g ##cp ##s
+makevalid	qgis-gui	16	make ##val ##id
+meshes	qgis-gui,qgis-manual	16	mesh ##es
+modifier	qgis-gui,qgis-manual	16	mod ##ifier
+noaa	qgis-gui	16	no ##aa
+radiometric	iso-mlgt	16	radio ##metric
+recursive	qgis-gui	16	rec ##urs ##ive
+refine	qgis-gui	16	ref ##ine
+reinstall	qgis-gui	16	reins ##tal ##l
+reopening	qgis-gui	16	re ##open ##ing
+stacking	qgis-gui	16	stack ##ing
+statistic	qgis-gui	16	stat ##istic
+utils	qgis-gui	16	ut ##ils
+classfactory	qgis-gui	15	class ##factory
+concave	qgis-gui,qgis-manual	15	con ##cave
+cyan	qgis-gui	15	cy ##an
+datasource	qgis-gui	15	data ##so ##ur ##ce
+delimiter	qgis-gui	15	del ##imi ##ter
+deselect	qgis-gui	15	des ##ele ##ct
+embedding	qgis-gui,qgis-manual	15	em ##bed ##ding
+indexing	qgis-gui	15	index ##ing
+mapinfo	qgis-gui	15	map ##in ##fo
+modifies	qgis-gui	15	mod ##ifies
+overwriting	qgis-gui	15	over ##writing
+pdal	qgis-gui	15	pd ##al
+peucker	qgis-gui	15	pe ##uck ##er
+polygonize	qgis-gui,qgis-manual	15	poly ##gon ##ize
+preferably	qgis-gui	15	prefer ##ably
+reloading	qgis-gui	15	re ##loading
+resample	qgis-gui	15	res ##amp ##le
+semicolon	qgis-gui	15	semi ##col ##on
+uuid	qgis-gui	15	u ##uid
+wildfire	iate	15	wild ##fire
+copc	qgis-gui,qgis-manual	14	cop ##c
+geotagged	qgis-gui,qgis-manual	14	geo ##tag ##ged
+grayscale	qgis-gui	14	gray ##sca ##le
+hydrologic	qgis-gui	14	hydro ##logic
+linestrings	qgis-gui	14	lines ##tri ##ng ##s
+locates	qgis-gui	14	locate ##s
+mbtiles	qgis-gui,qgis-manual	14	mb ##tile ##s
+meteorology	qgis-gui	14	meteor ##ology
+parametric	iso-mlgt	14	para ##metric
+parsed	qgis-gui	14	par ##sed
+plotly	qgis-gui	14	plot ##ly
+residuals	qgis-gui	14	residual ##s
+scripting	qgis-gui	14	script ##ing
+srid	qgis-gui	14	sri ##d
+stratified	qgis-gui	14	st ##rat ##ified
+timestamps	qgis-gui	14	times ##tam ##ps
+watersheds	qgis-gui	14	watershed ##s
+aligns	qgis-gui	13	align ##s
+alphanumeric	qgis-gui	13	alpha ##num ##eric
+bins	qgis-gui	13	bin ##s
+decode	qgis-gui	13	deco ##de
+embed	qgis-gui	13	em ##bed
+embeds	qgis-gui	13	em ##bed ##s
+getcapabilities	qgis-gui	13	get ##cap ##abi ##lit ##ies
+gradients	qgis-gui	13	gradient ##s
+hydrographic	iso-mlgt,qgis-gui	13	hydro ##graphic
+inserts	qgis-gui	13	insert ##s
+invert	qgis-gui	13	in ##vert
+lossless	qgis-gui	13	loss ##less
+ortho	iate	13	or ##th ##o
+positional	iso-mlgt	13	position ##al
+pseudocolor	qgis-gui,qgis-manual	13	pseudo ##color
+queried	qgis-gui	13	que ##ried
+reclassification	qgis-gui	13	rec ##lass ##ification
+refreshed	qgis-gui	13	ref ##resh ##ed
+rollback	qgis-gui	13	roll ##back
+segmented	qgis-gui	13	segment ##ed
+subsets	qgis-gui,qgis-manual	13	subset ##s
+versioned	qgis-gui	13	version ##ed
+assigning	qgis-gui	12	assign ##ing
+constructs	qgis-gui	12	construct ##s
+decimals	qgis-gui	12	decimal ##s
+delaunay	iso-mlgt,qgis-gui,qgis-manual	12	del ##au ##nay
+dijkstra	iso-mlgt	12	di ##jk ##stra
+elev	qgis-gui	12	el ##ev
+ellipses	qgis-manual	12	el ##lip ##ses
+evapotranspiration	qgis-gui	12	eva ##pot ##ran ##sp ##ira ##tion
+extensible	qgis-gui	12	ex ##tens ##ible
+footer	qgis-gui	12	foot ##er
+geoid	iate,iso-mlgt,qgis-gui	12	geo ##id
+interpolates	qgis-gui	12	inter ##pol ##ates
+iterative	qgis-gui	12	it ##erative
+multiplier	qgis-gui	12	multi ##pl ##ier
+overviews	qgis-gui,qgis-manual	12	overview ##s
+prerequisite	qgis-gui	12	pre ##re ##quisite
+recursively	qgis-gui	12	rec ##urs ##ively
+reshape	qgis-gui,qgis-manual	12	res ##ha ##pe
+retrieving	qgis-gui	12	re ##tri ##eving
+simulating	qgis-gui	12	sim ##ulating
+ticks	qgis-gui	12	tick ##s
+trademarks	iate	12	trademark ##s
+vectorized	qgis-gui	12	vector ##ized
+appended	qgis-gui	11	app ##ended
+celsius	qgis-gui	11	ce ##ls ##ius
+centrality	qgis-gui	11	central ##ity
+commas	qgis-gui	11	com ##mas
+correctness	iso-mlgt	11	correct ##ness
+dbscan	qgis-gui,qgis-manual	11	db ##scan
+densification	qgis-gui	11	den ##si ##fication
+disjoint	qgis-gui	11	di ##s ##jo ##int
+eval	qgis-gui	11	eva ##l
+fillet	qgis-gui	11	fill ##et
+geocoded	qgis-gui	11	geo ##code ##d
+geomatics	iate,qgis-gui	11	geo ##matic ##s
+helmert	qgis-gui	11	helm ##ert
+kmeans	qgis-gui	11	km ##ean ##s
+mapserver	qgis-gui	11	maps ##er ##ver
+multiply	qgis-gui	11	multi ##ply
+normalize	qgis-gui	11	normal ##ize
+reloaded	qgis-gui	11	re ##loaded
+revert	qgis-gui,qgis-manual	11	rev ##ert
+simplifying	qgis-gui	11	sim ##plify ##ing
+spatio	iso-mlgt,qgis-gui	11	spat ##io
+submitting	iso-mlgt	11	submit ##ting
+webpage	qgis-gui	11	web ##page
+alkis	qgis-gui	10	al ##kis
+animations	qgis-gui	10	animation ##s
+anisotropy	qgis-gui	10	an ##iso ##tro ##py
+appends	qgis-gui	10	app ##end ##s
+bookmark	qgis-gui,qgis-manual	10	book ##mark
+calc	qgis-gui	10	cal ##c
+cartesian	iso-mlgt,qgis-gui,qgis-manual	10	cart ##esian
+datasources	qgis-gui	10	data ##so ##ur ##ces
+deployments	qgis-gui	10	deployment ##s
+dict	qgis-gui	10	di ##ct
+frontend	qgis-gui	10	front ##end
+gauss	qgis-gui	10	ga ##uss
+initialization	qgis-gui	10	initial ##ization
+insar	iso-mlgt	10	ins ##ar
+interoperability	iate,iso-mlgt	10	inter ##oper ##ability
+intersected	qgis-gui	10	intersect ##ed
+isolines	qgis-gui	10	iso ##lines
+layername	qgis-gui	10	layer ##name
+licences	qgis-gui	10	licence ##s
+lxml	qgis-gui	10	l ##x ##ml
+mismatch	qgis-gui	10	mis ##mat ##ch
+readability	qgis-gui	10	read ##ability
+reclassify	qgis-gui,qgis-manual	10	rec ##lass ##ify
+recreate	qgis-gui	10	rec ##reate
+ruggedness	qgis-gui,qgis-manual	10	rugged ##ness
+saturation	qgis-gui	10	sat ##uration
+singleband	qgis-gui,qgis-manual	10	single ##band
+swipe	iso-mlgt	10	sw ##ipe
+toggled	qgis-gui	10	to ##ggle ##d
+topologically	qgis-gui	10	topological ##ly
+transects	qgis-gui	10	trans ##ect ##s
+unsaved	qgis-gui	10	un ##sa ##ved
+aligning	qgis-gui	9	align ##ing
+analysed	iate	9	anal ##yse ##d
+archiving	iate	9	arch ##iving
+aster	qgis-gui	9	as ##ter
+betweenness	qgis-gui	9	between ##ness
+cesium	qgis-gui	9	ce ##si ##um
+constants	qgis-gui	9	constant ##s
+coords	qgis-gui	9	co ##ord ##s
+cropping	qgis-gui	9	crop ##ping
+densified	qgis-gui	9	den ##si ##fied
+dissolves	qgis-gui	9	dissolve ##s
+equidistant	qgis-gui	9	e ##qui ##dis ##tan ##t
+fieldname	qgis-gui	9	field ##name
+flattening	iso-mlgt	9	flat ##ten ##ing
+gazetteer	iso-mlgt	9	gazette ##er
+geolocation	iate,iso-mlgt	9	geo ##lo ##cation
+geotag	qgis-gui	9	geo ##tag
+goto	qgis-gui	9	got ##o
+hypsometric	qgis-gui,qgis-manual	9	h ##yp ##some ##tric
+infiltration	qgis-gui	9	in ##filtration
+initgui	qgis-gui	9	in ##it ##gui
+iterate	qgis-gui	9	it ##erate
+linestringz	qgis-gui	9	lines ##tri ##ng ##z
+morphometric	qgis-gui	9	mor ##ph ##ometric
+multipolygons	qgis-gui	9	multi ##pol ##y ##gon ##s
+nadir	iso-mlgt,qgis-gui	9	nad ##ir
+pans	qgis-gui	9	pan ##s
+percentiles	qgis-gui	9	percent ##ile ##s
+permeability	qgis-gui	9	per ##me ##ability
+pointz	qgis-gui	9	point ##z
+pyramids	qgis-gui,qgis-manual	9	pyramid ##s
+radiance	iso-mlgt,qgis-gui	9	ra ##dian ##ce
+radii	qgis-gui	9	ra ##di ##i
+rasterization	qgis-gui	9	ras ##ter ##ization
+resizing	qgis-manual	9	res ##izing
+scalable	qgis-gui	9	scala ##ble
+simulates	qgis-gui	9	simulate ##s
+smooths	qgis-gui	9	smooth ##s
+timezone	qgis-gui	9	time ##zone
+undefined	qgis-gui	9	und ##efined
+whitespace	qgis-gui	9	whites ##pace
+anisotropic	qgis-gui	8	an ##iso ##tro ##pic
+beginners	qgis-manual	8	begin ##ners
+bezier	qgis-gui	8	be ##zier
+delimiters	qgis-gui	8	del ##imi ##ters
+deploying	qgis-manual	8	deploy ##ing
+depressions	qgis-gui	8	depression ##s
+donut	qgis-gui	8	don ##ut
+eigenvector	qgis-gui	8	e ##igen ##ve ##ctor
+extrusion	qgis-gui	8	ex ##tr ##usion
+finalize	qgis-gui	8	final ##ize
+geocodes	qgis-gui	8	geo ##codes
+geometrically	qgis-gui	8	geometric ##ally
+graticule	qgis-gui	8	gr ##atic ##ule
+logarithmic	qgis-gui	8	log ##ari ##th ##mic
+maptiler	qgis-gui,qgis-manual	8	map ##tile ##r
+multiline	qgis-gui	8	multi ##line
+overlaid	qgis-gui	8	over ##laid
+paletted	qgis-gui,qgis-manual	8	palette ##d
+panoramic	iate	8	pan ##ora ##mic
+passwords	qgis-gui	8	password ##s
+placeholder	qgis-gui	8	place ##holder
+prioritize	qgis-gui	8	prior ##iti ##ze
+quantile	qgis-gui	8	quan ##tile
+rasterize	qgis-gui,qgis-manual	8	ras ##ter ##ize
+rasterized	qgis-gui	8	ras ##ter ##ized
+resamples	qgis-gui	8	res ##amp ##les
+resets	qgis-gui	8	reset ##s
+reverses	qgis-gui	8	reverse ##s
+separators	qgis-gui	8	sep ##arat ##ors
+sliver	qgis-gui	8	sl ##iver
+stylesheet	qgis-gui	8	styles ##hee ##t
+summed	qgis-gui	8	sum ##med
+timeouts	qgis-gui	8	time ##outs
+topographical	iate	8	topographic ##al
+transect	qgis-gui,qgis-manual	8	trans ##ect
+unzipped	qgis-gui	8	un ##zi ##pped
+vectorize	qgis-gui	8	vector ##ize
+asymmetric	qgis-gui	7	as ##ym ##metric
+azimuthal	qgis-gui	7	az ##im ##uth ##al
+concentric	qgis-gui	7	con ##centric
+constructor	qgis-gui	7	construct ##or
+covariance	qgis-gui	7	co ##var ##iance
+denominator	qgis-gui	7	den ##omi ##nator
+descriptor	qgis-gui	7	des ##cript ##or
+duplicating	qgis-gui,qgis-manual	7	du ##pl ##ica ##ting
+featureserver	qgis-gui	7	features ##er ##ver
+filegdb	qgis-gui	7	file ##g ##db
+filepath	qgis-gui	7	file ##path
+filesystem	qgis-gui	7	files ##yst ##em
+fingerprint	qgis-gui	7	finger ##print
+foreground	qgis-gui	7	fore ##ground
+georeferences	qgis-gui	7	geo ##re ##ference ##s
+lanczos	qgis-gui	7	lan ##cz ##os
+leakage	qgis-gui	7	leak ##age
+minimizes	qgis-gui	7	minimize ##s
+monochrome	qgis-gui	7	mono ##chrome
+odbc	qgis-gui	7	o ##db ##c
+optimum	qgis-gui	7	opt ##imum
+photogrammetric	iate	7	photo ##gram ##metric
+placeholders	qgis-gui	7	place ##holders
+queryable	qgis-gui	7	query ##able
+redraw	qgis-gui	7	red ##ra ##w
+renames	qgis-gui	7	ren ##ame ##s
+reprojecting	qgis-gui	7	rep ##ro ##ject ##ing
+scalar	qgis-gui	7	scala ##r
+subdirectory	qgis-gui	7	sub ##di ##re ##ctor ##y
+sublayers	qgis-gui	7	sub ##layer ##s
+subtract	qgis-gui	7	sub ##tra ##ct
+toolboxes	qgis-gui	7	tool ##box ##es
+triangulation	iso-mlgt,qgis-gui,qgis-manual	7	tri ##ang ##ulation
+tweak	qgis-gui	7	t ##we ##ak
+unset	qgis-gui	7	un ##set
+writable	qgis-gui	7	writ ##able
+appending	qgis-gui	6	app ##ending
+aquifer	qgis-gui	6	a ##qui ##fer
+callout	qgis-gui	6	call ##out
+cartogram	iate	6	cart ##og ##ram
+cassini	qgis-gui	6	cass ##ini
+chamfer	qgis-gui	6	cha ##m ##fer
+coincident	qgis-gui	6	coincide ##nt
+configs	qgis-gui	6	con ##fi ##gs
+conformal	iso-mlgt,qgis-gui	6	conform ##al
+copyleft	iso-mlgt	6	copy ##le ##ft
+cors	qgis-gui	6	co ##rs
+coverages	qgis-gui	6	coverage ##s
+datums	qgis-gui	6	dat ##ums
+degenerate	qgis-gui	6	de ##gen ##erate
+deviations	qgis-gui	6	deviation ##s
+dictionaries	qgis-gui	6	di ##ction ##aries
+discarding	qgis-gui	6	disc ##arding
+distributes	qgis-gui	6	distribute ##s
+elapsed	qgis-gui	6	el ##ap ##sed
+emissivity	iso-mlgt,qgis-gui	6	emi ##ssi ##vity
+encode	qgis-gui	6	en ##code
+fishnet	qgis-gui	6	fish ##net
+flatten	qgis-gui,qgis-manual	6	flat ##ten
+fractal	qgis-gui	6	fra ##cta ##l
+gimbal	iso-mlgt	6	gi ##mba ##l
+greyscale	qgis-gui	6	grey ##sca ##le
+hydrogeological	iate	6	hydro ##ge ##ological
+increment	iate,qgis-gui	6	inc ##rem ##ent
+inset	iate,qgis-gui	6	ins ##et
+interlis	qgis-gui	6	inter ##lis
+latlon	qgis-gui	6	la ##tl ##on
+logger	qgis-gui,qgis-manual	6	log ##ger
+malformed	qgis-gui	6	mal ##formed
+mdal	qgis-gui	6	md ##al
+objectid	qgis-gui	6	object ##id
+opengl	qgis-gui	6	open ##gl
+planimetric	iate,qgis-gui	6	plan ##ime ##tric
+predicate	iso-mlgt,qgis-gui	6	pre ##dicate
+predicates	qgis-gui	6	pre ##dicate ##s
+prefixed	qgis-gui	6	prefix ##ed
+quadratic	qgis-gui	6	quad ##ratic
+randomized	qgis-gui	6	random ##ized
+recalculate	qgis-gui	6	rec ##al ##cula ##te
+recharge	qgis-gui	6	rec ##har ##ge
+redirect	qgis-gui	6	red ##ire ##ct
+redirects	qgis-gui	6	red ##ire ##cts
+redrawn	qgis-gui	6	red ##ra ##wn
+refactor	qgis-gui,qgis-manual	6	ref ##act ##or
+restricts	qgis-gui	6	restrict ##s
+rgba	qgis-gui	6	r ##gb ##a
+scopes	qgis-gui	6	scope ##s
+sinuosity	qgis-gui	6	sin ##uo ##sity
+splines	qgis-gui	6	sp ##lines
+subtraction	qgis-gui	6	sub ##tra ##ction
+summing	qgis-gui	6	sum ##ming
+swaps	qgis-gui	6	swap ##s
+swath	iso-mlgt	6	swat ##h
+tagging	qgis-gui	6	tag ##ging
+thiessen	iso-mlgt	6	th ##ies ##sen
+traceability	iso-mlgt	6	trace ##ability
+unclassified	qgis-gui	6	un ##class ##ified
+unloading	qgis-gui	6	un ##loading
+unmodified	qgis-gui	6	un ##mo ##di ##fied
+unresolved	qgis-gui	6	un ##res ##olved
+unusable	qgis-gui	6	un ##usa ##ble
+vect	qgis-gui	6	ve ##ct
+webp	qgis-gui	6	web ##p
+allocate	qgis-gui	5	all ##oca ##te
+ansi	qgis-gui	5	an ##si
+autofill	qgis-gui	5	auto ##fi ##ll
+cartographer	iate	5	cart ##ographer
+centering	qgis-gui	5	center ##ing
+coarser	qgis-gui	5	coarse ##r
+concatenate	qgis-gui	5	con ##cate ##nate
+concatenation	qgis-gui,qgis-manual	5	con ##cate ##nation
+coord	qgis-gui	5	co ##ord
+dangle	qgis-gui,qgis-manual	5	dan ##gle
+decoded	qgis-gui	5	deco ##ded
+decodes	qgis-gui	5	deco ##des
+delineated	qgis-gui	5	del ##ine ##ated
+digitizes	qgis-gui	5	digit ##izes
+dimensionality	qgis-gui	5	dimensional ##ity
+disabling	qgis-gui	5	di ##sa ##bling
+dissolving	qgis-gui	5	di ##sso ##lving
+downgrade	qgis-gui	5	down ##grade
+duplication	qgis-gui	5	du ##plication
+entra	qgis-gui	5	en ##tra
+fractional	qgis-gui	5	fraction ##al
+fractions	qgis-gui	5	fraction ##s
+generalize	qgis-gui	5	general ##ize
+geometrical	iate	5	geometric ##al
+georef	iate	5	geo ##re ##f
+gltf	qgis-gui,qgis-manual	5	g ##lt ##f
+gzip	qgis-gui	5	g ##zi ##p
+harmonization	iso-mlgt	5	harmon ##ization
+hashes	qgis-gui	5	hash ##es
+headings	qgis-gui	5	heading ##s
+hexagons	qgis-gui	5	he ##xa ##gon ##s
+hillshading	qgis-gui	5	hills ##had ##ing
+hulls	qgis-gui	5	hull ##s
+kernels	qgis-gui	5	kernel ##s
+linearly	iso-mlgt,qgis-gui	5	linear ##ly
+linetype	qgis-gui	5	line ##type
+localize	qgis-gui	5	local ##ize
+longitudes	qgis-gui	5	longitude ##s
+lowercase	qgis-gui	5	lower ##case
+magnifier	qgis-gui	5	mag ##ni ##fi ##er
+matlab	qgis-gui	5	mat ##lab
+measurable	iso-mlgt	5	me ##asurable
+millimeter	qgis-gui	5	mill ##imeter
+mozilla	qgis-gui	5	mo ##zi ##lla
+mssql	qgis-gui	5	ms ##s ##q ##l
+multipoints	qgis-gui	5	multi ##points
+pansharpening	qgis-gui	5	pan ##sha ##rp ##ening
+polarization	iso-mlgt	5	polar ##ization
+primitives	qgis-gui	5	primitive ##s
+proj4	qgis-gui	5	pro ##j ##4
+reclassified	qgis-gui	5	rec ##lassified
+refactored	qgis-gui	5	ref ##act ##ored
+regularization	qgis-gui	5	regular ##ization
+rescale	qgis-gui,qgis-manual	5	res ##cal ##e
+rescaling	qgis-gui	5	res ##cal ##ing
+robustness	iso-mlgt,qgis-gui	5	robust ##ness
+semicolons	qgis-gui	5	semi ##col ##ons
+shorten	qgis-gui	5	short ##en
+sieve	qgis-gui,qgis-manual	5	si ##eve
+signup	qgis-gui	5	sign ##up
+solvers	qgis-gui	5	solve ##rs
+stereographic	qgis-gui	5	stereo ##graphic
+subbasins	qgis-gui	5	sub ##bas ##ins
+subclass	qgis-gui	5	sub ##class
+substring	qgis-gui,qgis-manual	5	sub ##st ##ring
+swatch	qgis-gui	5	swat ##ch
+temporally	qgis-gui	5	temporal ##ly
+timestep	qgis-gui	5	times ##te ##p
+uint16	qgis-gui	5	ui ##nt ##16
+unchecking	qgis-gui	5	un ##che ##cking
+uniqueness	qgis-gui	5	unique ##ness
+upgradeable	qgis-gui	5	upgrade ##able
+uppercase	qgis-gui	5	upper ##case
+velocities	qgis-gui	5	ve ##lo ##cit ##ies
+verbose	qgis-gui	5	verb ##ose
+webkit	qgis-gui	5	web ##kit
+wildcard	qgis-gui	5	wild ##card
+xmin	qgis-gui	5	x ##min
+ymin	qgis-gui	5	y ##min
+abort	qgis-gui	4	ab ##ort
+arranges	qgis-gui	4	arrange ##s
+authcfg	qgis-gui	4	au ##th ##c ##f ##g
+autocompletion	qgis-gui	4	auto ##com ##ple ##tion
+basename	qgis-gui	4	base ##name
+blends	qgis-gui	4	blend ##s
+breakline	iso-mlgt	4	break ##line
+callouts	qgis-gui,qgis-manual	4	call ##outs
+categorize	qgis-gui	4	cat ##ego ##rize
+cellsize	qgis-gui	4	cells ##ize
+clamp	qgis-gui	4	cl ##amp
+clarification	iso-mlgt	4	cl ##ari ##fication
+climatology	qgis-gui	4	cl ##ima ##tology
+conforming	iso-mlgt	4	conform ##ing
+constrain	qgis-gui	4	con ##stra ##in
+cosine	qgis-gui	4	co ##sin ##e
+courant	qgis-gui	4	co ##ura ##nt
+datatype	iso-mlgt	4	data ##type
+defaulting	qgis-gui	4	default ##ing
+densify	qgis-gui,qgis-manual	4	den ##si ##fy
+emit	qgis-gui	4	emi ##t
+enclosing	qgis-gui,qgis-manual	4	en ##cl ##osing
+euler	qgis-gui	4	eu ##ler
+expiry	qgis-gui	4	ex ##pi ##ry
+formatter	qgis-gui	4	format ##ter
+geographiclib	qgis-gui	4	geographic ##lib
+geomorphic	qgis-gui	4	geo ##morphic
+geoscientific	qgis-gui	4	geo ##sc ##ient ##ific
+getfeatureinfo	qgis-gui	4	get ##fe ##at ##ure ##in ##fo
+gist	qgis-gui	4	gi ##st
+hausdorff	qgis-gui	4	ha ##us ##dorff
+heterogeneity	qgis-gui	4	het ##ero ##gen ##eit ##y
+hexadecimal	qgis-gui	4	he ##xa ##de ##ci ##mal
+inverts	qgis-gui	4	in ##vert ##s
+invoke	iate	4	in ##vo ##ke
+isoline	iate,qgis-gui	4	iso ##line
+latlong	qgis-gui	4	la ##tl ##ong
+linework	qgis-gui	4	line ##work
+macros	qgis-gui,qgis-manual	4	macro ##s
+mailing	qgis-gui	4	mail ##ing
+millimeters	qgis-gui	4	mill ##imeters
+milliseconds	qgis-gui	4	mill ##ise ##con ##ds
+model3	qgis-gui	4	model ##3
+multivariate	qgis-manual	4	multi ##var ##iate
+mysql	qgis-gui	4	my ##s ##q ##l
+nmea	qgis-gui	4	nme ##a
+oapif	qgis-gui	4	o ##ap ##if
+occlusion	qgis-gui	4	o ##cc ##lusion
+openfilegdb	qgis-gui	4	open ##fi ##leg ##db
+ordinate	iate	4	or ##dina ##te
+overlapped	qgis-gui	4	overlap ##ped
+partitions	qgis-gui	4	partition ##s
+pkce	qgis-gui	4	p ##k ##ce
+polygonz	qgis-gui	4	poly ##gon ##z
+preloaded	qgis-gui	4	pre ##loaded
+profiler	qgis-gui,qgis-manual	4	profile ##r
+propagate	qgis-gui	4	prop ##aga ##te
+qdatetime	qgis-gui	4	q ##date ##time
+qgscoordinatereferencesystem	qgis-gui	4	q ##gs ##co ##ord ##inate ##re ##ference ##sy ##ste ##m
+quantiles	qgis-gui	4	quan ##tile ##s
+queued	qgis-gui	4	queue ##d
+radians	qgis-gui	4	ra ##dian ##s
+redirected	qgis-gui	4	red ##ire ##cted
+reordered	qgis-gui	4	re ##ord ##ered
+reversing	qgis-gui	4	rev ##ers ##ing
+rotates	qgis-gui	4	rotate ##s
+rubberband	qgis-gui	4	rubber ##band
+scalebar	qgis-gui	4	scale ##bar
+sha256	qgis-gui,qgis-manual	4	sha ##25 ##6
+sharpen	qgis-gui	4	sharpe ##n
+singlepart	qgis-gui	4	single ##par ##t
+smoothness	qgis-gui	4	smooth ##ness
+sqlite3	qgis-gui	4	sql ##ite ##3
+stakeholder	iso-mlgt	4	stake ##holder
+stra	qgis-gui	4	st ##ra
+subdivides	qgis-gui	4	sub ##di ##vid ##es
+sublayer	qgis-gui	4	sub ##layer
+summarise	qgis-gui	4	sum ##mar ##ise
+syncing	qgis-gui	4	sync ##ing
+tissot	qgis-gui	4	tis ##so ##t
+transactional	qgis-gui	4	transaction ##al
+traversal	iso-mlgt	4	travers ##al
+triangulated	iso-mlgt,qgis-gui	4	tri ##ang ##ulated
+truncate	qgis-gui,qgis-manual	4	tr ##un ##cate
+turbidity	qgis-gui	4	tu ##rb ##idi ##ty
+typename	qgis-gui	4	type ##name
+uncompressed	qgis-gui	4	un ##com ##pressed
+zeros	qgis-gui	4	zero ##s
+albedo	qgis-gui	3	al ##bedo
+albers	qgis-gui	3	al ##bers
+anno	qgis-gui	3	ann ##o
+antimeridian	qgis-gui,qgis-manual	3	anti ##mer ##idia ##n
+authid	qgis-gui	3	au ##thi ##d
+ballpark	qgis-gui	3	ball ##park
+base64	qgis-gui	3	base ##64
+bicubic	qgis-gui	3	bi ##cu ##bic
+bonne	qgis-gui	3	bonn ##e
+brovey	qgis-gui	3	bro ##vey
+chooser	qgis-gui	3	choose ##r
+climatological	iate	3	cl ##ima ##to ##logical
+cmyk	qgis-gui	3	cm ##yk
+codec	qgis-gui	3	code ##c
+compacted	qgis-gui	3	compact ##ed
+compaction	iso-mlgt	3	compact ##ion
+configures	qgis-gui	3	con ##fi ##gur ##es
+conic	qgis-gui	3	con ##ic
+customizing	qgis-manual	3	custom ##izing
+dataprovider	qgis-gui	3	data ##pro ##vid ##er
+deflection	iate	3	def ##le ##ction
+desc	qgis-gui	3	des ##c
+dface	qgis-gui	3	d ##face
+discretization	qgis-gui	3	disc ##ret ##ization
+drape	qgis-gui,qgis-manual	3	dr ##ape
+encodes	qgis-gui	3	en ##codes
+equidistance	iate	3	e ##qui ##dis ##tance
+erdas	qgis-gui	3	er ##das
+evaporative	qgis-gui	3	eva ##por ##ative
+extrude	qgis-gui	3	ex ##tr ##ude
+extruded	qgis-gui	3	ex ##tr ##uded
+farthest	qgis-gui	3	far ##thest
+flattens	qgis-gui	3	flat ##tens
+float64	qgis-gui	3	float ##64
+flowline	qgis-gui	3	flow ##line
+geometryless	qgis-gui	3	geometry ##less
+geonames	qgis-gui	3	geo ##name ##s
+getfeature	qgis-gui	3	get ##fe ##at ##ure
+getmap	qgis-gui	3	get ##ma ##p
+glob	qgis-gui	3	g ##lo ##b
+granularity	qgis-gui	3	gran ##ular ##ity
+gtiff	qgis-gui	3	gt ##iff
+hargreaves	qgis-gui	3	ha ##rg ##rea ##ves
+hdop	qgis-gui	3	hd ##op
+hermite	qgis-gui	3	hermit ##e
+hubs	qgis-gui	3	hub ##s
+imageserver	qgis-gui	3	images ##er ##ver
+inaccuracies	qgis-gui	3	ina ##cc ##ura ##cies
+indent	qgis-gui	3	ind ##ent
+initialized	qgis-gui	3	initial ##ized
+instantaneous	iso-mlgt,qgis-gui	3	instant ##aneous
+isometric	iate	3	iso ##metric
+italic	qgis-gui	3	it ##alic
+levenshtein	qgis-gui	3	lev ##ens ##ht ##ein
+log10	qgis-gui	3	log ##10
+lossy	qgis-gui	3	loss ##y
+markup	iate,qgis-gui	3	mark ##up
+microstation	qgis-gui	3	micro ##station
+newline	qgis-gui	3	new ##line
+ntv2	qgis-manual	3	nt ##v ##2
+nulls	qgis-gui	3	null ##s
+orthographic	qgis-gui	3	or ##th ##ographic
+overridden	qgis-gui	3	over ##rid ##den
+overriding	qgis-gui	3	over ##riding
+panchromatic	qgis-gui	3	pan ##ch ##romatic
+parabolic	qgis-gui	3	para ##bolic
+parameterized	iso-mlgt	3	parameter ##ized
+pdop	qgis-gui	3	pd ##op
+poisson	qgis-gui,qgis-manual	3	po ##isson
+polyconic	qgis-gui	3	poly ##con ##ic
+prepended	qgis-gui	3	prep ##ended
+qgsprocessingalgorithm	qgis-manual	3	q ##gs ##pro ##ces ##sing ##al ##gor ##ith ##m
+reclassifies	qgis-gui	3	rec ##lass ##ifies
+reconnect	qgis-gui	3	rec ##onne ##ct
+rectification	iate,qgis-gui	3	rec ##ti ##fication
+referencinglayer	qgis-gui	3	referencing ##layer
+referer	qgis-gui	3	refer ##er
+reinstalls	qgis-gui	3	reins ##tal ##ls
+sebal	qgis-gui	3	se ##bal
+segmentized	qgis-gui	3	segment ##ized
+sine	qgis-gui	3	sin ##e
+singleparts	qgis-gui,qgis-manual	3	single ##parts
+strasse	qgis-gui	3	st ##ras ##se
+stratigraphic	iate	3	st ##rat ##ig ##raphic
+subdatasets	qgis-gui	3	sub ##da ##tase ##ts
+subtracts	qgis-gui	3	sub ##tra ##cts
+tabulation	qgis-gui	3	tab ##ulation
+tessellation	iso-mlgt,qgis-gui	3	tess ##ella ##tion
+thins	qgis-gui	3	thin ##s
+tilesets	qgis-gui,qgis-manual	3	tiles ##ets
+transversal	qgis-gui	3	trans ##vers ##al
+troubleshoot	qgis-manual	3	troubles ##hoot
+typeface	qgis-gui	3	type ##face
+ungeoreferenced	iso-mlgt	3	un ##ge ##ore ##ference ##d
+untrusted	qgis-gui	3	un ##trust ##ed
+uploader	qgis-gui	3	up ##load ##er
+upsert	qgis-gui	3	ups ##ert
+vdop	qgis-gui	3	v ##do ##p
+webgl	qgis-gui	3	web ##gl
+wildcards	qgis-gui	3	wild ##cards
+wmm2025	qgis-gui	3	w ##mm ##20 ##25
+xmax	qgis-gui	3	x ##max
+ymax	qgis-gui	3	y ##max
+aliasing	qgis-gui	2	alias ##ing
+allocates	qgis-gui	2	all ##oca ##tes
+allocating	qgis-gui	2	all ##ocating
+animating	qgis-manual	2	an ##imating
+antialiased	qgis-gui	2	anti ##alia ##sed
+apostrophe	qgis-gui	2	ap ##ost ##rop ##he
+atan2	qgis-gui	2	ata ##n ##2
+authenticator	qgis-gui	2	authentic ##ator
+babel	qgis-gui	2	babe ##l
+barbs	qgis-gui	2	bar ##bs
+bigint	qgis-gui	2	big ##int
+binomial	qgis-gui,qgis-manual	2	bin ##omi ##al
+bisector	qgis-gui	2	bis ##ect ##or
+bool	qgis-gui	2	boo ##l
+capitalization	qgis-gui	2	capital ##ization
+cardinality	iso-mlgt,qgis-gui	2	cardinal ##ity
+clamping	qgis-gui	2	cl ##amp ##ing
+clough	qgis-gui	2	cl ##ough
+coalesce	qgis-gui	2	coal ##es ##ce
+colorbrewer	qgis-gui	2	color ##bre ##wer
+colorize	qgis-gui	2	color ##ize
+colormap	qgis-gui	2	color ##ma ##p
+completer	qgis-gui	2	complete ##r
+concat	qgis-gui	2	con ##cat
+concatenated	iso-mlgt,qgis-gui	2	con ##cate ##nated
+concatenates	qgis-gui	2	con ##cate ##nate ##s
+conductivity	qgis-gui	2	conduct ##ivity
+curvatures	qgis-gui	2	curvature ##s
+decimation	qgis-gui	2	dec ##ima ##tion
+decompress	qgis-gui	2	deco ##mp ##ress
+decorator	qgis-gui,qgis-manual	2	decor ##ator
+definable	qgis-gui	2	def ##ina ##ble
+degrades	qgis-gui	2	de ##grade ##s
+designator	iso-mlgt	2	design ##ator
+dgps	qgis-gui	2	d ##gp ##s
+dimlinear	qgis-gui	2	dim ##line ##ar
+diurnal	qgis-gui	2	di ##urn ##al
+downscaling	qgis-gui	2	downs ##cal ##ing
+drapes	qgis-gui	2	dr ##apes
+drillings	iate	2	drilling ##s
+edigeo	qgis-gui	2	ed ##ige ##o
+enumeration	qgis-gui	2	en ##ume ##ration
+ephemeris	iso-mlgt	2	ep ##hem ##eri ##s
+epochs	qgis-gui	2	epoch ##s
+equalization	qgis-gui	2	equal ##ization
+erasing	qgis-gui	2	eras ##ing
+expansions	qgis-gui	2	expansion ##s
+expiration	qgis-gui	2	ex ##piration
+exponent	qgis-gui	2	expo ##nent
+extrudes	qgis-gui	2	ex ##tr ##udes
+ff0000	qgis-gui	2	ff ##00 ##00
+flowlines	qgis-gui	2	flow ##lines
+foci	qgis-gui	2	f ##oc ##i
+foliation	iso-mlgt	2	f ##oli ##ation
+geocentric	iso-mlgt,qgis-gui	2	geo ##centric
+geoidal	qgis-gui	2	geo ##idal
+geomatic	iate	2	geo ##matic
+geomorphons	qgis-gui	2	geo ##mo ##rp ##hon ##s
+getcoverage	qgis-gui	2	get ##co ##vera ##ge
+gisco	iate	2	gi ##sco
+gmes	iate	2	gm ##es
+googlemaps	qgis-gui	2	google ##ma ##ps
+granule	iso-mlgt	2	gran ##ule
+gridlines	qgis-gui	2	grid ##lines
+halved	qgis-gui	2	hal ##ved
+headland	iate	2	head ##land
+hmac	qgis-gui,qgis-manual	2	hm ##ac
+ilike	qgis-gui	2	il ##ike
+inertial	iate,iso-mlgt	2	in ##ert ##ial
+interquartile	qgis-gui	2	inter ##qua ##rti ##le
+irradiance	iate,iso-mlgt,qgis-gui	2	ir ##rad ##iance
+irradiation	qgis-gui	2	ir ##rad ##iation
+keyframe	qgis-gui	2	key ##frame
+keyframes	qgis-gui	2	key ##frame ##s
+landsat8	qgis-gui	2	lands ##at ##8
+layerid	qgis-gui	2	layer ##id
+lewy	qgis-gui	2	lew ##y
+lightness	qgis-gui	2	light ##ness
+linestringm	qgis-gui	2	lines ##tri ##ng ##m
+linke	qgis-gui	2	link ##e
+magenta	qgis-gui	2	mage ##nta
+mapset	qgis-gui,qgis-manual	2	maps ##et
+methodes	iate	2	method ##es
+modflow	qgis-gui	2	mod ##flow
+monotonic	iso-mlgt	2	mono ##tonic
+monteith	qgis-gui	2	monte ##ith
+multibeam	iso-mlgt	2	multi ##beam
+multicurve	qgis-gui	2	multi ##cu ##r ##ve
+multidirectional	qgis-gui	2	multi ##di ##re ##ction ##al
+multipolygonz	qgis-gui	2	multi ##pol ##y ##gon ##z
+multipurpose	iate,iso-mlgt	2	multi ##pur ##pose
+navigational	iso-mlgt	2	navigation ##al
+noded	qgis-gui	2	node ##d
+nurbs	qgis-gui	2	nur ##bs
+oceanographic	iate	2	ocean ##ographic
+opencl	qgis-gui	2	open ##cl
+ordinal	iso-mlgt	2	or ##dina ##l
+orthoimage	iate,iso-mlgt	2	or ##th ##oi ##mage
+orthoimagery	iate	2	or ##th ##oi ##mage ##ry
+orthophotomap	iate	2	or ##th ##op ##hot ##oma ##p
+parametrisation	qgis-gui	2	para ##met ##ris ##ation
+penman	qgis-gui	2	pen ##man
+piezometric	qgis-gui	2	pie ##zo ##metric
+pivoting	qgis-gui	2	pi ##vot ##ing
+placements	qgis-gui	2	placement ##s
+polylabel	qgis-gui	2	poly ##lab ##el
+posteriori	iso-mlgt,qgis-gui	2	posterior ##i
+prepend	qgis-gui	2	prep ##end
+qgscollapsiblegroupbox	qgis-gui	2	q ##gs ##coll ##ap ##sible ##group ##box
+qgsdockwidget	qgis-gui	2	q ##gs ##dock ##wi ##dget
+qgslocatorfilter	qgis-gui	2	q ##gs ##lo ##cat ##orf ##il ##ter
+quadrangle	iate	2	quad ##rangle
+quadtree	qgis-gui	2	quad ##tree
+quantization	iso-mlgt,qgis-gui	2	quan ##ti ##zation
+quantized	qgis-gui	2	quan ##tized
+quartic	qgis-gui	2	qu ##art ##ic
+quartile	qgis-gui	2	qu ##art ##ile
+rearrange	qgis-gui,qgis-manual	2	rear ##rang ##e
+recompute	qgis-gui	2	rec ##omp ##ute
+recursion	qgis-gui	2	rec ##urs ##ion
+reformat	qgis-gui	2	reform ##at
+regroup	qgis-gui	2	reg ##roup
+remediation	iso-mlgt	2	re ##media ##tion
+rescaled	qgis-gui	2	res ##cal ##ed
+resetting	qgis-gui	2	reset ##ting
+reshaping	qgis-manual	2	res ##ha ##ping
+retile	qgis-gui,qgis-manual	2	re ##tile
+retrying	qgis-gui	2	re ##try ##ing
+richness	iate,qgis-gui	2	rich ##ness
+routable	qgis-gui	2	ro ##utable
+sahel	qgis-gui	2	sa ##hel
+samani	qgis-gui	2	sam ##ani
+scatterplot	qgis-gui,qgis-manual	2	sc ##atter ##pl ##ot
+sensorthings	qgis-gui,qgis-manual	2	sensor ##thing ##s
+shader	qgis-gui,qgis-manual	2	shade ##r
+sharealike	qgis-gui	2	share ##ali ##ke
+shrinks	qgis-gui	2	shrink ##s
+silt	qgis-gui	2	si ##lt
+slashes	qgis-gui	2	slash ##es
+smap	qgis-gui	2	sm ##ap
+sosi	qgis-gui	2	so ##si
+soundex	qgis-gui	2	sound ##ex
+spaceborne	iate	2	space ##borne
+spheroid	iso-mlgt	2	sp ##her ##oid
+stddev	qgis-gui	2	st ##dd ##ev
+stdout	qgis-gui	2	st ##dou ##t
+steepness	qgis-gui	2	steep ##ness
+subdivide	qgis-gui,qgis-manual	2	sub ##di ##vid ##e
+swatches	qgis-gui	2	swat ##ches
+synchronizing	qgis-gui	2	sync ##hr ##oni ##zing
+terrarium	qgis-gui	2	terra ##rium
+tessellate	qgis-gui,qgis-manual	2	tess ##ella ##te
+thinned	qgis-gui	2	thin ##ned
+tolerances	qgis-gui	2	tolerance ##s
+tuple	iso-mlgt	2	tu ##ple
+undulation	iate	2	und ##ulation
+unfiltered	qgis-gui	2	un ##fi ##lter ##ed
+ungroup	qgis-gui	2	un ##group
+uniformity	iso-mlgt	2	uniform ##ity
+uninstalled	qgis-gui	2	un ##ins ##tal ##led
+univariate	qgis-gui	2	un ##ivar ##iate
+unlink	qgis-gui	2	un ##link
+unpin	qgis-gui	2	un ##pin
+unreadable	qgis-gui	2	un ##rea ##dable
+usle	qgis-gui	2	usl ##e
+vegetated	qgis-gui	2	ve ##get ##ated
+warping	qgis-gui	2	warp ##ing
+abcd	qgis-gui	1	abc ##d
+aborted	qgis-gui	1	ab ##orted
+accumulative	qgis-gui	1	acc ##um ##ula ##tive
+achromatopsia	qgis-gui	1	ac ##hr ##oma ##tops ##ia
+advertise	qgis-gui	1	ad ##vert ##ise
+algebraically	qgis-gui	1	algebraic ##ally
+amplify	qgis-gui	1	amp ##li ##fy
+anchoring	qgis-gui	1	anchor ##ing
+ancillary	iso-mlgt,qgis-gui	1	an ##ci ##llary
+antialiasing	qgis-gui	1	anti ##alia ##sing
+arcgrid	qgis-gui	1	arc ##gr ##id
+argv	qgis-gui	1	ar ##g ##v
+articulation	qgis-gui	1	art ##ic ##ulation
+asin	qgis-gui	1	as ##in
+associative	iso-mlgt	1	ass ##oc ##ia ##tive
+atan	qgis-gui	1	ata ##n
+authenticating	qgis-gui	1	authentic ##ating
+autodetect	qgis-gui	1	auto ##de ##tec ##t
+autoincrementing	qgis-gui	1	auto ##in ##cre ##ment ##ing
+avhrr	qgis-gui	1	av ##hr ##r
+b3dm	qgis-gui,qgis-manual	1	b ##3d ##m
+backslash	qgis-gui	1	backs ##lash
+barycentric	iso-mlgt	1	bar ##yce ##nt ##ric
+beautify	qgis-gui	1	beau ##tify
+bevel	qgis-gui	1	be ##vel
+billboards	qgis-gui	1	billboard ##s
+biogeography	iate	1	bio ##ge ##ography
+biota	qgis-gui	1	bio ##ta
+bluetooth	qgis-manual	1	blue ##tooth
+braces	qgis-gui	1	brace ##s
+bytea	qgis-gui	1	byte ##a
+canceling	qgis-gui	1	cancel ##ing
+carree	qgis-gui	1	carr ##ee
+ceil	qgis-gui	1	ce ##il
+cert	qgis-gui	1	ce ##rt
+cest	qgis-gui	1	ce ##st
+circularstring	qgis-gui	1	circular ##st ##ring
+circumscribed	qgis-gui	1	ci ##rc ##ums ##cr ##ibe ##d
+codelist	iso-mlgt	1	code ##list
+codespace	iso-mlgt	1	codes ##pace
+combinatorial	qgis-gui	1	comb ##inator ##ial
+compoundcurve	qgis-gui	1	compound ##cu ##r ##ve
+concatenating	qgis-gui	1	con ##cate ##nat ##ing
+concavehull	qgis-gui	1	con ##cave ##hul ##l
+constraining	qgis-gui	1	con ##stra ##ining
+cs2cs	qgis-gui	1	cs ##2 ##cs
+custodian	qgis-gui	1	cu ##sto ##dian
+darken	qgis-gui	1	dark ##en
+datastream	qgis-gui	1	data ##stream
+datastreams	qgis-gui	1	data ##stream ##s
+dbname	qgis-gui	1	db ##name
+decimate	qgis-gui	1	dec ##imate
+decrypt	qgis-gui	1	dec ##ry ##pt
+deduce	qgis-gui	1	de ##du ##ce
+delimiting	iso-mlgt	1	del ##imi ##ting
+denominators	qgis-gui	1	den ##omi ##nator ##s
+describefeaturetype	qgis-gui	1	describe ##fe ##at ##ure ##type
+deselected	qgis-gui	1	des ##ele ##cted
+deuteranopia	qgis-gui	1	de ##uter ##ano ##pia
+dggs	iso-mlgt	1	d ##ggs
+dilution	qgis-gui	1	dil ##ution
+dimangular	qgis-gui	1	dim ##ang ##ular
+dispersivity	qgis-gui	1	di ##sper ##si ##vity
+displace	qgis-gui	1	di ##sp ##lace
+dmax	qgis-gui	1	d ##max
+dmin	qgis-gui	1	d ##min
+donuts	qgis-gui	1	don ##uts
+doppler	iso-mlgt	1	do ##pp ##ler
+downgrades	qgis-gui	1	down ##grade ##s
+encloses	qgis-gui	1	en ##cl ##oses
+encountering	qgis-gui	1	encounter ##ing
+encrypt	qgis-gui	1	en ##cr ##yp ##t
+enumerated	qgis-gui	1	en ##ume ##rated
+epanechnikov	qgis-gui	1	epa ##ne ##ch ##nikov
+erroneous	qgis-gui	1	er ##rone ##ous
+exaggerating	qgis-gui	1	ex ##agger ##ating
+extremity	qgis-gui	1	ex ##tre ##mity
+featureinfo	qgis-gui	1	feature ##in ##fo
+featuresofinterest	qgis-gui	1	features ##of ##int ##eres ##t
+featuretypes	qgis-gui	1	feature ##type ##s
+federated	iso-mlgt	1	fed ##erated
+fiducial	iso-mlgt	1	fi ##du ##cial
+flamsteed	qgis-gui	1	fl ##ams ##tee ##d
+flannery	qgis-gui	1	fl ##anne ##ry
+foreach	qgis-gui	1	fore ##ach
+fromstring	qgis-gui	1	from ##st ##ring
+furthest	qgis-gui	1	fur ##thest
+gdalwarp	qgis-gui	1	g ##dal ##war ##p
+geocatalog	qgis-gui	1	geo ##cat ##alo ##g
+geoconcept	qgis-gui	1	geo ##con ##ce ##pt
+geoint	iate	1	geo ##int
+geolocating	iso-mlgt	1	geo ##lo ##cating
+georss	qgis-gui	1	geo ##rs ##s
+geostationary	qgis-gui	1	geo ##station ##ary
+geotags	qgis-gui	1	geo ##tag ##s
+globes	qgis-gui	1	globe ##s
+gmlas	qgis-gui	1	gm ##las
+goode	qgis-gui	1	good ##e
+gpsmap	qgis-manual	1	gps ##ma ##p
+gpstrackmaker	qgis-gui	1	gps ##tra ##ck ##maker
+hadoop	qgis-gui	1	had ##oop
+hamming	qgis-gui	1	ham ##ming
+hashed	qgis-gui	1	hash ##ed
+heic	qgis-gui	1	he ##ic
+hist	qgis-gui	1	his ##t
+hstore	qgis-gui,qgis-manual	1	hs ##tore
+hyperlink	qgis-gui	1	hyper ##link
+iana	qgis-gui	1	ian ##a
+imbalance	iso-mlgt	1	im ##balance
+inaccessibility	iate,qgis-gui,qgis-manual	1	ina ##cc ##ess ##ibility
+incompatibility	qgis-gui	1	inc ##omp ##ati ##bility
+incremented	qgis-gui	1	inc ##rem ##ented
+indentation	qgis-gui	1	ind ##entation
+initializing	qgis-gui	1	initial ##izing
+insolation	qgis-gui	1	ins ##ola ##tion
+int32	qgis-gui	1	int ##32
+int8	qgis-gui	1	int ##8
+interferometric	iso-mlgt	1	inter ##fer ##ometric
+invalidation	iso-mlgt	1	invalid ##ation
+isostatic	iate	1	iso ##static
+issuer	qgis-gui	1	issue ##r
+jacobi	qgis-gui	1	jacob ##i
+juin	qgis-gui	1	ju ##in
+kerning	qgis-gui	1	kern ##ing
+keyhole	qgis-gui	1	key ##hole
+kittens	qgis-gui	1	kitten ##s
+krovak	qgis-gui	1	k ##rov ##ak
+lagrange	qgis-gui	1	la ##gra ##nge
+latitudes	qgis-gui	1	latitude ##s
+layover	iso-mlgt	1	lay ##over
+ldid	qgis-gui	1	ld ##id
+leftmost	qgis-gui	1	left ##most
+length3d	qgis-gui	1	length ##3d
+lerc	qgis-gui	1	le ##rc
+lighten	qgis-gui	1	light ##en
+linkage	iate	1	link ##age
+localtime	qgis-gui	1	local ##time
+lognormal	qgis-gui	1	log ##nor ##mal
+luminosity	qgis-gui	1	lu ##min ##osity
+magnification	qgis-gui	1	mag ##ni ##fication
+mapcalc	qgis-gui	1	map ##cal ##c
+mapsets	qgis-gui	1	maps ##ets
+maptip	qgis-gui	1	map ##tip
+metasearch	qgis-gui,qgis-manual	1	meta ##sea ##rch
+metatile	qgis-gui	1	meta ##tile
+metatiles	qgis-gui	1	meta ##tile ##s
+millisecond	qgis-gui	1	mill ##ise ##con ##d
+miter	qgis-gui	1	mit ##er
+msavi2	qgis-gui	1	ms ##avi ##2
+mtext	qgis-gui	1	mt ##ex ##t
+multidatastreams	qgis-gui	1	multi ##da ##tas ##tream ##s
+multiedit	qgis-gui	1	multi ##ed ##it
+multilinestringm	qgis-gui	1	multi ##lines ##tri ##ng ##m
+multilinestrings	qgis-gui	1	multi ##lines ##tri ##ng ##s
+multiparts	qgis-gui	1	multi ##parts
+multiplicative	qgis-gui	1	multi ##pl ##icative
+multipointz	qgis-gui	1	multi ##point ##z
+multisurface	qgis-gui	1	multi ##sur ##face
+negates	qgis-gui	1	ne ##gate ##s
+noding	qgis-gui	1	nod ##ing
+normality	qgis-gui	1	normal ##ity
+normals	qgis-gui	1	normal ##s
+nudge	qgis-gui	1	nu ##dge
+observable	iso-mlgt	1	ob ##ser ##vable
+ontology	iso-mlgt	1	onto ##logy
+originator	qgis-gui	1	origin ##ator
+orthophotograph	iate	1	or ##th ##op ##hot ##og ##raph
+ovals	qgis-gui,qgis-manual	1	oval ##s
+paging	qgis-gui	1	pa ##ging
+paintbrush	qgis-gui	1	paint ##brush
+passphrase	qgis-gui	1	pass ##ph ##rase
+patched	qgis-gui	1	patch ##ed
+percents	qgis-gui	1	percent ##s
+perturbations	qgis-gui	1	per ##tur ##bation ##s
+perturbed	qgis-gui	1	per ##tur ##bed
+phong	qgis-gui	1	ph ##ong
+pica	qgis-gui	1	pic ##a
+pkcs	qgis-gui,qgis-manual	1	p ##k ##cs
+pkey	qgis-gui	1	p ##key
+planimetry	iate	1	plan ##ime ##try
+polarimetric	iso-mlgt	1	polar ##ime ##tric
+polydata	qgis-gui	1	poly ##da ##ta
+polygonizing	qgis-gui	1	poly ##gon ##izing
+polymorphic	qgis-gui,qgis-manual	1	poly ##morphic
+porosity	qgis-gui	1	por ##osity
+prognostic	iate	1	pro ##gno ##stic
+protanopia	qgis-gui	1	pro ##tan ##op ##ia
+qgsmaplayer	qgis-gui	1	q ##gs ##ma ##play ##er
+quant	qgis-gui	1	quan ##t
+quaternion	qgis-gui	1	qu ##ater ##nio ##n
+queryables	qgis-gui	1	query ##able ##s
+randomize	qgis-gui	1	random ##ize
+rast	qgis-gui	1	ras ##t
+rasterizing	qgis-gui	1	ras ##ter ##izing
+reassign	qgis-gui	1	re ##ass ##ign
+recenter	qgis-gui	1	recent ##er
+recode	qgis-gui	1	rec ##ode
+recreating	qgis-gui	1	rec ##rea ##ting
+redrawing	qgis-gui	1	red ##ra ##wing
+referent	iso-mlgt	1	refer ##ent
+reflectances	qgis-gui	1	reflect ##ances
+refraction	qgis-gui	1	ref ##raction
+regexp	qgis-gui	1	reg ##ex ##p
+registries	qgis-gui	1	regis ##tries
+reinstalled	qgis-gui	1	reins ##tal ##led
+repackaging	iso-mlgt	1	rep ##ack ##aging
+repeatability	iso-mlgt	1	repeat ##ability
+reselect	qgis-gui	1	res ##ele ##ct
+reshaped	qgis-gui	1	res ##ha ##ped
+resizes	qgis-gui	1	res ##izes
+resurvey	iate	1	res ##ur ##vey
+rewind	qgis-gui	1	re ##wind
+roundness	qgis-gui,qgis-manual	1	round ##ness
+rowid	qgis-gui	1	row ##id
+rrggbb	qgis-gui	1	rr ##gg ##bb
+rrggbbaa	qgis-gui	1	rr ##gg ##bba ##a
+sanson	qgis-gui	1	sans ##on
+seeding	qgis-gui	1	seed ##ing
+selectively	qgis-gui	1	selective ##ly
+setnull	qgis-gui	1	set ##nu ##ll
+sexagesimal	iso-mlgt	1	sex ##ages ##ima ##l
+sfcgal	qgis-gui	1	sf ##c ##gal
+shortname	qgis-gui	1	short ##name
+sidescan	iso-mlgt	1	sides ##can
+simplex	iso-mlgt	1	simple ##x
+smrf	qgis-gui	1	sm ##rf
+speedup	qgis-gui	1	speed ##up
+sprite	qgis-gui	1	sp ##rite
+srids	qgis-gui	1	sri ##ds
+stamping	qgis-gui	1	stamp ##ing
+statusbar	qgis-gui	1	status ##bar
+stdev	qgis-gui	1	st ##dev
+sublicence	iso-mlgt	1	sub ##lice ##nce
+subregion	qgis-gui	1	sub ##region
+subsampling	qgis-gui	1	sub ##sam ##pling
+subscript	qgis-gui	1	sub ##script
+subsection	qgis-gui,qgis-manual	1	sub ##section
+substr	qgis-gui	1	sub ##st ##r
+synoptic	iate	1	syn ##op ##tic
+tage	qgis-gui	1	tag ##e
+tasseled	qgis-gui	1	ta ##ssel ##ed
+tectonics	iate	1	te ##cton ##ics
+tessellated	qgis-gui	1	tess ##ella ##ted
+textfile	qgis-gui	1	text ##fi ##le
+textured	qgis-gui	1	texture ##d
+timetables	qgis-gui	1	timetable ##s
+topographically	qgis-gui	1	topographic ##ally
+topographies	iate	1	top ##og ##raph ##ies
+torus	qgis-gui	1	tor ##us
+traversable	iso-mlgt	1	travers ##able
+trigonometric	iate,qgis-gui	1	tri ##gon ##ometric
+triplet	qgis-gui	1	triple ##t
+tritanopia	qgis-gui	1	tri ##tan ##op ##ia
+truncates	qgis-gui	1	tr ##un ##cate ##s
+truncating	qgis-gui	1	tr ##un ##cating
+uint32	qgis-gui	1	ui ##nt ##32
+ukooa	qgis-gui	1	uk ##oo ##a
+unaccent	qgis-gui	1	una ##cc ##ent
+unconfined	qgis-gui	1	un ##con ##fine ##d
+underestimates	qgis-gui	1	under ##est ##imate ##s
+underline	qgis-gui	1	under ##line
+underlined	qgis-gui	1	under ##lined
+undetermined	qgis-gui	1	und ##eter ##mined
+unhandled	qgis-gui	1	un ##hand ##led
+unioned	qgis-gui	1	union ##ed
+unplaced	qgis-gui	1	un ##placed
+unrestricted	qgis-gui	1	unrest ##ricted
+upslope	qgis-gui	1	ups ##lo ##pe
+uvre	iso-mlgt,qgis-gui	1	uv ##re
+vapour	qgis-gui	1	va ##pour
+varchar	qgis-gui	1	var ##cha ##r
+vectorlayer	qgis-gui	1	vector ##layer
+visvalingam	qgis-gui	1	vis ##val ##inga ##m
+vnir	qgis-gui	1	v ##nir
+waveform	qgis-gui	1	wave ##form
+wayland	qgis-gui	1	way ##land
+webdav	qgis-gui	1	web ##dav
+wildfires	qgis-gui	1	wild ##fires
+winkel	qgis-gui	1	wink ##el
+wireframe	qgis-gui	1	wire ##frame
+wrench	qgis-gui	1	wren ##ch
+x594	qgis-gui	1	x ##59 ##4
+x841	qgis-gui	1	x ##8 ##41
+ycbcr	qgis-gui	1	y ##cb ##cr
+a619ada631c770f44bc643ead18fb393b93d6a6af1861fcfece0	qgis-gui	0	a ##6 ##19 ##ada ##6 ##31 ##c ##7 ##70 ##f ##44 ##bc ##64 ##3 ##ead ##18 ##fb ##39 ##3 ##b ##9 ##3d ##6 ##a ##6 ##af ##18 ##6 ##1 ##fc ##fe ##ce ##0
+aaa9e22adaefac7f5f342f1c6da	qgis-gui	0	aaa ##9 ##e ##22 ##ada ##ef ##ac ##7 ##f ##5 ##f ##34 ##2 ##f ##1 ##c ##6 ##da
+aaaaa	qgis-gui	0	aaa ##aa
+ababc	qgis-gui	0	aba ##bc
+abc123	qgis-gui	0	abc ##12 ##3
+abcde	qgis-gui	0	abc ##de
+abcdef	qgis-gui	0	abc ##de ##f
+abcdex	qgis-gui	0	abc ##de ##x
+abstractinterface	qgis-gui	0	abstract ##int ##er ##face
+ac2010	qgis-gui	0	ac ##20 ##10
+acca	qgis-gui	0	acc ##a
+accesskeyid	qgis-gui	0	access ##key ##id
+accumulations	qgis-gui	0	accumulation ##s
+accumulator	qgis-gui	0	acc ##um ##ulator
+acos	qgis-gui	0	ac ##os
+addons	qgis-gui	0	add ##ons
+addressable	iso-mlgt	0	address ##able
+addressee	iso-mlgt	0	address ##ee
+aesir	qgis-gui	0	ae ##sir
+aest	qgis-gui	0	ae ##st
+aggr	qgis-gui	0	ag ##gr
+agrometeorology	iate	0	ag ##rom ##ete ##oro ##logy
+airy	qgis-gui	0	air ##y
+aitoff	qgis-gui	0	ai ##to ##ff
+akeys	qgis-gui	0	ak ##ey ##s
+algname	qgis-gui	0	al ##gna ##me
+alibaba	qgis-gui	0	ali ##ba ##ba
+alloc	qgis-gui	0	all ##oc
+alloction	qgis-gui	0	all ##oc ##tion
+allowable	qgis-gui	0	allow ##able
+allpairs	qgis-gui	0	all ##pa ##irs
+alphamax	qgis-gui	0	alpha ##max
+ammonium	iate	0	am ##monium
+amplitudes	qgis-gui	0	amplitude ##s
+antialias	qgis-gui	0	anti ##alia ##s
+apian	qgis-gui	0	api ##an
+appellations	iate	0	app ##ella ##tions
+appendices	qgis-manual	0	app ##end ##ices
+arcgisfeatureserver	qgis-gui	0	arc ##gis ##fe ##at ##ures ##er ##ver
+arcsde	qgis-gui	0	arcs ##de
+array1	qgis-gui	0	array ##1
+array2	qgis-gui	0	array ##2
+ascendingly	qgis-gui	0	ascending ##ly
+aspatial	qgis-gui	0	as ##pati ##al
+assorted	qgis-gui	0	ass ##orted
+astride	qgis-gui	0	astrid ##e
+astronomic	iate	0	astro ##no ##mic
+asymmetrical	qgis-gui	0	as ##ym ##metric ##al
+athematic	qgis-gui	0	at ##hema ##tic
+attr	qgis-gui	0	at ##tr
+authalic	qgis-gui	0	au ##thal ##ic
+autocollimation	iso-mlgt	0	auto ##coll ##ima ##tion
+autogenerate	qgis-gui	0	auto ##gen ##erate
+autogenerated	qgis-gui,qgis-manual	0	auto ##gen ##erated
+autoincremental	qgis-gui,qgis-manual	0	auto ##in ##cre ##mental
+autopep8	qgis-gui	0	auto ##pe ##p ##8
+autosize	qgis-gui	0	auto ##si ##ze
+avals	qgis-gui	0	ava ##ls
+b0ce6acef8b0a121d4ac4f3eaa8503c799ad4e26a3392d1fb201478	qgis-gui	0	b ##0 ##ce ##6 ##ace ##f ##8 ##b ##0 ##a1 ##21 ##d ##4 ##ac ##4 ##f ##3 ##ea ##a ##85 ##0 ##3 ##c ##7 ##9 ##9 ##ad ##4 ##e ##26 ##a ##33 ##9 ##2 ##d ##1 ##fb ##20 ##14 ##7 ##8
+b45ratio	qgis-gui	0	b ##45 ##rat ##io
+b56composite	qgis-gui	0	b ##56 ##com ##po ##sit ##e
+babc	qgis-gui	0	ba ##bc
+babca	qgis-gui	0	ba ##bc ##a
+backscattering	iso-mlgt	0	backs ##cat ##tering
+backtick	qgis-gui	0	back ##tick
+backticks	qgis-gui	0	back ##tick ##s
+barbour	iate	0	bar ##bour
+baseraster	qgis-gui	0	base ##ras ##ter
+bastiaanssen	qgis-gui	0	bas ##tia ##ans ##sen
+bathymeter	iate	0	bath ##yme ##ter
+baud	qgis-gui	0	ba ##ud
+baudrate	qgis-gui	0	ba ##ud ##rate
+baunit	iso-mlgt	0	ba ##uni ##t
+bd2f60f	qgis-gui	0	b ##d ##2 ##f ##60 ##f
+bd2f60ff1574a6d96afd4ba4cb366a1	qgis-gui	0	b ##d ##2 ##f ##60 ##ff ##15 ##7 ##4 ##a ##6 ##d ##9 ##6 ##af ##d ##4 ##ba ##4 ##cb ##36 ##6 ##a1
+bdiagonal	qgis-gui	0	b ##dia ##gonal
+beveled	qgis-gui	0	be ##vel ##ed
+bicgstab	qgis-gui	0	bi ##c ##gs ##ta ##b
+bicontinuous	iso-mlgt	0	bi ##con ##tin ##uous
+bingmapsportal	qgis-gui	0	bing ##ma ##ps ##port ##al
+binomially	qgis-gui	0	bin ##omi ##ally
+biocenotic	iate	0	bio ##cen ##otic
+biogeographical	iate	0	bio ##ge ##ographic ##al
+bitmap	qgis-gui	0	bit ##ma ##p
+blackbody	iso-mlgt	0	black ##body
+blacklisted	qgis-gui	0	black ##list ##ed
+blooming	iso-mlgt	0	bloom ##ing
+bluemax	qgis-manual	0	blue ##max
+boggs	qgis-gui	0	bog ##gs
+bookmarking	qgis-manual	0	book ##mark ##ing
+boreal	iate	0	bore ##al
+boresight	iso-mlgt	0	bore ##sight
+boundingvolume	qgis-gui	0	bound ##ing ##vo ##lum ##e
+brighten	qgis-gui	0	bright ##en
+broadside	iso-mlgt	0	broad ##side
+brulee	qgis-gui	0	br ##ule ##e
+bspline	qgis-gui	0	bs ##plin ##e
+btgp	qgis-manual	0	bt ##gp
+budac	qgis-gui	0	bud ##ac
+c0fc71c241cdebb6e888cbac0e2b68eb	qgis-gui	0	c ##0 ##fc ##7 ##1 ##c ##24 ##1 ##cd ##eb ##b ##6 ##e ##8 ##8 ##8 ##cb ##ac ##0 ##e ##2 ##b ##6 ##8 ##eb
+c1de038cc3d09fdd512e99f9dd9922efadc39ed21d3922e69a4305cc25506033aee388e554b78714c8734f9cd7e610	qgis-gui	0	c1 ##de ##0 ##38 ##cc ##3d ##0 ##9 ##f ##dd ##51 ##2 ##e ##9 ##9 ##f ##9 ##dd ##9 ##9 ##22 ##ef ##ad ##c ##39 ##ed ##21 ##d ##39 ##22 ##e ##6 ##9 ##a ##43 ##0 ##5 ##cc ##25 ##50 ##60 ##33 ##ae ##e ##38 ##8 ##e ##55 ##4 ##b ##7 ##8 ##7 ##14 ##c ##8 ##7 ##34 ##f ##9 ##cd ##7 ##e ##6 ##10
+c520aa6815392de24087f61b2ae0fd56abbfeee4a8ca019c1011d327c577e	qgis-gui	0	c ##52 ##0 ##aa ##6 ##8 ##15 ##39 ##2 ##de ##24 ##0 ##8 ##7 ##f ##6 ##1 ##b ##2 ##ae ##0 ##f ##d ##56 ##ab ##bf ##ee ##e ##4 ##a ##8 ##ca ##01 ##9 ##c ##10 ##11 ##d ##32 ##7 ##c ##57 ##7 ##e
+c57a3aed9d856fa04e5eeee9b62b6e027cca81ba574116d3cc1f0d48a1ef9e5886ff463ea8d0fac772ee473bf92f810d	qgis-gui	0	c ##57 ##a ##3 ##ae ##d ##9 ##d ##85 ##6 ##fa ##0 ##4 ##e ##5 ##ee ##ee ##9 ##b ##6 ##2 ##b ##6 ##e ##0 ##27 ##cca ##8 ##1 ##ba ##57 ##41 ##16 ##d ##3 ##cc ##1 ##f ##0 ##d ##48 ##a1 ##ef ##9 ##e ##58 ##86 ##ff ##46 ##3 ##ea ##8 ##d ##0 ##fa ##c ##7 ##7 ##2 ##ee ##47 ##3 ##bf ##9 ##2 ##f ##8 ##10 ##d
+caretline	qgis-gui	0	care ##tl ##ine
+cartobibliography	iate	0	cart ##ob ##ib ##lio ##graphy
+cellhd	qgis-gui	0	cell ##hd
+centimorgan	iate	0	cent ##imo ##rgan
+certs	qgis-gui	0	ce ##rts
+cfloat32	qgis-gui	0	cfl ##oat ##32
+cfloat64	qgis-gui	0	cfl ##oat ##64
+chamberlin	qgis-gui	0	chamber ##lin
+changefeatures	qgis-gui	0	change ##fe ##at ##ures
+changegeometries	qgis-gui	0	change ##ge ##ome ##tries
+chorographic	iate	0	cho ##ro ##graphic
+chugiak	qgis-gui	0	chu ##gia ##k
+cigi	iate	0	ci ##gi
+cigir	iate	0	ci ##gi ##r
+cint16	qgis-gui	0	ci ##nt ##16
+cint32	qgis-gui	0	ci ##nt ##32
+circque	iate	0	ci ##rc ##que
+circularstringm	qgis-gui	0	circular ##st ##ring ##m
+circularstringz	qgis-gui	0	circular ##st ##ring ##z
+circularstringzm	qgis-gui	0	circular ##st ##ring ##z ##m
+citext	qgis-gui	0	cite ##xt
+clob	qgis-gui	0	cl ##ob
+clump	qgis-gui	0	cl ##ump
+clumped	qgis-gui	0	cl ##ump ##ed
+clumps	qgis-gui	0	cl ##ump ##s
+cmyka	qgis-gui	0	cm ##yk ##a
+cmykf	qgis-gui	0	cm ##yk ##f
+coboundary	iso-mlgt	0	co ##bound ##ary
+codepage	qgis-gui	0	code ##page
+coercion	iso-mlgt	0	coe ##rc ##ion
+collignon	qgis-gui	0	col ##li ##gnon
+colorise	qgis-gui	0	color ##ise
+complextype	qgis-gui	0	complex ##type
+compoundcurvem	qgis-gui	0	compound ##cu ##r ##ve ##m
+compoundcurvez	qgis-gui	0	compound ##cu ##r ##vez
+compoundcurvezm	qgis-gui	0	compound ##cu ##r ##vez ##m
+computerised	iate	0	computer ##ised
+computerized	iate	0	computer ##ized
+concatenator	qgis-gui	0	con ##cate ##nator
+concavehullofpolygons	qgis-gui	0	con ##cave ##hul ##lo ##fp ##ol ##y ##gon ##s
+conditionals	qgis-gui	0	conditional ##s
+conformance	iso-mlgt,qgis-gui	0	conform ##ance
+conformity	iso-mlgt	0	conform ##ity
+connectedness	qgis-gui	0	connected ##ness
+connectednode	qgis-gui	0	connected ##no ##de
+constraineddelaunaytriangulation	qgis-gui	0	constrained ##del ##au ##nay ##tri ##ang ##ulation
+contourline	iate	0	con ##tour ##line
+coor	qgis-gui	0	co ##or
+couchdb	qgis-gui	0	couch ##db
+counterclockwise	qgis-gui	0	counter ##cl ##ock ##wise
+craster	qgis-gui	0	cr ##aster
+createinstance	qgis-gui	0	create ##ins ##tance
+createopt	qgis-gui	0	create ##op ##t
+createuuid	qgis-gui	0	create ##u ##uid
+createvectorlayerexporterdestinationuri	qgis-gui	0	create ##ve ##ctor ##layer ##ex ##port ##er ##des ##tina ##tion ##uri
+createvectortable	qgis-gui	0	create ##ve ##ctor ##table
+creme	qgis-gui	0	cr ##eme
+csvt	qgis-manual	0	cs ##v ##t
+ctid	qgis-gui	0	ct ##id
+culling	qgis-gui	0	cu ##lling
+currentfeature	qgis-gui	0	current ##fe ##at ##ure
+curvepolygon	qgis-gui	0	curve ##pol ##y ##gon
+curvepolygonm	qgis-gui	0	curve ##pol ##y ##gon ##m
+curvepolygonz	qgis-gui	0	curve ##pol ##y ##gon ##z
+curvepolygonzm	qgis-gui	0	curve ##pol ##y ##gon ##z ##m
+customcomment	qgis-gui	0	custom ##com ##ment
+customtolerance	qgis-gui	0	custom ##to ##ler ##ance
+cvdev	qgis-gui	0	cv ##dev
+cwed	qgis-gui	0	cw ##ed
+cytogenetic	iate	0	cy ##to ##gen ##etic
+d09cmg	qgis-gui	0	d ##0 ##9 ##cm ##g
+d4ba4cb366a1	qgis-gui	0	d ##4 ##ba ##4 ##cb ##36 ##6 ##a1
+da1e77679e9a65f60d7ead961b287977823144786386eb43647b0901fd8516fa6f1b9d243fb3f28775e6dde6107	qgis-gui	0	da ##1 ##e ##7 ##7 ##6 ##7 ##9 ##e ##9 ##a ##65 ##f ##60 ##d ##7 ##ead ##9 ##6 ##1 ##b ##28 ##7 ##9 ##7 ##7 ##8 ##23 ##14 ##47 ##86 ##38 ##6 ##eb ##43 ##64 ##7 ##b ##0 ##90 ##1 ##f ##d ##85 ##16 ##fa ##6 ##f ##1 ##b ##9 ##d ##24 ##3 ##fb ##3 ##f ##28 ##7 ##75 ##e ##6 ##dd ##e ##6 ##10 ##7
+dasharray	qgis-gui	0	dash ##ar ##ray
+datablade	qgis-gui	0	data ##bla ##de
+datalogger	qgis-manual	0	data ##log ##ger
+datastreamrelations	qgis-gui	0	data ##stream ##rel ##ations
+dateline	qgis-gui	0	date ##line
+dcell	qgis-gui	0	dc ##ell
+dddd	qgis-gui	0	dd ##dd
+decelerating	qgis-gui	0	dec ##ele ##rating
+decimates	qgis-gui	0	dec ##imate ##s
+decimeters	qgis-gui	0	dec ##imeters
+decipher	qgis-gui	0	dec ##ip ##her
+decorating	qgis-manual	0	decor ##ating
+deg2	qgis-gui	0	de ##g ##2
+deg3	qgis-gui	0	de ##g ##3
+degeneratepolygon	qgis-gui	0	de ##gen ##erate ##pol ##y ##gon
+deletable	qgis-gui	0	del ##eta ##ble
+demarcated	iate	0	dem ##ar ##cated
+denoise	qgis-gui	0	den ##oise
+denoyer	qgis-gui	0	den ##oy ##er
+depressionless	qgis-gui	0	depression ##less
+deserialize	qgis-gui	0	des ##eria ##li ##ze
+designates	qgis-gui	0	designate ##s
+dest	qgis-gui	0	des ##t
+deviates	qgis-gui	0	devi ##ates
+diacritic	qgis-gui	0	dia ##cr ##itic
+diagrammatic	iate	0	diagram ##matic
+dielectric	qgis-gui	0	die ##le ##ctric
+dihydrogen	iate	0	di ##hy ##dro ##gen
+dihydrogenorthophosphate	iate	0	di ##hy ##dro ##gen ##orth ##op ##hos ##phate
+dimalign	qgis-gui	0	dim ##ali ##gn
+dimangular3p	qgis-gui	0	dim ##ang ##ular ##3 ##p
+dimdiametric	qgis-gui	0	dim ##dia ##metric
+dimordinal	qgis-gui	0	dim ##ord ##inal
+dimradial	qgis-gui	0	dim ##rad ##ial
+dirichlet	qgis-gui	0	dir ##ich ##let
+disconnect	qgis-gui	0	disco ##nne ##ct
+disp	qgis-gui	0	di ##sp
+dither	qgis-gui	0	di ##ther
+dividend	qgis-gui	0	divide ##nd
+dnorm	qgis-gui	0	d ##nor ##m
+dods	qgis-gui	0	dod ##s
+downgradeable	qgis-gui	0	down ##grade ##able
+dsco	qgis-gui	0	ds ##co
+dsnu	iso-mlgt	0	ds ##nu
+dssi	qgis-gui	0	ds ##si
+dstnodata	qgis-gui	0	ds ##t ##no ##da ##ta
+dufour	qgis-gui	0	du ##fo ##ur
+duplicatenodes	qgis-gui	0	duplicate ##no ##des
+eb045cba7a797aaa06ac58830846e40c8e8c780bc0676d3393605fae50c05309	qgis-gui	0	e ##b ##0 ##45 ##cb ##a ##7 ##a ##7 ##9 ##7 ##aa ##a ##0 ##6 ##ac ##58 ##8 ##30 ##8 ##46 ##e ##40 ##c ##8 ##e ##8 ##c ##7 ##80 ##bc ##0 ##6 ##7 ##6 ##d ##33 ##9 ##36 ##0 ##5 ##fa ##e ##50 ##c ##0 ##53 ##0 ##9
+eckert	qgis-gui	0	ec ##ker ##t
+edgedensity	qgis-gui	0	edged ##ens ##ity
+edgedetection	qgis-gui	0	edged ##ete ##ction
+eigl	iate	0	e ##ig ##l
+ellipsoids	qgis-gui	0	el ##lip ##so ##ids
+elliptically	qgis-gui	0	elliptical ##ly
+emissive	qgis-gui	0	emi ##ssi ##ve
+emsa1	qgis-gui	0	ems ##a1
+emsa3	qgis-gui	0	ems ##a ##3
+encipher	qgis-gui	0	en ##ci ##pher
+encipherment	qgis-gui	0	en ##ci ##pher ##ment
+enclose	qgis-gui	0	en ##cl ##ose
+endlessly	qgis-gui	0	endless ##ly
+enterupdatemode	qgis-gui	0	enter ##up ##date ##mo ##de
+entwine	qgis-gui	0	en ##t ##wine
+epicycloidal	qgis-gui	0	epic ##y ##cl ##oid ##al
+equalized	qgis-gui	0	equal ##ized
+equates	qgis-gui	0	e ##qua ##tes
+equidistantly	qgis-gui	0	e ##qui ##dis ##tan ##tly
+erodibility	qgis-gui	0	er ##od ##ibility
+erosivity	qgis-gui	0	er ##osi ##vity
+escambia	iate	0	es ##cam ##bia
+eumorphic	qgis-gui	0	eu ##morphic
+eurogi	iate	0	euro ##gi
+exageration	qgis-gui	0	ex ##ager ##ation
+exceptioncode	qgis-gui	0	exception ##code
+exponentially	qgis-gui	0	exponential ##ly
+exponentiation	qgis-gui	0	expo ##nent ##iation
+extrapolate	qgis-gui	0	extra ##pol ##ate
+extrapolating	qgis-gui	0	extra ##pol ##ating
+extrema	qgis-gui	0	ex ##tre ##ma
+extremum	qgis-gui	0	ex ##tre ##mum
+extrusionheight	qgis-gui	0	ex ##tr ##usion ##hei ##ght
+f001	qgis-gui	0	f ##00 ##1
+f157	qgis-gui	0	f1 ##57
+f49a5039e7280d5d42fd433e80d203439e338eaabd701f0d6c17d	qgis-gui	0	f ##49 ##a ##50 ##39 ##e ##7 ##28 ##0 ##d ##5 ##d ##42 ##f ##d ##43 ##3 ##e ##80 ##d ##20 ##34 ##39 ##e ##33 ##8 ##ea ##ab ##d ##70 ##1 ##f ##0 ##d ##6 ##c ##17 ##d
+f7354b6b8a6e735f2845250f15f4f3ba4f666c55574d9e9354575de0e980f	qgis-gui	0	f ##7 ##35 ##4 ##b ##6 ##b ##8 ##a ##6 ##e ##7 ##35 ##f ##28 ##45 ##25 ##0 ##f ##15 ##f ##4 ##f ##3 ##ba ##4 ##f ##66 ##6 ##c ##55 ##57 ##4 ##d ##9 ##e ##9 ##35 ##45 ##75 ##de ##0 ##e ##9 ##80 ##f
+f87cfb2b74cdd5867db913237024e7001e62b114	qgis-gui	0	f ##8 ##7 ##c ##fb ##2 ##b ##7 ##4 ##cd ##d ##58 ##6 ##7 ##db ##9 ##13 ##23 ##70 ##24 ##e ##70 ##01 ##e ##6 ##2 ##b ##11 ##4
+facies	iate	0	fa ##cies
+fahey	qgis-gui	0	fa ##hey
+fallbackfield	qgis-gui	0	fall ##back ##field
+falsification	iso-mlgt	0	fa ##ls ##ification
+fathoms	qgis-gui	0	fat ##hom ##s
+fcell	qgis-gui	0	fc ##ell
+fcnconverttimezone	qgis-gui	0	fc ##nco ##n ##vert ##time ##zone
+fcngettimezone	qgis-gui	0	fc ##nge ##tti ##me ##zone
+fcnsettimezone	qgis-gui	0	fc ##nse ##tti ##me ##zone
+fcntimezonefromid	qgis-gui	0	fc ##nti ##me ##zone ##fr ##omi ##d
+fcntimezonetoid	qgis-gui	0	fc ##nti ##me ##zone ##to ##id
+fdiagonal	qgis-gui	0	f ##dia ##gonal
+featuremode	qgis-gui	0	feature ##mo ##de
+featurerelations	qgis-gui	0	feature ##rel ##ations
+ff1f00102	qgis-gui	0	ff ##1 ##f ##00 ##10 ##2
+fhrm	iate	0	f ##hr ##m
+fielda	qgis-gui	0	field ##a
+fieldindex	qgis-gui	0	field ##ind ##ex
+filegeodatabase	qgis-gui	0	file ##ge ##oda ##ta ##base
+filewidget	qgis-gui	0	file ##wi ##dget
+finalizing	qgis-gui	0	final ##izing
+firebrand	qgis-gui	0	fire ##brand
+firstx	qgis-gui	0	first ##x
+firsty	qgis-gui	0	first ##y
+fixable	qgis-gui	0	fix ##able
+flatness	qgis-gui	0	flat ##ness
+flightgear	qgis-gui	0	flight ##ge ##ar
+floater	qgis-gui	0	float ##er
+fluorosensor	iate	0	flu ##oro ##sen ##sor
+fmeobjects	qgis-gui	0	fm ##eo ##b ##ject ##s
+formalism	iso-mlgt	0	formal ##ism
+formfeeds	qgis-gui	0	form ##fe ##ed ##s
+foucaut	qgis-gui	0	f ##ou ##ca ##ut
+fpar	qgis-gui	0	f ##par
+fpdems	qgis-gui	0	f ##pd ##em ##s
+frame001	qgis-gui	0	frame ##00 ##1
+freeform	qgis-gui	0	free ##form
+frgs	iate	0	fr ##gs
+friedrichs	qgis-gui	0	friedrich ##s
+funniness	qgis-gui	0	fun ##nine ##ss
+fuzzified	qgis-gui	0	fu ##zzi ##fied
+fuzzify	qgis-gui,qgis-manual	0	fu ##zzi ##fy
+garm	iate	0	ga ##rm
+gdal2tiles	qgis-gui	0	g ##dal ##2 ##tile ##s
+gdal2xyz	qgis-gui	0	g ##dal ##2 ##xy ##z
+gdalnumeric	qgis-gui	0	g ##dal ##num ##eric
+geiger	iso-mlgt,qgis-gui	0	ge ##iger
+geodetical	iate	0	geo ##de ##tical
+geodrm	iso-mlgt	0	geo ##dr ##m
+geog	qgis-gui	0	geo ##g
+geolicence	iso-mlgt	0	geo ##lice ##nce
+geometry1	qgis-gui	0	geometry ##1
+geometry2	qgis-gui	0	geometry ##2
+geometrycollection	qgis-gui	0	geometry ##coll ##ection
+geometrycollectionm	qgis-gui	0	geometry ##coll ##ection ##m
+geometrycollectionz	qgis-gui	0	geometry ##coll ##ection ##z
+geometrycollectionzm	qgis-gui	0	geometry ##coll ##ection ##z ##m
+geometrygroup	qgis-gui	0	geometry ##group
+geomfromgml	qgis-gui	0	geo ##m ##fr ##om ##gm ##l
+geonet	qgis-gui	0	geo ##net
+geopolitics	iate	0	geo ##pol ##itic ##s
+geopositioning	iso-mlgt	0	geo ##position ##ing
+georectified	iso-mlgt	0	geo ##re ##ct ##ified
+georeferenceable	iso-mlgt	0	geo ##re ##ference ##able
+getcapabilitiesurl	qgis-gui	0	get ##cap ##abi ##lit ##ies ##ur ##l
+getfeatureinfourl	qgis-gui	0	get ##fe ##at ##ure ##in ##fo ##ur ##l
+getlayerinfo	qgis-gui	0	get ##layer ##in ##fo
+getlegendgraphic	qgis-gui	0	get ##leg ##end ##graphic
+getmapurl	qgis-gui	0	get ##ma ##pur ##l
+getobjectids	qgis-gui	0	get ##ob ##ject ##ids
+getrecordbyidresponse	qgis-gui	0	get ##re ##cor ##db ##yi ##dre ##sp ##ons ##e
+getrecords	qgis-gui	0	get ##re ##cor ##ds
+gettableinfo	qgis-gui	0	get ##table ##in ##fo
+gettile	qgis-gui	0	get ##tile
+gettileurl	qgis-gui	0	get ##tile ##ur ##l
+gfcm	iate	0	g ##fc ##m
+ginsburg	qgis-gui	0	gin ##sburg
+gisbase	qgis-gui	0	gi ##sb ##ase
+gisdbase	qgis-gui	0	gi ##sd ##base
+gisrc	qgis-gui	0	gi ##sr ##c
+globalsettingsfile	qgis-gui	0	global ##sett ##ings ##fi ##le
+globular	qgis-gui	0	g ##lo ##bular
+gml2	qgis-gui	0	gm ##l ##2
+gnomonic	qgis-gui	0	g ##no ##mon ##ic
+godot	qgis-gui	0	god ##ot
+gooch	qgis-gui	0	goo ##ch
+gpcs	qgis-gui	0	gp ##cs
+gpsbabel	qgis-gui	0	gps ##ba ##bel
+gpsd	qgis-gui	0	gps ##d
+gpstrans	qgis-gui	0	gps ##tra ##ns
+gradians	qgis-gui	0	gr ##adia ##ns
+greifendorff	qgis-gui	0	gr ##ei ##fen ##dorff
+gridatb	qgis-gui	0	grid ##at ##b
+grinten	qgis-gui	0	grin ##ten
+groupbox	qgis-gui	0	group ##box
+gtrs	iso-mlgt	0	gt ##rs
+gugk	iate	0	gu ##g ##k
+gyroscope	iso-mlgt	0	g ##yr ##os ##cope
+hackfests	qgis-gui	0	hack ##fest ##s
+hairline	qgis-gui	0	hair ##line
+hapex	qgis-gui	0	ha ##pe ##x
+hatano	qgis-gui	0	hat ##ano
+heave	iso-mlgt	0	he ##ave
+heif	qgis-gui	0	he ##if
+hellohellohello	qgis-gui	0	hello ##hell ##oh ##ello
+helloxxxxx	qgis-gui	0	hello ##xx ##xx ##x
+heredoc	qgis-gui	0	here ##do ##c
+histograph	iate	0	his ##to ##graph
+homograph	iso-mlgt	0	homo ##graph
+homolosine	qgis-gui	0	homo ##los ##ine
+homomorphism	iso-mlgt	0	homo ##morphism
+homonym	iate	0	homo ##ny ##m
+homonymous	iate	0	homo ##ny ##mous
+homonymy	iso-mlgt	0	homo ##ny ##my
+homophone	iso-mlgt	0	homo ##phone
+hsebal01	qgis-gui	0	hs ##eb ##al ##01
+hsla	qgis-gui	0	hs ##la
+hslf	qgis-gui	0	hs ##lf
+hsva	qgis-gui	0	hs ##va
+hsvf	qgis-gui	0	hs ##v ##f
+hydrochemical	iate	0	hydro ##chemical
+hydrophone	iso-mlgt	0	hydro ##phone
+id128	qgis-gui	0	id ##12 ##8
+ifft	qgis-gui	0	if ##ft
+imageservice	qgis-gui	0	images ##er ##vic ##e
+inaccuracy	qgis-gui	0	ina ##cc ##ura ##cy
+inadvertent	qgis-gui	0	ina ##d ##vert ##ent
+incidout	qgis-gui	0	inc ##ido ##ut
+incirc	qgis-gui	0	inc ##ir ##c
+inconclusive	iso-mlgt	0	inc ##on ##clusive
+incubic	qgis-gui	0	inc ##ub ##ic
+indented	qgis-gui	0	ind ##ented
+inexpo	qgis-gui	0	in ##ex ##po
+infilt	qgis-gui	0	in ##fi ##lt
+infix	qgis-gui	0	in ##fi ##x
+informix	qgis-gui	0	inform ##ix
+ingres	qgis-gui	0	ing ##res
+initiator	qgis-gui	0	in ##itia ##tor
+initprocessing	qgis-gui	0	in ##it ##pro ##ces ##sing
+inoutcirc	qgis-gui	0	in ##out ##ci ##rc
+inoutcubic	qgis-gui	0	in ##out ##cu ##bic
+inoutexpo	qgis-gui	0	in ##out ##ex ##po
+inoutquad	qgis-gui	0	in ##out ##qua ##d
+inoutquart	qgis-gui	0	in ##out ##qua ##rt
+inoutquint	qgis-gui	0	in ##out ##quin ##t
+inoutsine	qgis-gui	0	in ##outs ##ine
+input1	qgis-gui	0	input ##1
+inputn	qgis-gui	0	input ##n
+inquad	qgis-gui	0	in ##qua ##d
+inquart	qgis-gui	0	in ##qua ##rt
+inquint	qgis-gui	0	in ##quin ##t
+insine	qgis-gui	0	ins ##ine
+insoltime	qgis-gui	0	ins ##olt ##ime
+instantiate	iso-mlgt,qgis-gui	0	instant ##iate
+insulator	qgis-gui	0	ins ##ulator
+insunits	qgis-gui	0	ins ##uni ##ts
+int16	qgis-gui	0	int ##16
+intension	iso-mlgt	0	int ##ens ##ion
+intercalibration	iate	0	inter ##cal ##ib ##ration
+interoperate	iso-mlgt	0	inter ##oper ##ate
+interquartilerange	qgis-gui	0	inter ##qua ##rti ##ler ##ange
+intervisibility	qgis-gui	0	inter ##vis ##ibility
+invalids	qgis-gui	0	invalid ##s
+ipsec	qgis-gui	0	ip ##se ##c
+ipsum	qgis-gui	0	ip ##sum
+irsa	iate	0	irs ##a
+isarithm	iate	0	isa ##rith ##m
+islr	iso-mlgt	0	is ##lr
+isobase	iate	0	iso ##base
+isogram	iate	0	iso ##gram
+isoheight	iate	0	iso ##hei ##ght
+isohyetal	iate	0	iso ##hy ##eta ##l
+isohypse	iate	0	iso ##hy ##pse
+isolatednode	qgis-gui	0	isolated ##no ##de
+isometry	iso-mlgt	0	iso ##metry
+isomorphic	iso-mlgt	0	iso ##morphic
+isomorphism	iso-mlgt	0	iso ##morphism
+isontic	iate	0	iso ##nti ##c
+isopercental	iate	0	iso ##per ##cent ##al
+isopleth	iate	0	iso ##ple ##th
+isopluvial	iate	0	iso ##pl ##u ##vial
+issuers	qgis-gui	0	issue ##rs
+itrs	iate	0	it ##rs
+iugg	iate	0	i ##ug ##g
+ixit	iso-mlgt	0	ix ##it
+jsonb	qgis-gui	0	j ##son ##b
+karnaugh	iate	0	ka ##rna ##ugh
+kauth	qgis-gui	0	ka ##uth
+kavraisky	qgis-gui	0	ka ##vr ##ais ##ky
+kceo	iate	0	kc ##eo
+keccak	qgis-gui	0	ke ##cca ##k
+keychain	qgis-gui	0	key ##chai ##n
+keystore	qgis-gui	0	keys ##tore
+laborde	qgis-gui	0	labor ##de
+landownership	iate	0	landowners ##hip
+landsat4	qgis-gui	0	lands ##at ##4
+larrivee	qgis-gui	0	la ##rri ##ve ##e
+laskowski	qgis-gui	0	las ##kowski
+lastx	qgis-gui	0	last ##x
+lasty	qgis-gui	0	last ##y
+launder	qgis-gui	0	lau ##nder
+layer1id	qgis-gui	0	layer ##1 ##id
+layer2id	qgis-gui	0	layer ##2 ##id
+layeroption	qgis-gui	0	layer ##op ##tion
+leaveupdatemode	qgis-gui	0	leave ##up ##date ##mo ##de
+legendgraphic	qgis-gui,qgis-manual	0	legend ##graphic
+legendurls	qgis-gui	0	legend ##ur ##ls
+levelling	iate	0	level ##ling
+lexical	iso-mlgt	0	lexi ##cal
+liblas	qgis-gui	0	li ##bla ##s
+libspatialite	qgis-gui	0	li ##bs ##pati ##ali ##te
+licensee	iso-mlgt	0	license ##e
+licensor	iso-mlgt	0	li ##cens ##or
+liminal	iso-mlgt	0	lim ##inal
+linearity	iso-mlgt	0	linear ##ity
+linearize	qgis-gui	0	linear ##ize
+lineburst	qgis-gui	0	line ##bu ##rst
+linestring25d	qgis-gui	0	lines ##tri ##ng ##25 ##d
+linestringzm	qgis-gui	0	lines ##tri ##ng ##z ##m
+linetypes	qgis-gui	0	line ##type ##s
+literals	qgis-gui	0	literal ##s
+liters	qgis-gui	0	liter ##s
+localname	iso-mlgt	0	local ##name
+lodz	qgis-gui	0	lo ##d ##z
+logarithm	qgis-gui	0	log ##ari ##th ##m
+logon	qgis-gui	0	logo ##n
+lorem	qgis-gui	0	lore ##m
+loximuthal	qgis-gui	0	lo ##xi ##mut ##hal
+loxodrome	iso-mlgt	0	lo ##x ##od ##rom ##e
+lpad	qgis-gui	0	lp ##ad
+lt95	qgis-gui	0	lt ##9 ##5
+lt97	qgis-gui	0	lt ##9 ##7
+lt98	qgis-gui	0	lt ##9 ##8
+ltrim	qgis-gui	0	lt ##rim
+lwir	qgis-gui	0	l ##wi ##r
+magneticmodels	qgis-gui	0	magnetic ##mo ##del ##s
+mailee	iso-mlgt	0	mail ##ee
+mailer	iso-mlgt	0	mail ##er
+makin	qgis-gui	0	ma ##kin
+mannings	qgis-gui	0	manning ##s
+mapgen	qgis-gui	0	map ##gen
+maptools	qgis-gui	0	map ##to ##ols
+maxlik	qgis-gui	0	max ##lik
+maxversion	qgis-gui	0	max ##version
+mbtile	qgis-gui	0	mb ##tile
+mcbryde	qgis-gui	0	mc ##bry ##de
+mcd43b2q	qgis-gui	0	mc ##d ##43 ##b ##2 ##q
+measurand	iso-mlgt	0	me ##as ##ura ##nd
+measuretool	qgis-gui	0	measure ##to ##ol
+metalanguage	iso-mlgt	0	metal ##ang ##ua ##ge
+metalness	qgis-gui	0	metal ##ness
+metamodel	iso-mlgt	0	meta ##mo ##del
+metaopt	qgis-gui	0	meta ##op ##t
+metaquality	iso-mlgt	0	meta ##qual ##ity
+metrological	iso-mlgt	0	metro ##logical
+microchips	iate	0	micro ##chi ##ps
+microtectonic	iate	0	micro ##tec ##tonic
+microtubule	iate	0	micro ##tub ##ule
+midflame	qgis-gui	0	mid ##fl ##ame
+millibars	qgis-gui	0	mill ##ibar ##s
+millirad	qgis-gui	0	mill ##ira ##d
+milliradians	qgis-gui	0	mill ##ira ##dian ##s
+mime	iso-mlgt,qgis-gui	0	mi ##me
+minmax	qgis-gui	0	min ##max
+minversion	qgis-gui	0	min ##version
+mitten	qgis-gui	0	mit ##ten
+mmmm	qgis-gui	0	mmm ##m
+mod09a1	qgis-gui	0	mod ##0 ##9 ##a1
+mod09q1	qgis-gui	0	mod ##0 ##9 ##q ##1
+modulus	qgis-gui	0	mod ##ulus
+molden	qgis-gui	0	mold ##en
+mollweide	qgis-gui	0	mo ##ll ##wei ##de
+monosemy	iso-mlgt	0	mono ##se ##my
+monospace	qgis-gui	0	mono ##space
+morphographic	iate	0	mor ##ph ##ographic
+mpeg	qgis-gui	0	mp ##eg
+msaa	qgis-gui	0	ms ##aa
+msecs	qgis-gui	0	ms ##ec ##s
+multicurvem	qgis-gui	0	multi ##cu ##r ##ve ##m
+multicurvez	qgis-gui	0	multi ##cu ##r ##vez
+multicurvezm	qgis-gui	0	multi ##cu ##r ##vez ##m
+multidatastream	qgis-gui	0	multi ##da ##tas ##tream
+multiframe	qgis-gui	0	multi ##frame
+multigeometry	qgis-gui	0	multi ##ge ##ome ##try
+multilinestring25d	qgis-gui	0	multi ##lines ##tri ##ng ##25 ##d
+multilinez	qgis-gui	0	multi ##line ##z
+multilinezm	qgis-gui	0	multi ##line ##z ##m
+multipatch	qgis-gui	0	multi ##pa ##tch
+multiplicity	iso-mlgt	0	multi ##plicity
+multipoint25d	qgis-gui	0	multi ##point ##25 ##d
+multipointm	qgis-gui	0	multi ##point ##m
+multipointzm	qgis-gui	0	multi ##point ##z ##m
+multipolygon25d	qgis-gui	0	multi ##pol ##y ##gon ##25 ##d
+multipolygonm	qgis-gui	0	multi ##pol ##y ##gon ##m
+multipolygonzm	qgis-gui	0	multi ##pol ##y ##gon ##z ##m
+multirectional	qgis-gui	0	multi ##re ##ction ##al
+multisample	qgis-gui	0	multi ##sam ##ple
+multisatellite	iate	0	multi ##sat ##elli ##te
+multisurfacem	qgis-gui	0	multi ##sur ##face ##m
+multisurfacez	qgis-gui	0	multi ##sur ##face ##z
+multisurfacezm	qgis-gui	0	multi ##sur ##face ##z ##m
+multithreaded	qgis-gui	0	multi ##th ##rea ##ded
+mwir	qgis-gui	0	mw ##ir
+mysite	qgis-gui	0	my ##sit ##e
+naclr	iate	0	na ##cl ##r
+narrowest	qgis-gui	0	narrow ##est
+nchar	qgis-gui	0	nc ##har
+nclob	qgis-gui	0	nc ##lo ##b
+nearblack	qgis-gui	0	near ##bla ##ck
+negation	qgis-gui	0	ne ##gation
+newlinestring	qgis-gui	0	new ##lines ##tri ##ng
+nicolosi	qgis-gui	0	nico ##los ##i
+nnss	iate	0	n ##ns ##s
+nodepages	qgis-gui	0	node ##page ##s
+nrel	qgis-gui	0	nr ##el
+nreport	qgis-gui	0	nr ##ep ##ort
+ntext	qgis-gui	0	nt ##ex ##t
+ntf2	qgis-gui	0	nt ##f ##2
+nullif	qgis-gui	0	null ##if
+nullraster	qgis-gui	0	null ##ras ##ter
+nurbscurve	qgis-gui	0	nur ##bs ##cu ##r ##ve
+nurbscurvem	qgis-gui	0	nur ##bs ##cu ##r ##ve ##m
+nurbscurvez	qgis-gui	0	nur ##bs ##cu ##r ##vez
+nurbscurvezm	qgis-gui	0	nur ##bs ##cu ##r ##vez ##m
+nvarchar	qgis-gui	0	n ##var ##cha ##r
+nviz	qgis-gui	0	n ##vi ##z
+nworld	qgis-gui	0	nw ##or ##ld
+oais	iso-mlgt	0	o ##ais
+oapi	qgis-gui	0	o ##ap ##i
+objectidfieldname	qgis-gui	0	object ##id ##field ##name
+objectids	qgis-gui	0	object ##ids
+oblated	qgis-gui	0	ob ##lated
+observationrelations	qgis-gui	0	observation ##rel ##ations
+observingprocedures	qgis-gui	0	observing ##pro ##ced ##ures
+occluded	qgis-gui	0	o ##cc ##lu ##ded
+ocsp	qgis-gui	0	o ##cs ##p
+oeuvre	qgis-gui	0	o ##eu ##vre
+offlineediting	qgis-gui	0	off ##line ##ed ##iting
+offsetting	qgis-gui	0	offset ##ting
+ogdi	qgis-gui	0	og ##di
+olleh	qgis-gui	0	ol ##le ##h
+openair	qgis-gui	0	open ##air
+openssl	qgis-gui	0	opens ##sl
+openstack	qgis-gui	0	opens ##ta ##ck
+operand	qgis-gui	0	opera ##nd
+operands	qgis-gui	0	opera ##nds
+operationresult	qgis-gui	0	operation ##res ##ult
+orderby	qgis-gui	0	order ##by
+ordinates	iate	0	or ##dina ##tes
+ortelius	qgis-gui	0	or ##tel ##ius
+orthogonalize	qgis-gui,qgis-manual	0	orthogonal ##ize
+orthogonalized	qgis-gui	0	orthogonal ##ized
+orthogonalizing	qgis-gui	0	orthogonal ##izing
+orthophotography	iate	0	or ##th ##op ##hot ##ography
+ossl	qgis-gui	0	os ##sl
+outcirc	qgis-gui	0	out ##ci ##rc
+outcubic	qgis-gui	0	out ##cu ##bic
+outexpo	qgis-gui	0	out ##ex ##po
+outincirc	qgis-gui	0	out ##in ##ci ##rc
+outincubic	qgis-gui	0	out ##in ##cu ##bic
+outinexpo	qgis-gui	0	out ##ine ##x ##po
+outinquad	qgis-gui	0	out ##in ##qua ##d
+outinquart	qgis-gui	0	out ##in ##qua ##rt
+outinquint	qgis-gui	0	out ##in ##quin ##t
+outinsine	qgis-gui	0	out ##ins ##ine
+outputtype	qgis-gui	0	output ##type
+outquad	qgis-gui	0	out ##qua ##d
+outquart	qgis-gui	0	out ##qua ##rt
+outquint	qgis-gui	0	out ##quin ##t
+outsine	qgis-gui	0	outs ##ine
+outwards	qgis-gui	0	outward ##s
+ouwership	iate	0	ou ##wer ##ship
+oversampling	qgis-gui	0	overs ##amp ##ling
+padcv	qgis-gui	0	pad ##c ##v
+padrange	qgis-gui	0	pad ##rang ##e
+padsd	qgis-gui	0	pads ##d
+paigh	iate	0	pa ##igh
+pannonian	iate	0	pan ##non ##ian
+parametrizable	qgis-manual	0	para ##met ##riz ##able
+partitive	iso-mlgt	0	part ##itive
+pascagoula	iate	0	pas ##ca ##go ##ula
+patchdensity	qgis-gui	0	patch ##den ##sity
+patchnum	qgis-gui	0	patch ##num
+pcpatch	qgis-gui	0	pc ##pa ##tch
+pdf4qt	qgis-gui	0	pdf ##4 ##q ##t
+peirce	qgis-gui	0	pei ##rce
+percentrank	qgis-gui,qgis-manual	0	percent ##rank
+perturbation	qgis-gui	0	per ##tur ##bation
+photogeography	iate	0	photo ##ge ##ography
+photogram	iate	0	photo ##gram
+photogrammetrical	iate	0	photo ##gram ##metric ##al
+physiognomy	iso-mlgt	0	ph ##ys ##io ##gno ##my
+picas	qgis-gui	0	pic ##as
+pielou	qgis-gui	0	pie ##lou
+pixmap	qgis-gui	0	pi ##x ##ma ##p
+plummet	iate	0	plum ##met
+png24	qgis-gui	0	p ##ng ##24
+png32	qgis-gui	0	p ##ng ##32
+png8	qgis-gui	0	p ##ng ##8
+point1	qgis-gui	0	point ##1
+point2	qgis-gui	0	point ##2
+point25d	qgis-gui	0	point ##25 ##d
+pointm	qgis-gui	0	point ##m
+pointzm	qgis-gui	0	point ##z ##m
+polyface	qgis-gui	0	poly ##face
+polygon25d	qgis-gui	0	poly ##gon ##25 ##d
+polygonm	qgis-gui	0	poly ##gon ##m
+polygonzm	qgis-gui	0	poly ##gon ##z ##m
+polyhedralsurface	qgis-gui	0	poly ##hedral ##sur ##face
+polyhedralsurfacem	qgis-gui	0	poly ##hedral ##sur ##face ##m
+polyhedralsurfacez	qgis-gui	0	poly ##hedral ##sur ##face ##z
+polyhedralsurfacezm	qgis-gui	0	poly ##hedral ##sur ##face ##z ##m
+polymorphism	iso-mlgt	0	poly ##morphism
+polysemy	iso-mlgt	0	poly ##se ##my
+postgresstringutils	qgis-gui	0	post ##gre ##ss ##tri ##ng ##uti ##ls
+povray	qgis-gui	0	po ##vr ##ay
+pqgetcancel	qgis-gui	0	p ##q ##get ##can ##cel
+pragmatic	iso-mlgt	0	pr ##ag ##matic
+predetermined	qgis-gui	0	pre ##de ##ter ##mined
+prefs	qgis-gui	0	pre ##fs
+preparationprocedures	qgis-gui	0	preparation ##pro ##ced ##ures
+preparationsteps	qgis-gui	0	preparations ##te ##ps
+presimplify	qgis-gui	0	pre ##si ##mp ##li ##fy
+priestley	qgis-gui	0	priest ##ley
+printf	qgis-gui	0	print ##f
+priori	iso-mlgt	0	prior ##i
+prnu	iso-mlgt	0	pr ##nu
+processcommands	qgis-gui	0	process ##com ##man ##ds
+processinputs	qgis-gui	0	process ##in ##put ##s
+projwin	qgis-gui	0	pro ##j ##win
+propertyisbetween	qgis-gui	0	property ##is ##bet ##wee ##n
+propertyname	qgis-gui	0	property ##name
+propertyseq	qgis-gui	0	property ##se ##q
+protonopia	qgis-gui	0	proton ##op ##ia
+protracting	iate	0	pro ##tra ##cting
+proximate	iso-mlgt	0	pro ##xi ##mate
+pseudos	qgis-gui	0	pseudo ##s
+pslr	iso-mlgt	0	ps ##lr
+pushbroom	iso-mlgt	0	push ##bro ##om
+pushbutton	qgis-gui	0	push ##bu ##tton
+putnins	qgis-gui	0	put ##nin ##s
+pyramidized	qgis-gui	0	pyramid ##ized
+pythagorean	iso-mlgt	0	p ##yt ##ha ##gor ##ean
+qdatetimeedit	qgis-gui	0	q ##date ##time ##ed ##it
+qgisapp	qgis-gui	0	q ##gis ##app
+qgscustomization	qgis-gui	0	q ##gs ##cus ##tom ##ization
+qgseditorwidgetregistry	qgis-gui	0	q ##gs ##ed ##itor ##wi ##dget ##re ##gist ##ry
+qgsprocessingfeaturesourcedefinition	qgis-gui	0	q ##gs ##pro ##ces ##sing ##fe ##at ##ures ##our ##cede ##fin ##ition
+qgsprocessingparameteralignrasterlayers	qgis-gui	0	q ##gs ##pro ##ces ##sing ##para ##meter ##ali ##gn ##ras ##ter ##layer ##s
+qgsprocessingparameterdxflayers	qgis-gui	0	q ##gs ##pro ##ces ##sing ##para ##meter ##d ##x ##fl ##ay ##ers
+qgsprocessingparametermeshdatasetgroups	qgis-gui	0	q ##gs ##pro ##ces ##sing ##para ##meter ##mes ##hd ##ata ##set ##group ##s
+qgsprocessingparametermeshdatasettime	qgis-gui	0	q ##gs ##pro ##ces ##sing ##para ##meter ##mes ##hd ##ata ##sett ##ime
+qgsprocessingparametertininputlayers	qgis-gui	0	q ##gs ##pro ##ces ##sing ##para ##meter ##tin ##in ##put ##layer ##s
+qgsprocessingparametervectortilewriterlayers	qgis-gui	0	q ##gs ##pro ##ces ##sing ##para ##meter ##ve ##ctor ##tile ##writer ##layer ##s
+qgssensorthingssourcewidgetbase	qgis-gui	0	q ##gs ##sen ##sor ##thing ##sso ##ur ##ce ##wi ##dget ##base
+qgssettingstreenamedlistnode	qgis-gui	0	q ##gs ##sett ##ings ##tree ##name ##dl ##ist ##no ##de
+qscintilla2	qgis-gui	0	q ##sc ##int ##illa ##2
+qtime	qgis-gui	0	q ##time
+quadrat	qgis-gui	0	quad ##rat
+quadrats	qgis-gui	0	quad ##rat ##s
+quadrilateralise	qgis-gui	0	quad ##ril ##ater ##alis ##e
+quadruplet	qgis-gui	0	quad ##rup ##let
+querylayer	qgis-gui	0	query ##layer
+quincuncial	qgis-gui	0	qui ##nc ##un ##cial
+quuid	qgis-gui	0	qu ##uid
+r0lgodlhaqabaaaaach5baekaaealaaaaaabaaeaaaiaow	qgis-gui	0	r ##0 ##l ##go ##dl ##ha ##qa ##ba ##aa ##aa ##ch ##5 ##ba ##eka ##aea ##la ##aa ##aa ##aba ##aea ##aa ##ia ##ow
+r150	qgis-gui	0	r ##15 ##0
+r163	qgis-gui	0	r ##16 ##3
+radiometer	iso-mlgt	0	radio ##meter
+randf	qgis-gui	0	rand ##f
+randomised	qgis-gui	0	random ##ised
+rarest	qgis-gui	0	rare ##st
+raster3d	qgis-gui	0	ras ##ter ##3d
+rayleigh	qgis-gui	0	ray ##leigh
+rcds	iate	0	rc ##ds
+rebalance	qgis-gui	0	re ##balance
+recalculating	qgis-gui	0	rec ##al ##cula ##ting
+recategorize	qgis-gui	0	rec ##ate ##gor ##ize
+recategorizes	qgis-gui	0	rec ##ate ##gor ##izes
+reclass	qgis-gui	0	rec ##lass
+recoded	qgis-gui	0	rec ##ode ##d
+recodes	qgis-gui	0	rec ##odes
+recombination	iate	0	rec ##om ##bina ##tion
+rectified	iate,iso-mlgt,qgis-gui	0	rec ##ti ##fied
+rectifies	qgis-gui	0	rec ##ti ##fies
+redirections	qgis-gui	0	red ##ire ##ctions
+reencrypt	qgis-gui	0	re ##en ##cr ##yp ##t
+referenceable	iso-mlgt	0	reference ##able
+referencingfieldidx	qgis-gui	0	referencing ##field ##id ##x
+reformatting	qgis-gui	0	reform ##att ##ing
+refreshable	qgis-gui	0	ref ##resh ##able
+refreshment	iso-mlgt	0	ref ##resh ##ment
+regenerates	qgis-gui	0	reg ##ener ##ates
+regularized	qgis-gui	0	regular ##ized
+regularizing	qgis-gui	0	regular ##izing
+reindex	qgis-gui	0	rein ##de ##x
+reindexing	qgis-manual	0	rein ##de ##xing
+reinstallable	qgis-gui	0	reins ##tal ##lab ##le
+reinterpolate	qgis-gui	0	rein ##ter ##pol ##ate
+reinterpolates	qgis-gui	0	rein ##ter ##pol ##ates
+relationroles	qgis-gui	0	relation ##rol ##es
+remappable	qgis-gui	0	re ##ma ##ppa ##ble
+remarking	iate	0	remark ##ing
+renyi	qgis-gui	0	ren ##yi
+reoriented	qgis-gui	0	re ##ori ##ented
+representvalue	qgis-gui	0	represent ##val ##ue
+repudiation	qgis-gui	0	rep ##udi ##ation
+rescales	qgis-gui	0	res ##cal ##es
+responsivity	iso-mlgt	0	res ##pon ##si ##vity
+retardation	qgis-gui	0	re ##tar ##dation
+retrievable	qgis-gui	0	re ##tri ##eva ##ble
+rgbf	qgis-gui	0	r ##gb ##f
+rhumb	iso-mlgt	0	r ##hum ##b
+rightmost	qgis-gui	0	right ##most
+ripemd160	qgis-gui	0	ripe ##md ##16 ##0
+roerink	qgis-gui	0	roe ##rin ##k
+romaneste	qgis-gui	0	roman ##est ##e
+rotationinfo	qgis-gui	0	rotation ##in ##fo
+rotationtype	qgis-gui	0	rotation ##type
+roussilhe	qgis-gui	0	ro ##uss ##il ##he
+rpad	qgis-gui	0	r ##pad
+rtrim	qgis-gui	0	rt ##rim
+sampler	iso-mlgt,qgis-gui	0	sample ##r
+samplers	qgis-gui	0	sample ##rs
+samplingprocedures	qgis-gui	0	sampling ##pro ##ced ##ures
+samplings	qgis-gui	0	sampling ##s
+savepoint	qgis-gui	0	save ##point
+scalebars	qgis-gui	0	scale ##bar ##s
+scansar	iso-mlgt	0	scans ##ar
+schreiber	qgis-gui	0	sc ##hre ##ibe ##r
+sdts	qgis-gui	0	sd ##ts
+secretaccesskey	qgis-gui	0	secret ##ac ##ces ##ske ##y
+secs	qgis-gui	0	sec ##s
+secureprotocols	qgis-gui	0	secure ##pro ##to ##col ##s
+segmax	qgis-gui	0	se ##gm ##ax
+segmentize	qgis-gui,qgis-manual	0	segment ##ize
+semiconductors	iate	0	semiconductor ##s
+serg	iate	0	ser ##g
+serially	qgis-gui	0	serial ##ly
+serverclassfactory	qgis-gui	0	server ##class ##factory
+set1	qgis-gui	0	set ##1
+set2	qgis-gui	0	set ##2
+setfeature	qgis-gui	0	set ##fe ##at ##ure
+setx	qgis-gui	0	set ##x
+sgdbe	iate	0	sg ##db ##e
+sha1	qgis-gui	0	sha ##1
+sha224	qgis-gui	0	sha ##22 ##4
+sha3	qgis-gui	0	sha ##3
+sha384	qgis-gui	0	sha ##38 ##4
+sha512	qgis-gui	0	sha ##51 ##2
+shadowing	qgis-gui	0	shadow ##ing
+shapeburst	qgis-gui	0	shape ##bu ##rst
+shininess	qgis-gui	0	shin ##iness
+sidelobe	iso-mlgt	0	side ##lo ##be
+sidereal	qgis-gui	0	side ##real
+sieved	qgis-gui	0	si ##eve ##d
+simwe	qgis-gui	0	sim ##we
+sinusoidal	qgis-gui	0	sin ##uso ##idal
+sketchshowing	iate	0	sketch ##sho ##wing
+skipnodata	qgis-gui	0	skip ##no ##da ##ta
+skybox	qgis-gui,qgis-manual	0	sky ##box
+smallint	qgis-gui	0	small ##int
+snaptogrid	qgis-gui	0	snap ##to ##gr ##id
+socks5	qgis-gui	0	socks ##5
+solarized	qgis-gui	0	solar ##ized
+solpos	qgis-gui	0	sol ##po ##s
+solute	qgis-gui	0	sol ##ute
+solvable	qgis-gui	0	sol ##vable
+sorter	qgis-gui	0	sort ##er
+spacer	qgis-gui	0	space ##r
+spacestamp	iso-mlgt	0	spaces ##tam ##p
+spanningtree	qgis-gui	0	spanning ##tree
+spatialmetadata	qgis-gui	0	spatial ##met ##ada ##ta
+specular	qgis-gui	0	spec ##ular
+spilhaus	qgis-gui	0	sp ##il ##haus
+spillover	iso-mlgt	0	spill ##over
+spokes	qgis-gui	0	spoke ##s
+squint	iso-mlgt	0	sq ##uin ##t
+srcnodata	qgis-gui	0	sr ##c ##no ##da ##ta
+srocks	qgis-gui	0	sr ##ocks
+sshould	qgis-gui	0	ss ##ho ##uld
+stabilizing	qgis-gui	0	stab ##ili ##zing
+staleness	qgis-gui	0	stale ##ness
+stbd	qgis-gui	0	st ##b ##d
+steppic	iate	0	step ##pic
+stereophotogrammetry	iate	0	stereo ##ph ##oto ##gram ##metry
+stereorestitution	iate	0	stereo ##rest ##it ##ution
+stereotype	iso-mlgt	0	stereo ##type
+stererographics	qgis-gui	0	ste ##rer ##ographic ##s
+strikeout	qgis-gui	0	strike ##out
+stripmap	iso-mlgt	0	strip ##ma ##p
+strpos	qgis-gui	0	st ##rp ##os
+subcomplex	iso-mlgt	0	sub ##com ##plex
+subdiagram	qgis-gui	0	sub ##dia ##gram
+subelement	iso-mlgt	0	sub ##ele ##ment
+sublicensee	iso-mlgt	0	sub ##lice ##nse ##e
+submatrix	qgis-gui	0	sub ##mat ##rix
+subnets	qgis-gui	0	sub ##nets
+subranges	qgis-gui	0	sub ##rang ##es
+subregister	iso-mlgt	0	sub ##re ##gist ##er
+subsections	qgis-gui	0	sub ##section ##s
+substitutability	iso-mlgt	0	sub ##sti ##tu ##ta ##bility
+substitutions	qgis-gui	0	substitution ##s
+subtree	qgis-gui	0	sub ##tree
+subunits	qgis-gui	0	subunit ##s
+sunmask	qgis-gui	0	sun ##mas ##k
+superimposed	iate	0	super ##im ##posed
+superordinate	iso-mlgt	0	super ##ord ##inate
+superscript	qgis-gui	0	super ##script
+supersession	iso-mlgt	0	super ##ses ##sion
+symdiff	qgis-gui	0	sy ##md ##iff
+synonymy	iso-mlgt	0	synonym ##y
+tableuri	qgis-gui	0	table ##uri
+tabulate	qgis-gui	0	tab ##ulate
+tabulates	qgis-gui	0	tab ##ulates
+tangential	iso-mlgt,qgis-gui	0	tangent ##ial
+tangents	qgis-gui	0	tangent ##s
+tapered	qgis-gui,qgis-manual	0	tape ##red
+tcity	qgis-gui	0	tc ##ity
+tectonical	iate	0	te ##cton ##ical
+terminological	iso-mlgt	0	term ##ino ##logical
+terse	qgis-gui	0	ter ##se
+tessellates	qgis-gui	0	tess ##ella ##tes
+testxxzx	qgis-gui	0	test ##xx ##z ##x
+textlabel	qgis-gui	0	text ##lab ##el
+textural	qgis-gui	0	text ##ural
+thingrelations	qgis-gui	0	thing ##rel ##ations
+thinness	qgis-gui	0	thin ##ness
+tilemap	qgis-gui	0	tile ##ma ##p
+tilerequest	qgis-gui	0	tile ##re ##quest
+tileset	qgis-gui	0	tiles ##et
+tilings	qgis-gui	0	til ##ings
+tinm	qgis-gui	0	tin ##m
+tinyint	qgis-gui	0	tiny ##int
+tinz	qgis-gui	0	tin ##z
+tinzm	qgis-gui	0	tin ##z ##m
+tlsv1	qgis-gui	0	t ##ls ##v ##1
+tnsnames	qgis-gui	0	tn ##s ##name ##s
+topidxstats	qgis-gui	0	top ##id ##x ##sta ##ts
+topmodel	qgis-gui	0	top ##mo ##del
+topocentric	qgis-gui	0	top ##oc ##ent ##ric
+topocolor	qgis-gui	0	top ##oco ##lor
+topogeometry	qgis-gui	0	top ##oge ##ome ##try
+tostring	qgis-gui	0	to ##st ##ring
+toucher	qgis-gui	0	touch ##er
+transducer	iso-mlgt	0	trans ##du ##cer
+transmissivity	qgis-gui	0	trans ##mis ##si ##vity
+transmissivitymap	qgis-gui	0	trans ##mis ##si ##vity ##ma ##p
+trianglem	qgis-gui	0	triangle ##m
+trianglestrips	qgis-gui	0	triangles ##trip ##s
+trianglez	qgis-gui	0	triangle ##z
+trianglezm	qgis-gui	0	triangle ##z ##m
+triangulate	qgis-gui,qgis-manual	0	tri ##ang ##ulate
+trilinear	qgis-gui	0	tri ##line ##ar
+trimetric	qgis-gui	0	trim ##et ##ric
+tripel	qgis-gui	0	trip ##el
+triweight	qgis-gui	0	tri ##weight
+tsniigaik	qgis-gui	0	ts ##ni ##iga ##ik
+tuples	qgis-gui	0	tu ##ples
+tykhonov	qgis-gui	0	ty ##kh ##ono ##v
+typeoption	qgis-gui	0	type ##op ##tion
+udac	qgis-gui	0	ud ##ac
+unary	qgis-gui	0	una ##ry
+unbalanced	qgis-gui	0	un ##balance ##d
+uncounted	qgis-gui	0	un ##co ##unt ##ed
+unencoded	qgis-gui	0	une ##nco ##ded
+unenforced	qgis-gui	0	une ##n ##force ##d
+unformatted	qgis-gui	0	un ##form ##att ##ed
+ungegn	iate	0	un ##ge ##gn
+unicity	qgis-gui	0	un ##ici ##ty
+unjoinable	qgis-gui	0	un ##jo ##ina ##ble
+unlit	qgis-gui	0	un ##lit
+unmatching	qgis-gui	0	un ##mat ##ching
+unmerge	qgis-gui	0	un ##mer ##ge
+unpinned	qgis-gui	0	un ##pin ##ned
+unpublish	qgis-gui	0	un ##pu ##bl ##ish
+unqualified	iso-mlgt	0	un ##qual ##ified
+unreal	qgis-gui	0	un ##real
+unregisters	qgis-gui	0	un ##re ##gist ##ers
+untwine	qgis-gui	0	un ##t ##wine
+uors	qgis-gui	0	u ##ors
+upwinding	qgis-gui	0	up ##wind ##ing
+urlencoded	qgis-gui	0	ur ##len ##code ##d
+urmaev	qgis-gui	0	ur ##ma ##ev
+usergroup	qgis-gui	0	user ##group
+uudjuw	qgis-gui	0	u ##ud ##ju ##w
+vacuuming	qgis-gui	0	vacuum ##ing
+valmiera	qgis-gui	0	val ##mie ##ra
+valueexpression	qgis-gui	0	value ##ex ##press ##ion
+varbinary	qgis-gui	0	var ##bina ##ry
+varchar2	qgis-gui	0	var ##cha ##r ##2
+vars	qgis-gui	0	var ##s
+vectortileserver	qgis-gui	0	vector ##tile ##ser ##ver
+vicarious	iso-mlgt	0	vicar ##ious
+visualvariable	qgis-gui	0	visual ##var ##iable
+vitkovsky	qgis-gui	0	vi ##t ##kovsky
+vlayer	qgis-gui	0	v ##layer
+vpcs	qgis-gui	0	vp ##cs
+vrml	qgis-gui	0	vr ##ml
+vsifilehandler	qgis-gui	0	vs ##if ##ile ##hand ##ler
+vtpk	qgis-gui	0	vt ##p ##k
+werenskiold	qgis-gui	0	weren ##ski ##old
+wfs3	qgis-gui	0	w ##fs ##3
+whereoption	qgis-gui	0	where ##op ##tion
+whiskbroom	iso-mlgt	0	w ##his ##k ##bro ##om
+widest	qgis-gui	0	wide ##st
+windfield	iate	0	wind ##field
+withbraces	qgis-gui	0	with ##bra ##ces
+withoutbraces	qgis-gui	0	without ##bra ##ces
+wordwrap	qgis-gui	0	word ##wr ##ap
+worl	qgis-gui	0	wo ##rl
+writeowner	qgis-gui	0	write ##own ##er
+x1189	qgis-gui	0	x ##11 ##8 ##9
+x210	qgis-gui	0	x ##21 ##0
+x256	qgis-gui	0	x ##25 ##6
+x297	qgis-gui	0	x ##29 ##7
+x420	qgis-gui	0	x ##42 ##0
+x512	qgis-gui	0	x ##51 ##2
+xline	qgis-gui	0	xl ##ine
+xmpp	qgis-gui	0	x ##mp ##p
+xxxxxhello	qgis-gui	0	xx ##xx ##x ##hell ##o
+yds3	qgis-gui	0	yd ##s ##3
+zeroes	qgis-gui	0	zero ##es
+zevenbergenthorne	qgis-gui	0	zev ##enberg ##ent ##horn ##e
+zoogeography	iate	0	zoo ##ge ##ography
+zzzytest	qgis-gui	0	z ##zzy ##test

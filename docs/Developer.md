@@ -36,7 +36,8 @@ branch "embeddings"                            QGIS
 
 The model is a **static token embedding** (model2vec style):
 [minishlab/potion-base-8M](https://huggingface.co/minishlab/potion-base-8M),
-MIT licensed and distilled from the Apache-2.0 all-MiniLM-L6-v2, converted
+MIT licensed, distilled from the MIT licensed BAAI/bge-base-en-v1.5 and
+trained further with Tokenlearn (per its model card), converted
 into a compressed int8 matrix of token vectors with one global scale
 (`.npz`, about 6 MB, 29528 tokens × 256 dimensions). The revision and file
 checksum are pinned. One scale for the whole table keeps released plugin

@@ -115,4 +115,6 @@ from the project model into [docs/Specification.md](docs/Specification.md).
 [MIT](LICENSE), compatible with the GPLv2-or-later requirement for QGIS
 plugins. The search model is
 [minishlab/potion-base-8M](https://huggingface.co/minishlab/potion-base-8M)
-(MIT), distilled from all-MiniLM-L6-v2 (Apache-2.0).
+(MIT), distilled from
+[BAAI/bge-base-en-v1.5](https://huggingface.co/BAAI/bge-base-en-v1.5) (MIT)
+and trained further with Tokenlearn.
