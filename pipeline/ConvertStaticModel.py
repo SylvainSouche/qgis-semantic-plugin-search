@@ -73,13 +73,25 @@ def writeNpz(
     dim: int,
     licenseNote: str,
     sourceModel: str,
+    dtype: str = "int8",
 ) -> None:
+    """Write the model; int8 uses one global scale (see StaticModelLoader)."""
     order = sorted(vocab.items(), key=lambda item: item[1])
     tokens = np.array([token for token, _ in order], dtype=np.str_)
-    matrix = np.zeros((len(tokens), dim), dtype=np.float16)
+    matrix = np.zeros((len(tokens), dim), dtype=np.float32)
     for position, (_, index) in enumerate(order):
         if index < len(vectors):
             matrix[position] = vectors[index]
+    extra: dict = {"dtype": dtype}
+    if dtype == "int8":
+        peak = float(np.abs(matrix).max()) or 1.0
+        scale = peak / 127.0
+        matrix = np.clip(np.round(matrix / scale), -127, 127).astype(np.int8)
+        extra["scale"] = scale
+    elif dtype == "float16":
+        matrix = matrix.astype(np.float16)
+    else:
+        raise ValueError(f"unsupported dtype {dtype!r}")
     meta = json.dumps(
         {
             "format": FORMAT_ID,
@@ -88,10 +100,11 @@ def writeNpz(
             "dim": dim,
             "license": licenseNote,
             "source_model": sourceModel,
+            **extra,
         }
     )
     outputPath.parent.mkdir(parents=True, exist_ok=True)
-    np.savez(
+    np.savez_compressed(
         outputPath,
         **{KEY_TOKENS: tokens, KEY_VECTORS: matrix, KEY_META: np.array(meta)},
     )
@@ -113,6 +126,8 @@ def main(argv: list[str] | None = None) -> int:
         default="Commercial use allowed; see source model license",
     )
     parser.add_argument("--source-model", default="")
+    parser.add_argument("--dtype", choices=("int8", "float16"), default="int8",
+                        help="Token table precision (int8: one global scale)")
     args = parser.parse_args(argv)
 
     modelDir = Path(args.model_dir)
@@ -126,6 +141,7 @@ def main(argv: list[str] | None = None) -> int:
         dim=int(vectors.shape[1]),
         licenseNote=args.license_note,
         sourceModel=args.source_model,
+        dtype=args.dtype,
     )
     print(f"Wrote {args.output}: {len(vocab)} tokens, dim {vectors.shape[1]}")
     return 0

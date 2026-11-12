@@ -37,8 +37,24 @@ branch "embeddings"                            QGIS
 The model is a **static token embedding** (model2vec style):
 [minishlab/potion-base-8M](https://huggingface.co/minishlab/potion-base-8M),
 MIT licensed and distilled from the Apache-2.0 all-MiniLM-L6-v2, converted
-into a plain float16 matrix of token vectors (`.npz`, about 17 MB, 29528
-tokens × 256 dimensions). The revision and file checksum are pinned.
+into a compressed int8 matrix of token vectors with one global scale
+(`.npz`, about 6 MB, 29528 tokens × 256 dimensions). The revision and file
+checksum are pinned. One scale for the whole table keeps released plugin
+versions working: they ignore it, and the normalised mean of the token
+vectors is unchanged by a constant factor.
+
+The plugin vectors are stored twice on the `embeddings` branch:
+
+- as float32 under `universes` in `index.json`, which every plugin version
+  reads;
+- as int8 with a per-vector scale under `universes_q8`
+  (`pipeline/QuantizeDatabase.py`, `Data/VectorCodec.py`), about 45 % smaller,
+  which this version prefers.
+
+The search quality evaluation measured no loss from either quantization: on
+QGIS 3, nDCG@10 is 0.517 against 0.518 for a sentence, and 0.563 against
+0.558 for keywords. The float32 files can go once released versions older
+than this one no longer matter.
 
 Plugin side, a query is tokenized by a pure-Python BERT WordPiece tokenizer,
 its token vectors are looked up and mean-pooled with numpy, and the result

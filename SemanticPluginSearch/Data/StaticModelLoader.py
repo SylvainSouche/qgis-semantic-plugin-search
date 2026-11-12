@@ -1,8 +1,13 @@
 """Static model persistence in the distributed .npz format.
 
 The format is intentionally minimal: a string array of vocabulary tokens, a
-float16 matrix of token vectors aligned with it, and a JSON metadata blob.
-It carries no code and is loaded with numpy only.
+matrix of token vectors aligned with it, and a JSON metadata blob. It
+carries no code and is loaded with numpy only.
+
+The matrix is float16, or int8 with one global scale (meta "scale"): the
+token vectors are value * scale. A single scale for the whole table keeps
+older plugin versions working: they ignore it, and since a query is the
+normalised mean of its token vectors, a constant factor cancels out.
 
 This module is part of the Data layer: it must import neither qgis nor Qt.
 """
@@ -60,7 +65,7 @@ class NpzStaticModel(StaticModelData):
                 f"vocabulary size {len(tokens)} does not match {len(vectors)} vectors"
             )
         vocabulary = {token: index for index, token in enumerate(tokens.tolist())}
-        vectors = vectors.astype(np.float32)
+        vectors = vectors.astype(np.float32) * np.float32(meta.get("scale", 1.0))
         if vectors.ndim != 2:
             raise StaticModelFormatError("vectors must be a two dimensional matrix")
         return NpzStaticModel(

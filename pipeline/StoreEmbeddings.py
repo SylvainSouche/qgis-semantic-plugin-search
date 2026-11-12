@@ -10,7 +10,10 @@ more universe databases, and calls this script, which:
    store's current index.json;
 3. refuses to store anything when a universe has no plugins or its plugin
    count moved more than the gate tolerance from the stored one;
-4. writes index.json and deletes every data file it no longer references,
+4. writes an int8 copy of every database (pipeline/QuantizeDatabase.py),
+   listed under universes_q8 for the plugin versions that read it, while
+   universes keeps the float32 files every released version reads;
+5. writes index.json and deletes every data file it no longer references,
    keeping the readme caches the fetch step maintains.
 
 Everything is local: no network access, no release API.
@@ -33,6 +36,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 
 from pipeline.PublishGate import checkGates  # noqa: E402
+from pipeline.QuantizeDatabase import quantizeDatabase  # noqa: E402
 from pipeline.WriteReleaseIndex import buildIndex, sha256Of  # noqa: E402
 
 INDEX_NAME = "index.json"
@@ -86,9 +90,26 @@ def storeEmbeddings(
             staged.append(target)
         databases[universe] = target
 
+    quantized: dict[str, Path] = {}
+    previousQuantized = previous.get("universes_q8") or {}
+    for universe, source in databases.items():
+        carried = store / (previousQuantized.get(universe) or {}).get("url", "").rsplit("/", 1)[-1]
+        if universe not in freshDatabases and carried.is_file() and carried.suffix == ".sqlite":
+            quantized[universe] = carried
+            continue
+        temporary = quantizeDatabase(source, store / f".Embeddings-{universe}-q8.sqlite")
+        target = store / contentName(temporary, f"Embeddings-{universe}-q8")
+        if target.is_file():
+            temporary.unlink()
+        else:
+            temporary.replace(target)
+            staged.append(target)
+        quantized[universe] = target
+
     index = buildIndex(
         modelPath=modelPath,
         databases=databases,
+        quantized=quantized,
         baseUrl=baseUrl,
         generatedAt=generatedAt
         or datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
@@ -104,7 +125,8 @@ def storeEmbeddings(
         raise GateFailure("; ".join(violations))
 
     indexPath.write_text(json.dumps(index, indent=2), encoding="utf-8")
-    referenced = {modelPath.name} | {path.name for path in databases.values()}
+    referenced = ({modelPath.name} | {path.name for path in databases.values()}
+                  | {path.name for path in quantized.values()})
     for path in store.iterdir():
         if not path.is_file() or path.name in referenced | KEEP_NAMES:
             continue

@@ -299,6 +299,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-int8-storage": {
+    "active": true,
+    "id": "0f87-6af5-c588-63fc",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-license-policy": {
     "active": true,
     "id": "0f87-6ae3-6956-fbf2",

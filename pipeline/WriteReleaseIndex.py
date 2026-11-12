@@ -58,8 +58,14 @@ def buildIndex(
     databases: dict[str, Path],
     baseUrl: str,
     generatedAt: str,
+    quantized: dict[str, Path] | None = None,
 ) -> dict:
-    """Build the index for the given model and universe databases."""
+    """Build the index for the given model and universe databases.
+
+    universes lists the float32 databases every plugin version reads;
+    universes_q8, when given, their int8 copies for versions that read them
+    (older versions ignore the key).
+    """
     index = {
         "format": INDEX_FORMAT,
         "generated_at": generatedAt,
@@ -71,15 +77,19 @@ def buildIndex(
         },
         "universes": {},
     }
-    for universe, databasePath in sorted(databases.items()):
-        meta = databaseMeta(databasePath)
-        index["universes"][universe] = {
-            "url": f"{baseUrl}/{databasePath.name}",
-            "sha256": sha256Of(databasePath),
-            "bytes": databasePath.stat().st_size,
-            "build_stamp": meta["build_stamp"],
-            "plugin_count": meta["plugin_count"],
-        }
+    for key, paths in (("universes", databases), ("universes_q8", quantized)):
+        if paths is None:
+            continue
+        index[key] = {}
+        for universe, databasePath in sorted(paths.items()):
+            meta = databaseMeta(databasePath)
+            index[key][universe] = {
+                "url": f"{baseUrl}/{databasePath.name}",
+                "sha256": sha256Of(databasePath),
+                "bytes": databasePath.stat().st_size,
+                "build_stamp": meta["build_stamp"],
+                "plugin_count": meta["plugin_count"],
+            }
     return index
 
 

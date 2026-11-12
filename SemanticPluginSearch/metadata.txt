@@ -5,7 +5,7 @@ qgisMinimumVersion=3.44
 qgisMaximumVersion=4.99
 description=Find QGIS plugins with natural language semantic search over plugin metadata and readmes
 about=Describe what you need in plain language, for example "classify a drone orthophoto into land cover classes" or "create contour lines from a DEM", and get the matching QGIS plugins ranked by relevance, with their metadata, readme and the usual Install, Upgrade, Reinstall and Uninstall buttons, which are carried out by the standard plugin manager. Plugins you already have are marked installed, or update when a newer version exists. Requirements: an internet connection on first use, to download a compact embedding model (about 17 MB) and the plugin index for your QGIS version (about 5 MB) from the project GitHub repository; both are cached in your profile and refreshed automatically. No other dependency: numpy, which QGIS bundles, and the Python standard library. Your query never leaves your machine: it is turned into an embedding locally.
-version=0.5.2
+version=0.5.3
 author=SylvainSouche
 email=sylvain@souche.fr
 tracker=https://github.com/SylvainSouche/qgis-semantic-plugin-search/issues
@@ -17,7 +17,8 @@ experimental=True
 deprecated=False
 server=False
 license=MIT
-changelog=0.5.2 - README states the objective (describe a need instead of knowing keywords, then beat keyword search), where it stands and the techniques evaluated
+changelog=0.5.3 - int8 search model and int8 copies of the plugin vector databases: about half the first download, no measured quality loss, released versions keep working
+    0.5.2 - README states the objective (describe a need instead of knowing keywords, then beat keyword search), where it stands and the techniques evaluated
     0.5.1 - Search evaluation with blind sentence and keyword queries, keyword sessions, and an embedding model benchmark workflow
     0.5.0 - Search quality evaluation against keyword baselines and a cross language assessment
     0.4.8 - Author email in the metadata, ready for the plugin repository

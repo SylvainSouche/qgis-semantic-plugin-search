@@ -52,10 +52,11 @@ jobs:
           fi
           ls -l store
 
-      - name: Convert the model (only when none is stored)
+      - name: Convert the model (only when none is stored, or it is not int8 yet)
         run: |
-          if ls store/EmbeddingModel.*.npz >/dev/null 2>&1; then
-            echo "Model already stored: nothing to download."
+          STORED=$(ls store/EmbeddingModel.*.npz 2>/dev/null | head -1)
+          if [ -n "$STORED" ] && python -c "import json,sys,numpy as np; sys.exit(json.loads(str(np.load(sys.argv[1])['meta'])).get('dtype') != 'int8')" "$STORED"; then
+            echo "int8 model already stored: nothing to download."
             exit 0
           fi
           # minishlab/potion-base-8M: MIT licensed, distilled from the
@@ -72,6 +73,7 @@ jobs:
             --model-id static-potion-base-8M \
             --source-model "minishlab/potion-base-8M" \
             --license-note "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed" \
+            --dtype int8 \
             --output build/EmbeddingModel.npz
 
       - name: Fetch, embed and store

@@ -8,8 +8,10 @@ Database layout (written by the pipeline, see pipeline/BuildEmbeddings.py):
     plugins(plugin_id INTEGER PRIMARY KEY, name TEXT, version TEXT, ...)
     vectors(plugin_id INTEGER PRIMARY KEY, embedding BLOB)
 
-Plugin rows are L2 normalized float32 blobs aligned with the plugin id list,
-so a cosine similarity is a single matrix product.
+Plugin rows are L2 normalized vectors aligned with the plugin id list, so a
+cosine similarity is a single matrix product. They are stored as float32
+blobs, or as int8 with a scale when meta.vector_format is int8-scaled
+(Data.VectorCodec); both load into the same float32 matrix.
 
 This module is part of the Data layer: it must import neither qgis nor Qt.
 """
@@ -23,6 +25,7 @@ import numpy as np
 
 from ..Domain.Entities import PluginInfo
 from ..Domain.Ports import PluginVectorStore
+from .VectorCodec import FLOAT32, INT8_SCALED, VECTOR_FORMAT_KEY, decodeVector, normaliseRows
 
 SCHEMA_VERSION = 2
 
@@ -83,11 +86,15 @@ class SqliteVectorStore(PluginVectorStore):
                 vectors[pluginId] = blob
         finally:
             connection.close()
-        matrix = np.zeros((len(pluginIds), int(meta.get("model_dim", "0"))), dtype=np.float32)
+        dim = int(meta.get("model_dim", "0"))
+        vectorFormat = meta.get(VECTOR_FORMAT_KEY, FLOAT32)
+        matrix = np.zeros((len(pluginIds), dim), dtype=np.float32)
         for position, pluginId in enumerate(pluginIds):
             blob = vectors.get(pluginId)
             if blob is not None:
-                matrix[position] = np.frombuffer(blob, dtype=np.float32)
+                matrix[position] = decodeVector(blob, dim, vectorFormat)
+        if vectorFormat == INT8_SCALED:
+            matrix = normaliseRows(matrix)
         return SqliteVectorStore(meta, infos, pluginIds, matrix)
 
     def buildStamp(self) -> str:

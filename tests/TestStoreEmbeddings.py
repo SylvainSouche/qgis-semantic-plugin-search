@@ -57,7 +57,10 @@ def test_first_store_needs_and_keeps_the_model(tmp_path, modelPath, buildDatabas
     assert index["model"]["url"].startswith(BASE + "/EmbeddingModel.")
     name = index["universes"]["4"]["url"].rsplit("/", 1)[-1]
     assert name.startswith("Embeddings-4.") and name.endswith(".sqlite")
-    assert stored(store) == {"index.json", name, index["model"]["url"].rsplit("/", 1)[-1]}
+    quantized = index["universes_q8"]["4"]["url"].rsplit("/", 1)[-1]
+    assert quantized.startswith("Embeddings-4-q8.") and quantized.endswith(".sqlite")
+    assert stored(store) == {"index.json", name, quantized,
+                             index["model"]["url"].rsplit("/", 1)[-1]}
 
 
 def test_universes_not_rebuilt_are_carried_over(tmp_path, modelPath, buildDatabase):
@@ -106,3 +109,36 @@ def test_readme_caches_are_kept_but_not_indexed(tmp_path, modelPath, buildDataba
     )
     assert (store / "Readmes-4.json.gz").read_bytes() == b"cache"
     assert "Readmes" not in json.dumps(index)
+
+
+def test_int8_copies_load_like_the_float32_databases(tmp_path, modelPath, buildDatabase):
+    import numpy as np
+
+    from SemanticPluginSearch.Data.SqliteVectorStore import SqliteVectorStore
+
+    store = tmp_path / "store"
+    index = storeEmbeddings(store, {"4": buildDatabase("4", "20261029T000000Z")}, BASE,
+                            model=modelPath)
+    plain = SqliteVectorStore.open(store / index["universes"]["4"]["url"].rsplit("/", 1)[-1])
+    small = SqliteVectorStore.open(store / index["universes_q8"]["4"]["url"].rsplit("/", 1)[-1])
+    assert small.meta()["vector_format"] == "int8-scaled"
+    assert "vector_format" not in plain.meta(), "released plugins read this file unchanged"
+    assert small.pluginIds() == plain.pluginIds()
+    assert index["universes_q8"]["4"]["plugin_count"] == index["universes"]["4"]["plugin_count"]
+    cosines = (small.embeddings() * plain.embeddings()).sum(axis=1)
+    assert np.all(cosines[np.linalg.norm(plain.embeddings(), axis=1) > 0] > 0.999)
+
+
+def test_int8_copies_of_carried_universes_are_kept(tmp_path, modelPath, buildDatabase):
+    store = tmp_path / "store"
+    storeEmbeddings(
+        store,
+        {"3": buildDatabase("3", "20261026T000000Z"), "4": buildDatabase("4", "20261027T000000Z")},
+        BASE,
+        model=modelPath,
+    )
+    first = json.loads((store / "index.json").read_text())
+    index = storeEmbeddings(store, {"3": buildDatabase("3", "20261102T000000Z")}, BASE)
+    assert index["universes_q8"]["4"] == first["universes_q8"]["4"]
+    assert index["universes_q8"]["3"]["build_stamp"] == "20261102T000000Z"
+    assert first["universes_q8"]["3"]["url"].rsplit("/", 1)[-1] not in stored(store)

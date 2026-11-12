@@ -32,8 +32,8 @@ you pick, through the standard QGIS plugin manager.
 
 - **QGIS 3.44 or later, or QGIS 4.x.** The same plugin works on both.
 - **An internet connection the first time** you open the search window, to
-  download the search model (about 17 MB) and the plugin index for your QGIS
-  version (about 5 MB). After that, search works offline.
+  download the search model (about 6 MB) and the plugin index for your QGIS
+  version (about 3 to 7 MB). After that, search works offline.
 - Nothing else to install: the plugin only uses what QGIS already ships
   (Python and numpy).
 
@@ -181,7 +181,7 @@ that folder is safe: everything is downloaded again on the next launch.
 ## Troubleshooting
 
 **"Preparing the search…" in the window's status line.**
-The plugin is downloading its index (first launch, about 22 MB) or loading
+The plugin is downloading its index (first launch, about 10 to 13 MB) or loading
 it. Your query runs by itself as soon as it is ready, usually within
 seconds. If it stays there, check your internet connection or your proxy
 in *Settings › Options › Network*, then close and reopen the window.

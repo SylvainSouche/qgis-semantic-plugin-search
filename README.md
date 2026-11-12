@@ -76,7 +76,7 @@ sentence for this search, and the keywords a keyword search user would type.
 ## Get started
 
 1. **Requirements:** QGIS 3.44 or later, or QGIS 4.x, and an internet
-   connection on first launch (about 22 MB is downloaded once). Nothing else
+   connection on first launch (about 10 to 13 MB is downloaded once). Nothing else
    to install.
 2. **Install:** download `SemanticPluginSearch.<version>.zip`, then in QGIS
    use *Plugins › Manage and Install Plugins… › Install from ZIP*.

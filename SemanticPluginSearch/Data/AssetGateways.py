@@ -52,7 +52,10 @@ def parseIndexDocument(document: bytes | dict) -> RemoteIndex:
         bytes=int(modelData.get("bytes", 0)),
     )
     universes: dict[str, UniverseRelease] = {}
-    for key, release in (data.get("universes") or {}).items():
+    # universes_q8: the same databases with int8 vectors, about half the
+    # download; older indexes have only the float32 universes.
+    releases = data.get("universes_q8") or data.get("universes") or {}
+    for key, release in releases.items():
         database = RemoteFile(
             url=str(release.get("url", "")),
             sha256=str(release.get("sha256", "")),
