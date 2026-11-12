@@ -5,7 +5,7 @@
 # @impl 4be9-6ae4-471f-260f
 
 .DEFAULT_GOAL := help
-.PHONY: help test smoke fetch embed dist version increment clean clean-all _python _venv
+.PHONY: help test smoke fetch embed dist eval eval-data version increment clean clean-all _python _venv
 
 PLUGIN := SemanticPluginSearch
 DATA_DIR := data
@@ -111,6 +111,26 @@ embed: _venv $(MODEL) ## Embed the fetched plugins into per universe databases; 
 # @impl 4be9-6ae4-4ed4-e450
 dist: _python ## Check, then package the plugin as dist/<plugin>.<version>.zip (no venv needed)
 	@"$(PYTHON)" tools/PackageCheck.py --zip $(DIST_DIR)
+
+# The evaluation runs on a pinned commit of the embeddings branch, so results
+# stay comparable across weekly rebuilds; change EVAL_COMMIT on purpose only.
+EVAL_COMMIT ?= 97fc1c9592beb53d4c2e5d725898bdb34c782807
+EVAL_DIR := $(BUILD_DIR)/eval/snapshot
+EVAL_FILES := EmbeddingModel.4f5f1043f084.npz Embeddings-3.e85e407c80cb.sqlite \
+	Embeddings-4.e2adea4752e9.sqlite Readmes-3.json.gz Readmes-4.json.gz index.json
+
+eval-data: ## Extract the pinned embeddings snapshot used by eval into build/eval/snapshot
+	@git cat-file -e $(EVAL_COMMIT) 2>/dev/null || { \
+		echo "==> Fetching the embeddings branch"; \
+		git fetch --quiet origin refs/heads/embeddings:refs/remotes/origin/embeddings || exit 1; }
+	@mkdir -p $(EVAL_DIR)
+	@for f in $(EVAL_FILES); do \
+		test -s $(EVAL_DIR)/$$f || git show $(EVAL_COMMIT):$$f > $(EVAL_DIR)/$$f || exit 1; \
+	done
+	@echo "==> Snapshot $(EVAL_COMMIT) in $(EVAL_DIR)"
+
+eval: _venv eval-data ## Search quality evaluation: semantic vs keyword, cross language (writes evaluation/Results.md)
+	@"$(PY)" evaluation/RunEvaluation.py > /dev/null && echo "==> Wrote evaluation/Results.md and evaluation/Results.json"
 
 version: _python ## Set the plugin version: make version VERSION=0.4.1 COMMENT="What changed"
 	@test "$(origin VERSION)" = "command line" || { echo "Usage: make version VERSION=x.y.z [COMMENT=\"...\"] (current: $(CURRENT_VERSION))"; exit 1; }

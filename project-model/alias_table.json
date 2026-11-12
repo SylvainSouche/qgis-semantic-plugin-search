@@ -227,6 +227,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-eval-05": {
+    "active": true,
+    "id": "0f87-6af5-78a3-2240",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-event-discipline": {
     "active": true,
     "id": "0f87-6ae3-e355-8355",
@@ -734,6 +740,24 @@
   "obs-dangling-venv": {
     "active": true,
     "id": "4be9-6ae4-5060-f410",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-eval-cross-language": {
+    "active": true,
+    "id": "0f87-6af5-78a3-8780",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-eval-native-catalogue": {
+    "active": true,
+    "id": "0f87-6af5-78a3-5f23",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-eval-vs-keyword": {
+    "active": true,
+    "id": "0f87-6af5-78a3-f019",
     "status": "recorded",
     "type": "obs"
   },
