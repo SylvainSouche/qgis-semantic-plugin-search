@@ -4,8 +4,8 @@ name: BenchmarkEmbeddings
 # GitHub's runners: no model is downloaded on a developer machine, and every
 # run uses the same pinned snapshot, needs, queries and judgments. Models are
 # listed in evaluation/Candidates.json. Runs by hand (workflow_dispatch, once
-# this file is on the default branch) or when the candidate list or this
-# workflow changes on a dev branch: then only new or changed candidates run,
+# this file is on the default branch) or when the candidates, queries,
+# judgments, evaluation code or this workflow change on a dev branch: then only new or changed candidates run,
 # or the ones a commit message line "benchmark: id1 id2" names.
 
 on:
@@ -13,6 +13,9 @@ on:
     branches: ["dev/**"]
     paths:
       - evaluation/Candidates.json
+      - evaluation/Queries.json
+      - evaluation/Judgments.json
+      - evaluation/SearchEvaluation.py
       - evaluation/RunBenchmark.py
       - .github/workflows/BenchmarkEmbeddings.yml
   workflow_dispatch:
