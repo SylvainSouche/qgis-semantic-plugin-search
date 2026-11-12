@@ -1,467 +1,1124 @@
 {
-  "about": "Golden queries. 'task' queries describe a need in plain language, the way the search box invites; 'keyword' queries are the one or two words a user would type into the plugin manager. Every query carries the same need in eight more languages, translated by hand, so cross language results are judged against the same relevance judgments as English. 'native' queries are region specific needs whose best plugins are often documented in that region's language; each carries the native wording and an English one.",
-  "languages": ["en", "fr", "de", "es", "pt", "it", "ru", "zh", "ja"],
-  "queries": [
-    {"id": "T01", "kind": "task",
-     "en": "create contour lines from a DEM",
-     "fr": "créer des courbes de niveau à partir d'un MNT",
-     "de": "Höhenlinien aus einem DGM erzeugen",
-     "es": "crear curvas de nivel a partir de un MDE",
-     "pt": "gerar curvas de nível a partir de um MDE",
-     "it": "creare curve di livello da un DEM",
-     "ru": "построить изолинии рельефа по ЦМР",
-     "zh": "从数字高程模型生成等高线",
-     "ja": "DEMから等高線を作成する"},
-    {"id": "T02", "kind": "task",
-     "en": "classify a drone orthophoto into land cover classes",
-     "fr": "classer une orthophoto de drone en classes d'occupation du sol",
-     "de": "ein Drohnen-Orthofoto in Landbedeckungsklassen klassifizieren",
-     "es": "clasificar una ortofoto de dron en clases de cobertura del suelo",
-     "pt": "classificar um ortomosaico de drone em classes de cobertura do solo",
-     "it": "classificare un'ortofoto da drone in classi di copertura del suolo",
-     "ru": "классифицировать ортофотоплан с дрона по классам земного покрова",
-     "zh": "将无人机正射影像分类为土地覆盖类型",
-     "ja": "ドローンのオルソ画像を土地被覆クラスに分類する"},
-    {"id": "T03", "kind": "task",
-     "en": "export my project to an interactive web map",
-     "fr": "exporter mon projet en carte web interactive",
-     "de": "mein Projekt als interaktive Webkarte exportieren",
-     "es": "exportar mi proyecto a un mapa web interactivo",
-     "pt": "exportar meu projeto para um mapa web interativo",
-     "it": "esportare il mio progetto in una mappa web interattiva",
-     "ru": "экспортировать проект в интерактивную веб-карту",
-     "zh": "将我的项目导出为交互式网页地图",
-     "ja": "プロジェクトをインタラクティブなWebマップに書き出す"},
-    {"id": "T04", "kind": "task",
-     "en": "geocode a list of street addresses",
-     "fr": "géocoder une liste d'adresses postales",
-     "de": "eine Liste von Adressen geokodieren",
-     "es": "geocodificar una lista de direcciones",
-     "pt": "geocodificar uma lista de endereços",
-     "it": "geocodificare un elenco di indirizzi",
-     "ru": "геокодировать список адресов",
-     "zh": "对一组街道地址进行地理编码",
-     "ja": "住所のリストをジオコーディングする"},
-    {"id": "T05", "kind": "task",
-     "en": "download OpenStreetMap data for my area",
-     "fr": "télécharger les données OpenStreetMap de ma zone",
-     "de": "OpenStreetMap-Daten für mein Gebiet herunterladen",
-     "es": "descargar datos de OpenStreetMap de mi zona",
-     "pt": "baixar dados do OpenStreetMap da minha área",
-     "it": "scaricare i dati OpenStreetMap della mia zona",
-     "ru": "скачать данные OpenStreetMap для моей территории",
-     "zh": "下载我所在区域的OpenStreetMap数据",
-     "ja": "自分の地域のOpenStreetMapデータをダウンロードする"},
-    {"id": "T06", "kind": "task",
-     "en": "add a satellite imagery basemap as background",
-     "fr": "ajouter un fond de carte d'images satellite",
-     "de": "eine Satellitenbild-Hintergrundkarte hinzufügen",
-     "es": "añadir un mapa base de imágenes satelitales de fondo",
-     "pt": "adicionar um mapa base de imagens de satélite como fundo",
-     "it": "aggiungere una mappa di base con immagini satellitari come sfondo",
-     "ru": "добавить спутниковую подложку в качестве фона",
-     "zh": "添加卫星影像底图作为背景",
-     "ja": "衛星画像のベースマップを背景に追加する"},
-    {"id": "T07", "kind": "task",
-     "en": "compute the shortest path along a road network",
-     "fr": "calculer le plus court chemin sur un réseau routier",
-     "de": "den kürzesten Weg in einem Straßennetz berechnen",
-     "es": "calcular la ruta más corta en una red de carreteras",
-     "pt": "calcular o caminho mais curto em uma rede viária",
-     "it": "calcolare il percorso più breve su una rete stradale",
-     "ru": "найти кратчайший путь по дорожной сети",
-     "zh": "计算道路网络上的最短路径",
-     "ja": "道路ネットワーク上の最短経路を計算する"},
-    {"id": "T08", "kind": "task",
-     "en": "draw isochrones of the area reachable within 10 minutes by car",
-     "fr": "tracer les isochrones de la zone accessible en 10 minutes en voiture",
-     "de": "Isochronen der in 10 Minuten mit dem Auto erreichbaren Fläche zeichnen",
-     "es": "dibujar isócronas del área alcanzable en 10 minutos en coche",
-     "pt": "desenhar isócronas da área alcançável em 10 minutos de carro",
-     "it": "disegnare le isocrone dell'area raggiungibile in 10 minuti in auto",
-     "ru": "построить изохроны зоны доступности за 10 минут на машине",
-     "zh": "绘制驾车10分钟可达范围的等时线",
-     "ja": "車で10分以内に到達できる範囲の等時線を描く"},
-    {"id": "T09", "kind": "task",
-     "en": "compute NDVI from Sentinel-2 bands",
-     "fr": "calculer le NDVI à partir des bandes Sentinel-2",
-     "de": "NDVI aus Sentinel-2-Bändern berechnen",
-     "es": "calcular el NDVI a partir de las bandas de Sentinel-2",
-     "pt": "calcular o NDVI a partir das bandas do Sentinel-2",
-     "it": "calcolare l'NDVI dalle bande Sentinel-2",
-     "ru": "рассчитать NDVI по каналам Sentinel-2",
-     "zh": "利用Sentinel-2波段计算NDVI",
-     "ja": "Sentinel-2のバンドからNDVIを計算する"},
-    {"id": "T10", "kind": "task",
-     "en": "download Sentinel-2 satellite images",
-     "fr": "télécharger des images satellite Sentinel-2",
-     "de": "Sentinel-2-Satellitenbilder herunterladen",
-     "es": "descargar imágenes satelitales Sentinel-2",
-     "pt": "baixar imagens de satélite Sentinel-2",
-     "it": "scaricare immagini satellitari Sentinel-2",
-     "ru": "скачать спутниковые снимки Sentinel-2",
-     "zh": "下载Sentinel-2卫星影像",
-     "ja": "Sentinel-2の衛星画像をダウンロードする"},
-    {"id": "T11", "kind": "task",
-     "en": "georeference a scanned historical map",
-     "fr": "géoréférencer une carte ancienne scannée",
-     "de": "eine gescannte historische Karte georeferenzieren",
-     "es": "georreferenciar un mapa histórico escaneado",
-     "pt": "georreferenciar um mapa histórico digitalizado",
-     "it": "georeferenziare una mappa storica scansionata",
-     "ru": "привязать отсканированную историческую карту",
-     "zh": "对扫描的历史地图进行地理配准",
-     "ja": "スキャンした古地図をジオリファレンスする"},
-    {"id": "T12", "kind": "task",
-     "en": "delineate a watershed from elevation data",
-     "fr": "délimiter un bassin versant à partir de données d'altitude",
-     "de": "ein Einzugsgebiet aus Höhendaten abgrenzen",
-     "es": "delimitar una cuenca hidrográfica a partir de datos de elevación",
-     "pt": "delimitar uma bacia hidrográfica a partir de dados de elevação",
-     "it": "delimitare un bacino idrografico dai dati di elevazione",
-     "ru": "выделить водосборный бассейн по данным о рельефе",
-     "zh": "利用高程数据划分流域",
-     "ja": "標高データから流域を抽出する"},
-    {"id": "T13", "kind": "task",
-     "en": "check topology errors in a polygon layer",
-     "fr": "vérifier les erreurs de topologie d'une couche de polygones",
-     "de": "Topologiefehler in einem Polygonlayer prüfen",
-     "es": "comprobar errores de topología en una capa de polígonos",
-     "pt": "verificar erros de topologia em uma camada de polígonos",
-     "it": "controllare gli errori topologici in un layer di poligoni",
-     "ru": "проверить ошибки топологии в полигональном слое",
-     "zh": "检查面图层中的拓扑错误",
-     "ja": "ポリゴンレイヤのトポロジーエラーをチェックする"},
-    {"id": "T14", "kind": "task",
-     "en": "import GPS tracks from a GPX file",
-     "fr": "importer des traces GPS depuis un fichier GPX",
-     "de": "GPS-Tracks aus einer GPX-Datei importieren",
-     "es": "importar tracks GPS desde un archivo GPX",
-     "pt": "importar trilhas de GPS de um arquivo GPX",
-     "it": "importare tracce GPS da un file GPX",
-     "ru": "импортировать GPS-треки из файла GPX",
-     "zh": "从GPX文件导入GPS轨迹",
-     "ja": "GPXファイルからGPSトラックを読み込む"},
-    {"id": "T15", "kind": "task",
-     "en": "draw lines with exact lengths and angles like in CAD",
-     "fr": "dessiner des lignes avec des longueurs et des angles précis comme en DAO",
-     "de": "Linien mit exakten Längen und Winkeln wie im CAD zeichnen",
-     "es": "dibujar líneas con longitudes y ángulos exactos como en CAD",
-     "pt": "desenhar linhas com comprimentos e ângulos exatos como no CAD",
-     "it": "disegnare linee con lunghezze e angoli esatti come in CAD",
-     "ru": "чертить линии с точными длинами и углами как в САПР",
-     "zh": "像CAD一样按精确长度和角度绘制线",
-     "ja": "CADのように正確な長さと角度で線を描く"},
-    {"id": "T16", "kind": "task",
-     "en": "publish my layers to a GeoServer",
-     "fr": "publier mes couches sur un GeoServer",
-     "de": "meine Layer auf einem GeoServer veröffentlichen",
-     "es": "publicar mis capas en un GeoServer",
-     "pt": "publicar minhas camadas em um GeoServer",
-     "it": "pubblicare i miei layer su un GeoServer",
-     "ru": "опубликовать мои слои на GeoServer",
-     "zh": "将我的图层发布到GeoServer",
-     "ja": "レイヤをGeoServerに公開する"},
-    {"id": "T17", "kind": "task",
-     "en": "run SQL queries on a PostGIS database",
-     "fr": "exécuter des requêtes SQL sur une base PostGIS",
-     "de": "SQL-Abfragen auf einer PostGIS-Datenbank ausführen",
-     "es": "ejecutar consultas SQL en una base de datos PostGIS",
-     "pt": "executar consultas SQL em um banco de dados PostGIS",
-     "it": "eseguire query SQL su un database PostGIS",
-     "ru": "выполнять SQL-запросы к базе данных PostGIS",
-     "zh": "在PostGIS数据库上运行SQL查询",
-     "ja": "PostGISデータベースでSQLクエリを実行する"},
-    {"id": "T18", "kind": "task",
-     "en": "make a heat map of point density",
-     "fr": "faire une carte de chaleur de la densité de points",
-     "de": "eine Heatmap der Punktdichte erstellen",
-     "es": "hacer un mapa de calor de la densidad de puntos",
-     "pt": "fazer um mapa de calor da densidade de pontos",
-     "it": "creare una mappa di calore della densità di punti",
-     "ru": "построить тепловую карту плотности точек",
-     "zh": "制作点密度热力图",
-     "ja": "点密度のヒートマップを作る"},
-    {"id": "T19", "kind": "task",
-     "en": "show buildings in 3D",
-     "fr": "afficher les bâtiments en 3D",
-     "de": "Gebäude in 3D anzeigen",
-     "es": "mostrar los edificios en 3D",
-     "pt": "mostrar as edificações em 3D",
-     "it": "visualizzare gli edifici in 3D",
-     "ru": "показать здания в 3D",
-     "zh": "以三维方式显示建筑物",
-     "ja": "建物を3Dで表示する"},
-    {"id": "T20", "kind": "task",
-     "en": "import a DXF drawing from AutoCAD",
-     "fr": "importer un dessin DXF d'AutoCAD",
-     "de": "eine DXF-Zeichnung aus AutoCAD importieren",
-     "es": "importar un dibujo DXF de AutoCAD",
-     "pt": "importar um desenho DXF do AutoCAD",
-     "it": "importare un disegno DXF da AutoCAD",
-     "ru": "импортировать чертёж DXF из AutoCAD",
-     "zh": "导入AutoCAD的DXF图纸",
-     "ja": "AutoCADのDXF図面を読み込む"},
-    {"id": "T21", "kind": "task",
-     "en": "see street level imagery at the location I click",
-     "fr": "voir des images au niveau de la rue à l'endroit où je clique",
-     "de": "Straßenansichten an der angeklickten Stelle sehen",
-     "es": "ver imágenes a pie de calle en el lugar donde hago clic",
-     "pt": "ver imagens ao nível da rua no local onde clico",
-     "it": "vedere immagini a livello stradale nel punto in cui clicco",
-     "ru": "смотреть панорамы улиц в точке, где я щёлкаю",
-     "zh": "在我点击的位置查看街景图像",
-     "ja": "クリックした場所のストリートビュー画像を見る"},
-    {"id": "T22", "kind": "task",
-     "en": "draw an elevation profile along a line",
-     "fr": "tracer un profil altimétrique le long d'une ligne",
-     "de": "ein Höhenprofil entlang einer Linie zeichnen",
-     "es": "trazar un perfil de elevación a lo largo de una línea",
-     "pt": "traçar um perfil de elevação ao longo de uma linha",
-     "it": "tracciare un profilo altimetrico lungo una linea",
-     "ru": "построить профиль высот вдоль линии",
-     "zh": "沿一条线绘制高程剖面",
-     "ja": "線に沿って標高断面図を描く"},
-    {"id": "T23", "kind": "task",
-     "en": "plan a flight path for a drone mapping survey",
-     "fr": "planifier un plan de vol pour un levé par drone",
-     "de": "eine Flugroute für eine Drohnenvermessung planen",
-     "es": "planificar la ruta de vuelo de un levantamiento con dron",
-     "pt": "planejar o plano de voo de um levantamento com drone",
-     "it": "pianificare il piano di volo per un rilievo con drone",
-     "ru": "спланировать маршрут полёта дрона для аэросъёмки",
-     "zh": "为无人机测绘规划航线",
-     "ja": "ドローン測量の飛行ルートを計画する"},
-    {"id": "T24", "kind": "task",
-     "en": "interpolate temperature measurements into a raster surface",
-     "fr": "interpoler des mesures de température en une surface raster",
-     "de": "Temperaturmessungen zu einer Rasteroberfläche interpolieren",
-     "es": "interpolar mediciones de temperatura en una superficie ráster",
-     "pt": "interpolar medições de temperatura em uma superfície raster",
-     "it": "interpolare misure di temperatura in una superficie raster",
-     "ru": "интерполировать измерения температуры в растровую поверхность",
-     "zh": "将温度测量值插值为栅格表面",
-     "ja": "気温の観測値をラスタ面に内挿する"},
-    {"id": "T25", "kind": "task",
-     "en": "detect changes between two satellite images taken at different dates",
-     "fr": "détecter les changements entre deux images satellite de dates différentes",
-     "de": "Veränderungen zwischen zwei Satellitenbildern verschiedener Zeitpunkte erkennen",
-     "es": "detectar cambios entre dos imágenes satelitales de fechas distintas",
-     "pt": "detectar mudanças entre duas imagens de satélite de datas diferentes",
-     "it": "rilevare i cambiamenti tra due immagini satellitari di date diverse",
-     "ru": "выявить изменения между двумя космоснимками разных дат",
-     "zh": "检测两幅不同日期卫星影像之间的变化",
-     "ja": "撮影日の異なる2枚の衛星画像の変化を検出する"},
-    {"id": "T26", "kind": "task",
-     "en": "collect data in the field on a phone and sync it back",
-     "fr": "collecter des données sur le terrain avec un téléphone et les synchroniser",
-     "de": "Daten im Gelände mit dem Handy erfassen und zurück synchronisieren",
-     "es": "recoger datos en campo con un teléfono y sincronizarlos",
-     "pt": "coletar dados em campo no celular e sincronizá-los",
-     "it": "raccogliere dati sul campo con il telefono e sincronizzarli",
-     "ru": "собирать данные в поле на телефоне и синхронизировать их",
-     "zh": "用手机在野外采集数据并同步回来",
-     "ja": "スマートフォンで現地調査データを収集して同期する"},
-    {"id": "T27", "kind": "task",
-     "en": "simulate river flooding and inundation depth",
-     "fr": "simuler une crue de rivière et la hauteur d'inondation",
-     "de": "Flusshochwasser und Überflutungstiefe simulieren",
-     "es": "simular la crecida de un río y la profundidad de inundación",
-     "pt": "simular a cheia de um rio e a profundidade de inundação",
-     "it": "simulare la piena di un fiume e la profondità di allagamento",
-     "ru": "смоделировать паводок на реке и глубину затопления",
-     "zh": "模拟河流洪水及淹没深度",
-     "ja": "河川の洪水と浸水深をシミュレーションする"},
-    {"id": "T28", "kind": "task",
-     "en": "split a polygon into parts of equal area",
-     "fr": "découper un polygone en parties de même surface",
-     "de": "ein Polygon in flächengleiche Teile aufteilen",
-     "es": "dividir un polígono en partes de igual superficie",
-     "pt": "dividir um polígono em partes de áreas iguais",
-     "it": "suddividere un poligono in parti di uguale superficie",
-     "ru": "разделить полигон на части равной площади",
-     "zh": "将一个面分割成面积相等的几部分",
-     "ja": "ポリゴンを等しい面積に分割する"},
-    {"id": "T29", "kind": "task",
-     "en": "create a grid of hexagons over my study area",
-     "fr": "créer une grille d'hexagones sur ma zone d'étude",
-     "de": "ein Sechseckraster über mein Untersuchungsgebiet legen",
-     "es": "crear una malla de hexágonos sobre mi zona de estudio",
-     "pt": "criar uma grade de hexágonos sobre minha área de estudo",
-     "it": "creare una griglia di esagoni sulla mia area di studio",
-     "ru": "создать сетку шестиугольников на территории исследования",
-     "zh": "在研究区上创建六边形格网",
-     "ja": "調査範囲に六角形のグリッドを作成する"},
-    {"id": "T30", "kind": "task",
-     "en": "export the attribute table to an Excel spreadsheet",
-     "fr": "exporter la table attributaire vers un tableur Excel",
-     "de": "die Attributtabelle in eine Excel-Tabelle exportieren",
-     "es": "exportar la tabla de atributos a una hoja de Excel",
-     "pt": "exportar a tabela de atributos para uma planilha do Excel",
-     "it": "esportare la tabella degli attributi in un foglio Excel",
-     "ru": "экспортировать таблицу атрибутов в Excel",
-     "zh": "将属性表导出为Excel表格",
-     "ja": "属性テーブルをExcelに書き出す"},
-    {"id": "T31", "kind": "task",
-     "en": "ask an AI assistant to write processing scripts for me",
-     "fr": "demander à un assistant IA d'écrire des scripts de traitement",
-     "de": "einen KI-Assistenten Verarbeitungsskripte für mich schreiben lassen",
-     "es": "pedir a un asistente de IA que escriba scripts de procesamiento",
-     "pt": "pedir a um assistente de IA para escrever scripts de processamento",
-     "it": "chiedere a un assistente IA di scrivere script di elaborazione",
-     "ru": "попросить ИИ-ассистента написать скрипты обработки",
-     "zh": "让AI助手帮我编写处理脚本",
-     "ja": "AIアシスタントに処理スクリプトを書いてもらう"},
-    {"id": "T32", "kind": "task",
-     "en": "estimate the solar potential of rooftops",
-     "fr": "estimer le potentiel solaire des toitures",
-     "de": "das Solarpotenzial von Dächern abschätzen",
-     "es": "estimar el potencial solar de los tejados",
-     "pt": "estimar o potencial solar dos telhados",
-     "it": "stimare il potenziale solare dei tetti",
-     "ru": "оценить солнечный потенциал крыш",
-     "zh": "估算屋顶的太阳能潜力",
-     "ja": "屋根の太陽光発電ポテンシャルを推定する"},
-    {"id": "T33", "kind": "task",
-     "en": "load WMS and WFS services from a catalogue",
-     "fr": "charger des services WMS et WFS depuis un catalogue",
-     "de": "WMS- und WFS-Dienste aus einem Katalog laden",
-     "es": "cargar servicios WMS y WFS desde un catálogo",
-     "pt": "carregar serviços WMS e WFS a partir de um catálogo",
-     "it": "caricare servizi WMS e WFS da un catalogo",
-     "ru": "загрузить сервисы WMS и WFS из каталога",
-     "zh": "从目录加载WMS和WFS服务",
-     "ja": "カタログからWMSとWFSサービスを読み込む"},
-    {"id": "T34", "kind": "task",
-     "en": "match GPS points to the roads they were recorded on",
-     "fr": "recaler des points GPS sur les routes où ils ont été enregistrés",
-     "de": "GPS-Punkte den Straßen zuordnen, auf denen sie aufgezeichnet wurden",
-     "es": "ajustar puntos GPS a las carreteras donde se registraron",
-     "pt": "ajustar pontos de GPS às vias onde foram registrados",
-     "it": "agganciare i punti GPS alle strade su cui sono stati registrati",
-     "ru": "привязать GPS-точки к дорогам, по которым они записаны",
-     "zh": "将GPS点匹配到其记录时所在的道路",
-     "ja": "GPSの点を記録された道路にマッチングする"},
-    {"id": "T35", "kind": "task",
-     "en": "analyse public transport timetables from GTFS",
-     "fr": "analyser les horaires de transport en commun au format GTFS",
-     "de": "ÖPNV-Fahrpläne aus GTFS analysieren",
-     "es": "analizar horarios de transporte público en GTFS",
-     "pt": "analisar horários de transporte público em GTFS",
-     "it": "analizzare gli orari del trasporto pubblico da GTFS",
-     "ru": "анализировать расписания общественного транспорта GTFS",
-     "zh": "分析GTFS公共交通时刻表",
-     "ja": "GTFSの公共交通時刻表を分析する"},
-    {"id": "T36", "kind": "task",
-     "en": "animate a layer over time with a time slider",
-     "fr": "animer une couche dans le temps avec un curseur temporel",
-     "de": "einen Layer mit einem Zeitschieberegler über die Zeit animieren",
-     "es": "animar una capa en el tiempo con un deslizador temporal",
-     "pt": "animar uma camada ao longo do tempo com um controle deslizante",
-     "it": "animare un layer nel tempo con un cursore temporale",
-     "ru": "анимировать слой во времени с помощью ползунка",
-     "zh": "用时间滑块按时间动画显示图层",
-     "ja": "タイムスライダーでレイヤを時系列アニメーションする"},
-    {"id": "T37", "kind": "task",
-     "en": "process a lidar point cloud into a digital terrain model",
-     "fr": "traiter un nuage de points lidar pour obtenir un modèle numérique de terrain",
-     "de": "eine LiDAR-Punktwolke zu einem digitalen Geländemodell verarbeiten",
-     "es": "procesar una nube de puntos lidar para obtener un modelo digital del terreno",
-     "pt": "processar uma nuvem de pontos lidar para gerar um modelo digital do terreno",
-     "it": "elaborare una nuvola di punti lidar per ottenere un modello digitale del terreno",
-     "ru": "обработать облако точек лидара в цифровую модель рельефа",
-     "zh": "将激光雷达点云处理为数字地形模型",
-     "ja": "LiDAR点群から数値地形モデルを作成する"},
-    {"id": "T38", "kind": "task",
-     "en": "fill an attribute for many selected features at once",
-     "fr": "remplir un attribut pour de nombreuses entités sélectionnées en une fois",
-     "de": "ein Attribut für viele ausgewählte Objekte auf einmal füllen",
-     "es": "rellenar un atributo de muchas entidades seleccionadas a la vez",
-     "pt": "preencher um atributo de muitas feições selecionadas de uma vez",
-     "it": "compilare un attributo per molti elementi selezionati in una volta",
-     "ru": "заполнить атрибут сразу для многих выбранных объектов",
-     "zh": "一次为多个选中要素填写属性",
-     "ja": "選択した多数の地物の属性を一括入力する"},
-    {"id": "T39", "kind": "task",
-     "en": "copy coordinates of a clicked point to the clipboard",
-     "fr": "copier dans le presse-papiers les coordonnées d'un point cliqué",
-     "de": "Koordinaten eines angeklickten Punkts in die Zwischenablage kopieren",
-     "es": "copiar al portapapeles las coordenadas de un punto pulsado",
-     "pt": "copiar para a área de transferência as coordenadas de um ponto clicado",
-     "it": "copiare negli appunti le coordinate di un punto cliccato",
-     "ru": "скопировать координаты точки щелчка в буфер обмена",
-     "zh": "将点击点的坐标复制到剪贴板",
-     "ja": "クリックした地点の座標をクリップボードにコピーする"},
-    {"id": "T40", "kind": "task",
-     "en": "manage and edit the metadata of my layers",
-     "fr": "gérer et éditer les métadonnées de mes couches",
-     "de": "die Metadaten meiner Layer verwalten und bearbeiten",
-     "es": "gestionar y editar los metadatos de mis capas",
-     "pt": "gerenciar e editar os metadados das minhas camadas",
-     "it": "gestire e modificare i metadati dei miei layer",
-     "ru": "управлять метаданными моих слоёв и редактировать их",
-     "zh": "管理和编辑我的图层元数据",
-     "ja": "レイヤのメタデータを管理・編集する"},
-    {"id": "K01", "kind": "keyword",
-     "en": "geocoding", "fr": "géocodage", "de": "Geokodierung", "es": "geocodificación",
-     "pt": "geocodificação", "it": "geocodifica", "ru": "геокодирование",
-     "zh": "地理编码", "ja": "ジオコーディング"},
-    {"id": "K02", "kind": "keyword",
-     "en": "isochrone", "fr": "isochrone", "de": "Isochrone", "es": "isócrona",
-     "pt": "isócrona", "it": "isocrona", "ru": "изохрона", "zh": "等时线", "ja": "等時線"},
-    {"id": "K03", "kind": "keyword",
-     "en": "lidar", "fr": "lidar", "de": "Lidar", "es": "lidar", "pt": "lidar",
-     "it": "lidar", "ru": "лидар", "zh": "激光雷达", "ja": "ライダー"},
-    {"id": "K04", "kind": "keyword",
-     "en": "basemap", "fr": "fond de carte", "de": "Hintergrundkarte", "es": "mapa base",
-     "pt": "mapa base", "it": "mappa di base", "ru": "подложка", "zh": "底图", "ja": "背景地図"},
-    {"id": "K05", "kind": "keyword",
-     "en": "watershed", "fr": "bassin versant", "de": "Einzugsgebiet", "es": "cuenca",
-     "pt": "bacia hidrográfica", "it": "bacino idrografico", "ru": "водосбор",
-     "zh": "流域", "ja": "流域"},
-    {"id": "K06", "kind": "keyword",
-     "en": "topology", "fr": "topologie", "de": "Topologie", "es": "topología",
-     "pt": "topologia", "it": "topologia", "ru": "топология", "zh": "拓扑", "ja": "トポロジー"},
-    {"id": "K07", "kind": "keyword",
-     "en": "routing", "fr": "calcul d'itinéraire", "de": "Routenplanung", "es": "cálculo de rutas",
-     "pt": "roteamento", "it": "calcolo del percorso", "ru": "маршрутизация",
-     "zh": "路径规划", "ja": "経路探索"},
-    {"id": "K08", "kind": "keyword",
-     "en": "flood", "fr": "inondation", "de": "Hochwasser", "es": "inundación",
-     "pt": "inundação", "it": "alluvione", "ru": "наводнение", "zh": "洪水", "ja": "洪水"}
-  ],
-  "native": [
-    {"id": "N01", "lang": "fr", "text": "consulter le cadastre et les parcelles en France",
-     "en": "view French cadastre and land parcels"},
-    {"id": "N02", "lang": "pt", "text": "Cadastro Ambiental Rural CAR imóveis rurais",
-     "en": "Brazilian rural environmental registry of rural properties"},
-    {"id": "N03", "lang": "es", "text": "consultar el catastro español y las parcelas",
-     "en": "query the Spanish cadastre and land parcels"},
-    {"id": "N04", "lang": "ja", "text": "国土地理院の地図タイルを表示する",
-     "en": "display GSI Japan map tiles"},
-    {"id": "N05", "lang": "de", "text": "ALKIS Liegenschaftskataster laden",
-     "en": "load the German ALKIS real estate cadastre"},
-    {"id": "N06", "lang": "it", "text": "visualizzare le particelle del catasto italiano",
-     "en": "view Italian cadastral parcels"},
-    {"id": "N07", "lang": "fr", "text": "télécharger les données de l'IGN Géoplateforme",
-     "en": "download data from the French IGN Geoplatform"},
-    {"id": "N08", "lang": "pt", "text": "baixar dados do IBGE",
-     "en": "download data from the Brazilian statistics institute IBGE"},
-    {"id": "N09", "lang": "es", "text": "descargar datos del Instituto Geográfico Nacional de España",
-     "en": "download data from Spain's National Geographic Institute"},
-    {"id": "N10", "lang": "ja", "text": "地番図や筆界を扱う",
-     "en": "work with Japanese parcel maps and lot boundaries"},
-    {"id": "N11", "lang": "ru", "text": "загрузить данные кадастровой карты Росреестра",
-     "en": "load Russian Rosreestr cadastral map data"},
-    {"id": "N12", "lang": "zh", "text": "加载天地图底图",
-     "en": "load Tianditu basemap"},
-    {"id": "N13", "lang": "de", "text": "Daten vom Geoportal Schweiz swisstopo laden",
-     "en": "load Swiss swisstopo geoportal data"},
-    {"id": "N14", "lang": "fr", "text": "géocoder des adresses avec la Base Adresse Nationale",
-     "en": "geocode addresses with the French national address base"},
-    {"id": "N15", "lang": "pt", "text": "georreferenciamento de imóveis rurais SIGEF INCRA",
-     "en": "georeferencing of rural properties for SIGEF INCRA"},
-    {"id": "N16", "lang": "es", "text": "cartografía de riesgo de incendios forestales",
-     "en": "wildfire risk mapping"}
-  ]
+ "about": "Golden queries, one per task need. Each task has a set of plugins that do it (Judgments.json). 'en' states the task; it is also the author's own sentence and the source of the eight translations. 'generated' holds the sentence and the keyword list written by an independent model from the task alone (see 'generator' and QueryPrompt.txt): the sentence is what it would type into a plain language search box, the keywords what it would type into a keyword search box, in order, each added when the results so far are not good enough. 'authorKeywords' are the evaluation author's keyword lists, kept for comparison: they were written after seeing the catalogue. 'native' queries are region specific needs whose best plugins are often documented in that region's language; each carries the native wording and an English one.",
+ "languages": [
+  "en",
+  "fr",
+  "de",
+  "es",
+  "pt",
+  "it",
+  "ru",
+  "zh",
+  "ja"
+ ],
+ "queries": [
+  {
+   "id": "T01",
+   "kind": "task",
+   "en": "create contour lines from a DEM",
+   "generated": {
+    "sentence": "Create contour lines from a DEM elevation raster.",
+    "keywords": [
+     "contour",
+     "DEM"
+    ]
+   },
+   "authorKeywords": [
+    "contour",
+    "dem"
+   ],
+   "fr": "créer des courbes de niveau à partir d'un MNT",
+   "de": "Höhenlinien aus einem DGM erzeugen",
+   "es": "crear curvas de nivel a partir de un MDE",
+   "pt": "gerar curvas de nível a partir de um MDE",
+   "it": "creare curve di livello da un DEM",
+   "ru": "построить изолинии рельефа по ЦМР",
+   "zh": "从数字高程模型生成等高线",
+   "ja": "DEMから等高線を作成する"
+  },
+  {
+   "id": "T02",
+   "kind": "task",
+   "en": "classify a drone orthophoto into land cover classes",
+   "generated": {
+    "sentence": "Classify drone orthophoto into land cover classes",
+    "keywords": [
+     "land cover",
+     "classification",
+     "orthophoto"
+    ]
+   },
+   "authorKeywords": [
+    "classification",
+    "land cover",
+    "drone"
+   ],
+   "fr": "classer une orthophoto de drone en classes d'occupation du sol",
+   "de": "ein Drohnen-Orthofoto in Landbedeckungsklassen klassifizieren",
+   "es": "clasificar una ortofoto de dron en clases de cobertura del suelo",
+   "pt": "classificar um ortomosaico de drone em classes de cobertura do solo",
+   "it": "classificare un'ortofoto da drone in classi di copertura del suolo",
+   "ru": "классифицировать ортофотоплан с дрона по классам земного покрова",
+   "zh": "将无人机正射影像分类为土地覆盖类型",
+   "ja": "ドローンのオルソ画像を土地被覆クラスに分類する"
+  },
+  {
+   "id": "T03",
+   "kind": "task",
+   "en": "export my project to an interactive web map",
+   "generated": {
+    "sentence": "Export my QGIS project to an interactive web map",
+    "keywords": [
+     "web map",
+     "export",
+     "leaflet"
+    ]
+   },
+   "authorKeywords": [
+    "web map",
+    "export"
+   ],
+   "fr": "exporter mon projet en carte web interactive",
+   "de": "mein Projekt als interaktive Webkarte exportieren",
+   "es": "exportar mi proyecto a un mapa web interactivo",
+   "pt": "exportar meu projeto para um mapa web interativo",
+   "it": "esportare il mio progetto in una mappa web interattiva",
+   "ru": "экспортировать проект в интерактивную веб-карту",
+   "zh": "将我的项目导出为交互式网页地图",
+   "ja": "プロジェクトをインタラクティブなWebマップに書き出す"
+  },
+  {
+   "id": "T04",
+   "kind": "task",
+   "en": "geocode a list of street addresses",
+   "generated": {
+    "sentence": "Find a plugin to geocode a list of addresses",
+    "keywords": [
+     "geocode",
+     "batch",
+     "address"
+    ]
+   },
+   "authorKeywords": [
+    "geocode",
+    "address"
+   ],
+   "fr": "géocoder une liste d'adresses postales",
+   "de": "eine Liste von Adressen geokodieren",
+   "es": "geocodificar una lista de direcciones",
+   "pt": "geocodificar uma lista de endereços",
+   "it": "geocodificare un elenco di indirizzi",
+   "ru": "геокодировать список адресов",
+   "zh": "对一组街道地址进行地理编码",
+   "ja": "住所のリストをジオコーディングする"
+  },
+  {
+   "id": "T05",
+   "kind": "task",
+   "en": "download OpenStreetMap data for my area",
+   "generated": {
+    "sentence": "download OpenStreetMap data for a local area",
+    "keywords": [
+     "OpenStreetMap",
+     "download",
+     "bounding box"
+    ]
+   },
+   "authorKeywords": [
+    "openstreetmap",
+    "download"
+   ],
+   "fr": "télécharger les données OpenStreetMap de ma zone",
+   "de": "OpenStreetMap-Daten für mein Gebiet herunterladen",
+   "es": "descargar datos de OpenStreetMap de mi zona",
+   "pt": "baixar dados do OpenStreetMap da minha área",
+   "it": "scaricare i dati OpenStreetMap della mia zona",
+   "ru": "скачать данные OpenStreetMap для моей территории",
+   "zh": "下载我所在区域的OpenStreetMap数据",
+   "ja": "自分の地域のOpenStreetMapデータをダウンロードする"
+  },
+  {
+   "id": "T06",
+   "kind": "task",
+   "en": "add a satellite imagery basemap as background",
+   "generated": {
+    "sentence": "Add a satellite imagery basemap to my QGIS map",
+    "keywords": [
+     "satellite",
+     "basemap",
+     "imagery"
+    ]
+   },
+   "authorKeywords": [
+    "basemap",
+    "satellite"
+   ],
+   "fr": "ajouter un fond de carte d'images satellite",
+   "de": "eine Satellitenbild-Hintergrundkarte hinzufügen",
+   "es": "añadir un mapa base de imágenes satelitales de fondo",
+   "pt": "adicionar um mapa base de imagens de satélite como fundo",
+   "it": "aggiungere una mappa di base con immagini satellitari come sfondo",
+   "ru": "добавить спутниковую подложку в качестве фона",
+   "zh": "添加卫星影像底图作为背景",
+   "ja": "衛星画像のベースマップを背景に追加する"
+  },
+  {
+   "id": "T07",
+   "kind": "task",
+   "en": "compute the shortest path along a road network",
+   "generated": {
+    "sentence": "QGIS plugin to compute shortest path on road network",
+    "keywords": [
+     "shortest path",
+     "road network",
+     "routing"
+    ]
+   },
+   "authorKeywords": [
+    "shortest path",
+    "road"
+   ],
+   "fr": "calculer le plus court chemin sur un réseau routier",
+   "de": "den kürzesten Weg in einem Straßennetz berechnen",
+   "es": "calcular la ruta más corta en una red de carreteras",
+   "pt": "calcular o caminho mais curto em uma rede viária",
+   "it": "calcolare il percorso più breve su una rete stradale",
+   "ru": "найти кратчайший путь по дорожной сети",
+   "zh": "计算道路网络上的最短路径",
+   "ja": "道路ネットワーク上の最短経路を計算する"
+  },
+  {
+   "id": "T08",
+   "kind": "task",
+   "en": "draw isochrones of the area reachable within 10 minutes by car",
+   "generated": {
+    "sentence": "Isochrones of area reachable within 10 minutes by car",
+    "keywords": [
+     "isochrone",
+     "driving",
+     "travel time"
+    ]
+   },
+   "authorKeywords": [
+    "isochrone",
+    "car"
+   ],
+   "fr": "tracer les isochrones de la zone accessible en 10 minutes en voiture",
+   "de": "Isochronen der in 10 Minuten mit dem Auto erreichbaren Fläche zeichnen",
+   "es": "dibujar isócronas del área alcanzable en 10 minutos en coche",
+   "pt": "desenhar isócronas da área alcançável em 10 minutos de carro",
+   "it": "disegnare le isocrone dell'area raggiungibile in 10 minuti in auto",
+   "ru": "построить изохроны зоны доступности за 10 минут на машине",
+   "zh": "绘制驾车10分钟可达范围的等时线",
+   "ja": "車で10分以内に到達できる範囲の等時線を描く"
+  },
+  {
+   "id": "T09",
+   "kind": "task",
+   "en": "compute NDVI from Sentinel-2 bands",
+   "generated": {
+    "sentence": "Compute NDVI vegetation index from Sentinel-2 satellite bands",
+    "keywords": [
+     "NDVI",
+     "Sentinel-2",
+     "vegetation index"
+    ]
+   },
+   "authorKeywords": [
+    "ndvi",
+    "sentinel"
+   ],
+   "fr": "calculer le NDVI à partir des bandes Sentinel-2",
+   "de": "NDVI aus Sentinel-2-Bändern berechnen",
+   "es": "calcular el NDVI a partir de las bandas de Sentinel-2",
+   "pt": "calcular o NDVI a partir das bandas do Sentinel-2",
+   "it": "calcolare l'NDVI dalle bande Sentinel-2",
+   "ru": "рассчитать NDVI по каналам Sentinel-2",
+   "zh": "利用Sentinel-2波段计算NDVI",
+   "ja": "Sentinel-2のバンドからNDVIを計算する"
+  },
+  {
+   "id": "T10",
+   "kind": "task",
+   "en": "download Sentinel-2 satellite images",
+   "generated": {
+    "sentence": "download Sentinel-2 satellite images",
+    "keywords": [
+     "Sentinel-2",
+     "download",
+     "Copernicus"
+    ]
+   },
+   "authorKeywords": [
+    "sentinel",
+    "download"
+   ],
+   "fr": "télécharger des images satellite Sentinel-2",
+   "de": "Sentinel-2-Satellitenbilder herunterladen",
+   "es": "descargar imágenes satelitales Sentinel-2",
+   "pt": "baixar imagens de satélite Sentinel-2",
+   "it": "scaricare immagini satellitari Sentinel-2",
+   "ru": "скачать спутниковые снимки Sentinel-2",
+   "zh": "下载Sentinel-2卫星影像",
+   "ja": "Sentinel-2の衛星画像をダウンロードする"
+  },
+  {
+   "id": "T11",
+   "kind": "task",
+   "en": "georeference a scanned historical map",
+   "generated": {
+    "sentence": "Georeference a scanned historical map",
+    "keywords": [
+     "georeference",
+     "scanned map",
+     "historical"
+    ]
+   },
+   "authorKeywords": [
+    "georeference",
+    "historical"
+   ],
+   "fr": "géoréférencer une carte ancienne scannée",
+   "de": "eine gescannte historische Karte georeferenzieren",
+   "es": "georreferenciar un mapa histórico escaneado",
+   "pt": "georreferenciar um mapa histórico digitalizado",
+   "it": "georeferenziare una mappa storica scansionata",
+   "ru": "привязать отсканированную историческую карту",
+   "zh": "对扫描的历史地图进行地理配准",
+   "ja": "スキャンした古地図をジオリファレンスする"
+  },
+  {
+   "id": "T12",
+   "kind": "task",
+   "en": "delineate a watershed from elevation data",
+   "generated": {
+    "sentence": "Delineate a watershed from a digital elevation model",
+    "keywords": [
+     "watershed",
+     "DEM",
+     "basin delineation"
+    ]
+   },
+   "authorKeywords": [
+    "watershed",
+    "dem"
+   ],
+   "fr": "délimiter un bassin versant à partir de données d'altitude",
+   "de": "ein Einzugsgebiet aus Höhendaten abgrenzen",
+   "es": "delimitar una cuenca hidrográfica a partir de datos de elevación",
+   "pt": "delimitar uma bacia hidrográfica a partir de dados de elevação",
+   "it": "delimitare un bacino idrografico dai dati di elevazione",
+   "ru": "выделить водосборный бассейн по данным о рельефе",
+   "zh": "利用高程数据划分流域",
+   "ja": "標高データから流域を抽出する"
+  },
+  {
+   "id": "T13",
+   "kind": "task",
+   "en": "check topology errors in a polygon layer",
+   "generated": {
+    "sentence": "Find a plugin to check topology errors in polygon layers",
+    "keywords": [
+     "topology",
+     "polygon",
+     "validation"
+    ]
+   },
+   "authorKeywords": [
+    "topology",
+    "polygon"
+   ],
+   "fr": "vérifier les erreurs de topologie d'une couche de polygones",
+   "de": "Topologiefehler in einem Polygonlayer prüfen",
+   "es": "comprobar errores de topología en una capa de polígonos",
+   "pt": "verificar erros de topologia em uma camada de polígonos",
+   "it": "controllare gli errori topologici in un layer di poligoni",
+   "ru": "проверить ошибки топологии в полигональном слое",
+   "zh": "检查面图层中的拓扑错误",
+   "ja": "ポリゴンレイヤのトポロジーエラーをチェックする"
+  },
+  {
+   "id": "T14",
+   "kind": "task",
+   "en": "import GPS tracks from a GPX file",
+   "generated": {
+    "sentence": "import GPS tracks from a GPX file",
+    "keywords": [
+     "GPX",
+     "GPS tracks",
+     "import"
+    ]
+   },
+   "authorKeywords": [
+    "gpx",
+    "import"
+   ],
+   "fr": "importer des traces GPS depuis un fichier GPX",
+   "de": "GPS-Tracks aus einer GPX-Datei importieren",
+   "es": "importar tracks GPS desde un archivo GPX",
+   "pt": "importar trilhas de GPS de um arquivo GPX",
+   "it": "importare tracce GPS da un file GPX",
+   "ru": "импортировать GPS-треки из файла GPX",
+   "zh": "从GPX文件导入GPS轨迹",
+   "ja": "GPXファイルからGPSトラックを読み込む"
+  },
+  {
+   "id": "T15",
+   "kind": "task",
+   "en": "draw lines with exact lengths and angles like in CAD",
+   "generated": {
+    "sentence": "draw lines with exact length and angle, like CAD",
+    "keywords": [
+     "CAD",
+     "exact length",
+     "angle"
+    ]
+   },
+   "authorKeywords": [
+    "cad",
+    "length",
+    "angle"
+   ],
+   "fr": "dessiner des lignes avec des longueurs et des angles précis comme en DAO",
+   "de": "Linien mit exakten Längen und Winkeln wie im CAD zeichnen",
+   "es": "dibujar líneas con longitudes y ángulos exactos como en CAD",
+   "pt": "desenhar linhas com comprimentos e ângulos exatos como no CAD",
+   "it": "disegnare linee con lunghezze e angoli esatti come in CAD",
+   "ru": "чертить линии с точными длинами и углами как в САПР",
+   "zh": "像CAD一样按精确长度和角度绘制线",
+   "ja": "CADのように正確な長さと角度で線を描く"
+  },
+  {
+   "id": "T16",
+   "kind": "task",
+   "en": "publish my layers to a GeoServer",
+   "generated": {
+    "sentence": "Publish my QGIS layers to a GeoServer",
+    "keywords": [
+     "GeoServer",
+     "publish",
+     "upload"
+    ]
+   },
+   "authorKeywords": [
+    "geoserver",
+    "publish"
+   ],
+   "fr": "publier mes couches sur un GeoServer",
+   "de": "meine Layer auf einem GeoServer veröffentlichen",
+   "es": "publicar mis capas en un GeoServer",
+   "pt": "publicar minhas camadas em um GeoServer",
+   "it": "pubblicare i miei layer su un GeoServer",
+   "ru": "опубликовать мои слои на GeoServer",
+   "zh": "将我的图层发布到GeoServer",
+   "ja": "レイヤをGeoServerに公開する"
+  },
+  {
+   "id": "T17",
+   "kind": "task",
+   "en": "run SQL queries on a PostGIS database",
+   "generated": {
+    "sentence": "Run SQL queries on a PostGIS database",
+    "keywords": [
+     "PostGIS",
+     "SQL",
+     "database"
+    ]
+   },
+   "authorKeywords": [
+    "postgis",
+    "sql"
+   ],
+   "fr": "exécuter des requêtes SQL sur une base PostGIS",
+   "de": "SQL-Abfragen auf einer PostGIS-Datenbank ausführen",
+   "es": "ejecutar consultas SQL en una base de datos PostGIS",
+   "pt": "executar consultas SQL em um banco de dados PostGIS",
+   "it": "eseguire query SQL su un database PostGIS",
+   "ru": "выполнять SQL-запросы к базе данных PostGIS",
+   "zh": "在PostGIS数据库上运行SQL查询",
+   "ja": "PostGISデータベースでSQLクエリを実行する"
+  },
+  {
+   "id": "T18",
+   "kind": "task",
+   "en": "make a heat map of point density",
+   "generated": {
+    "sentence": "Make a heat map of point density",
+    "keywords": [
+     "heatmap",
+     "point density",
+     "kernel"
+    ]
+   },
+   "authorKeywords": [
+    "heatmap",
+    "density"
+   ],
+   "fr": "faire une carte de chaleur de la densité de points",
+   "de": "eine Heatmap der Punktdichte erstellen",
+   "es": "hacer un mapa de calor de la densidad de puntos",
+   "pt": "fazer um mapa de calor da densidade de pontos",
+   "it": "creare una mappa di calore della densità di punti",
+   "ru": "построить тепловую карту плотности точек",
+   "zh": "制作点密度热力图",
+   "ja": "点密度のヒートマップを作る"
+  },
+  {
+   "id": "T19",
+   "kind": "task",
+   "en": "show buildings in 3D",
+   "generated": {
+    "sentence": "Show buildings in 3D on my map",
+    "keywords": [
+     "3D buildings",
+     "extrusion",
+     "OSM"
+    ]
+   },
+   "authorKeywords": [
+    "3d",
+    "buildings"
+   ],
+   "fr": "afficher les bâtiments en 3D",
+   "de": "Gebäude in 3D anzeigen",
+   "es": "mostrar los edificios en 3D",
+   "pt": "mostrar as edificações em 3D",
+   "it": "visualizzare gli edifici in 3D",
+   "ru": "показать здания в 3D",
+   "zh": "以三维方式显示建筑物",
+   "ja": "建物を3Dで表示する"
+  },
+  {
+   "id": "T20",
+   "kind": "task",
+   "en": "import a DXF drawing from AutoCAD",
+   "generated": {
+    "sentence": "Import a DXF drawing from AutoCAD into QGIS",
+    "keywords": [
+     "DXF",
+     "AutoCAD",
+     "import"
+    ]
+   },
+   "authorKeywords": [
+    "dxf",
+    "import"
+   ],
+   "fr": "importer un dessin DXF d'AutoCAD",
+   "de": "eine DXF-Zeichnung aus AutoCAD importieren",
+   "es": "importar un dibujo DXF de AutoCAD",
+   "pt": "importar um desenho DXF do AutoCAD",
+   "it": "importare un disegno DXF da AutoCAD",
+   "ru": "импортировать чертёж DXF из AutoCAD",
+   "zh": "导入AutoCAD的DXF图纸",
+   "ja": "AutoCADのDXF図面を読み込む"
+  },
+  {
+   "id": "T21",
+   "kind": "task",
+   "en": "see street level imagery at the location I click",
+   "generated": {
+    "sentence": "show street level imagery at the clicked location",
+    "keywords": [
+     "street view",
+     "mapillary",
+     "panoramic"
+    ]
+   },
+   "authorKeywords": [
+    "street view",
+    "imagery"
+   ],
+   "fr": "voir des images au niveau de la rue à l'endroit où je clique",
+   "de": "Straßenansichten an der angeklickten Stelle sehen",
+   "es": "ver imágenes a pie de calle en el lugar donde hago clic",
+   "pt": "ver imagens ao nível da rua no local onde clico",
+   "it": "vedere immagini a livello stradale nel punto in cui clicco",
+   "ru": "смотреть панорамы улиц в точке, где я щёлкаю",
+   "zh": "在我点击的位置查看街景图像",
+   "ja": "クリックした場所のストリートビュー画像を見る"
+  },
+  {
+   "id": "T22",
+   "kind": "task",
+   "en": "draw an elevation profile along a line",
+   "generated": {
+    "sentence": "Draw an elevation profile along a line",
+    "keywords": [
+     "elevation profile",
+     "terrain",
+     "cross section"
+    ]
+   },
+   "authorKeywords": [
+    "profile",
+    "elevation"
+   ],
+   "fr": "tracer un profil altimétrique le long d'une ligne",
+   "de": "ein Höhenprofil entlang einer Linie zeichnen",
+   "es": "trazar un perfil de elevación a lo largo de una línea",
+   "pt": "traçar um perfil de elevação ao longo de uma linha",
+   "it": "tracciare un profilo altimetrico lungo una linea",
+   "ru": "построить профиль высот вдоль линии",
+   "zh": "沿一条线绘制高程剖面",
+   "ja": "線に沿って標高断面図を描く"
+  },
+  {
+   "id": "T23",
+   "kind": "task",
+   "en": "plan a flight path for a drone mapping survey",
+   "generated": {
+    "sentence": "QGIS plugin to plan drone mapping survey flight paths",
+    "keywords": [
+     "drone",
+     "flight path",
+     "survey grid"
+    ]
+   },
+   "authorKeywords": [
+    "drone",
+    "flight plan"
+   ],
+   "fr": "planifier un plan de vol pour un levé par drone",
+   "de": "eine Flugroute für eine Drohnenvermessung planen",
+   "es": "planificar la ruta de vuelo de un levantamiento con dron",
+   "pt": "planejar o plano de voo de um levantamento com drone",
+   "it": "pianificare il piano di volo per un rilievo con drone",
+   "ru": "спланировать маршрут полёта дрона для аэросъёмки",
+   "zh": "为无人机测绘规划航线",
+   "ja": "ドローン測量の飛行ルートを計画する"
+  },
+  {
+   "id": "T24",
+   "kind": "task",
+   "en": "interpolate temperature measurements into a raster surface",
+   "generated": {
+    "sentence": "Interpolate point temperature measurements into a raster surface",
+    "keywords": [
+     "interpolation",
+     "raster",
+     "kriging"
+    ]
+   },
+   "authorKeywords": [
+    "interpolation",
+    "temperature"
+   ],
+   "fr": "interpoler des mesures de température en une surface raster",
+   "de": "Temperaturmessungen zu einer Rasteroberfläche interpolieren",
+   "es": "interpolar mediciones de temperatura en una superficie ráster",
+   "pt": "interpolar medições de temperatura em uma superfície raster",
+   "it": "interpolare misure di temperatura in una superficie raster",
+   "ru": "интерполировать измерения температуры в растровую поверхность",
+   "zh": "将温度测量值插值为栅格表面",
+   "ja": "気温の観測値をラスタ面に内挿する"
+  },
+  {
+   "id": "T25",
+   "kind": "task",
+   "en": "detect changes between two satellite images taken at different dates",
+   "generated": {
+    "sentence": "Detect changes between two satellite images from different dates",
+    "keywords": [
+     "change detection",
+     "satellite",
+     "multitemporal"
+    ]
+   },
+   "authorKeywords": [
+    "change detection",
+    "satellite"
+   ],
+   "fr": "détecter les changements entre deux images satellite de dates différentes",
+   "de": "Veränderungen zwischen zwei Satellitenbildern verschiedener Zeitpunkte erkennen",
+   "es": "detectar cambios entre dos imágenes satelitales de fechas distintas",
+   "pt": "detectar mudanças entre duas imagens de satélite de datas diferentes",
+   "it": "rilevare i cambiamenti tra due immagini satellitari di date diverse",
+   "ru": "выявить изменения между двумя космоснимками разных дат",
+   "zh": "检测两幅不同日期卫星影像之间的变化",
+   "ja": "撮影日の異なる2枚の衛星画像の変化を検出する"
+  },
+  {
+   "id": "T26",
+   "kind": "task",
+   "en": "collect data in the field on a phone and sync it back",
+   "generated": {
+    "sentence": "Collect field data on phone, sync to QGIS",
+    "keywords": [
+     "mobile data collection",
+     "field survey",
+     "sync"
+    ]
+   },
+   "authorKeywords": [
+    "field",
+    "mobile",
+    "sync"
+   ],
+   "fr": "collecter des données sur le terrain avec un téléphone et les synchroniser",
+   "de": "Daten im Gelände mit dem Handy erfassen und zurück synchronisieren",
+   "es": "recoger datos en campo con un teléfono y sincronizarlos",
+   "pt": "coletar dados em campo no celular e sincronizá-los",
+   "it": "raccogliere dati sul campo con il telefono e sincronizzarli",
+   "ru": "собирать данные в поле на телефоне и синхронизировать их",
+   "zh": "用手机在野外采集数据并同步回来",
+   "ja": "スマートフォンで現地調査データを収集して同期する"
+  },
+  {
+   "id": "T27",
+   "kind": "task",
+   "en": "simulate river flooding and inundation depth",
+   "generated": {
+    "sentence": "QGIS plugin to simulate river flooding inundation depth",
+    "keywords": [
+     "flood simulation",
+     "inundation",
+     "river"
+    ]
+   },
+   "authorKeywords": [
+    "flood",
+    "simulation"
+   ],
+   "fr": "simuler une crue de rivière et la hauteur d'inondation",
+   "de": "Flusshochwasser und Überflutungstiefe simulieren",
+   "es": "simular la crecida de un río y la profundidad de inundación",
+   "pt": "simular a cheia de um rio e a profundidade de inundação",
+   "it": "simulare la piena di un fiume e la profondità di allagamento",
+   "ru": "смоделировать паводок на реке и глубину затопления",
+   "zh": "模拟河流洪水及淹没深度",
+   "ja": "河川の洪水と浸水深をシミュレーションする"
+  },
+  {
+   "id": "T28",
+   "kind": "task",
+   "en": "split a polygon into parts of equal area",
+   "generated": {
+    "sentence": "split a polygon into parts of equal area",
+    "keywords": [
+     "split polygon",
+     "equal area",
+     "divide"
+    ]
+   },
+   "authorKeywords": [
+    "split polygon",
+    "equal area"
+   ],
+   "fr": "découper un polygone en parties de même surface",
+   "de": "ein Polygon in flächengleiche Teile aufteilen",
+   "es": "dividir un polígono en partes de igual superficie",
+   "pt": "dividir um polígono em partes de áreas iguais",
+   "it": "suddividere un poligono in parti di uguale superficie",
+   "ru": "разделить полигон на части равной площади",
+   "zh": "将一个面分割成面积相等的几部分",
+   "ja": "ポリゴンを等しい面積に分割する"
+  },
+  {
+   "id": "T29",
+   "kind": "task",
+   "en": "create a grid of hexagons over my study area",
+   "generated": {
+    "sentence": "create a hexagon grid over my study area",
+    "keywords": [
+     "hexagon",
+     "grid",
+     "tessellation"
+    ]
+   },
+   "authorKeywords": [
+    "hexagon",
+    "grid"
+   ],
+   "fr": "créer une grille d'hexagones sur ma zone d'étude",
+   "de": "ein Sechseckraster über mein Untersuchungsgebiet legen",
+   "es": "crear una malla de hexágonos sobre mi zona de estudio",
+   "pt": "criar uma grade de hexágonos sobre minha área de estudo",
+   "it": "creare una griglia di esagoni sulla mia area di studio",
+   "ru": "создать сетку шестиугольников на территории исследования",
+   "zh": "在研究区上创建六边形格网",
+   "ja": "調査範囲に六角形のグリッドを作成する"
+  },
+  {
+   "id": "T30",
+   "kind": "task",
+   "en": "export the attribute table to an Excel spreadsheet",
+   "generated": {
+    "sentence": "Export attribute table to Excel spreadsheet",
+    "keywords": [
+     "excel export",
+     "attribute table"
+    ]
+   },
+   "authorKeywords": [
+    "excel",
+    "export"
+   ],
+   "fr": "exporter la table attributaire vers un tableur Excel",
+   "de": "die Attributtabelle in eine Excel-Tabelle exportieren",
+   "es": "exportar la tabla de atributos a una hoja de Excel",
+   "pt": "exportar a tabela de atributos para uma planilha do Excel",
+   "it": "esportare la tabella degli attributi in un foglio Excel",
+   "ru": "экспортировать таблицу атрибутов в Excel",
+   "zh": "将属性表导出为Excel表格",
+   "ja": "属性テーブルをExcelに書き出す"
+  },
+  {
+   "id": "T31",
+   "kind": "task",
+   "en": "ask an AI assistant to write processing scripts for me",
+   "generated": {
+    "sentence": "Use an AI assistant to write processing scripts",
+    "keywords": [
+     "AI assistant",
+     "script",
+     "processing"
+    ]
+   },
+   "authorKeywords": [
+    "ai",
+    "assistant",
+    "script"
+   ],
+   "fr": "demander à un assistant IA d'écrire des scripts de traitement",
+   "de": "einen KI-Assistenten Verarbeitungsskripte für mich schreiben lassen",
+   "es": "pedir a un asistente de IA que escriba scripts de procesamiento",
+   "pt": "pedir a um assistente de IA para escrever scripts de processamento",
+   "it": "chiedere a un assistente IA di scrivere script di elaborazione",
+   "ru": "попросить ИИ-ассистента написать скрипты обработки",
+   "zh": "让AI助手帮我编写处理脚本",
+   "ja": "AIアシスタントに処理スクリプトを書いてもらう"
+  },
+  {
+   "id": "T32",
+   "kind": "task",
+   "en": "estimate the solar potential of rooftops",
+   "generated": {
+    "sentence": "QGIS plugin to estimate rooftop solar potential",
+    "keywords": [
+     "solar",
+     "rooftop",
+     "irradiance"
+    ]
+   },
+   "authorKeywords": [
+    "solar",
+    "roof"
+   ],
+   "fr": "estimer le potentiel solaire des toitures",
+   "de": "das Solarpotenzial von Dächern abschätzen",
+   "es": "estimar el potencial solar de los tejados",
+   "pt": "estimar o potencial solar dos telhados",
+   "it": "stimare il potenziale solare dei tetti",
+   "ru": "оценить солнечный потенциал крыш",
+   "zh": "估算屋顶的太阳能潜力",
+   "ja": "屋根の太陽光発電ポテンシャルを推定する"
+  },
+  {
+   "id": "T33",
+   "kind": "task",
+   "en": "load WMS and WFS services from a catalogue",
+   "generated": {
+    "sentence": "Load WMS and WFS services from a catalogue",
+    "keywords": [
+     "WMS",
+     "WFS",
+     "catalogue"
+    ]
+   },
+   "authorKeywords": [
+    "wms",
+    "wfs",
+    "catalog"
+   ],
+   "fr": "charger des services WMS et WFS depuis un catalogue",
+   "de": "WMS- und WFS-Dienste aus einem Katalog laden",
+   "es": "cargar servicios WMS y WFS desde un catálogo",
+   "pt": "carregar serviços WMS e WFS a partir de um catálogo",
+   "it": "caricare servizi WMS e WFS da un catalogo",
+   "ru": "загрузить сервисы WMS и WFS из каталога",
+   "zh": "从目录加载WMS和WFS服务",
+   "ja": "カタログからWMSとWFSサービスを読み込む"
+  },
+  {
+   "id": "T34",
+   "kind": "task",
+   "en": "match GPS points to the roads they were recorded on",
+   "generated": {
+    "sentence": "QGIS plugin to snap GPS points to roads",
+    "keywords": [
+     "map matching",
+     "GPS",
+     "road network"
+    ]
+   },
+   "authorKeywords": [
+    "map matching",
+    "gps"
+   ],
+   "fr": "recaler des points GPS sur les routes où ils ont été enregistrés",
+   "de": "GPS-Punkte den Straßen zuordnen, auf denen sie aufgezeichnet wurden",
+   "es": "ajustar puntos GPS a las carreteras donde se registraron",
+   "pt": "ajustar pontos de GPS às vias onde foram registrados",
+   "it": "agganciare i punti GPS alle strade su cui sono stati registrati",
+   "ru": "привязать GPS-точки к дорогам, по которым они записаны",
+   "zh": "将GPS点匹配到其记录时所在的道路",
+   "ja": "GPSの点を記録された道路にマッチングする"
+  },
+  {
+   "id": "T35",
+   "kind": "task",
+   "en": "analyse public transport timetables from GTFS",
+   "generated": {
+    "sentence": "Analyse public transport timetables from GTFS data",
+    "keywords": [
+     "GTFS",
+     "public transport",
+     "timetable"
+    ]
+   },
+   "authorKeywords": [
+    "gtfs",
+    "timetable"
+   ],
+   "fr": "analyser les horaires de transport en commun au format GTFS",
+   "de": "ÖPNV-Fahrpläne aus GTFS analysieren",
+   "es": "analizar horarios de transporte público en GTFS",
+   "pt": "analisar horários de transporte público em GTFS",
+   "it": "analizzare gli orari del trasporto pubblico da GTFS",
+   "ru": "анализировать расписания общественного транспорта GTFS",
+   "zh": "分析GTFS公共交通时刻表",
+   "ja": "GTFSの公共交通時刻表を分析する"
+  },
+  {
+   "id": "T36",
+   "kind": "task",
+   "en": "animate a layer over time with a time slider",
+   "generated": {
+    "sentence": "Animate map layer over time with time slider",
+    "keywords": [
+     "animation",
+     "time slider",
+     "timeline"
+    ]
+   },
+   "authorKeywords": [
+    "animation",
+    "time"
+   ],
+   "fr": "animer une couche dans le temps avec un curseur temporel",
+   "de": "einen Layer mit einem Zeitschieberegler über die Zeit animieren",
+   "es": "animar una capa en el tiempo con un deslizador temporal",
+   "pt": "animar uma camada ao longo do tempo com um controle deslizante",
+   "it": "animare un layer nel tempo con un cursore temporale",
+   "ru": "анимировать слой во времени с помощью ползунка",
+   "zh": "用时间滑块按时间动画显示图层",
+   "ja": "タイムスライダーでレイヤを時系列アニメーションする"
+  },
+  {
+   "id": "T37",
+   "kind": "task",
+   "en": "process a lidar point cloud into a digital terrain model",
+   "generated": {
+    "sentence": "Lidar point cloud to digital terrain model QGIS plugin",
+    "keywords": [
+     "lidar",
+     "DTM",
+     "point cloud"
+    ]
+   },
+   "authorKeywords": [
+    "lidar",
+    "dtm"
+   ],
+   "fr": "traiter un nuage de points lidar pour obtenir un modèle numérique de terrain",
+   "de": "eine LiDAR-Punktwolke zu einem digitalen Geländemodell verarbeiten",
+   "es": "procesar una nube de puntos lidar para obtener un modelo digital del terreno",
+   "pt": "processar uma nuvem de pontos lidar para gerar um modelo digital do terreno",
+   "it": "elaborare una nuvola di punti lidar per ottenere un modello digitale del terreno",
+   "ru": "обработать облако точек лидара в цифровую модель рельефа",
+   "zh": "将激光雷达点云处理为数字地形模型",
+   "ja": "LiDAR点群から数値地形モデルを作成する"
+  },
+  {
+   "id": "T38",
+   "kind": "task",
+   "en": "fill an attribute for many selected features at once",
+   "generated": {
+    "sentence": "Set one attribute value for many selected features",
+    "keywords": [
+     "batch edit",
+     "attribute values",
+     "selected features"
+    ]
+   },
+   "authorKeywords": [
+    "attribute",
+    "multiple",
+    "edit"
+   ],
+   "fr": "remplir un attribut pour de nombreuses entités sélectionnées en une fois",
+   "de": "ein Attribut für viele ausgewählte Objekte auf einmal füllen",
+   "es": "rellenar un atributo de muchas entidades seleccionadas a la vez",
+   "pt": "preencher um atributo de muitas feições selecionadas de uma vez",
+   "it": "compilare un attributo per molti elementi selezionati in una volta",
+   "ru": "заполнить атрибут сразу для многих выбранных объектов",
+   "zh": "一次为多个选中要素填写属性",
+   "ja": "選択した多数の地物の属性を一括入力する"
+  },
+  {
+   "id": "T39",
+   "kind": "task",
+   "en": "copy coordinates of a clicked point to the clipboard",
+   "generated": {
+    "sentence": "copy clicked point coordinates to clipboard",
+    "keywords": [
+     "clipboard",
+     "coordinates",
+     "copy"
+    ]
+   },
+   "authorKeywords": [
+    "coordinates",
+    "clipboard"
+   ],
+   "fr": "copier dans le presse-papiers les coordonnées d'un point cliqué",
+   "de": "Koordinaten eines angeklickten Punkts in die Zwischenablage kopieren",
+   "es": "copiar al portapapeles las coordenadas de un punto pulsado",
+   "pt": "copiar para a área de transferência as coordenadas de um ponto clicado",
+   "it": "copiare negli appunti le coordinate di un punto cliccato",
+   "ru": "скопировать координаты точки щелчка в буфер обмена",
+   "zh": "将点击点的坐标复制到剪贴板",
+   "ja": "クリックした地点の座標をクリップボードにコピーする"
+  },
+  {
+   "id": "T40",
+   "kind": "task",
+   "en": "manage and edit the metadata of my layers",
+   "generated": {
+    "sentence": "Find a plugin to manage and edit layer metadata",
+    "keywords": [
+     "metadata",
+     "layer editor"
+    ]
+   },
+   "authorKeywords": [
+    "metadata",
+    "editor"
+   ],
+   "fr": "gérer et éditer les métadonnées de mes couches",
+   "de": "die Metadaten meiner Layer verwalten und bearbeiten",
+   "es": "gestionar y editar los metadatos de mis capas",
+   "pt": "gerenciar e editar os metadados das minhas camadas",
+   "it": "gestire e modificare i metadati dei miei layer",
+   "ru": "управлять метаданными моих слоёв и редактировать их",
+   "zh": "管理和编辑我的图层元数据",
+   "ja": "レイヤのメタデータを管理・編集する"
+  }
+ ],
+ "native": [
+  {
+   "id": "N01",
+   "lang": "fr",
+   "text": "consulter le cadastre et les parcelles en France",
+   "en": "view French cadastre and land parcels"
+  },
+  {
+   "id": "N02",
+   "lang": "pt",
+   "text": "Cadastro Ambiental Rural CAR imóveis rurais",
+   "en": "Brazilian rural environmental registry of rural properties"
+  },
+  {
+   "id": "N03",
+   "lang": "es",
+   "text": "consultar el catastro español y las parcelas",
+   "en": "query the Spanish cadastre and land parcels"
+  },
+  {
+   "id": "N04",
+   "lang": "ja",
+   "text": "国土地理院の地図タイルを表示する",
+   "en": "display GSI Japan map tiles"
+  },
+  {
+   "id": "N05",
+   "lang": "de",
+   "text": "ALKIS Liegenschaftskataster laden",
+   "en": "load the German ALKIS real estate cadastre"
+  },
+  {
+   "id": "N06",
+   "lang": "it",
+   "text": "visualizzare le particelle del catasto italiano",
+   "en": "view Italian cadastral parcels"
+  },
+  {
+   "id": "N07",
+   "lang": "fr",
+   "text": "télécharger les données de l'IGN Géoplateforme",
+   "en": "download data from the French IGN Geoplatform"
+  },
+  {
+   "id": "N08",
+   "lang": "pt",
+   "text": "baixar dados do IBGE",
+   "en": "download data from the Brazilian statistics institute IBGE"
+  },
+  {
+   "id": "N09",
+   "lang": "es",
+   "text": "descargar datos del Instituto Geográfico Nacional de España",
+   "en": "download data from Spain's National Geographic Institute"
+  },
+  {
+   "id": "N10",
+   "lang": "ja",
+   "text": "地番図や筆界を扱う",
+   "en": "work with Japanese parcel maps and lot boundaries"
+  },
+  {
+   "id": "N11",
+   "lang": "ru",
+   "text": "загрузить данные кадастровой карты Росреестра",
+   "en": "load Russian Rosreestr cadastral map data"
+  },
+  {
+   "id": "N12",
+   "lang": "zh",
+   "text": "加载天地图底图",
+   "en": "load Tianditu basemap"
+  },
+  {
+   "id": "N13",
+   "lang": "de",
+   "text": "Daten vom Geoportal Schweiz swisstopo laden",
+   "en": "load Swiss swisstopo geoportal data"
+  },
+  {
+   "id": "N14",
+   "lang": "fr",
+   "text": "géocoder des adresses avec la Base Adresse Nationale",
+   "en": "geocode addresses with the French national address base"
+  },
+  {
+   "id": "N15",
+   "lang": "pt",
+   "text": "georreferenciamento de imóveis rurais SIGEF INCRA",
+   "en": "georeferencing of rural properties for SIGEF INCRA"
+  },
+  {
+   "id": "N16",
+   "lang": "es",
+   "text": "cartografía de riesgo de incendios forestales",
+   "en": "wildfire risk mapping"
+  }
+ ],
+ "generator": {
+  "model": "claude-haiku-5-5",
+  "effort": "medium",
+  "prompt": "QueryPrompt.txt (short sentence version: fewer than 10 words)",
+  "date": "2026-11-12",
+  "how": "one independent call per task; the prompt's {task} is the task's 'en' text and nothing else is given: no plugin names, no catalogue, no other task"
+ }
 }

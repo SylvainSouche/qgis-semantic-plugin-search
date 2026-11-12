@@ -11,11 +11,16 @@ from pathlib import Path
 
 import pytest
 
+from SemanticPluginSearch.Domain.Entities import PluginInfo
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "evaluation"))
 
 from SearchEvaluation import (  # noqa: E402
     EVALUATION_DIR,
+    AndFilter,
     Bm25,
+    EncodedVectors,
+    keywordSession,
     keywordTokens,
     lightStem,
     pairedBootstrap,
@@ -48,7 +53,51 @@ def testUnjudgedResultsCountAsNotRelevant():
 
 def testEmptyRankingScoresZero():
     metrics = queryMetrics([], {"a": 2})
-    assert metrics == {"ndcg@10": 0.0, "recall@20": 0.0, "mrr": 0.0, "success@5": 0.0}
+    assert set(metrics.values()) == {0.0}
+
+
+def testPrecisionCountsOnlyWhatIsShownAndFoundNeedsAFullMatch():
+    metrics = queryMetrics(["x", "a", "b"], {"a": 1, "b": 1})
+    assert metrics["precision@10"] == pytest.approx(2 / 3)
+    assert metrics["found@10"] == 0.0
+    metrics = queryMetrics(["x", "y"], {"a": 2})
+    assert metrics["precision@10"] == 0.0
+    names = [f"n{i}" for i in range(10)] + ["a"]
+    assert queryMetrics(names, {"a": 2})["found@10"] == 0.0
+    assert queryMetrics(names[1:], {"a": 2})["found@10"] == 1.0
+
+
+def _info(name, description="", tags=()):
+    return PluginInfo(pluginId=len(name), name=name, description=description, tags=tuple(tags))
+
+
+def testAndFilterNeedsEveryKeywordAtAWordStartAndSortsByName():
+    infos = [_info("Zeta contours", "contour lines from a DEM"),
+             _info("Alpha", "Contour generator", ["dem"]),
+             _info("Decontour", "removes outlines from DEMs"),
+             _info("Web map", "export a web map")]
+    andFilter = AndFilter(infos)
+    assert andFilter.matches(["contour", "dem"]) == [1, 0]
+    assert andFilter.matches(["web map"]) == [3]
+    assert andFilter.matches(["map web"]) == []
+    assert andFilter.matches([]) == []
+
+
+def testKeywordSessionStopsOnTheFirstScreenThatShowsTheTask():
+    lists = {("a",): ["x", "y"], ("a", "b"): ["x", "good"], ("a", "b", "c"): ["good"]}
+    outcome = keywordSession(lambda k: lists.get(tuple(k), []), ["a", "b", "c"], {"good": 2})
+    assert outcome.found and outcome.keywordsTyped == 2
+    assert outcome.final.keywords == ["a", "b"]
+    assert outcome.metrics["precision@10"] == 0.5
+
+
+def testKeywordSessionDropsAKeywordThatEmptiesTheList():
+    lists = {("a",): ["x"], ("a", "c"): ["good"]}
+    outcome = keywordSession(lambda k: lists.get(tuple(k), []), ["a", "b", "c"], {"good": 2})
+    assert [s.kept for s in outcome.steps] == [True, False, True]
+    assert outcome.found and outcome.final.keywords == ["a", "c"]
+    outcome = keywordSession(lambda k: lists.get(tuple(k), []), ["a", "b"], {"good": 2})
+    assert not outcome.found and outcome.final.keywords == ["a"]
 
 
 def testPairedBootstrapIsCenteredOnTheMeanDifference():
@@ -99,3 +148,32 @@ def testJudgmentsCoverEveryQuery():
         assert set(grades) <= {1, 2}, qid
     for query in queries["queries"]:
         assert all(query.get(lang) for lang in queries["languages"]), query["id"]
+        for keywords in (query["generated"]["keywords"], query["authorKeywords"]):
+            assert 1 <= len(keywords) <= 4 and all(keywords), query["id"]
+        assert query["generated"]["sentence"], query["id"]
+
+
+def testEncodedVectorsNormaliseAndCacheQueries():
+    calls = []
+
+    def encode(text):
+        calls.append(text)
+        return [3.0, 4.0] if text else [0.0, 0.0]
+
+    vectors = EncodedVectors([[2.0, 0.0], [0.0, 0.0]], encode)
+    assert vectors.documents[0].tolist() == [1.0, 0.0]
+    assert vectors.documents[1].tolist() == [0.0, 0.0]
+    assert vectors.query("x").tolist() == pytest.approx([0.6, 0.8])
+    vectors.query("x")
+    assert calls == ["x"]
+    assert vectors.query("") is None
+
+
+def testCandidatesAreWellFormed():
+    candidates = json.loads((EVALUATION_DIR / "Candidates.json").read_text(encoding="utf-8"))
+    ids = [c["id"] for c in candidates["candidates"]]
+    assert len(ids) == len(set(ids)) and "shipped" in ids
+    for candidate in candidates["candidates"]:
+        assert candidate["kind"] in {"shipped", "model2vec", "sentence-transformers"}
+        assert candidate["class"] in {"static", "transformer"}
+        assert candidate["kind"] == "shipped" or candidate["model"]

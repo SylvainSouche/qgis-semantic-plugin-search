@@ -1,0 +1,24 @@
+{
+ "about": "Embedding models benchmarked by evaluation/RunBenchmark.py (GitHub workflow BenchmarkEmbeddings). 'static' models are token lookup tables averaged per text, like the shipped engine: they could ship within con-light-engine if their tokenizer is BERT WordPiece. 'transformer' models need a neural network at query time; they are measured as a quality ceiling, not as shippable options. Licenses are as stated on each model card at the time of writing; check them again before adopting a model. 'dim' truncates Matryoshka (MRL) embeddings to that width. 'queryPrefix' and 'documentPrefix' are the instructions some models expect.",
+ "candidates": [
+  {"id": "shipped", "kind": "shipped", "class": "static", "license": "MIT",
+   "note": "potion-base-8M as converted and shipped, read from the pinned snapshot: the reference"},
+  {"id": "potion-base-8M", "kind": "model2vec", "model": "minishlab/potion-base-8M", "class": "static", "license": "MIT",
+   "note": "the shipped model loaded by model2vec: checks that the benchmark path reproduces the shipped one"},
+  {"id": "potion-base-32M", "kind": "model2vec", "model": "minishlab/potion-base-32M", "class": "static", "license": "MIT"},
+  {"id": "potion-retrieval-32M", "kind": "model2vec", "model": "minishlab/potion-retrieval-32M", "class": "static", "license": "MIT"},
+  {"id": "potion-multilingual-128M", "kind": "model2vec", "model": "minishlab/potion-multilingual-128M", "class": "static", "license": "MIT"},
+  {"id": "static-retrieval-mrl-en-v1", "kind": "sentence-transformers", "model": "sentence-transformers/static-retrieval-mrl-en-v1",
+   "class": "static", "license": "Apache-2.0", "dim": 256},
+  {"id": "static-similarity-mrl-multilingual-v1", "kind": "sentence-transformers",
+   "model": "sentence-transformers/static-similarity-mrl-multilingual-v1", "class": "static", "license": "Apache-2.0", "dim": 256},
+  {"id": "all-MiniLM-L6-v2", "kind": "sentence-transformers", "model": "sentence-transformers/all-MiniLM-L6-v2",
+   "class": "transformer", "license": "Apache-2.0", "note": "the teacher the shipped model was distilled from"},
+  {"id": "paraphrase-multilingual-MiniLM-L12-v2", "kind": "sentence-transformers",
+   "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", "class": "transformer", "license": "Apache-2.0"},
+  {"id": "multilingual-e5-small", "kind": "sentence-transformers", "model": "intfloat/multilingual-e5-small",
+   "class": "transformer", "license": "MIT", "queryPrefix": "query: ", "documentPrefix": "passage: "},
+  {"id": "bge-small-en-v1.5", "kind": "sentence-transformers", "model": "BAAI/bge-small-en-v1.5", "class": "transformer",
+   "license": "MIT", "queryPrefix": "Represent this sentence for searching relevant passages: "}
+ ]
+}

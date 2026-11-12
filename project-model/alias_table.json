@@ -203,6 +203,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-embedding-benchmark": {
+    "active": true,
+    "id": "0f87-6af5-ae16-fe82",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-embeddings-branch": {
     "active": true,
     "id": "4be9-6ae3-f849-f08f",
@@ -230,6 +236,24 @@
   "dec-eval-05": {
     "active": true,
     "id": "0f87-6af5-78a3-2240",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-eval-blind-queries": {
+    "active": true,
+    "id": "0f87-6af5-9806-42d5",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-eval-query-forms": {
+    "active": true,
+    "id": "0f87-6af5-9429-4f67",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-eval-short-sentences": {
+    "active": true,
+    "id": "0f87-6af5-a8e7-50d4",
     "status": "recorded",
     "type": "dec"
   },
@@ -743,22 +767,52 @@
     "status": "recorded",
     "type": "obs"
   },
+  "obs-eval-blind-queries": {
+    "active": false,
+    "id": "0f87-6af5-9806-f960",
+    "status": "superseded",
+    "type": "obs"
+  },
   "obs-eval-cross-language": {
-    "active": true,
+    "active": false,
     "id": "0f87-6af5-78a3-8780",
+    "status": "superseded",
+    "type": "obs"
+  },
+  "obs-eval-cross-language-40": {
+    "active": true,
+    "id": "0f87-6af5-9429-c467",
     "status": "recorded",
     "type": "obs"
   },
   "obs-eval-native-catalogue": {
-    "active": true,
+    "active": false,
     "id": "0f87-6af5-78a3-5f23",
+    "status": "superseded",
+    "type": "obs"
+  },
+  "obs-eval-native-catalogue-fixed": {
+    "active": true,
+    "id": "0f87-6af5-9429-c3f7",
+    "status": "recorded",
+    "type": "obs"
+  },
+  "obs-eval-sentence-vs-keywords": {
+    "active": false,
+    "id": "0f87-6af5-9429-e626",
+    "status": "superseded",
+    "type": "obs"
+  },
+  "obs-eval-short-blind-queries": {
+    "active": true,
+    "id": "0f87-6af5-a8e7-9e22",
     "status": "recorded",
     "type": "obs"
   },
   "obs-eval-vs-keyword": {
-    "active": true,
+    "active": false,
     "id": "0f87-6af5-78a3-f019",
-    "status": "recorded",
+    "status": "superseded",
     "type": "obs"
   },
   "obs-existing-data": {

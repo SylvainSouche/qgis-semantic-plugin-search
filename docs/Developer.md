@@ -66,7 +66,8 @@ shown is the hybrid score, capped at 100.
 How good this ranking is, against keyword search and across languages, is
 measured by `make eval` and discussed in
 [SearchQualityEvaluation.md](SearchQualityEvaluation.md). Rerun it before
-changing weights, text preparation or the model.
+changing weights, text preparation or the model. Alternative models are
+compared by the BenchmarkEmbeddings workflow, on GitHub's runners.
 
 ### Installed state
 
@@ -135,6 +136,7 @@ make smoke       # load and exercise the plugin headless in every installed QGIS
 make fetch       # catalogue and readmes into data/ (QGIS_VERSIONS="3.44 4.2")
 make embed       # model and per-universe databases into build/, fetching first if needed
 make eval        # search quality vs keyword baselines and across languages, on a pinned snapshot
+make benchmark   # the same for embedding models in evaluation/Candidates.json (CI: BenchmarkEmbeddings)
 make dist        # package checks (standard library only, no venv), then dist/SemanticPluginSearch.<version>.zip
 make version VERSION=0.4.1 COMMENT="What changed"   # set the version and its changelog entry
 make increment INC=rel COMMENT="What changed"       # bump maj, min or rel (0.4.0 -> 1.0.0, 0.5.0, 0.4.1)

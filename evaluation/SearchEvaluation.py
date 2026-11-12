@@ -10,6 +10,9 @@ Systems compared (all see the same catalogue and the same visibility rule):
 - manager:    an approximation of the QGIS plugin manager search box: the
               whole query, case insensitive, must appear as a substring of
               the name, description, author or tags; matches sorted by name.
+- andfilter:  the boolean keyword search users expect from a search box:
+              every keyword must start a word of the name, description,
+              about, tags or author; matches sorted by name.
 - bm25:       Okapi BM25 over the full embedded text (name, description,
               about, tags, readme excerpt), no stemming. The strong keyword
               baseline.
@@ -19,8 +22,17 @@ Systems compared (all see the same catalogue and the same visibility rule):
 - hybrid:     the shipped ranking (Domain.SearchEngine.SearchService).
 
 Metrics per query, averaged over queries: nDCG@10 with graded judgments
-(2 = does the task, 1 = partly or as a side feature), Recall@20, MRR and
-Success@5 (a relevant plugin in the first five). Differences between two
+(2 = does the task, 1 = partly or as a side feature), Recall@20, MRR,
+Success@5 (a relevant plugin in the first five), Found@10 (a plugin that
+does the task, grade 2, on the first screen of ten) and Precision@10 (the
+share of what is shown on that screen that is relevant: a short list of
+wrong plugins scores 0, it is not credited for being short).
+
+Each need is asked twice: as a sentence and as a keyword list. A keyword
+session (keywordSession) replays how keyword search is really used: type
+the first keyword, look at the first screen, add the next keyword if it
+does not show a plugin that does the task, and take a keyword back out if
+it empties the list. Differences between two
 systems come with a paired bootstrap 95 % interval over queries.
 
 This module is tooling: it imports the plugin Domain and Data layers but is
@@ -70,7 +82,9 @@ CUTOFF_RECALL = 20
 CUTOFF_SUCCESS = 5
 RANK_DEPTH = 50
 
-SYSTEMS = ("manager", "bm25", "bm25stem", "lexical", "semantic", "hybrid")
+SCREEN = 10
+
+SYSTEMS = ("manager", "andfilter", "bm25", "bm25stem", "lexical", "semantic", "hybrid")
 # Not shipped: reciprocal rank fusion of semantic and BM25, measured to see
 # whether a keyword component stronger than the lexical boost would help.
 EXPERIMENTS = ("fusion",)
@@ -221,24 +235,93 @@ def managerRanking(corpus: Corpus, query: str) -> list[int]:
     return sorted(hits, key=lambda p: corpus.infos[p].name.casefold())
 
 
+class AndFilter:
+    """Every keyword must start a word of the plugin's visible fields."""
+
+    def __init__(self, infos: Sequence[PluginInfo]) -> None:
+        self.texts = [" " + " ".join(_WORD.findall(fold(" ".join(
+            (info.name, info.description, info.about or "", " ".join(info.tags),
+             info.author or ""))))) for info in infos]
+        self.names = [info.name.casefold() for info in infos]
+
+    def matches(self, keywords: Sequence[str]) -> list[int]:
+        needles = [" " + " ".join(_WORD.findall(fold(k))) for k in keywords]
+        needles = [n for n in needles if n.strip()]
+        if not needles:
+            return []
+        hits = [i for i, text in enumerate(self.texts) if all(n in text for n in needles)]
+        return sorted(hits, key=lambda i: self.names[i])
+
+
 # ---------------------------------------------------------------- systems
 
 
-class Systems:
-    """Every compared ranking over one corpus, returning store positions."""
+class EncodedVectors:
+    """Document vectors and a query encoder from any embedding model.
 
-    def __init__(self, corpus: Corpus) -> None:
+    Rows of documents are L2 normalised; encodeQuery returns one vector of
+    the same width, or None for an all-zero one. Used by the embedding
+    benchmark to run the semantic and hybrid systems on another model.
+    """
+
+    def __init__(self, documents: np.ndarray, encodeQuery: Callable[[str], np.ndarray]) -> None:
+        documents = np.asarray(documents, dtype=np.float32)
+        norms = np.linalg.norm(documents, axis=1, keepdims=True)
+        self.documents = documents / np.where(norms > 0, norms, 1.0)
+        self._encode = encodeQuery
+        self._cache: dict[str, np.ndarray | None] = {}
+
+    def query(self, text: str) -> np.ndarray | None:
+        if text not in self._cache:
+            vector = np.asarray(self._encode(text), dtype=np.float32).reshape(-1)
+            norm = float(np.linalg.norm(vector))
+            self._cache[text] = vector / norm if norm > 0 else None
+        return self._cache[text]
+
+
+HYBRID_MIN_SCORE = 0.02  # SearchService's default floor
+
+
+class Systems:
+    """Every compared ranking over one corpus, returning store positions.
+
+    With vectors, the semantic, hybrid and fusion systems use those
+    instead of the shipped model; the keyword systems are unchanged.
+    """
+
+    def __init__(self, corpus: Corpus, vectors: EncodedVectors | None = None) -> None:
         self.corpus = corpus
+        self.vectors = vectors
         self.bm25 = Bm25(corpus.texts)
         self.bm25stem = Bm25(corpus.texts, stem=True)
         self.lexical = LexicalIndex(corpus.infos)
+        self.andFilter = AndFilter(corpus.infos)
         self.service = SearchService(corpus.engine)
         self._position = {pid: i for i, pid in enumerate(corpus.pluginIds)}
 
+    def rankKeywords(self, system: str, keywords: Sequence[str],
+                     depth: int = RANK_DEPTH) -> list[int]:
+        """A keyword list: each keyword as typed, or the list joined by spaces."""
+        if system == "andfilter":
+            corpus = self.corpus
+            return [p for p in self.andFilter.matches(keywords) if corpus.visible[p]][:depth]
+        return self.rank(system, " ".join(keywords), depth)
+
     def rank(self, system: str, query: str, depth: int = RANK_DEPTH) -> list[int]:
         corpus = self.corpus
+        if system == "andfilter":
+            # A sentence typed into a boolean search box: every content word.
+            return self.rankKeywords(system, keywordTokens(query), depth)
         if system == "manager":
             return [p for p in managerRanking(corpus, query) if corpus.visible[p]][:depth]
+        if system == "hybrid" and self.vectors is not None:
+            vector = self.vectors.query(query)
+            semantic = (self.vectors.documents @ vector if vector is not None
+                        else np.zeros(len(corpus.infos), np.float32))
+            scores = semantic + self.lexical.boosts(query)
+            masked = np.where(corpus.visible & (scores >= HYBRID_MIN_SCORE), scores, -np.inf)
+            order = np.argsort(-masked, kind="stable")[:depth]
+            return [int(i) for i in order if np.isfinite(masked[i])]
         if system == "hybrid":
             results = self.service.search(corpus.store, query, limit=depth,
                                           predicate=visibilityPredicate())
@@ -255,6 +338,11 @@ class Systems:
             scores = self.bm25stem.scores(query)
         elif system == "lexical":
             scores = self.lexical.boosts(query)
+        elif system == "semantic" and self.vectors is not None:
+            vector = self.vectors.query(query)
+            if vector is None:
+                return []
+            scores = self.vectors.documents @ vector
         elif system == "semantic":
             vector = corpus.engine.embedQuery(query)
             scores = corpus.store.embeddings() @ vector if np.any(vector) else None
@@ -286,7 +374,10 @@ def queryMetrics(ranked: Sequence[str], judgments: dict[str, int]) -> dict[str, 
     idealDcg = dcg(ideal[:CUTOFF_NDCG])
     firstHit = next((i for i, g in enumerate(gains) if g > 0), None)
     found = {name for name in ranked[:CUTOFF_RECALL] if name in relevant}
+    screen = gains[:SCREEN]
     return {
+        "found@10": 1.0 if any(g >= 2 for g in screen) else 0.0,
+        "precision@10": sum(1 for g in screen if g > 0) / len(screen) if screen else 0.0,
         "ndcg@10": dcg(gains[:CUTOFF_NDCG]) / idealDcg if idealDcg else 0.0,
         "recall@20": len(found) / len(relevant) if relevant else 0.0,
         "mrr": 1.0 / (firstHit + 1) if firstHit is not None else 0.0,
@@ -294,7 +385,61 @@ def queryMetrics(ranked: Sequence[str], judgments: dict[str, int]) -> dict[str, 
     }
 
 
-METRICS = ("ndcg@10", "recall@20", "mrr", "success@5")
+METRICS = ("ndcg@10", "found@10", "precision@10", "recall@20", "mrr", "success@5")
+
+
+# ---------------------------------------------------------------- keyword sessions
+
+
+@dataclass
+class SessionStep:
+    keywords: list[str]
+    shown: list[str]
+    size: int
+    kept: bool
+
+
+@dataclass
+class SessionOutcome:
+    """Where an adaptive keyword session stopped and what the user saw then."""
+
+    steps: list[SessionStep]
+    found: bool
+    keywordsTyped: int
+    metrics: dict[str, float]
+
+    @property
+    def final(self) -> SessionStep:
+        kept = [step for step in self.steps if step.kept]
+        return kept[-1] if kept else self.steps[-1]
+
+
+def keywordSession(rank: Callable[[list[str]], list[str]], keywords: Sequence[str],
+                   judgments: dict[str, int]) -> SessionOutcome:
+    """Replay a keyword search session over one ranking function.
+
+    The user types the first keyword and reads the first screen. If it
+    shows a plugin that does the task (grade 2) they stop. Otherwise they add
+    the next keyword. A keyword that empties the list is taken back out
+    (even the first one) and the session continues with the next one. When
+    the keywords run out, the session ends on the last non empty list.
+    rank maps a keyword list to the ranked plugin names.
+    """
+    current: list[str] = []
+    steps: list[SessionStep] = []
+    for keyword in keywords:
+        attempt = [*current, keyword]
+        names = rank(attempt)
+        kept = bool(names)
+        steps.append(SessionStep(attempt, names[:SCREEN], len(names), kept))
+        if kept:
+            current = attempt
+            if any(judgments.get(n, 0) >= 2 for n in names[:SCREEN]):
+                break
+    outcome = SessionOutcome(steps, False, len(steps), {})
+    outcome.metrics = queryMetrics(rank(outcome.final.keywords), judgments)
+    outcome.found = outcome.metrics["found@10"] > 0
+    return outcome
 
 
 def pairedBootstrap(a: Sequence[float], b: Sequence[float], rounds: int = 10000,

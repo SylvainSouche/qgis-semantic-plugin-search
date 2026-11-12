@@ -1,0 +1,118 @@
+name: BenchmarkEmbeddings
+
+# Benchmark candidate embedding models on the search quality evaluation, on
+# GitHub's runners: no model is downloaded on a developer machine, and every
+# run uses the same pinned snapshot, needs, queries and judgments. Models are
+# listed in evaluation/Candidates.json. Runs by hand (workflow_dispatch, once
+# this file is on the default branch) or when the candidate list or this
+# workflow changes on a dev branch.
+
+on:
+  push:
+    branches: ["dev/**"]
+    paths:
+      - evaluation/Candidates.json
+      - .github/workflows/BenchmarkEmbeddings.yml
+  workflow_dispatch:
+    inputs:
+      candidates:
+        description: "Candidate ids, space separated, or 'all' (see evaluation/Candidates.json)"
+        type: string
+        default: "all"
+      universes:
+        description: "QGIS universes to benchmark ('3' or '3 4')"
+        type: string
+        default: "3 4"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: benchmark-embeddings-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  plan:
+    name: List the candidates
+    runs-on: ubuntu-latest
+    outputs:
+      candidates: ${{ steps.list.outputs.candidates }}
+    steps:
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
+      - id: list
+        env:
+          REQUESTED: ${{ inputs.candidates || 'all' }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          known = [c["id"] for c in json.load(open("evaluation/Candidates.json"))["candidates"]]
+          requested = os.environ["REQUESTED"].split()
+          chosen = known if requested in ([], ["all"]) else requested
+          unknown = [c for c in chosen if c not in known]
+          if unknown:
+              raise SystemExit(f"unknown candidates: {unknown}")
+          print("candidates=" + json.dumps(chosen))
+          PY
+
+  benchmark:
+    name: Benchmark ${{ matrix.candidate }}
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        candidate: ${{ fromJSON(needs.plan.outputs.candidates) }}
+    env:
+      PYTHONUNBUFFERED: "1"
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      CANDIDATE: ${{ matrix.candidate }}
+      UNIVERSES: ${{ inputs.universes || '3 4' }}
+    steps:
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          python -m pip install --quiet numpy
+          if [ "$CANDIDATE" != "shipped" ]; then
+            # CPU wheels only: no CUDA download.
+            python -m pip install --quiet torch --index-url https://download.pytorch.org/whl/cpu
+            python -m pip install --quiet sentence-transformers model2vec huggingface_hub
+          fi
+      - name: Extract the pinned snapshot
+        run: make eval-data
+      - name: Benchmark
+        run: |
+          case "$UNIVERSES" in "3"|"4"|"3 4"|"4 3") ;; *) echo "bad universes: $UNIVERSES"; exit 1;; esac
+          python evaluation/RunBenchmark.py --candidate "$CANDIDATE" \
+            --universes "$UNIVERSES" --out build/benchmark
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-${{ matrix.candidate }}
+          path: build/benchmark/
+          retention-days: 90
+
+  report:
+    name: Comparison report
+    needs: benchmark
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-*
+          path: build/benchmark
+          merge-multiple: true
+      - name: Report
+        run: |
+          python3 evaluation/BenchmarkReport.py build/benchmark > build/benchmark/BenchmarkReport.md
+          cat build/benchmark/BenchmarkReport.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-report
+          path: build/benchmark/
+          retention-days: 90

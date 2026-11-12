@@ -5,7 +5,7 @@
 # @impl 4be9-6ae4-471f-260f
 
 .DEFAULT_GOAL := help
-.PHONY: help test smoke fetch embed dist eval eval-data version increment clean clean-all _python _venv
+.PHONY: help test smoke fetch embed dist eval eval-data benchmark version increment clean clean-all _python _venv
 
 PLUGIN := SemanticPluginSearch
 DATA_DIR := data
@@ -114,15 +114,20 @@ dist: _python ## Check, then package the plugin as dist/<plugin>.<version>.zip (
 
 # The evaluation runs on a pinned commit of the embeddings branch, so results
 # stay comparable across weekly rebuilds; change EVAL_COMMIT on purpose only.
+# The branch is force pushed weekly, so the tag EVAL_TAG keeps that commit
+# reachable for CI and fresh clones.
 EVAL_COMMIT ?= 97fc1c9592beb53d4c2e5d725898bdb34c782807
+EVAL_TAG ?= eval-snapshot-97fc1c9
 EVAL_DIR := $(BUILD_DIR)/eval/snapshot
 EVAL_FILES := EmbeddingModel.4f5f1043f084.npz Embeddings-3.e85e407c80cb.sqlite \
 	Embeddings-4.e2adea4752e9.sqlite Readmes-3.json.gz Readmes-4.json.gz index.json
 
 eval-data: ## Extract the pinned embeddings snapshot used by eval into build/eval/snapshot
 	@git cat-file -e $(EVAL_COMMIT) 2>/dev/null || { \
-		echo "==> Fetching the embeddings branch"; \
-		git fetch --quiet origin refs/heads/embeddings:refs/remotes/origin/embeddings || exit 1; }
+		echo "==> Fetching the evaluation snapshot"; \
+		git fetch --quiet origin "refs/tags/$(EVAL_TAG):refs/tags/$(EVAL_TAG)" \
+		|| git fetch --quiet origin refs/heads/embeddings:refs/remotes/origin/embeddings || exit 1; \
+		git cat-file -e $(EVAL_COMMIT) || { echo "Snapshot $(EVAL_COMMIT) not found"; exit 1; }; }
 	@mkdir -p $(EVAL_DIR)
 	@for f in $(EVAL_FILES); do \
 		test -s $(EVAL_DIR)/$$f || git show $(EVAL_COMMIT):$$f > $(EVAL_DIR)/$$f || exit 1; \
@@ -131,6 +136,14 @@ eval-data: ## Extract the pinned embeddings snapshot used by eval into build/eva
 
 eval: _venv eval-data ## Search quality evaluation: semantic vs keyword, cross language (writes evaluation/Results.md)
 	@"$(PY)" evaluation/RunEvaluation.py > /dev/null && echo "==> Wrote evaluation/Results.md and evaluation/Results.json"
+
+# Embedding model benchmark. Meant for the BenchmarkEmbeddings GitHub workflow,
+# which downloads the models there; locally only "shipped" needs nothing more.
+CANDIDATES ?= shipped
+BENCH_DIR := $(BUILD_DIR)/benchmark
+benchmark: _venv eval-data ## Benchmark embedding models (CANDIDATES="shipped ..."; others need sentence-transformers, model2vec)
+	@for c in $(CANDIDATES); do "$(PY)" evaluation/RunBenchmark.py --candidate $$c --universes "3 4" --out $(BENCH_DIR) || exit 1; done
+	@"$(PY)" evaluation/BenchmarkReport.py $(BENCH_DIR) > $(BENCH_DIR)/BenchmarkReport.md && echo "==> Wrote $(BENCH_DIR)/BenchmarkReport.md"
 
 version: _python ## Set the plugin version: make version VERSION=0.4.1 COMMENT="What changed"
 	@test "$(origin VERSION)" = "command line" || { echo "Usage: make version VERSION=x.y.z [COMMENT=\"...\"] (current: $(CURRENT_VERSION))"; exit 1; }
