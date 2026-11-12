@@ -5,7 +5,7 @@ qgisMinimumVersion=3.44
 qgisMaximumVersion=4.99
 description=Find QGIS plugins with natural language semantic search over plugin metadata and readmes
 about=Describe what you need in plain language, for example "classify a drone orthophoto into land cover classes" or "create contour lines from a DEM", and get the matching QGIS plugins ranked by relevance, with their metadata, readme and the usual Install, Upgrade, Reinstall and Uninstall buttons, which are carried out by the standard plugin manager. Plugins you already have are marked installed, or update when a newer version exists. Requirements: an internet connection on first use, to download a compact embedding model (about 17 MB) and the plugin index for your QGIS version (about 5 MB) from the project GitHub repository; both are cached in your profile and refreshed automatically. No other dependency: numpy, which QGIS bundles, and the Python standard library. Your query never leaves your machine: it is turned into an embedding locally.
-version=0.6.0
+version=0.6.1
 author=SylvainSouche
 email=sylvain@souche.fr
 tracker=https://github.com/SylvainSouche/qgis-semantic-plugin-search/issues
@@ -17,7 +17,8 @@ experimental=True
 deprecated=False
 server=False
 license=MIT
-changelog=0.6.0 - Multilingual search: the static model becomes static-similarity-mrl-multilingual-v1 (Apache-2.0, 256 dimensions, int8), chosen with the embedding benchmark; the model stays int8 in memory
+changelog=0.6.1 - Tokenizer matches the reference BERT tokenizer exactly: control and format characters removed, text kept decomposed after accent stripping, lowercasing per character
+    0.6.0 - Multilingual search: the static model becomes static-similarity-mrl-multilingual-v1 (Apache-2.0, 256 dimensions, int8), chosen with the embedding benchmark; the model stays int8 in memory
     0.5.8 - Benchmark also reruns when queries, judgments or evaluation code change
     0.5.7 - Language matrix over the 21 languages the plugin aims to serve, Arabic included
     0.5.6 - Language matrix over the gis-glossary project's languages: the 40 needs translated into Norwegian Bokmål and Nynorsk, Icelandic, Danish, Swedish, Polish, Slovenian, Slovak, Greek, Romanian and Bulgarian

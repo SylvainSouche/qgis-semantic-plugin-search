@@ -82,3 +82,22 @@ def testTheConverterKeepsTheFirstDimensionsOfANamedTensor(tmp_path):
     tolerance = float(np.abs(table[:, :8]).max()) / 127
     assert np.allclose(model.vectorFor(4), table[4, :8], atol=tolerance)
     assert model._vectors.dtype == np.int8, "the table stays int8 in memory"
+
+
+def testTheTokenizerCleansLikeTheReferenceBertTokenizer():
+    import unicodedata
+
+    from SemanticPluginSearch.Domain.WordPieceTokenizer import WordPieceTokenizer
+
+    hangul = unicodedata.normalize("NFD", "개요")
+    vocab = {"[UNK]": 0, "plugin": 1, "in": 2, "σ": 3, "οδοσ": 4, "360": 5,
+             hangul[0]: 6, "##" + hangul[1]: 7, "##" + hangul[2]: 8, "##" + hangul[3]: 9}
+    tokenizer = WordPieceTokenizer(vocab)
+    # Zero width spaces, byte order marks and replacement characters vanish.
+    text = "plugin\u200b \ufeff\u200bin 360\ufffd"
+    assert tokenizer.tokenize(text) == ["plugin", "in", "360"]
+    # A final capital sigma lowercases to σ, character by character.
+    assert tokenizer.tokenize("ΟΔΟΣ") == ["οδοσ"]
+    # Hangul stays decomposed into jamo, as the multilingual vocabulary holds it.
+    assert tokenizer.tokenize("개요") == [hangul[0], "##" + hangul[1], "##" + hangul[2],
+                                         "##" + hangul[3]]

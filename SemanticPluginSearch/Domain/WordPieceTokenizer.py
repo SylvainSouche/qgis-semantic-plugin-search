@@ -55,21 +55,41 @@ class WordPieceTokenizer:
 
     def _basicChunks(self, text: str) -> list[str]:
         chunks: list[str] = []
-        for rawWord in text.split():
+        for rawWord in self._cleanText(text).split():
             for word in self._splitCjk(self._cleanWord(rawWord)):
                 pieces = self._splitPunctuation(word)
                 chunks.extend(piece for piece in pieces if piece)
         return chunks
 
+    @staticmethod
+    def _cleanText(text: str) -> str:
+        # As BERT's clean_text: drop NUL, the replacement character and every
+        # control or format character (zero width spaces, byte order marks),
+        # keeping tabs and line breaks as whitespace.
+        return "".join(
+            character
+            for character in text
+            if character in "\t\n\r"
+            or not (
+                character in "\x00\ufffd"
+                or unicodedata.category(character).startswith("C")
+            )
+        )
+
     def _cleanWord(self, word: str) -> str:
-        # Lowercase and strip accents, as BERT uncased does.
-        decomposed = unicodedata.normalize("NFD", word.lower())
-        stripped = "".join(
+        # Lowercase and strip accents, as BERT uncased does. The text stays
+        # decomposed afterwards, as in the reference tokenizer: Hangul, for
+        # one, is then matched letter by letter (jamo), which the
+        # multilingual vocabulary holds, rather than by syllable.
+        # Lowercase one character at a time, as the reference does: Python's
+        # word level lower() turns a final capital sigma into ς, not σ.
+        lowered = "".join(character.lower() for character in word)
+        decomposed = unicodedata.normalize("NFD", lowered)
+        return "".join(
             character
             for character in decomposed
             if unicodedata.category(character) != "Mn"
         )
-        return unicodedata.normalize("NFC", stripped)
 
     def _splitCjk(self, word: str) -> list[str]:
         words: list[str] = []
