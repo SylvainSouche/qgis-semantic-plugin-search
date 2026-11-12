@@ -322,13 +322,16 @@ These are options to decide, not decisions.
    current fixed boosts, or applied only to short queries. Rank fusion ties on
    sentences and is the best system on keyword lists. The target is to keep
    the sentence results and reach BM25's keyword results.
-3. **Multilingual** (`cand-multilingual-model`). The problem is the model, not
-   the ranking code. Any fix has to bring a cross lingual vocabulary within the
-   constraints `con-light-engine` and `con-commercial-models`, for example a
-   multilingual static model distilled from a commercially licensed
-   multilingual sentence model, pruned to a reasonable download size. The
-   other route is translating plugin texts on the GitHub side. The cross
-   language part of this evaluation is the yardstick for either.
+3. **Multilingual** (`cand-multilingual-model`): decided.
+   - **Model:** the pipeline now ships static-similarity-mrl-multilingual-v1,
+     cut to 256 dimensions and stored as int8, chosen with the embedding
+     benchmark and the language matrix.
+   - **Engine:** unchanged; the same WordPiece tokenizer reads its
+     vocabulary.
+   - **Cost:** a larger model download, about 25 MB against about 6 MB.
+   - **Still to settle:** the cross-language search scores of the new
+     model, judged in full.
+
 4. **Keep the harness.** `cand-golden-query-eval` asked for exactly this. It
    now exists as `make eval`; running it in the weekly workflow is still open.
 

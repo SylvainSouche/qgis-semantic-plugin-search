@@ -7,7 +7,8 @@ This branch holds only generated data and is rewritten by the
   the model and the per QGIS version databases, with checksums, sizes, build
   stamps and plugin counts.
 - `EmbeddingModel.<hash>.npz`: the static token embedding model
-  (potion-base-8M, MIT, distilled from BAAI/bge-base-en-v1.5, MIT).
+  (sentence-transformers/static-similarity-mrl-multilingual-v1, Apache-2.0,
+  first 256 dimensions, int8).
 - `Embeddings-<universe>.<hash>.sqlite`: plugin metadata and embeddings for
   QGIS 3 and QGIS 4.
 - `Readmes-<universe>.json.gz`: the readmes of the last run, reused while a

@@ -34,13 +34,26 @@ branch "embeddings"                            QGIS
 
 ### Embeddings
 
-The model is a **static token embedding** (model2vec style):
-[minishlab/potion-base-8M](https://huggingface.co/minishlab/potion-base-8M),
-MIT licensed, distilled from the MIT licensed BAAI/bge-base-en-v1.5 and
-trained further with Tokenlearn (per its model card), converted
-into a compressed int8 matrix of token vectors with one global scale
-(`.npz`, about 6 MB, 29528 tokens × 256 dimensions). The revision and file
-checksum are pinned. One scale for the whole table keeps released plugin
+The model is a **static token embedding**:
+[sentence-transformers/static-similarity-mrl-multilingual-v1](https://huggingface.co/sentence-transformers/static-similarity-mrl-multilingual-v1).
+
+- **Licence and vocabulary:** Apache-2.0, over the uncased multilingual BERT
+  WordPiece vocabulary of 105,879 tokens.
+- **Conversion:** its token vectors are trained Matryoshka style, so they
+  are cut to their first 256 dimensions. They are stored as a compressed
+  int8 matrix with one global scale (`.npz`, about 25 MB). The plugin keeps
+  that matrix as int8 in memory, about 27 MB, and converts rows as it looks
+  them up.
+- **Pinning:** the revision and both file checksums are pinned in the
+  BuildEmbeddings workflow.
+- **Why this model:** it was chosen with the embedding benchmark. Across 21
+  languages, a need's sentence finds its English counterpart 95–100% of the
+  time (Icelandic 65%), against 10–65% for the previous English-only
+  potion-base-8M. That model is MIT licensed and was distilled from
+  BAAI/bge-base-en-v1.5.
+- **Switching models:** the workflow converts the model again whenever the
+  stored model id differs, and then rebuilds every universe in the same run.
+  `pipeline/StoreEmbeddings.py` refuses a database built with another model. One scale for the whole table keeps released plugin
 versions working: they ignore it, and the normalised mean of the token
 vectors is unchanged by a constant factor.
 

@@ -178,7 +178,9 @@ def testCandidatesAreWellFormed():
         assert candidate["kind"] in {"shipped", "model2vec", "sentence-transformers", "npz"}
         assert candidate["class"] in {"static", "transformer"}
         if candidate["kind"] == "npz":
-            assert candidate["build"] in {"distill", "append"} and candidate["teacher"]
+            assert candidate["build"] in {"distill", "append", "convert"} and candidate["teacher"]
+            if candidate["build"] == "convert":
+                assert candidate["model"] and len(candidate["revision"]) == 40
             if candidate["build"] == "append" or candidate.get("vocabulary"):
                 assert (EVALUATION_DIR / candidate["vocabulary"]).is_file()
         elif candidate["kind"] != "shipped":

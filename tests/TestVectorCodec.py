@@ -59,3 +59,26 @@ def testTheIndexPrefersTheInt8Databases():
     assert parseIndexDocument(document).universes["3"].database.url == "small"
     del document["universes_q8"]
     assert parseIndexDocument(document).universes["3"].database.url == "plain"
+
+
+def testTheConverterKeepsTheFirstDimensionsOfANamedTensor(tmp_path):
+    import struct
+
+    from pipeline.ConvertStaticModel import main as convert
+
+    rng = np.random.default_rng(4)
+    table = rng.normal(size=(5, 16)).astype(np.float32)
+    header = json.dumps({"embedding.weight": {"dtype": "F32", "shape": [5, 16],
+                                              "data_offsets": [0, table.nbytes]}}).encode()
+    (tmp_path / "model.safetensors").write_bytes(struct.pack("<Q", len(header)) + header
+                                                 + table.tobytes())
+    vocab = {"[PAD]": 0, "[UNK]": 1, "contour": 2, "##s": 3, "dem": 4}
+    (tmp_path / "tokenizer.json").write_text(json.dumps({"model": {"vocab": vocab}}))
+    output = tmp_path / "out.npz"
+    convert(["--model-dir", str(tmp_path), "--model-id", "m", "--tensor-name",
+             "embedding.weight", "--dims", "8", "--output", str(output)])
+    model = NpzStaticModel.load(output)
+    assert model.dimension() == 8 and model.vocabulary()["dem"] == 4
+    tolerance = float(np.abs(table[:, :8]).max()) / 127
+    assert np.allclose(model.vectorFor(4), table[4, :8], atol=tolerance)
+    assert model._vectors.dtype == np.int8, "the table stays int8 in memory"

@@ -40,9 +40,14 @@ class NpzStaticModel(StaticModelData):
         vectors: np.ndarray,
         modelId: str,
         tokenizerId: str,
+        scale: float = 1.0,
     ) -> None:
         self._vocabulary = vocabulary
-        self._vectors = np.ascontiguousarray(vectors, dtype=np.float32)
+        # The table stays in its stored precision (int8 or float16): a
+        # multilingual vocabulary is over 100 MB as float32. Rows are
+        # converted when looked up.
+        self._vectors = np.ascontiguousarray(vectors)
+        self._scale = np.float32(scale)
         self._modelId = modelId
         self._tokenizerId = tokenizerId
 
@@ -65,7 +70,6 @@ class NpzStaticModel(StaticModelData):
                 f"vocabulary size {len(tokens)} does not match {len(vectors)} vectors"
             )
         vocabulary = {token: index for index, token in enumerate(tokens.tolist())}
-        vectors = vectors.astype(np.float32) * np.float32(meta.get("scale", 1.0))
         if vectors.ndim != 2:
             raise StaticModelFormatError("vectors must be a two dimensional matrix")
         return NpzStaticModel(
@@ -73,13 +77,14 @@ class NpzStaticModel(StaticModelData):
             vectors=vectors,
             modelId=str(meta.get("model_id", "unknown")),
             tokenizerId=str(meta.get("tokenizer", TOKENIZER_ID)),
+            scale=float(meta.get("scale", 1.0)),
         )
 
     def tokenId(self, token: str) -> int | None:
         return self._vocabulary.get(token)
 
     def vectorFor(self, tokenId: int) -> np.ndarray:
-        return self._vectors[tokenId]
+        return self._vectors[tokenId].astype(np.float32) * self._scale
 
     def dimension(self) -> int:
         return int(self._vectors.shape[1])
@@ -94,4 +99,5 @@ class NpzStaticModel(StaticModelData):
         return self._vocabulary
 
     def vectors(self) -> np.ndarray:
-        return self._vectors
+        """The whole table as float32 (tooling only: large for big vocabularies)."""
+        return self._vectors.astype(np.float32) * self._scale

@@ -52,27 +52,35 @@ jobs:
           fi
           ls -l store
 
-      - name: Convert the model (only when none is stored, or it is not int8 yet)
+      - name: Convert the model (only when the stored one is not this model as int8)
+        env:
+          MODEL_ID: static-similarity-mrl-multilingual-v1-256
         run: |
           STORED=$(ls store/EmbeddingModel.*.npz 2>/dev/null | head -1)
-          if [ -n "$STORED" ] && python -c "import json,sys,numpy as np; sys.exit(json.loads(str(np.load(sys.argv[1])['meta'])).get('dtype') != 'int8')" "$STORED"; then
-            echo "int8 model already stored: nothing to download."
+          if [ -n "$STORED" ] && python -c "import json,os,sys,numpy as np; m=json.loads(str(np.load(sys.argv[1])['meta'])); sys.exit(not (m.get('dtype') == 'int8' and m.get('model_id') == os.environ['MODEL_ID']))" "$STORED"; then
+            echo "$MODEL_ID already stored as int8: nothing to download."
             exit 0
           fi
-          # minishlab/potion-base-8M: MIT licensed, distilled from the
-          # MIT BAAI/bge-base-en-v1.5. Revision and checksum are pinned.
-          REV=bf8b056651a2c21b8d2565580b8569da283cab23
+          # sentence-transformers/static-similarity-mrl-multilingual-v1:
+          # Apache-2.0, multilingual static embeddings over the uncased
+          # multilingual BERT WordPiece vocabulary, Matryoshka trained, kept
+          # at 256 dimensions. Revision and checksums are pinned.
+          REPO=sentence-transformers/static-similarity-mrl-multilingual-v1
+          REV=b68f4122911bcffcd6e1f695f2d99cd6788972d8
           mkdir -p build/model
           curl -fL --retry 3 -o build/model/model.safetensors \
-            "https://huggingface.co/minishlab/potion-base-8M/resolve/$REV/model.safetensors"
-          echo "f65d0f325faadc1e121c319e2faa41170d3fa07d8c89abd48ca5358d9a223de2  build/model/model.safetensors" | sha256sum --check -
+            "https://huggingface.co/$REPO/resolve/$REV/0_StaticEmbedding/model.safetensors"
+          echo "8245ab78ee71dded845a82d2270fcb9e785b29dad0e1619f69d5390c47d9ba00  build/model/model.safetensors" | sha256sum --check -
           curl -fL --retry 3 -o build/model/tokenizer.json \
-            "https://huggingface.co/minishlab/potion-base-8M/resolve/$REV/tokenizer.json"
+            "https://huggingface.co/$REPO/resolve/$REV/0_StaticEmbedding/tokenizer.json"
+          echo "11aaf894a4ccf3d95e8830e27c0f8152791fbbff2b988e29a265580b86edd216  build/model/tokenizer.json" | sha256sum --check -
           python pipeline/ConvertStaticModel.py \
             --model-dir build/model \
-            --model-id static-potion-base-8M \
-            --source-model "minishlab/potion-base-8M" \
-            --license-note "MIT (potion-base-8M), distilled from BAAI/bge-base-en-v1.5 (MIT); commercial use allowed" \
+            --tensor-name embedding.weight \
+            --dims 256 \
+            --model-id "$MODEL_ID" \
+            --source-model "$REPO" \
+            --license-note "Apache-2.0 (sentence-transformers/static-similarity-mrl-multilingual-v1); commercial use allowed" \
             --dtype int8 \
             --output build/EmbeddingModel.npz
 
@@ -83,6 +91,9 @@ jobs:
             "0 3 * * 2") VERSIONS="4.2" ;;
             *) VERSIONS="3.44 4.2" ;;
           esac
+          # A new model changes the vector space: every universe is rebuilt
+          # in the same run, so no database built with the old model remains.
+          if [ -f build/EmbeddingModel.npz ]; then VERSIONS="3.44 4.2"; fi
           if [ -f build/EmbeddingModel.npz ]; then
             MODEL=build/EmbeddingModel.npz
             MODEL_ARG="--model $MODEL"

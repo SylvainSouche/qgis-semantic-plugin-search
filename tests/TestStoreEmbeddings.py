@@ -142,3 +142,20 @@ def test_int8_copies_of_carried_universes_are_kept(tmp_path, modelPath, buildDat
     assert index["universes_q8"]["4"] == first["universes_q8"]["4"]
     assert index["universes_q8"]["3"]["build_stamp"] == "20261102T000000Z"
     assert first["universes_q8"]["3"]["url"].rsplit("/", 1)[-1] not in stored(store)
+
+
+def test_a_database_built_with_another_model_is_refused(tmp_path, modelPath, buildDatabase):
+    import sqlite3
+
+    store = tmp_path / "store"
+    storeEmbeddings(store, {"3": buildDatabase("3", "20261026T000000Z"),
+                            "4": buildDatabase("4", "20261027T000000Z")}, BASE, model=modelPath)
+    stale = buildDatabase("4", "20261103T000000Z")
+    connection = sqlite3.connect(stale)
+    connection.execute("UPDATE meta SET value = 'another-model' WHERE key = 'model_id'")
+    connection.commit()
+    connection.close()
+    before = stored(store)
+    with pytest.raises(GateFailure, match="rebuild every universe"):
+        storeEmbeddings(store, {"4": stale}, BASE)
+    assert stored(store) == before, "the store is left untouched"

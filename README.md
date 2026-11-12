@@ -40,8 +40,13 @@ sentence for this search, and the keywords a keyword search user would type.
 - **Level 2 is not reached yet.** A keyword ranker still puts more relevant
   plugins on the first screen. Long, detailed descriptions also weaken the
   current model, so short descriptions work best.
-- **Other languages do not work yet.** The current model matches the
-  language of the query rather than its meaning.
+- **Other languages: switching to a multilingual model.**
+  - The English-only model matched the language of a query rather than its
+    meaning: a French query kept about a fifth of its English quality.
+  - The pipeline now uses a multilingual static model. Across 21 languages,
+    a need finds its English counterpart 95–100% of the time, except
+    Icelandic at 65%.
+  - Arabic, Chinese, Greek, Japanese and Russian included.
 
 ## Techniques
 
@@ -76,7 +81,7 @@ sentence for this search, and the keywords a keyword search user would type.
 ## Get started
 
 1. **Requirements:** QGIS 3.44 or later, or QGIS 4.x, and an internet
-   connection on first launch (about 10 to 13 MB is downloaded once). Nothing else
+   connection on first launch (about 30 MB is downloaded once). Nothing else
    to install.
 2. **Install:** download `SemanticPluginSearch.<version>.zip`, then in QGIS
    use *Plugins › Manage and Install Plugins… › Install from ZIP*.
@@ -114,7 +119,7 @@ from the project model into [docs/Specification.md](docs/Specification.md).
 
 [MIT](LICENSE), compatible with the GPLv2-or-later requirement for QGIS
 plugins. The search model is
+[sentence-transformers/static-similarity-mrl-multilingual-v1](https://huggingface.co/sentence-transformers/static-similarity-mrl-multilingual-v1)
+(Apache-2.0), kept at 256 dimensions. Earlier versions used
 [minishlab/potion-base-8M](https://huggingface.co/minishlab/potion-base-8M)
-(MIT), distilled from
-[BAAI/bge-base-en-v1.5](https://huggingface.co/BAAI/bge-base-en-v1.5) (MIT)
-and trained further with Tokenlearn.
+(MIT, distilled from BAAI/bge-base-en-v1.5).

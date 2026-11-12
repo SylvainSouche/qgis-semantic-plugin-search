@@ -128,10 +128,22 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--source-model", default="")
     parser.add_argument("--dtype", choices=("int8", "float16"), default="int8",
                         help="Token table precision (int8: one global scale)")
+    parser.add_argument("--tensor-name", default="embeddings",
+                        help="Token table in model.safetensors (sentence-transformers"
+                             " static models: embedding.weight)")
+    parser.add_argument("--dims", type=int, default=0,
+                        help="Keep only the first dims dimensions (Matryoshka models)")
     args = parser.parse_args(argv)
 
     modelDir = Path(args.model_dir)
-    vectors = readSafetensorsTensor(modelDir / "model.safetensors", "embeddings")
+    vectors = readSafetensorsTensor(modelDir / "model.safetensors", args.tensor_name)
+    if args.dims:
+        if args.dims > vectors.shape[1]:
+            raise ValueError(f"--dims {args.dims} exceeds the model's {vectors.shape[1]}")
+        # A static embedding is a mean of token vectors, so truncating every
+        # token vector truncates the text embedding exactly as Matryoshka
+        # training intends.
+        vectors = vectors[:, : args.dims]
     vocab = readWordPieceVocab(modelDir / "tokenizer.json")
     writeNpz(
         outputPath=Path(args.output),

@@ -122,6 +122,20 @@
    "class": "static",
    "license": "MIT",
    "note": "potion-base-8M unchanged plus one row per GIS word, mapped from the teacher into potion's space"
+  },
+  {
+   "id": "static-similarity-mrl-multilingual-v1-256",
+   "kind": "npz",
+   "build": "convert",
+   "model": "sentence-transformers/static-similarity-mrl-multilingual-v1",
+   "revision": "b68f4122911bcffcd6e1f695f2d99cd6788972d8",
+   "folder": "0_StaticEmbedding",
+   "tensor": "embedding.weight",
+   "dims": 256,
+   "teacher": "sentence-transformers/static-similarity-mrl-multilingual-v1",
+   "class": "static",
+   "license": "Apache-2.0",
+   "note": "the model the pipeline now ships, converted by our converter (256 dims, int8) and run through the plugin's tokenizer and engine; checks parity with the sentence-transformers run of the same model"
   }
  ]
 }

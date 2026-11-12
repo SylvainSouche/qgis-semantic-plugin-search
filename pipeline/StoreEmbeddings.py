@@ -37,7 +37,12 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from pipeline.PublishGate import checkGates  # noqa: E402
 from pipeline.QuantizeDatabase import quantizeDatabase  # noqa: E402
-from pipeline.WriteReleaseIndex import buildIndex, sha256Of  # noqa: E402
+from pipeline.WriteReleaseIndex import (  # noqa: E402
+    buildIndex,
+    databaseMeta,
+    modelMeta,
+    sha256Of,
+)
 
 INDEX_NAME = "index.json"
 KEEP_NAMES = {INDEX_NAME, "README.md"}
@@ -77,11 +82,18 @@ def storeEmbeddings(
         if modelPath is None or not modelPath.is_file():
             raise GateFailure("no model given and none stored: pass --model to bootstrap")
 
+    modelId = modelMeta(modelPath)["model_id"]
     databases: dict[str, Path] = {}
     for universe, entry in (previous.get("universes") or {}).items():
         carried = store / entry.get("url", "").rsplit("/", 1)[-1]
         if universe not in freshDatabases and carried.is_file():
             databases[universe] = carried
+    for universe, path in {**databases, **freshDatabases}.items():
+        built = databaseMeta(path)["model_id"]
+        if built != modelId:
+            raise GateFailure(
+                f"QGIS {universe} database was built with {built!r}, not with the stored"
+                f" model {modelId!r}: rebuild every universe when the model changes")
     staged: list[Path] = []
     for universe, source in freshDatabases.items():
         target = store / contentName(source, f"Embeddings-{universe}")

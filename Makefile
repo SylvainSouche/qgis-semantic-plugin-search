@@ -12,8 +12,8 @@ DATA_DIR := data
 BUILD_DIR := build
 DIST_DIR := dist
 MODEL := $(BUILD_DIR)/EmbeddingModel.npz
-MODEL_ID ?= static-potion-base-8M
-HF_BASE ?= https://huggingface.co/minishlab/potion-base-8M/resolve/bf8b056651a2c21b8d2565580b8569da283cab23
+MODEL_ID ?= static-similarity-mrl-multilingual-v1-256
+HF_BASE ?= https://huggingface.co/sentence-transformers/static-similarity-mrl-multilingual-v1/resolve/b68f4122911bcffcd6e1f695f2d99cd6788972d8/0_StaticEmbedding
 # System Python: the first of python3 and python that actually runs Python
 # 3.9+. On Windows and Cygwin, python3 is often the Microsoft Store
 # placeholder: it exists on the PATH but only prints "Python was not found".
@@ -170,14 +170,16 @@ clean-all: ## Remove everything clean removes, plus data/ (fetched plugins data)
 $(MODEL): pipeline/ConvertStaticModel.py | _venv
 	@command -v curl >/dev/null || { echo "curl is required"; exit 1; }
 	@mkdir -p $(BUILD_DIR)/model-src
-	@echo "==> Downloading the static model (MIT licensed, commercial use allowed)"
+	@echo "==> Downloading the static model (Apache-2.0, commercial use allowed; 434 MB, converted to about 27 MB)"
 	curl -fsSL --retry 3 $(HF_BASE)/model.safetensors -o $(BUILD_DIR)/model-src/model.safetensors
 	curl -fsSL --retry 3 $(HF_BASE)/tokenizer.json -o $(BUILD_DIR)/model-src/tokenizer.json
 	$(PY) pipeline/ConvertStaticModel.py \
 		--model-dir $(BUILD_DIR)/model-src \
 		--model-id $(MODEL_ID) \
-		--source-model "minishlab/potion-base-8M" \
-		--license-note "MIT (potion-base-8M), distilled from BAAI/bge-base-en-v1.5 (MIT); commercial use allowed" \
+		--tensor-name embedding.weight \
+		--dims 256 \
+		--source-model "sentence-transformers/static-similarity-mrl-multilingual-v1" \
+		--license-note "Apache-2.0 (sentence-transformers/static-similarity-mrl-multilingual-v1); commercial use allowed" \
 		--output $(MODEL)
 
 _python:

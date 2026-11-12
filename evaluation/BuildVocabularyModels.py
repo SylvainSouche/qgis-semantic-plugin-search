@@ -11,6 +11,11 @@ engine, exactly as it would ship. Candidates (evaluation/Candidates.json):
   extra words of the candidate's vocabulary file when it names one. Without
   vocabulary it is the control: what plain distillation gives without
   potion's further training (Tokenlearn).
+- build "convert": a published static model downloaded at a pinned
+  revision and converted by pipeline/ConvertStaticModel.py exactly as the
+  BuildEmbeddings workflow does; the plugin's tokenizer is also checked
+  token by token against the model's own (Hugging Face tokenizers) on every
+  query and plugin text.
 - build "append": potion-base-8M itself, unchanged, plus one new row per
   extra word. The teacher embeds each word; a linear map, fitted on the
   tokens both vocabularies share, carries it into potion's space; the row
@@ -88,6 +93,50 @@ def buildAppended(candidate: dict, words: list[str]) -> tuple[list[str], np.ndar
              "sharedTokens": len(shared)})
 
 
+def buildConverted(candidate: dict, words: list[str]) -> tuple[list[str], np.ndarray, dict]:
+    from huggingface_hub import hf_hub_download  # noqa: PLC0415
+    from tokenizers import Tokenizer  # noqa: PLC0415
+
+    from pipeline.ConvertStaticModel import main as convert  # noqa: PLC0415
+    from SearchEvaluation import loadCorpus, loadJson  # noqa: PLC0415
+
+    source = OUTPUT_DIR / f"{candidate['id']}-source"
+    source.mkdir(parents=True, exist_ok=True)
+    folder = candidate.get("folder", "")
+    for name in ("model.safetensors", "tokenizer.json"):
+        path = Path(hf_hub_download(candidate["model"], f"{folder}/{name}" if folder else name,
+                                    revision=candidate["revision"]))
+        (source / name).unlink(missing_ok=True)
+        (source / name).symlink_to(path)
+    output = OUTPUT_DIR / f"{candidate['id']}.npz"
+    convert(["--model-dir", str(source), "--model-id", candidate["id"],
+             "--tensor-name", candidate.get("tensor", "embeddings"),
+             "--dims", str(candidate.get("dims", 0)), "--output", str(output)])
+    model = NpzStaticModel.load(output)
+    ours = WordPieceTokenizer(model.vocabulary())
+    reference = Tokenizer.from_file(str(source / "tokenizer.json"))
+    queries = loadJson("Queries.json")
+    texts = [q[lang] for q in queries["queries"] for lang in queries["matrixLanguages"]]
+    texts += [q[k] for q in queries["native"] for k in ("text", "en")]
+    texts += sorted(set(loadCorpus("3").texts) | set(loadCorpus("4").texts))
+    differing, examples = 0, []
+    for text in texts:
+        expected = reference.encode(text, add_special_tokens=False).tokens
+        got = ours.tokenize(text)
+        if got != expected:
+            differing += 1
+            if len(examples) < 8:
+                first = next((i for i, (a, b) in enumerate(zip(got, expected)) if a != b),
+                             min(len(got), len(expected)))
+                examples.append({"text": text[:80], "ours": got[first:first + 4],
+                                 "reference": expected[first:first + 4]})
+    facts = {"method": "pipeline/ConvertStaticModel.py at the pinned revision",
+             "tokenizerTextsChecked": len(texts), "tokenizerTextsDiffering": differing,
+             "tokenizerExamples": examples}
+    tokens = sorted(model.vocabulary(), key=model.vocabulary().get)
+    return tokens, model.vectors(), facts
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--candidate", required=True)
@@ -95,7 +144,8 @@ def main(argv: list[str] | None = None) -> int:
     candidates = json.loads((EVALUATION_DIR / "Candidates.json").read_text())["candidates"]
     candidate = next(c for c in candidates if c["id"] == args.candidate)
     words = readVocabulary(candidate["vocabulary"]) if candidate.get("vocabulary") else []
-    build = {"distill": buildDistilled, "append": buildAppended}[candidate["build"]]
+    build = {"distill": buildDistilled, "append": buildAppended,
+             "convert": buildConverted}[candidate["build"]]
     tokens, vectors, facts = build(candidate, words)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     output = OUTPUT_DIR / f"{candidate['id']}.npz"

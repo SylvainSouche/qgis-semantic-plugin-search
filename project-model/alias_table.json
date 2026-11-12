@@ -347,6 +347,12 @@
     "status": "recorded",
     "type": "dec"
   },
+  "dec-multilingual-model": {
+    "active": true,
+    "id": "0f87-6af5-f159-563e",
+    "status": "recorded",
+    "type": "dec"
+  },
   "dec-one-codebase": {
     "active": false,
     "id": "0f87-6ae3-6956-8896",
