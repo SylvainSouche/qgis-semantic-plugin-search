@@ -58,8 +58,9 @@ def glossaryTerms(published: Path) -> dict[str, set[str]]:
         terms["osm"] = {r["text"] for r in csv.DictReader(s) if r["language"] == "en"}
     with lzma.open(published / "gemet/gemet_labels.csv.xz", "rt", encoding="utf-8") as s:
         terms["gemet"] = {r["label"] for r in csv.DictReader(s) if r["language"] == "en"}
-    with (published / "corine-land-cover-no/clc_nomenclature_nb_en.csv").open(encoding="utf-8") as s:
-        terms["corine"] = {r["en"] for r in csv.DictReader(s) if r["en"]}
+    corine = published / "corine-land-cover-no/clc_nomenclature_nb_en.csv"
+    with corine.open(encoding="utf-8") as stream:
+        terms["corine"] = {r["en"] for r in csv.DictReader(stream) if r["en"]}
     return terms
 
 

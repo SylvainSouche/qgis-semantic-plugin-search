@@ -397,6 +397,21 @@ compared, built on GitHub by `evaluation/BuildVocabularyModels.py`:
 Both run through the plugin's own tokenizer and engine. Any of them could
 ship as an ordinary model file, readable by released plugin versions too.
 
+Result (QGIS 3, hybrid nDCG@10 for a sentence / for keywords):
+
+| model | 2,466 words (glossary of 12 Nov) | 4,881 words (glossary of 14 Nov) |
+|---|---|---|
+| potion-base-8M (no extra words) | 0.518 / 0.558 | 0.518 / 0.558 |
+| potion-base-8M-gis | 0.504 / 0.548 | 0.503 / 0.548 |
+| distill-bge-base (control) | 0.497 / 0.542 | 0.499 / 0.544 |
+| distill-bge-base-gis | 0.510 / 0.535 | 0.514 / 0.532 |
+
+- **The embedding alone** gains about 0.02 from the extra words.
+- **The hybrid search** doesn't gain: the lexical boost already rewards
+  literal matches of these words.
+- **Doubling the list** changes nothing beyond noise.
+- **Not shipped.** The comparison stays in the benchmark.
+
 Language matrix. The plugin aims to serve 21 languages:
 
 - English, French, Spanish, German, Italian and Portuguese;
