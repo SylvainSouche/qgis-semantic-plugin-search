@@ -18,6 +18,7 @@ on:
       - evaluation/SearchEvaluation.py
       - evaluation/RunBenchmark.py
       - evaluation/BuildVocabularyModels.py
+      - evaluation/GisVocabulary.tsv
       - SemanticPluginSearch/Domain/**
       - SemanticPluginSearch/Data/**
       - pipeline/ConvertStaticModel.py

@@ -4,11 +4,14 @@
 
 Reads the English terms of the gis-glossary project's published term lists
 (ISO/TC 211 MLGT, IATE GIS terms, QGIS interface labels, QGIS manual
-headings; see GisVocabulary.ATTRIBUTION.md), splits them into words, and
+headings, INSPIRE regulation names, OpenStreetMap tagging schema labels,
+GEMET, CORINE land cover classes; see GisVocabulary.ATTRIBUTION.md), splits
+them into words, and
 keeps the words of four letters or more that the shipped model's WordPiece
 vocabulary cannot represent as one token (it cuts them into pieces such as
-con + ##tour). The broad Snorre termbase is left out: it covers every
-standards field, not GIS.
+con + ##tour). Left out: the broad Snorre termbase (every standards field,
+not GIS), the general Icelandic dictionaries, and Kartverket INT 1 (no reuse
+terms).
 
 The words are chosen from the glossary only, never from the evaluation's
 queries. plugin_docs counts the snapshot plugin texts (QGIS 3 and 4) that
@@ -49,6 +52,14 @@ def glossaryTerms(published: Path) -> dict[str, set[str]]:
         terms["qgis-gui"] = {r["source_text"] for r in csv.DictReader(stream)}
     with (published / "qgis-manual-headings/qgis_manual_headings.tsv").open(encoding="utf-8") as s:
         terms["qgis-manual"] = {r["en"] for r in csv.DictReader(s, delimiter="\t") if r["en"]}
+    with (published / "inspire-regulation/inspire_reg_en.csv").open(encoding="utf-8") as stream:
+        terms["inspire"] = {r["label"] for r in csv.DictReader(stream) if r["language"] == "en"}
+    with lzma.open(published / "osm-tagging-schema/osm_terms.csv.xz", "rt", encoding="utf-8") as s:
+        terms["osm"] = {r["text"] for r in csv.DictReader(s) if r["language"] == "en"}
+    with lzma.open(published / "gemet/gemet_labels.csv.xz", "rt", encoding="utf-8") as s:
+        terms["gemet"] = {r["label"] for r in csv.DictReader(s) if r["language"] == "en"}
+    with (published / "corine-land-cover-no/clc_nomenclature_nb_en.csv").open(encoding="utf-8") as s:
+        terms["corine"] = {r["en"] for r in csv.DictReader(s) if r["en"]}
     return terms
 
 
@@ -80,6 +91,8 @@ def main(argv: list[str] | None = None) -> int:
         writer.writerow(["word", "sources", "plugin_docs", "pieces_today"])
         writer.writerows(rows)
     print(f"Wrote {OUTPUT}: {len(rows)} words, {sum(1 for r in rows if r[2])} in plugin texts")
+    print("words per source:", {source: sum(1 for r in rows if source in r[1].split(","))
+                                for source in terms})
     return 0
 
 
