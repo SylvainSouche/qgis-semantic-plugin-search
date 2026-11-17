@@ -1,0 +1,31 @@
+{
+  "format": "qgis-semantic-search-index-v1",
+  "generated_at": "20261117T112907Z",
+  "model": {
+    "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/EmbeddingModel.4f5f1043f084.npz",
+    "sha256": "4f5f1043f084e1266598fa95f2286fafdb880f18984c58de9f0d25ee9255d805",
+    "bytes": 17246212,
+    "model_id": "static-potion-base-8M",
+    "dim": 256,
+    "format": "static-token-embeddings-v1",
+    "tokenizer": "bert-wordpiece-uncased",
+    "license": "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed",
+    "source_model": "minishlab/potion-base-8M"
+  },
+  "universes": {
+    "3": {
+      "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/Embeddings-3.55eeac1cacc9.sqlite",
+      "sha256": "55eeac1cacc9d1a0e3a3725303abcf0d5e69b867eff67c2b8cee3068848265d9",
+      "bytes": 12582912,
+      "build_stamp": "20261116T102440Z",
+      "plugin_count": 3970
+    },
+    "4": {
+      "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/Embeddings-4.11bfc1181099.sqlite",
+      "sha256": "11bfc1181099c07b262c26ae857313a42d7a395f13989833ea8a8fbe2040ab85",
+      "bytes": 5955584,
+      "build_stamp": "20261117T112853Z",
+      "plugin_count": 1729
+    }
+  }
+}
