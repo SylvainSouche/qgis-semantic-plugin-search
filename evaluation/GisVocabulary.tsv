@@ -3,10 +3,10 @@ qgis	qgis-gui,qgis-manual	3690	q ##gis
 plugin	qgis-gui,qgis-manual	3663	plug ##in
 plugins	qgis-gui,qgis-manual	1835	plug ##ins
 github	qgis-gui	1029	gi ##th ##ub
-raster	gemet,iate,iso-mlgt,qgis-gui,qgis-manual	1006	ras ##ter
+raster	gemet,iate,qgis-gui,qgis-manual	1006	ras ##ter
 toolbar	qgis-gui,qgis-manual	821	tool ##bar
-polygon	gemet,iso-mlgt,osm,qgis-gui,qgis-manual	767	poly ##gon
-workflow	iso-mlgt,qgis-manual	509	work ##flow
+polygon	gemet,osm,qgis-gui,qgis-manual	767	poly ##gon
+workflow	qgis-manual	509	work ##flow
 dialog	qgis-gui,qgis-manual	496	dial ##og
 geopackage	qgis-gui,qgis-manual	462	geo ##pack ##age
 polygons	qgis-gui,qgis-manual	451	poly ##gon ##s
@@ -21,12 +21,12 @@ gdal	qgis-gui,qgis-manual	329	g ##dal
 rasters	qgis-gui,qgis-manual	297	ras ##ters
 visualization	qgis-gui	286	visual ##ization
 geotiff	qgis-gui	283	geo ##ti ##ff
-dataset	iso-mlgt,qgis-gui,qgis-manual	277	data ##set
+dataset	qgis-gui,qgis-manual	277	data ##set
 json	qgis-gui,qgis-manual	272	j ##son
 optionally	qgis-gui	269	optional ##ly
 geospatial	iate,qgis-gui	262	geo ##sp ##ati ##al
 pyqgis	qgis-gui	260	p ##y ##q ##gis
-geometries	iso-mlgt,qgis-gui,qgis-manual	255	geo ##met ##ries
+geometries	qgis-gui,qgis-manual	255	geo ##met ##ries
 geojson	qgis-gui,qgis-manual	252	geo ##js ##on
 browse	qgis-gui	240	brows ##e
 numpy	qgis-gui	234	nu ##mp ##y
@@ -95,14 +95,13 @@ runtime	qgis-gui	90	run ##time
 defaults	qgis-gui	89	default ##s
 presets	qgis-gui	89	pre ##set ##s
 interpolation	gemet,iate,inspire,osm,qgis-gui,qgis-manual	88	inter ##pol ##ation
-schema	iso-mlgt,qgis-gui	88	sc ##hema
+schema	qgis-gui	88	sc ##hema
 validate	qgis-gui,qgis-manual	88	valid ##ate
 contour	gemet,iate,inspire,qgis-gui,qgis-manual	87	con ##tour
-azimuth	iso-mlgt,qgis-gui	86	az ##im ##uth
-seamless	iso-mlgt	83	seam ##less
+azimuth	qgis-gui	86	az ##im ##uth
 fixes	qgis-gui,qgis-manual	82	fix ##es
 cartographic	iate,qgis-gui	80	cart ##ographic
-lidar	iate,iso-mlgt,qgis-gui	80	lid ##ar
+lidar	iate,qgis-gui	80	lid ##ar
 clipping	qgis-gui	77	clip ##ping
 cursor	qgis-gui	77	cu ##rso ##r
 rename	qgis-gui,qgis-manual	77	ren ##ame
@@ -120,8 +119,8 @@ importing	qgis-gui,qgis-manual	70	import ##ing
 wmts	qgis-gui,qgis-manual	70	w ##mt ##s
 apis	qgis-gui	69	api ##s
 attribution	gemet,qgis-gui	68	at ##tri ##bution
-geocoding	iate,iso-mlgt,qgis-gui	68	geo ##co ##ding
-converter	gemet,iso-mlgt,osm,qgis-gui	67	convert ##er
+geocoding	iate,qgis-gui	68	geo ##co ##ding
+converter	gemet,osm,qgis-gui	67	convert ##er
 workspace	osm,qgis-gui,qgis-manual	67	works ##pace
 templates	qgis-gui	66	template ##s
 config	qgis-gui,qgis-manual	65	con ##fi ##g
@@ -135,9 +134,9 @@ spacing	qgis-gui,qgis-manual	63	spa ##cing
 centroid	qgis-gui	62	centro ##id
 endpoint	osm,qgis-gui	62	end ##point
 geoprocessing	qgis-gui,qgis-manual	62	geo ##pro ##ces ##sing
-georeferencing	iate,iso-mlgt,qgis-gui,qgis-manual	62	geo ##re ##fer ##en ##cing
+georeferencing	iate,qgis-gui,qgis-manual	62	geo ##re ##fer ##en ##cing
 hydrological	inspire	62	hydro ##logical
-identifier	inspire,iso-mlgt,osm,qgis-gui	62	id ##ent ##ifier
+identifier	inspire,osm,qgis-gui	62	id ##ent ##ifier
 predefined	qgis-gui	61	pre ##de ##fine ##d
 interactively	qgis-gui,qgis-manual	60	interactive ##ly
 readable	qgis-gui	60	read ##able
@@ -166,17 +165,17 @@ usgs	qgis-gui	53	us ##gs
 blob	qgis-gui	52	b ##lo ##b
 extracting	qgis-gui	52	extract ##ing
 duplicates	qgis-gui,qgis-manual	51	duplicate ##s
-extents	iso-mlgt,qgis-gui,qgis-manual	51	extent ##s
+extents	qgis-gui,qgis-manual	51	extent ##s
 filename	qgis-gui	51	file ##name
 histogram	qgis-gui,qgis-manual	51	his ##to ##gram
-locale	iso-mlgt,qgis-gui	51	local ##e
+locale	qgis-gui	51	local ##e
 shortcut	osm,qgis-gui,qgis-manual	51	short ##cut
 admin	osm,qgis-gui	50	ad ##min
 hillshade	qgis-gui,qgis-manual	50	hills ##had ##e
 normalized	qgis-gui	50	normal ##ized
 overlaps	qgis-gui	50	overlap ##s
 cached	qgis-gui	49	cache ##d
-calibration	gemet,iso-mlgt	49	cal ##ib ##ration
+calibration	gemet	49	cal ##ib ##ration
 multipart	qgis-gui,qgis-manual	49	multi ##par ##t
 clustering	qgis-gui,qgis-manual	48	cluster ##ing
 customization	qgis-gui,qgis-manual	48	custom ##ization
@@ -190,10 +189,10 @@ widgets	qgis-gui,qgis-manual	47	wi ##dgets
 buffers	qgis-gui,qgis-manual	46	buffer ##s
 comma	qgis-gui	46	com ##ma
 simplifies	qgis-gui	46	sim ##pl ##ifies
-zonal	iso-mlgt,qgis-gui,qgis-manual	46	z ##onal
+zonal	qgis-gui,qgis-manual	46	z ##onal
 delineation	iate	45	del ##ine ##ation
 exporter	qgis-gui	45	export ##er
-geodata	iate,iso-mlgt	45	geo ##da ##ta
+geodata	iate	45	geo ##da ##ta
 popup	qgis-gui	45	pop ##up
 reusable	gemet	45	re ##usa ##ble
 orthophoto	iate	44	or ##th ##op ##hot ##o
@@ -216,18 +215,18 @@ gnss	qgis-gui,qgis-manual	39	g ##ns ##s
 overlays	qgis-gui	39	over ##lay ##s
 renders	qgis-gui	39	render ##s
 autocad	qgis-gui	38	auto ##ca ##d
-datum	iate,inspire,iso-mlgt,osm,qgis-gui,qgis-manual	38	dat ##um
+datum	iate,inspire,osm,qgis-gui,qgis-manual	38	dat ##um
 debug	qgis-gui	38	de ##bu ##g
 interpolated	qgis-gui	38	inter ##pol ##ated
 spatialite	qgis-gui,qgis-manual	38	spatial ##ite
-timestamp	iso-mlgt,qgis-gui	38	times ##tam ##p
+timestamp	qgis-gui	38	times ##tam ##p
 modis	qgis-gui	37	mod ##is
 parsing	qgis-gui	37	par ##sing
 topo	qgis-gui	37	top ##o
 checker	qgis-gui,qgis-manual	36	check ##er
-deprecated	iso-mlgt,osm,qgis-gui	36	de ##pre ##cated
-executable	iso-mlgt,qgis-gui	36	ex ##ec ##utable
-locator	inspire,iso-mlgt,osm,qgis-gui,qgis-manual	36	lo ##cat ##or
+deprecated	osm,qgis-gui	36	de ##pre ##cated
+executable	qgis-gui	36	ex ##ec ##utable
+locator	inspire,osm,qgis-gui,qgis-manual	36	lo ##cat ##or
 nominatim	qgis-gui,qgis-manual	36	no ##mina ##ti ##m
 spatially	qgis-gui	36	spatial ##ly
 spreadsheet	iate,qgis-gui,qgis-manual	36	spreads ##hee ##t
@@ -250,12 +249,12 @@ simplification	qgis-gui	33	sim ##pl ##ification
 anthropic	gemet	32	ant ##hr ##op ##ic
 bindings	qgis-manual	32	binding ##s
 installable	qgis-gui	32	install ##able
-annotation	iate,iso-mlgt,qgis-gui,qgis-manual	31	ann ##ota ##tion
+annotation	iate,qgis-gui,qgis-manual	31	ann ##ota ##tion
 caching	qgis-gui	31	ca ##ching
 catalogs	qgis-gui,qgis-manual	31	catalog ##s
 centroids	qgis-gui,qgis-manual	31	centro ##ids
-easting	iso-mlgt,qgis-gui	31	east ##ing
-ellipsoid	iate,iso-mlgt,qgis-gui	31	el ##lip ##so ##id
+easting	qgis-gui	31	east ##ing
+ellipsoid	iate,qgis-gui	31	el ##lip ##so ##id
 geocode	qgis-gui	31	geo ##code
 geomorphology	gemet	31	geo ##mo ##rp ##hol ##ogy
 headers	qgis-gui	31	header ##s
@@ -269,7 +268,7 @@ helper	qgis-gui	30	help ##er
 hydraulics	gemet	30	hydraulic ##s
 merges	qgis-gui	30	merge ##s
 mosaics	qgis-gui	30	mosaic ##s
-planar	iso-mlgt,qgis-gui	30	plan ##ar
+planar	qgis-gui	30	plan ##ar
 srtm	qgis-gui	30	sr ##tm
 toolbars	qgis-gui,qgis-manual	30	tool ##bar ##s
 widths	qgis-gui,qgis-manual	30	width ##s
@@ -278,7 +277,7 @@ finder	iate,qgis-gui	29	find ##er
 geodatabase	qgis-gui	29	geo ##da ##ta ##base
 hotspot	osm,qgis-gui	29	hot ##sp ##ot
 multiband	qgis-gui,qgis-manual	29	multi ##band
-northing	iso-mlgt,qgis-gui	29	north ##ing
+northing	qgis-gui	29	north ##ing
 outliers	qgis-gui	29	out ##lier ##s
 parser	qgis-gui	29	par ##ser
 spline	qgis-gui	29	sp ##line
@@ -295,7 +294,6 @@ heatmap	qgis-gui,qgis-manual	28	heat ##ma ##p
 identifiers	qgis-gui	28	id ##ent ##ifiers
 mapbox	qgis-gui	28	map ##box
 mapper	qgis-gui	28	map ##per
-provenance	iso-mlgt	28	proven ##ance
 unsupported	qgis-gui	28	un ##su ##pp ##orted
 waypoints	qgis-gui	28	way ##points
 deleting	qgis-gui,qgis-manual	27	del ##eti ##ng
@@ -321,12 +319,12 @@ resize	qgis-gui,qgis-manual	26	res ##ize
 attachments	qgis-gui	25	attachment ##s
 bilinear	qgis-gui	25	bi ##line ##ar
 formatted	qgis-gui	25	format ##ted
-geodetic	iate,iso-mlgt,osm,qgis-gui	25	geo ##de ##tic
-gridded	iso-mlgt,qgis-gui	25	grid ##ded
+geodetic	iate,osm,qgis-gui	25	geo ##de ##tic
+gridded	qgis-gui	25	grid ##ded
 indexes	iate,qgis-gui,qgis-manual	25	index ##es
 leaflet	qgis-gui	25	leaf ##let
 redo	qgis-gui,qgis-manual	25	red ##o
-refinement	iso-mlgt,qgis-gui	25	ref ##ine ##ment
+refinement	qgis-gui	25	ref ##ine ##ment
 reprojects	qgis-gui	25	rep ##ro ##ject ##s
 roughness	qgis-gui,qgis-manual	25	rough ##ness
 shading	qgis-gui,qgis-manual	25	sha ##ding
@@ -334,7 +332,7 @@ tooltip	qgis-gui	25	tool ##tip
 checkboxes	qgis-gui	24	check ##box ##es
 datetime	qgis-gui	24	date ##time
 digitized	qgis-gui	24	digit ##ized
-ellipsoidal	iate,iso-mlgt,qgis-gui	24	el ##lip ##so ##idal
+ellipsoidal	iate,qgis-gui	24	el ##lip ##so ##idal
 offsets	qgis-gui	24	offset ##s
 parse	qgis-gui	24	par ##se
 permissions	qgis-gui	24	permission ##s
@@ -343,7 +341,7 @@ reopen	qgis-gui	24	re ##open
 reorder	qgis-gui	24	re ##ord ##er
 validating	qgis-gui	24	valid ##ating
 aggregated	inspire,qgis-gui	23	aggregate ##d
-geodesic	iate,iso-mlgt,qgis-gui,qgis-manual	23	geo ##des ##ic
+geodesic	iate,qgis-gui,qgis-manual	23	geo ##des ##ic
 geophysical	gemet,iate,inspire	23	geo ##physical
 rectangles	qgis-gui,qgis-manual	23	rec ##tangle ##s
 uninstall	qgis-gui	23	un ##ins ##tal ##l
@@ -351,8 +349,6 @@ zooming	qgis-gui	23	zoom ##ing
 adjusts	qgis-gui	22	adjust ##s
 analysing	qgis-gui,qgis-manual	22	anal ##ys ##ing
 boolean	qgis-gui,qgis-manual	22	boo ##lean
-calibrated	iso-mlgt	22	cal ##ib ##rated
-classifier	iso-mlgt	22	class ##ifier
 dispersion	gemet	22	di ##sper ##sion
 exif	qgis-gui	22	ex ##if
 georeferencer	qgis-gui,qgis-manual	22	geo ##re ##ference ##r
@@ -380,14 +376,14 @@ insensitive	qgis-gui	20	ins ##ens ##itive
 javascript	qgis-gui	20	java ##script
 labelling	gemet	20	label ##ling
 multipoint	qgis-gui	20	multi ##point
-namespace	iso-mlgt,qgis-gui	20	names ##pace
+namespace	qgis-gui	20	names ##pace
 outlier	qgis-gui	20	out ##lier
 percentages	qgis-gui	20	percentage ##s
 resampled	qgis-gui	20	res ##amp ##led
 specifying	qgis-gui	20	specify ##ing
 swir	qgis-gui	20	sw ##ir
 viewport	qgis-gui	20	view ##port
-waypoint	iso-mlgt,qgis-gui	20	way ##point
+waypoint	qgis-gui	20	way ##point
 contextual	qgis-gui,qgis-manual	19	context ##ual
 declination	qgis-gui	19	dec ##lina ##tion
 discard	qgis-gui	19	disc ##ard
@@ -398,10 +394,10 @@ retrieves	qgis-gui	19	retrieve ##s
 scatter	qgis-gui	19	sc ##atter
 searchable	qgis-gui	19	search ##able
 smoother	qgis-gui	19	smooth ##er
-spatiotemporal	iso-mlgt,qgis-gui	19	spat ##iot ##em ##por ##al
+spatiotemporal	qgis-gui	19	spat ##iot ##em ##por ##al
 thumbnail	qgis-gui	19	thumb ##nail
 viewshed	qgis-gui	19	views ##hed
-affine	iso-mlgt,qgis-gui,qgis-manual	18	af ##fine
+affine	qgis-gui,qgis-manual	18	af ##fine
 aggregates	qgis-gui,qgis-manual	18	aggregate ##s
 collapsible	qgis-gui	18	col ##la ##ps ##ible
 dangles	qgis-gui	18	dan ##gles
@@ -428,7 +424,7 @@ deactivate	qgis-gui	17	dea ##ct ##ivate
 deletes	qgis-gui	17	del ##ete ##s
 duplicated	qgis-gui,qgis-manual	17	duplicate ##d
 ellipse	qgis-gui	17	el ##lip ##se
-generalization	iso-mlgt,qgis-gui	17	general ##ization
+generalization	qgis-gui	17	general ##ization
 geom	qgis-gui	17	geo ##m
 hexagon	qgis-gui	17	he ##xa ##gon
 incremental	qgis-gui	17	inc ##rem ##ental
@@ -446,7 +442,6 @@ makevalid	qgis-gui	16	make ##val ##id
 meshes	qgis-gui,qgis-manual	16	mesh ##es
 modifier	qgis-gui,qgis-manual	16	mod ##ifier
 noaa	qgis-gui	16	no ##aa
-radiometric	iso-mlgt	16	radio ##metric
 recursive	qgis-gui	16	rec ##urs ##ive
 refine	qgis-gui	16	ref ##ine
 reinstall	qgis-gui	16	reins ##tal ##l
@@ -487,7 +482,6 @@ locates	qgis-gui	14	locate ##s
 mbtiles	qgis-gui,qgis-manual	14	mb ##tile ##s
 meteorology	gemet,qgis-gui	14	meteor ##ology
 optimisation	gemet	14	opt ##imi ##sation
-parametric	iso-mlgt	14	para ##metric
 parsed	qgis-gui	14	par ##sed
 plotly	qgis-gui	14	plot ##ly
 residuals	qgis-gui	14	residual ##s
@@ -508,12 +502,11 @@ embed	qgis-gui	13	em ##bed
 embeds	qgis-gui	13	em ##bed ##s
 getcapabilities	qgis-gui	13	get ##cap ##abi ##lit ##ies
 gradients	qgis-gui	13	gradient ##s
-hydrographic	gemet,iso-mlgt,qgis-gui	13	hydro ##graphic
+hydrographic	gemet,qgis-gui	13	hydro ##graphic
 inserts	qgis-gui	13	insert ##s
 invert	qgis-gui	13	in ##vert
 lossless	qgis-gui	13	loss ##less
 ortho	iate	13	or ##th ##o
-positional	iso-mlgt	13	position ##al
 pseudocolor	qgis-gui,qgis-manual	13	pseudo ##color
 queried	qgis-gui	13	que ##ried
 reclassification	qgis-gui	13	rec ##lass ##ification
@@ -526,15 +519,14 @@ wikimedia	osm	13	wi ##kim ##ed ##ia
 assigning	qgis-gui	12	assign ##ing
 constructs	qgis-gui	12	construct ##s
 decimals	qgis-gui	12	decimal ##s
-delaunay	iso-mlgt,qgis-gui,qgis-manual	12	del ##au ##nay
+delaunay	qgis-gui,qgis-manual	12	del ##au ##nay
 dessous	osm	12	des ##so ##us
-dijkstra	iso-mlgt	12	di ##jk ##stra
 elev	qgis-gui	12	el ##ev
 ellipses	qgis-manual	12	el ##lip ##ses
 evapotranspiration	gemet,qgis-gui	12	eva ##pot ##ran ##sp ##ira ##tion
 extensible	qgis-gui	12	ex ##tens ##ible
 footer	qgis-gui	12	foot ##er
-geoid	iate,iso-mlgt,qgis-gui	12	geo ##id
+geoid	iate,qgis-gui	12	geo ##id
 interpolates	qgis-gui	12	inter ##pol ##ates
 iterative	qgis-gui	12	it ##erative
 mitigation	gemet	12	mit ##iga ##tion
@@ -555,7 +547,6 @@ appended	qgis-gui	11	app ##ended
 celsius	qgis-gui	11	ce ##ls ##ius
 centrality	qgis-gui	11	central ##ity
 commas	qgis-gui	11	com ##mas
-correctness	iso-mlgt	11	correct ##ness
 dbscan	qgis-gui,qgis-manual	11	db ##scan
 densification	qgis-gui	11	den ##si ##fication
 digitising	gemet	11	digit ##ising
@@ -574,8 +565,7 @@ normalize	qgis-gui	11	normal ##ize
 reloaded	qgis-gui	11	re ##loaded
 revert	qgis-gui,qgis-manual	11	rev ##ert
 simplifying	qgis-gui	11	sim ##plify ##ing
-spatio	iso-mlgt,qgis-gui	11	spat ##io
-submitting	iso-mlgt	11	submit ##ting
+spatio	qgis-gui	11	spat ##io
 webpage	qgis-gui	11	web ##page
 alkis	qgis-gui	10	al ##kis
 animations	qgis-gui	10	animation ##s
@@ -583,7 +573,7 @@ anisotropy	qgis-gui	10	an ##iso ##tro ##py
 appends	qgis-gui	10	app ##end ##s
 bookmark	qgis-gui,qgis-manual	10	book ##mark
 calc	qgis-gui	10	cal ##c
-cartesian	iso-mlgt,qgis-gui,qgis-manual	10	cart ##esian
+cartesian	qgis-gui,qgis-manual	10	cart ##esian
 centreline	inspire	10	centre ##line
 chlorophyll	gemet	10	ch ##lor ##op ##hyl ##l
 cubes	osm	10	cube ##s
@@ -595,8 +585,7 @@ frontend	qgis-gui	10	front ##end
 gauss	qgis-gui	10	ga ##uss
 hydrogeology	gemet,osm	10	hydro ##ge ##ology
 initialization	qgis-gui	10	initial ##ization
-insar	iso-mlgt	10	ins ##ar
-interoperability	iate,iso-mlgt	10	inter ##oper ##ability
+interoperability	iate	10	inter ##oper ##ability
 intersected	qgis-gui	10	intersect ##ed
 isolines	qgis-gui	10	iso ##lines
 layername	qgis-gui	10	layer ##name
@@ -612,7 +601,6 @@ saturation	qgis-gui	10	sat ##uration
 singleband	qgis-gui,qgis-manual	10	single ##band
 stile	osm	10	stil ##e
 subsurface	osm	10	sub ##sur ##face
-swipe	iso-mlgt	10	sw ##ipe
 toggled	qgis-gui	10	to ##ggle ##d
 topologically	qgis-gui	10	topological ##ly
 transects	qgis-gui	10	trans ##ect ##s
@@ -633,9 +621,7 @@ dimensioning	inspire	9	dimension ##ing
 dissolves	qgis-gui	9	dissolve ##s
 equidistant	qgis-gui	9	e ##qui ##dis ##tan ##t
 fieldname	qgis-gui	9	field ##name
-flattening	iso-mlgt	9	flat ##ten ##ing
-gazetteer	iso-mlgt	9	gazette ##er
-geolocation	iate,iso-mlgt	9	geo ##lo ##cation
+geolocation	iate	9	geo ##lo ##cation
 geotag	qgis-gui	9	geo ##tag
 goto	qgis-gui	9	got ##o
 heterogeneous	corine	9	het ##ero ##gen ##eous
@@ -646,14 +632,14 @@ iterate	qgis-gui	9	it ##erate
 linestringz	qgis-gui	9	lines ##tri ##ng ##z
 morphometric	qgis-gui	9	mor ##ph ##ometric
 multipolygons	qgis-gui	9	multi ##pol ##y ##gon ##s
-nadir	iso-mlgt,qgis-gui	9	nad ##ir
+nadir	qgis-gui	9	nad ##ir
 pans	qgis-gui	9	pan ##s
 percentiles	qgis-gui	9	percent ##ile ##s
 permeability	gemet,qgis-gui	9	per ##me ##ability
 pointz	qgis-gui	9	point ##z
 pyramids	qgis-gui,qgis-manual	9	pyramid ##s
 quantification	inspire	9	quan ##ti ##fication
-radiance	iso-mlgt,qgis-gui	9	ra ##dian ##ce
+radiance	qgis-gui	9	ra ##dian ##ce
 radii	qgis-gui	9	ra ##di ##i
 rasterization	qgis-gui	9	ras ##ter ##ization
 resizing	qgis-manual	9	res ##izing
@@ -744,7 +730,7 @@ subtract	qgis-gui	7	sub ##tra ##ct
 thermo	gemet	7	the ##rm ##o
 toolboxes	qgis-gui	7	tool ##box ##es
 tracer	gemet	7	trace ##r
-triangulation	iso-mlgt,osm,qgis-gui,qgis-manual	7	tri ##ang ##ulation
+triangulation	osm,qgis-gui,qgis-manual	7	tri ##ang ##ulation
 tweak	qgis-gui	7	t ##we ##ak
 unset	qgis-gui	7	un ##set
 wechat	osm	7	we ##cha ##t
@@ -760,8 +746,7 @@ cassini	qgis-gui	6	cass ##ini
 chamfer	qgis-gui	6	cha ##m ##fer
 coincident	qgis-gui	6	coincide ##nt
 configs	qgis-gui	6	con ##fi ##gs
-conformal	iso-mlgt,qgis-gui	6	conform ##al
-copyleft	iso-mlgt	6	copy ##le ##ft
+conformal	qgis-gui	6	conform ##al
 cors	qgis-gui	6	co ##rs
 coverages	inspire,qgis-gui	6	coverage ##s
 datums	qgis-gui	6	dat ##ums
@@ -771,12 +756,11 @@ dictionaries	qgis-gui	6	di ##ction ##aries
 discarding	qgis-gui	6	disc ##arding
 distributes	qgis-gui	6	distribute ##s
 elapsed	qgis-gui	6	el ##ap ##sed
-emissivity	iso-mlgt,qgis-gui	6	emi ##ssi ##vity
+emissivity	qgis-gui	6	emi ##ssi ##vity
 encode	qgis-gui	6	en ##code
 fishnet	qgis-gui	6	fish ##net
 flatten	osm,qgis-gui,qgis-manual	6	flat ##ten
 fractal	qgis-gui	6	fra ##cta ##l
-gimbal	iso-mlgt	6	gi ##mba ##l
 greyscale	qgis-gui	6	grey ##sca ##le
 hydrogeological	iate,inspire	6	hydro ##ge ##ological
 increment	iate,qgis-gui	6	inc ##rem ##ent
@@ -793,7 +777,7 @@ objectid	qgis-gui	6	object ##id
 opengl	qgis-gui	6	open ##gl
 photovoltaic	osm	6	photo ##vo ##lta ##ic
 planimetric	iate,qgis-gui	6	plan ##ime ##tric
-predicate	iso-mlgt,qgis-gui	6	pre ##dicate
+predicate	qgis-gui	6	pre ##dicate
 predicates	qgis-gui	6	pre ##dicate ##s
 prefixed	qgis-gui	6	prefix ##ed
 quadratic	qgis-gui	6	quad ##ratic
@@ -815,10 +799,8 @@ subsidence	gemet	6	sub ##side ##nce
 subtraction	qgis-gui	6	sub ##tra ##ction
 summing	qgis-gui	6	sum ##ming
 swaps	qgis-gui	6	swap ##s
-swath	inspire,iso-mlgt	6	swat ##h
+swath	inspire	6	swat ##h
 tagging	qgis-gui	6	tag ##ging
-thiessen	iso-mlgt	6	th ##ies ##sen
-traceability	iso-mlgt	6	trace ##ability
 unclassified	osm,qgis-gui	6	un ##class ##ified
 unloading	osm,qgis-gui	6	un ##loading
 unmodified	qgis-gui	6	un ##mo ##di ##fied
@@ -862,7 +844,6 @@ geometrical	iate	5	geometric ##al
 georef	iate	5	geo ##re ##f
 gltf	qgis-gui,qgis-manual	5	g ##lt ##f
 gzip	qgis-gui	5	g ##zi ##p
-harmonization	iso-mlgt	5	harmon ##ization
 hashes	qgis-gui	5	hash ##es
 headings	qgis-gui	5	heading ##s
 hexagons	qgis-gui	5	he ##xa ##gon ##s
@@ -871,14 +852,13 @@ hulls	qgis-gui	5	hull ##s
 kart	osm	5	ka ##rt
 kernels	qgis-gui	5	kernel ##s
 landform	gemet	5	land ##form
-linearly	iso-mlgt,qgis-gui	5	linear ##ly
+linearly	qgis-gui	5	linear ##ly
 linetype	qgis-gui	5	line ##type
 localize	qgis-gui	5	local ##ize
 longitudes	qgis-gui	5	longitude ##s
 lowercase	qgis-gui	5	lower ##case
 magnifier	qgis-gui	5	mag ##ni ##fi ##er
 matlab	qgis-gui	5	mat ##lab
-measurable	iso-mlgt	5	me ##asurable
 millimeter	qgis-gui	5	mill ##imeter
 mozilla	qgis-gui	5	mo ##zi ##lla
 mssql	qgis-gui	5	ms ##s ##q ##l
@@ -887,7 +867,6 @@ occupancy	osm	5	o ##cc ##up ##ancy
 oceanography	gemet	5	ocean ##ography
 overflow	gemet,osm	5	over ##flow
 pansharpening	qgis-gui	5	pan ##sha ##rp ##ening
-polarization	iso-mlgt	5	polar ##ization
 pollutants	gemet	5	poll ##uta ##nts
 porta	osm	5	port ##a
 primitives	qgis-gui	5	primitive ##s
@@ -898,7 +877,7 @@ refactored	qgis-gui	5	ref ##act ##ored
 regularization	qgis-gui	5	regular ##ization
 rescale	qgis-gui,qgis-manual	5	res ##cal ##e
 rescaling	qgis-gui	5	res ##cal ##ing
-robustness	iso-mlgt,qgis-gui	5	robust ##ness
+robustness	qgis-gui	5	robust ##ness
 scoping	gemet	5	sc ##oping
 semicolons	qgis-gui	5	semi ##col ##ons
 sequestration	gemet	5	se ##quest ##ration
@@ -935,19 +914,16 @@ autocompletion	qgis-gui	4	auto ##com ##ple ##tion
 basename	qgis-gui	4	base ##name
 bicycling	osm	4	bi ##cy ##cl ##ing
 blends	qgis-gui	4	blend ##s
-breakline	inspire,iso-mlgt	4	break ##line
+breakline	inspire	4	break ##line
 callouts	qgis-gui,qgis-manual	4	call ##outs
 categorize	qgis-gui	4	cat ##ego ##rize
 cellsize	qgis-gui	4	cells ##ize
 clamp	qgis-gui	4	cl ##amp
-clarification	iso-mlgt	4	cl ##ari ##fication
 climatology	gemet,qgis-gui	4	cl ##ima ##tology
-conforming	iso-mlgt	4	conform ##ing
 constrain	qgis-gui	4	con ##stra ##in
 cosine	qgis-gui	4	co ##sin ##e
 courant	qgis-gui	4	co ##ura ##nt
 cropland	gemet	4	crop ##land
-datatype	iso-mlgt	4	data ##type
 defaulting	qgis-gui	4	default ##ing
 delegated	gemet	4	delegate ##d
 densify	qgis-gui,qgis-manual	4	den ##si ##fy
@@ -1014,7 +990,6 @@ sharpen	qgis-gui	4	sharpe ##n
 singlepart	qgis-gui	4	single ##par ##t
 smoothness	osm,qgis-gui	4	smooth ##ness
 sqlite3	qgis-gui	4	sql ##ite ##3
-stakeholder	iso-mlgt	4	stake ##holder
 stra	qgis-gui	4	st ##ra
 stratification	gemet	4	st ##rat ##ification
 subdivides	qgis-gui	4	sub ##di ##vid ##es
@@ -1024,8 +999,7 @@ syncing	qgis-gui	4	sync ##ing
 tampon	osm	4	tam ##pon
 tissot	qgis-gui	4	tis ##so ##t
 transactional	qgis-gui	4	transaction ##al
-traversal	iso-mlgt	4	travers ##al
-triangulated	iso-mlgt,qgis-gui	4	tri ##ang ##ulated
+triangulated	qgis-gui	4	tri ##ang ##ulated
 truncate	qgis-gui,qgis-manual	4	tr ##un ##cate
 turbidity	gemet,qgis-gui	4	tu ##rb ##idi ##ty
 typename	qgis-gui	4	type ##name
@@ -1057,7 +1031,7 @@ climatological	iate	3	cl ##ima ##to ##logical
 cmyk	qgis-gui	3	cm ##yk
 codec	qgis-gui	3	code ##c
 compacted	osm,qgis-gui	3	compact ##ed
-compaction	gemet,iso-mlgt	3	compact ##ion
+compaction	gemet	3	compact ##ion
 configures	qgis-gui	3	con ##fi ##gur ##es
 conic	qgis-gui	3	con ##ic
 customizing	qgis-manual	3	custom ##izing
@@ -1097,7 +1071,7 @@ inaccuracies	qgis-gui	3	ina ##cc ##ura ##cies
 incidental	gemet	3	incident ##al
 indent	qgis-gui	3	ind ##ent
 initialized	qgis-gui	3	initial ##ized
-instantaneous	iso-mlgt,qgis-gui	3	instant ##aneous
+instantaneous	qgis-gui	3	instant ##aneous
 isometric	iate	3	iso ##metric
 italic	qgis-gui	3	it ##alic
 levenshtein	qgis-gui	3	lev ##ens ##ht ##ein
@@ -1115,7 +1089,6 @@ overridden	qgis-gui	3	over ##rid ##den
 overriding	qgis-gui	3	over ##riding
 panchromatic	qgis-gui	3	pan ##ch ##romatic
 parabolic	osm,qgis-gui	3	para ##bolic
-parameterized	iso-mlgt	3	parameter ##ized
 paver	osm	3	pa ##ver
 pdop	qgis-gui	3	pd ##op
 permissive	osm	3	per ##missive
@@ -1145,7 +1118,7 @@ subdatasets	qgis-gui	3	sub ##da ##tase ##ts
 substation	osm	3	sub ##station
 subtracts	qgis-gui	3	sub ##tra ##cts
 tabulation	qgis-gui	3	tab ##ulation
-tessellation	iso-mlgt,qgis-gui	3	tess ##ella ##tion
+tessellation	qgis-gui	3	tess ##ella ##tion
 thins	qgis-gui	3	thin ##s
 tiler	osm	3	tile ##r
 tilesets	qgis-gui,qgis-manual	3	tiles ##ets
@@ -1153,7 +1126,6 @@ transpiration	gemet	3	trans ##piration
 transversal	qgis-gui	3	trans ##vers ##al
 troubleshoot	qgis-manual	3	troubles ##hoot
 typeface	qgis-gui	3	type ##face
-ungeoreferenced	iso-mlgt	3	un ##ge ##ore ##ference ##d
 untrusted	qgis-gui	3	un ##trust ##ed
 uploader	qgis-gui	3	up ##load ##er
 upsert	qgis-gui	3	ups ##ert
@@ -1185,7 +1157,7 @@ biotope	gemet	2	bio ##top ##e
 bisector	qgis-gui	2	bis ##ect ##or
 bool	qgis-gui	2	boo ##l
 capitalization	qgis-gui	2	capital ##ization
-cardinality	iso-mlgt,qgis-gui	2	cardinal ##ity
+cardinality	qgis-gui	2	cardinal ##ity
 catenary	osm	2	cat ##enary
 checkerboard	osm	2	check ##er ##board
 checkers	osm	2	check ##ers
@@ -1201,7 +1173,7 @@ colormap	qgis-gui	2	color ##ma ##p
 compensatory	gemet	2	com ##pen ##sat ##ory
 completer	qgis-gui	2	complete ##r
 concat	qgis-gui	2	con ##cat
-concatenated	iso-mlgt,qgis-gui	2	con ##cate ##nated
+concatenated	qgis-gui	2	con ##cate ##nated
 concatenates	qgis-gui	2	con ##cate ##nate ##s
 conductivity	gemet,qgis-gui	2	conduct ##ivity
 contingency	gemet	2	con ##ting ##ency
@@ -1213,7 +1185,7 @@ decorator	qgis-gui,qgis-manual	2	decor ##ator
 definable	qgis-gui	2	def ##ina ##ble
 degrades	qgis-gui	2	de ##grade ##s
 desertification	gemet	2	desert ##ification
-designator	inspire,iso-mlgt	2	design ##ator
+designator	inspire	2	design ##ator
 detour	osm	2	det ##our
 dgps	qgis-gui	2	d ##gp ##s
 dimlinear	qgis-gui	2	dim ##line ##ar
@@ -1224,7 +1196,6 @@ drapes	qgis-gui	2	dr ##apes
 drillings	iate	2	drilling ##s
 edigeo	qgis-gui	2	ed ##ige ##o
 enumeration	qgis-gui	2	en ##ume ##ration
-ephemeris	iso-mlgt	2	ep ##hem ##eri ##s
 epochs	qgis-gui	2	epoch ##s
 equalization	qgis-gui	2	equal ##ization
 erasing	qgis-gui	2	eras ##ing
@@ -1237,11 +1208,10 @@ ff0000	qgis-gui	2	ff ##00 ##00
 filtration	gemet	2	fi ##lt ##ration
 flowlines	qgis-gui	2	flow ##lines
 foci	qgis-gui	2	f ##oc ##i
-foliation	iso-mlgt	2	f ##oli ##ation
 foresight	gemet	2	fore ##sight
 garages	osm	2	garage ##s
 generalised	inspire	2	general ##ised
-geocentric	iso-mlgt,qgis-gui	2	geo ##centric
+geocentric	qgis-gui	2	geo ##centric
 geoidal	qgis-gui	2	geo ##idal
 geomatic	iate	2	geo ##matic
 geomorphons	qgis-gui	2	geo ##mo ##rp ##hon ##s
@@ -1249,7 +1219,6 @@ getcoverage	qgis-gui	2	get ##co ##vera ##ge
 gisco	iate	2	gi ##sco
 gmes	iate	2	gm ##es
 googlemaps	qgis-gui	2	google ##ma ##ps
-granule	iso-mlgt	2	gran ##ule
 grasshopper	gemet	2	grass ##hopper
 gridding	gemet	2	grid ##ding
 gridlines	qgis-gui	2	grid ##lines
@@ -1259,10 +1228,10 @@ hmac	qgis-gui,qgis-manual	2	hm ##ac
 ilike	qgis-gui	2	il ##ike
 impassable	osm	2	imp ##ass ##able
 importation	gemet	2	import ##ation
-inertial	iate,iso-mlgt	2	in ##ert ##ial
+inertial	iate	2	in ##ert ##ial
 informatics	gemet	2	inform ##atics
 interquartile	qgis-gui	2	inter ##qua ##rti ##le
-irradiance	iate,iso-mlgt,qgis-gui	2	ir ##rad ##iance
+irradiance	iate,qgis-gui	2	ir ##rad ##iance
 irradiation	gemet,qgis-gui	2	ir ##rad ##iation
 irrigated	corine	2	ir ##ri ##gated
 karst	gemet	2	ka ##rst
@@ -1290,23 +1259,20 @@ methodes	iate	2	method ##es
 mileage	osm	2	mile ##age
 mineralogy	gemet	2	mineral ##ogy
 modflow	qgis-gui	2	mod ##flow
-monotonic	iso-mlgt	2	mono ##tonic
 monteith	qgis-gui	2	monte ##ith
 mover	osm	2	move ##r
-multibeam	iso-mlgt	2	multi ##beam
 multicurve	qgis-gui	2	multi ##cu ##r ##ve
 multidirectional	qgis-gui	2	multi ##di ##re ##ction ##al
 multilevel	osm	2	multi ##lev ##el
 multipolygonz	qgis-gui	2	multi ##pol ##y ##gon ##z
-multipurpose	iate,iso-mlgt	2	multi ##pur ##pose
-navigational	gemet,iso-mlgt	2	navigation ##al
+multipurpose	iate	2	multi ##pur ##pose
+navigational	gemet	2	navigation ##al
 noded	qgis-gui	2	node ##d
 nurbs	qgis-gui	2	nur ##bs
 oceanographic	iate	2	ocean ##ographic
 openable	osm	2	open ##able
 opencl	qgis-gui	2	open ##cl
-ordinal	iso-mlgt	2	or ##dina ##l
-orthoimage	iate,inspire,iso-mlgt	2	or ##th ##oi ##mage
+orthoimage	iate,inspire	2	or ##th ##oi ##mage
 orthoimagery	iate	2	or ##th ##oi ##mage ##ry
 orthophotomap	iate	2	or ##th ##op ##hot ##oma ##p
 osmosis	gemet	2	os ##mos ##is
@@ -1323,7 +1289,7 @@ placements	qgis-gui	2	placement ##s
 polylabel	qgis-gui	2	poly ##lab ##el
 pooling	osm	2	pool ##ing
 posidonia	gemet	2	po ##si ##don ##ia
-posteriori	iso-mlgt,qgis-gui	2	posterior ##i
+posteriori	qgis-gui	2	posterior ##i
 potable	osm	2	pot ##able
 preparedness	gemet	2	prepared ##ness
 prepend	qgis-gui	2	prep ##end
@@ -1333,7 +1299,7 @@ qgsdockwidget	qgis-gui	2	q ##gs ##dock ##wi ##dget
 qgslocatorfilter	qgis-gui	2	q ##gs ##lo ##cat ##orf ##il ##ter
 quadrangle	iate	2	quad ##rangle
 quadtree	qgis-gui	2	quad ##tree
-quantization	iso-mlgt,qgis-gui	2	quan ##ti ##zation
+quantization	qgis-gui	2	quan ##ti ##zation
 quantized	qgis-gui	2	quan ##tized
 quartic	qgis-gui	2	qu ##art ##ic
 quartile	qgis-gui	2	qu ##art ##ile
@@ -1345,7 +1311,6 @@ recursion	qgis-gui	2	rec ##urs ##ion
 reforestation	gemet	2	ref ##orestation
 reformat	qgis-gui	2	reform ##at
 regroup	qgis-gui	2	reg ##roup
-remediation	iso-mlgt	2	re ##media ##tion
 rescaled	qgis-gui	2	res ##cal ##ed
 resetting	qgis-gui	2	reset ##ting
 reshaping	qgis-manual	2	res ##ha ##ping
@@ -1372,7 +1337,6 @@ sosi	qgis-gui	2	so ##si
 soundex	qgis-gui	2	sound ##ex
 spaceborne	iate	2	space ##borne
 spam	osm	2	spa ##m
-spheroid	iso-mlgt	2	sp ##her ##oid
 spinner	osm	2	spin ##ner
 stddev	qgis-gui	2	st ##dd ##ev
 stdout	qgis-gui	2	st ##dou ##t
@@ -1390,14 +1354,12 @@ tiered	osm	2	tier ##ed
 tolerances	qgis-gui	2	tolerance ##s
 tomography	osm	2	tom ##ography
 tropics	gemet	2	tr ##op ##ics
-tuple	iso-mlgt	2	tu ##ple
 unambiguous	osm	2	una ##mb ##ig ##uous
 unconnected	osm	2	un ##connected
 uncontrolled	gemet	2	un ##con ##tro ##lled
 undulation	iate	2	und ##ulation
 unfiltered	qgis-gui	2	un ##fi ##lter ##ed
 ungroup	qgis-gui	2	un ##group
-uniformity	iso-mlgt	2	uniform ##ity
 uninstalled	qgis-gui	2	un ##ins ##tal ##led
 univariate	qgis-gui	2	un ##ivar ##iate
 unlink	qgis-gui	2	un ##link
@@ -1421,14 +1383,13 @@ algebraically	qgis-gui	1	algebraic ##ally
 amphibian	gemet,osm	1	amp ##hi ##bian
 amplify	qgis-gui	1	amp ##li ##fy
 anchoring	qgis-gui	1	anchor ##ing
-ancillary	iso-mlgt,qgis-gui	1	an ##ci ##llary
+ancillary	qgis-gui	1	an ##ci ##llary
 antialiasing	qgis-gui	1	anti ##alia ##sing
 arcgrid	qgis-gui	1	arc ##gr ##id
 argentinian	osm	1	argent ##inian
 argv	qgis-gui	1	ar ##g ##v
 articulation	qgis-gui	1	art ##ic ##ulation
 asin	qgis-gui	1	as ##in
-associative	iso-mlgt	1	ass ##oc ##ia ##tive
 atan	qgis-gui	1	ata ##n
 audiovisual	gemet	1	audio ##vis ##ual
 authenticating	qgis-gui	1	authentic ##ating
@@ -1438,7 +1399,6 @@ avhrr	qgis-gui	1	av ##hr ##r
 avifauna	gemet	1	av ##if ##au ##na
 b3dm	qgis-gui,qgis-manual	1	b ##3d ##m
 backslash	qgis-gui	1	backs ##lash
-barycentric	iso-mlgt	1	bar ##yce ##nt ##ric
 beautify	qgis-gui	1	beau ##tify
 behavioural	gemet	1	behaviour ##al
 benzene	gemet	1	benz ##ene
@@ -1473,8 +1433,6 @@ chhnang	osm	1	ch ##hn ##ang
 chlorosis	gemet	1	ch ##lor ##osis
 circularstring	qgis-gui	1	circular ##st ##ring
 circumscribed	qgis-gui	1	ci ##rc ##ums ##cr ##ibe ##d
-codelist	iso-mlgt	1	code ##list
-codespace	iso-mlgt	1	codes ##pace
 combinatorial	qgis-gui	1	comb ##inator ##ial
 commuting	gemet	1	com ##mut ##ing
 compoundcurve	qgis-gui	1	compound ##cu ##r ##ve
@@ -1496,7 +1454,6 @@ debit	osm	1	de ##bit
 decimate	qgis-gui	1	dec ##imate
 decrypt	qgis-gui	1	dec ##ry ##pt
 deduce	qgis-gui	1	de ##du ##ce
-delimiting	iso-mlgt	1	del ##imi ##ting
 denominators	qgis-gui	1	den ##omi ##nator ##s
 departures	osm	1	departure ##s
 depletion	gemet	1	de ##ple ##tion
@@ -1504,7 +1461,6 @@ describefeaturetype	qgis-gui	1	describe ##fe ##at ##ure ##type
 deselected	qgis-gui	1	des ##ele ##cted
 deterrence	gemet	1	deter ##rence
 deuteranopia	qgis-gui	1	de ##uter ##ano ##pia
-dggs	iso-mlgt	1	d ##ggs
 dilution	qgis-gui	1	dil ##ution
 dimangular	qgis-gui	1	dim ##ang ##ular
 dine	osm	1	din ##e
@@ -1515,7 +1471,6 @@ dmax	qgis-gui	1	d ##max
 dmin	qgis-gui	1	d ##min
 doner	osm	1	done ##r
 donuts	qgis-gui	1	don ##uts
-doppler	iso-mlgt	1	do ##pp ##ler
 doughnut	osm	1	dough ##nut
 downgrades	qgis-gui	1	down ##grade ##s
 drivable	osm	1	dr ##iva ##ble
@@ -1541,11 +1496,9 @@ faecal	gemet	1	fae ##cal
 featureinfo	qgis-gui	1	feature ##in ##fo
 featuresofinterest	qgis-gui	1	features ##of ##int ##eres ##t
 featuretypes	qgis-gui	1	feature ##type ##s
-federated	iso-mlgt	1	fed ##erated
 ferrous	gemet	1	fe ##rro ##us
 fertilizer	osm	1	fe ##rti ##lizer
 fibres	gemet	1	fibre ##s
-fiducial	iso-mlgt	1	fi ##du ##cial
 firefighting	osm	1	fire ##fighting
 flamsteed	qgis-gui	1	fl ##ams ##tee ##d
 flannery	qgis-gui	1	fl ##anne ##ry
@@ -1560,7 +1513,6 @@ gdalwarp	qgis-gui	1	g ##dal ##war ##p
 geocatalog	qgis-gui	1	geo ##cat ##alo ##g
 geoconcept	qgis-gui	1	geo ##con ##ce ##pt
 geoint	iate	1	geo ##int
-geolocating	iso-mlgt	1	geo ##lo ##cating
 georss	qgis-gui	1	geo ##rs ##s
 geostationary	qgis-gui	1	geo ##station ##ary
 geotags	qgis-gui	1	geo ##tag ##s
@@ -1590,7 +1542,6 @@ hyperlink	qgis-gui	1	hyper ##link
 hypertext	gemet	1	hyper ##text
 iala	osm	1	ia ##la
 iana	qgis-gui	1	ian ##a
-imbalance	iso-mlgt	1	im ##balance
 inaccessibility	iate,qgis-gui,qgis-manual	1	ina ##cc ##ess ##ibility
 incompatibility	qgis-gui	1	inc ##omp ##ati ##bility
 incremented	qgis-gui	1	inc ##rem ##ented
@@ -1600,9 +1551,7 @@ initializing	qgis-gui	1	initial ##izing
 insolation	qgis-gui	1	ins ##ola ##tion
 int32	qgis-gui	1	int ##32
 int8	qgis-gui	1	int ##8
-interferometric	iso-mlgt	1	inter ##fer ##ometric
 intertidal	corine,gemet,inspire,osm	1	inter ##ti ##dal
-invalidation	iso-mlgt	1	invalid ##ation
 isostatic	iate	1	iso ##static
 issuer	qgis-gui	1	issue ##r
 jacobi	qgis-gui	1	jacob ##i
@@ -1616,7 +1565,6 @@ krovak	qgis-gui	1	k ##rov ##ak
 lagrange	qgis-gui	1	la ##gra ##nge
 latitudes	qgis-gui	1	latitude ##s
 latte	osm	1	la ##tte
-layover	iso-mlgt	1	lay ##over
 ldid	qgis-gui	1	ld ##id
 leds	osm	1	led ##s
 leftmost	qgis-gui	1	left ##most
@@ -1660,8 +1608,7 @@ noding	qgis-gui	1	nod ##ing
 normality	qgis-gui	1	normal ##ity
 normals	qgis-gui	1	normal ##s
 nudge	qgis-gui	1	nu ##dge
-observable	inspire,iso-mlgt	1	ob ##ser ##vable
-ontology	iso-mlgt	1	onto ##logy
+observable	inspire	1	ob ##ser ##vable
 orienteering	osm	1	orient ##eering
 originator	qgis-gui	1	origin ##ator
 orthophotograph	iate	1	or ##th ##op ##hot ##og ##raph
@@ -1687,7 +1634,6 @@ pkcs	qgis-gui,qgis-manual	1	p ##k ##cs
 pkey	qgis-gui	1	p ##key
 planimetry	iate	1	plan ##ime ##try
 planter	osm	1	plant ##er
-polarimetric	iso-mlgt	1	polar ##ime ##tric
 pollination	osm	1	poll ##ination
 polluted	gemet	1	poll ##uted
 polluting	gemet	1	poll ##uting
@@ -1716,15 +1662,12 @@ recode	qgis-gui	1	rec ##ode
 recreating	qgis-gui	1	rec ##rea ##ting
 recycle	osm	1	rec ##y ##cle
 redrawing	qgis-gui	1	red ##ra ##wing
-referent	iso-mlgt	1	refer ##ent
 reflectances	qgis-gui	1	reflect ##ances
 refraction	qgis-gui	1	ref ##raction
 regexp	qgis-gui	1	reg ##ex ##p
 registries	qgis-gui	1	regis ##tries
 reinstalled	qgis-gui	1	reins ##tal ##led
 removable	osm	1	re ##movable
-repackaging	iso-mlgt	1	rep ##ack ##aging
-repeatability	iso-mlgt	1	repeat ##ability
 reprocessing	gemet	1	rep ##ro ##ces ##sing
 reptile	gemet,osm	1	rep ##tile
 reselect	qgis-gui	1	res ##ele ##ct
@@ -1748,13 +1691,10 @@ seeding	qgis-gui	1	seed ##ing
 selectively	qgis-gui	1	selective ##ly
 setnull	qgis-gui	1	set ##nu ##ll
 sett	osm	1	set ##t
-sexagesimal	iso-mlgt	1	sex ##ages ##ima ##l
 sfcgal	qgis-gui	1	sf ##c ##gal
 shortname	qgis-gui	1	short ##name
 shrubland	osm	1	shrub ##land
-sidescan	iso-mlgt	1	sides ##can
 silviculture	gemet,osm	1	si ##l ##vic ##ult ##ure
-simplex	iso-mlgt	1	simple ##x
 slag	gemet	1	sl ##ag
 smrf	qgis-gui	1	sm ##rf
 softening	gemet	1	soft ##ening
@@ -1770,7 +1710,6 @@ stdev	qgis-gui	1	st ##dev
 streetlight	osm	1	street ##light
 stroller	osm	1	stroll ##er
 sturgeon	osm	1	stu ##rgeon
-sublicence	iso-mlgt	1	sub ##lice ##nce
 subregion	qgis-gui	1	sub ##region
 subsampling	qgis-gui	1	sub ##sam ##pling
 subscript	qgis-gui	1	sub ##script
@@ -1795,7 +1734,6 @@ torrent	osm	1	torre ##nt
 torus	qgis-gui	1	tor ##us
 transboundary	gemet	1	trans ##bound ##ary
 transposition	gemet	1	trans ##position
-traversable	iso-mlgt	1	travers ##able
 trigonometric	iate,qgis-gui	1	tri ##gon ##ometric
 triplet	qgis-gui	1	triple ##t
 tritanopia	qgis-gui	1	tri ##tan ##op ##ia
@@ -1818,7 +1756,7 @@ unplaced	qgis-gui	1	un ##placed
 unprocessed	osm	1	un ##pro ##ces ##sed
 unrestricted	qgis-gui	1	unrest ##ricted
 upslope	qgis-gui	1	ups ##lo ##pe
-uvre	iso-mlgt,qgis-gui	1	uv ##re
+uvre	qgis-gui	1	uv ##re
 vaccination	osm	1	va ##cci ##nation
 vapour	gemet,qgis-gui	1	va ##pour
 varchar	qgis-gui	1	var ##cha ##r
@@ -1875,8 +1813,6 @@ acuity	gemet	0	ac ##uity
 acupuncture	osm	0	ac ##up ##un ##cture
 adblue	osm	0	ad ##bl ##ue
 addons	qgis-gui	0	add ##ons
-addressable	iso-mlgt	0	address ##able
-addressee	iso-mlgt	0	address ##ee
 adhesive	gemet	0	ad ##hesive
 adit	osm	0	adi ##t
 adrenal	osm	0	ad ##ren ##al
@@ -2019,7 +1955,6 @@ aussie	osm	0	aus ##sie
 autecology	gemet	0	au ##tec ##ology
 authalic	qgis-gui	0	au ##thal ##ic
 autobahn	osm	0	auto ##bahn
-autocollimation	iso-mlgt	0	auto ##coll ##ima ##tion
 autoecology	gemet	0	auto ##ec ##ology
 autogenerate	qgis-gui	0	auto ##gen ##erate
 autogenerated	qgis-gui,qgis-manual	0	auto ##gen ##erated
@@ -2045,7 +1980,6 @@ backcountry	osm	0	back ##co ##unt ##ry
 backpacker	osm	0	backpack ##er
 backpacking	osm	0	backpack ##ing
 backrest	osm	0	back ##rest
-backscattering	iso-mlgt	0	backs ##cat ##tering
 backtick	qgis-gui	0	back ##tick
 backticks	qgis-gui	0	back ##tick ##s
 backwoods	osm	0	back ##woods
@@ -2075,7 +2009,6 @@ bastiaanssen	qgis-gui	0	bas ##tia ##ans ##sen
 bathymeter	iate	0	bath ##yme ##ter
 baud	qgis-gui	0	ba ##ud
 baudrate	qgis-gui	0	ba ##ud ##rate
-baunit	iso-mlgt	0	ba ##uni ##t
 bd2f60f	qgis-gui	0	b ##d ##2 ##f ##60 ##f
 bd2f60ff1574a6d96afd4ba4cb366a1	qgis-gui	0	b ##d ##2 ##f ##60 ##ff ##15 ##7 ##4 ##a ##6 ##d ##9 ##6 ##af ##d ##4 ##ba ##4 ##cb ##36 ##6 ##a1
 bdiagonal	qgis-gui	0	b ##dia ##gonal
@@ -2098,7 +2031,6 @@ beveled	qgis-gui	0	be ##vel ##ed
 bhaji	osm	0	b ##ha ##ji
 biathlon	osm	0	bi ##athlon
 bicgstab	qgis-gui	0	bi ##c ##gs ##ta ##b
-bicontinuous	iso-mlgt	0	bi ##con ##tin ##uous
 bier	osm	0	bi ##er
 biergarten	osm	0	bi ##er ##gart ##en
 bight	osm	0	big ##ht
@@ -2149,14 +2081,12 @@ bitumen	gemet	0	bit ##umen
 bivouac	osm	0	bi ##vo ##ua ##c
 biwakschachtel	osm	0	bi ##wa ##ks ##cha ##cht ##el
 blackboard	osm	0	black ##board
-blackbody	iso-mlgt	0	black ##body
 blackjack	osm	0	black ##jack
 blacklisted	qgis-gui	0	black ##list ##ed
 blacktop	osm	0	black ##top
 bleachers	osm	0	b ##lea ##chers
 bleaching	gemet	0	b ##lea ##ching
 blik	osm	0	b ##lik
-blooming	iso-mlgt	0	bloom ##ing
 blouses	osm	0	blouse ##s
 blower	osm	0	blow ##er
 bluemax	qgis-manual	0	blue ##max
@@ -2184,7 +2114,6 @@ bootleg	osm	0	boot ##leg
 booze	osm	0	boo ##ze
 borderline	osm	0	border ##line
 boreal	gemet,iate,osm	0	bore ##al
-boresight	iso-mlgt	0	bore ##sight
 boro	osm	0	bo ##ro
 boron	gemet	0	bo ##ron
 bouldering	osm	0	boulder ##ing
@@ -2209,7 +2138,6 @@ bridleway	osm	0	br ##id ##le ##way
 brighten	qgis-gui	0	bright ##en
 briquettes	osm	0	br ##ique ##ttes
 broadleaved	osm	0	broad ##lea ##ved
-broadside	iso-mlgt	0	broad ##side
 bromine	gemet	0	bro ##mine
 brownfield	osm	0	brown ##field
 brownstone	osm	0	browns ##tone
@@ -2376,13 +2304,11 @@ coalfired	osm	0	coal ##fire ##d
 coastguard	gemet	0	coast ##guard
 cobbler	osm	0	cobb ##ler
 cobblestone	osm	0	cobb ##les ##tone
-coboundary	iso-mlgt	0	co ##bound ##ary
 cockroach	gemet	0	cock ##ro ##ach
 cocktails	osm	0	cocktail ##s
 coconuts	osm	0	coconut ##s
 codepage	qgis-gui	0	code ##page
 coelenterate	gemet	0	coe ##lent ##erate
-coercion	iso-mlgt	0	coe ##rc ##ion
 coffeehouse	osm	0	coffee ##house
 cogeneration	gemet	0	co ##gen ##eration
 coliform	gemet	0	coli ##form
@@ -2418,8 +2344,7 @@ condensation	gemet	0	conde ##ns ##ation
 conditionals	qgis-gui	0	conditional ##s
 conditioner	gemet,osm	0	condition ##er
 confectionery	osm	0	con ##fect ##ion ##ery
-conformance	iso-mlgt,qgis-gui	0	conform ##ance
-conformity	iso-mlgt	0	conform ##ity
+conformance	qgis-gui	0	conform ##ance
 confucian	osm	0	con ##fu ##cian
 coniferous	corine,gemet	0	con ##iferous
 connectedness	qgis-gui	0	connected ##ness
@@ -2661,7 +2586,6 @@ drinkable	osm	0	drink ##able
 drugstore	osm	0	drugs ##tore
 dryer	osm	0	dry ##er
 dsco	qgis-gui	0	ds ##co
-dsnu	iso-mlgt	0	ds ##nu
 dssi	qgis-gui	0	ds ##si
 dstnodata	qgis-gui	0	ds ##t ##no ##da ##ta
 duckpin	osm	0	duck ##pin
@@ -2795,7 +2719,6 @@ fairway	inspire,osm	0	fair ##way
 fajitas	osm	0	fa ##jit ##as
 fallbackfield	qgis-gui	0	fall ##back ##field
 fallow	gemet	0	fall ##ow
-falsification	iso-mlgt	0	fa ##ls ##ification
 farmyard	osm	0	farm ##yard
 fascia	osm	0	fa ##scia
 fathoms	qgis-gui	0	fat ##hom ##s
@@ -2881,7 +2804,6 @@ footrail	osm	0	foot ##rail
 footrest	osm	0	foot ##rest
 forage	gemet	0	for ##age
 foreclosure	gemet	0	fore ##cl ##os ##ure
-formalism	iso-mlgt	0	formal ##ism
 formfeeds	qgis-gui	0	form ##fe ##ed ##s
 foucaut	qgis-gui	0	f ##ou ##ca ##ut
 fouling	gemet	0	foul ##ing
@@ -2941,17 +2863,15 @@ gazebo	osm	0	gaze ##bo
 gdal2tiles	qgis-gui	0	g ##dal ##2 ##tile ##s
 gdal2xyz	qgis-gui	0	g ##dal ##2 ##xy ##z
 gdalnumeric	qgis-gui	0	g ##dal ##num ##eric
-geiger	iso-mlgt,qgis-gui	0	ge ##iger
+geiger	qgis-gui	0	ge ##iger
 geiser	osm	0	ge ##iser
 gelato	osm	0	gel ##ato
 genotoxicity	gemet	0	gen ##oto ##xi ##city
 geochronologic	inspire	0	geo ##ch ##ron ##olo ##gic
 geodetical	iate	0	geo ##de ##tical
-geodrm	iso-mlgt	0	geo ##dr ##m
 geog	qgis-gui	0	geo ##g
 geogenic	gemet	0	geo ##genic
 geoglyph	osm	0	geo ##gly ##ph
-geolicence	iso-mlgt	0	geo ##lice ##nce
 geometry1	qgis-gui	0	geometry ##1
 geometry2	qgis-gui	0	geometry ##2
 geometry2d	inspire	0	geometry ##2 ##d
@@ -2965,9 +2885,6 @@ geomfromgml	qgis-gui	0	geo ##m ##fr ##om ##gm ##l
 geomorphologic	inspire	0	geo ##mo ##rp ##hol ##og ##ic
 geonet	qgis-gui	0	geo ##net
 geopolitics	iate	0	geo ##pol ##itic ##s
-geopositioning	iso-mlgt	0	geo ##position ##ing
-georectified	iso-mlgt	0	geo ##re ##ct ##ified
-georeferenceable	iso-mlgt	0	geo ##re ##ference ##able
 geothermal	gemet,osm	0	geo ##thermal
 geriatric	osm	0	ge ##ria ##tric
 germ	gemet	0	ge ##rm
@@ -3028,7 +2945,6 @@ grotto	osm	0	gr ##otto
 groundskeeping	osm	0	grounds ##keeping
 groupbox	qgis-gui	0	group ##box
 growlers	osm	0	growl ##ers
-gtrs	iso-mlgt	0	gt ##rs
 guerilla	osm	0	gu ##eri ##lla
 gugk	iate	0	gu ##g ##k
 guidebook	gemet	0	guide ##book
@@ -3050,7 +2966,6 @@ gynecologist	osm	0	g ##yne ##col ##ogist
 gynecology	osm	0	g ##yne ##cology
 gypsum	gemet	0	g ##yp ##sum
 gyros	osm	0	g ##yr ##os
-gyroscope	iso-mlgt	0	g ##yr ##os ##cope
 gyudon	osm	0	g ##yu ##don
 habal	osm	0	ha ##bal
 haberdashery	osm	0	ha ##ber ##das ##her ##y
@@ -3091,7 +3006,7 @@ headphone	osm	0	head ##phone
 headrace	osm	0	head ##race
 heater	gemet,osm	0	heat ##er
 heathland	gemet	0	heath ##land
-heave	iso-mlgt,osm	0	he ##ave
+heave	osm	0	he ##ave
 heif	qgis-gui	0	he ##if
 helipad	osm	0	he ##lip ##ad
 hellohellohello	qgis-gui	0	hello ##hell ##oh ##ello
@@ -3118,14 +3033,10 @@ hitchhiking	osm	0	hitch ##hi ##king
 hobbies	osm	0	ho ##bbies
 homeopath	osm	0	home ##opa ##th
 homeopathy	osm	0	home ##opa ##thy
-homograph	iso-mlgt	0	homo ##graph
 homologation	gemet	0	homo ##log ##ation
 homolosine	qgis-gui	0	homo ##los ##ine
-homomorphism	iso-mlgt	0	homo ##morphism
 homonym	iate	0	homo ##ny ##m
 homonymous	iate	0	homo ##ny ##mous
-homonymy	iso-mlgt	0	homo ##ny ##my
-homophone	iso-mlgt	0	homo ##phone
 hongsalmun	osm	0	hong ##sal ##mun
 hooch	osm	0	ho ##och
 hookah	osm	0	hook ##ah
@@ -3166,7 +3077,6 @@ hydrogeochemical	inspire	0	hydro ##ge ##oche ##mic ##al
 hydrolysis	gemet	0	hydro ##lysis
 hydrometeorology	gemet	0	hydro ##met ##eo ##rol ##ogy
 hydrometry	gemet	0	hydro ##metry
-hydrophone	iso-mlgt	0	hydro ##phone
 hydroslides	osm	0	hydro ##sl ##ides
 hydrosphere	gemet	0	hydro ##sphere
 hydrotherapy	osm	0	hydro ##therapy
@@ -3201,7 +3111,6 @@ incidout	qgis-gui	0	inc ##ido ##ut
 incineration	gemet,osm	0	inc ##iner ##ation
 incinerator	gemet,osm	0	inc ##iner ##ator
 incirc	qgis-gui	0	inc ##ir ##c
-inconclusive	iso-mlgt	0	inc ##on ##clusive
 incubic	qgis-gui	0	inc ##ub ##ic
 indemnity	gemet	0	ind ##em ##nity
 indented	osm,qgis-gui	0	ind ##ented
@@ -3239,21 +3148,19 @@ insine	qgis-gui	0	ins ##ine
 insoltime	qgis-gui	0	ins ##olt ##ime
 insoluble	gemet	0	ins ##ol ##ub ##le
 instagram	osm	0	ins ##tagram
-instantiate	iso-mlgt,qgis-gui	0	instant ##iate
+instantiate	qgis-gui	0	instant ##iate
 institutionalisation	gemet	0	institutional ##isation
 insulating	gemet	0	ins ##ulating
 insulator	osm,qgis-gui	0	ins ##ulator
 insunits	qgis-gui	0	ins ##uni ##ts
 insurer	osm	0	ins ##urer
 int16	qgis-gui	0	int ##16
-intension	iso-mlgt	0	int ##ens ##ion
 intercalibration	iate	0	inter ##cal ##ib ##ration
 interlaboratory	gemet	0	inter ##lab ##ora ##tory
 interlock	osm	0	inter ##lock
 interlocking	osm	0	inter ##lock ##ing
 internalisation	gemet	0	internal ##isation
 internist	osm	0	intern ##ist
-interoperate	iso-mlgt	0	inter ##oper ##ate
 interplanetary	gemet	0	inter ##plane ##tary
 interquartilerange	qgis-gui	0	inter ##qua ##rti ##ler ##ange
 intervisibility	qgis-gui	0	inter ##vis ##ibility
@@ -3273,7 +3180,6 @@ irreversibility	gemet	0	ir ##re ##vers ##ibility
 irsa	iate	0	irs ##a
 isarithm	iate	0	isa ##rith ##m
 islet	osm	0	isle ##t
-islr	iso-mlgt	0	is ##lr
 isobase	iate	0	iso ##base
 isogram	iate	0	iso ##gram
 isoheight	iate	0	iso ##hei ##ght
@@ -3281,9 +3187,6 @@ isohyetal	iate	0	iso ##hy ##eta ##l
 isohypse	iate	0	iso ##hy ##pse
 isolatednode	qgis-gui	0	isolated ##no ##de
 isomer	gemet	0	iso ##mer
-isometry	iso-mlgt	0	iso ##metry
-isomorphic	iso-mlgt	0	iso ##morphic
-isomorphism	iso-mlgt	0	iso ##morphism
 isontic	iate	0	iso ##nti ##c
 isopercental	iate	0	iso ##per ##cent ##al
 isopleth	iate	0	iso ##ple ##th
@@ -3291,7 +3194,6 @@ isopluvial	iate	0	iso ##pl ##u ##vial
 issuers	qgis-gui	0	issue ##rs
 itrs	iate	0	it ##rs
 iugg	iate	0	i ##ug ##g
-ixit	iso-mlgt	0	ix ##it
 jacuzzi	osm	0	ja ##cu ##zzi
 jaybar	osm	0	jay ##bar
 jbar	osm	0	j ##bar
@@ -3388,22 +3290,17 @@ letterplate	osm	0	letter ##plate
 letterslot	osm	0	letters ##lot
 leukaemia	gemet	0	le ##uka ##emia
 levelling	iate	0	level ##ling
-lexical	iso-mlgt	0	lexi ##cal
 lexicon	gemet	0	lexi ##con
 lgbtq	osm	0	lgbt ##q
 liblas	qgis-gui	0	li ##bla ##s
 libspatialite	qgis-gui	0	li ##bs ##pati ##ali ##te
 licencing	gemet	0	li ##cen ##cing
-licensee	iso-mlgt	0	license ##e
-licensor	iso-mlgt	0	li ##cens ##or
 lichen	gemet	0	li ##chen
 lichens	gemet	0	li ##chen ##s
 lifeguard	osm	0	life ##guard
 lifering	osm	0	life ##ring
 lightbulbs	osm	0	light ##bu ##lb ##s
 lignite	gemet	0	li ##gni ##te
-liminal	iso-mlgt	0	lim ##inal
-linearity	iso-mlgt	0	linear ##ity
 linearize	qgis-gui	0	linear ##ize
 lineburst	qgis-gui	0	line ##bu ##rst
 linestring25d	qgis-gui	0	lines ##tri ##ng ##25 ##d
@@ -3419,7 +3316,6 @@ lithosphere	gemet	0	lit ##hos ##pher ##e
 littoral	gemet	0	lit ##tor ##al
 loafers	osm	0	loaf ##ers
 lobsters	osm	0	lobster ##s
-localname	iso-mlgt	0	local ##name
 lockable	osm	0	lock ##able
 lockers	osm	0	locker ##s
 lockpick	osm	0	lock ##pic ##k
@@ -3435,7 +3331,6 @@ lotto	osm	0	lot ##to
 loudness	gemet	0	loud ##ness
 lounger	osm	0	lounge ##r
 loximuthal	qgis-gui	0	lo ##xi ##mut ##hal
-loxodrome	iso-mlgt	0	lo ##x ##od ##rom ##e
 lpad	qgis-gui	0	lp ##ad
 lt95	qgis-gui	0	lt ##9 ##5
 lt97	qgis-gui	0	lt ##9 ##7
@@ -3460,8 +3355,6 @@ macrophyte	gemet	0	macro ##phy ##te
 maedow	osm	0	mae ##do ##w
 magneticmodels	qgis-gui	0	magnetic ##mo ##del ##s
 magnetism	gemet	0	magnet ##ism
-mailee	iso-mlgt	0	mail ##ee
-mailer	iso-mlgt	0	mail ##er
 mailhole	osm	0	mail ##hole
 mailslot	osm	0	mail ##sl ##ot
 maisonette	osm	0	maison ##ette
@@ -3490,7 +3383,6 @@ maxversion	qgis-gui	0	max ##version
 mbtile	qgis-gui	0	mb ##tile
 mcbryde	qgis-gui	0	mc ##bry ##de
 mcd43b2q	qgis-gui	0	mc ##d ##43 ##b ##2 ##q
-measurand	iso-mlgt	0	me ##as ##ura ##nd
 measurer	osm	0	measure ##r
 measuretool	qgis-gui	0	measure ##to ##ol
 medic	osm	0	med ##ic
@@ -3504,15 +3396,11 @@ mend	osm	0	men ##d
 menstrual	osm	0	men ##st ##ru ##al
 metabolite	gemet	0	meta ##bol ##ite
 metainformation	gemet	0	meta ##in ##form ##ation
-metalanguage	iso-mlgt	0	metal ##ang ##ua ##ge
 metallurgical	gemet	0	metal ##lu ##rg ##ical
 metalness	qgis-gui	0	metal ##ness
 metalworker	osm	0	metal ##work ##er
-metamodel	iso-mlgt	0	meta ##mo ##del
 metaopt	qgis-gui	0	meta ##op ##t
-metaquality	iso-mlgt	0	meta ##qual ##ity
 methanisation	gemet	0	met ##hani ##sation
-metrological	iso-mlgt	0	metro ##logical
 metrology	gemet	0	metro ##logy
 mezcal	osm	0	me ##z ##cal
 microbial	gemet	0	micro ##bial
@@ -3538,7 +3426,7 @@ millirad	qgis-gui	0	mill ##ira ##d
 milliradians	qgis-gui	0	mill ##ira ##dian ##s
 millpond	osm	0	mill ##pon ##d
 millstone	osm	0	mills ##tone
-mime	iso-mlgt,qgis-gui	0	mi ##me
+mime	qgis-gui	0	mi ##me
 minaret	osm	0	mina ##ret
 mineralisation	gemet	0	mineral ##isation
 mineshaft	osm	0	mines ##ha ##ft
@@ -3565,7 +3453,6 @@ molluscs	osm	0	mo ##llus ##cs
 mollweide	qgis-gui	0	mo ##ll ##wei ##de
 momos	osm	0	mom ##os
 monorail	osm	0	mono ##rail
-monosemy	iso-mlgt	0	mono ##se ##my
 monospace	qgis-gui	0	mono ##space
 monoxide	gemet	0	mono ##xide
 montessori	osm	0	monte ##sso ##ri
@@ -3604,7 +3491,6 @@ multilinez	qgis-gui	0	multi ##line ##z
 multilinezm	qgis-gui	0	multi ##line ##z ##m
 multipatch	qgis-gui	0	multi ##pa ##tch
 multiplex	osm	0	multiple ##x
-multiplicity	iso-mlgt	0	multi ##plicity
 multipoint25d	qgis-gui	0	multi ##point ##25 ##d
 multipointm	qgis-gui	0	multi ##point ##m
 multipointzm	qgis-gui	0	multi ##point ##z ##m
@@ -3707,7 +3593,6 @@ nvarchar	qgis-gui	0	n ##var ##cha ##r
 nviz	qgis-gui	0	n ##vi ##z
 nworld	qgis-gui	0	nw ##or ##ld
 nzgb	osm	0	nz ##gb
-oais	iso-mlgt	0	o ##ais
 oapi	qgis-gui	0	o ##ap ##i
 obelisk	osm	0	obe ##lis ##k
 obgyn	osm	0	ob ##gy ##n
@@ -3863,7 +3748,6 @@ parametrizable	qgis-manual	0	para ##met ##riz ##able
 parasitology	gemet	0	para ##sit ##ology
 parkade	osm	0	park ##ade
 parkland	osm	0	park ##land
-partitive	iso-mlgt	0	part ##itive
 pascagoula	iate	0	pas ##ca ##go ##ula
 passable	osm	0	pass ##able
 patchdensity	qgis-gui	0	patch ##den ##sity
@@ -3920,7 +3804,6 @@ photodegradation	gemet	0	photo ##de ##grad ##ation
 photogeography	iate	0	photo ##ge ##ography
 photogram	iate	0	photo ##gram
 photogrammetrical	iate	0	photo ##gram ##metric ##al
-physiognomy	iso-mlgt	0	ph ##ys ##io ##gno ##my
 phytomass	gemet	0	ph ##yt ##oma ##ss
 phytomedicine	osm	0	ph ##yt ##ome ##dic ##ine
 phytopathology	gemet	0	ph ##yt ##opa ##th ##ology
@@ -3996,8 +3879,6 @@ polyhedralsurfacem	qgis-gui	0	poly ##hedral ##sur ##face ##m
 polyhedralsurfacez	qgis-gui	0	poly ##hedral ##sur ##face ##z
 polyhedralsurfacezm	qgis-gui	0	poly ##hedral ##sur ##face ##z ##m
 polymerisation	gemet	0	polymer ##isation
-polymorphism	iso-mlgt	0	poly ##morphism
-polysemy	iso-mlgt	0	poly ##se ##my
 polyvinyl	gemet	0	poly ##vin ##yl
 poma	osm	0	po ##ma
 poop	osm	0	po ##op
@@ -4011,7 +3892,6 @@ potager	osm	0	pot ##ager
 potty	osm	0	pot ##ty
 povray	qgis-gui	0	po ##vr ##ay
 pqgetcancel	qgis-gui	0	p ##q ##get ##can ##cel
-pragmatic	iso-mlgt	0	pr ##ag ##matic
 pram	osm	0	pr ##am
 precautionary	gemet	0	pre ##ca ##ution ##ary
 predetermined	qgis-gui	0	pre ##de ##ter ##mined
@@ -4026,9 +3906,7 @@ presimplify	qgis-gui	0	pre ##si ##mp ##li ##fy
 pretzel	osm	0	pre ##tze ##l
 priestley	qgis-gui	0	priest ##ley
 printf	qgis-gui	0	print ##f
-priori	iso-mlgt	0	prior ##i
 privatisation	gemet	0	pri ##vati ##sation
-prnu	iso-mlgt	0	pr ##nu
 proboscidean	gemet	0	pro ##bos ##cide ##an
 procaryote	gemet	0	pro ##car ##yo ##te
 processcommands	qgis-gui	0	process ##com ##man ##ds
@@ -4045,9 +3923,7 @@ prosumerism	gemet	0	pro ##sume ##ris ##m
 protonopia	qgis-gui	0	proton ##op ##ia
 protozoan	gemet	0	proto ##zo ##an
 protracting	iate	0	pro ##tra ##cting
-proximate	iso-mlgt	0	pro ##xi ##mate
 pseudos	qgis-gui	0	pseudo ##s
-pslr	iso-mlgt	0	ps ##lr
 psychosomatic	gemet	0	psycho ##som ##atic
 psychotherapist	osm	0	psycho ##ther ##ap ##ist
 psychotherapy	osm	0	psycho ##therapy
@@ -4063,7 +3939,6 @@ puri	osm	0	pu ##ri
 purified	osm	0	pu ##rified
 purifying	gemet	0	pu ##ri ##fying
 purin	gemet	0	pu ##rin
-pushbroom	iso-mlgt	0	push ##bro ##om
 pushbutton	qgis-gui	0	push ##bu ##tton
 pushup	osm	0	push ##up
 putnins	qgis-gui	0	put ##nin ##s
@@ -4073,7 +3948,6 @@ pyralene	gemet	0	p ##yra ##lene
 pyramidal	osm	0	pyramid ##al
 pyramidized	qgis-gui	0	pyramid ##ized
 pyrolysis	gemet	0	p ##yr ##ol ##ysis
-pythagorean	iso-mlgt	0	p ##yt ##ha ##gor ##ean
 qdatetimeedit	qgis-gui	0	q ##date ##time ##ed ##it
 qgisapp	qgis-gui	0	q ##gis ##app
 qgscustomization	qgis-gui	0	q ##gs ##cus ##tom ##ization
@@ -4111,7 +3985,6 @@ rackless	osm	0	rack ##less
 radioelement	gemet	0	radio ##ele ##ment
 radiologist	osm	0	radio ##logist
 radiology	osm	0	radio ##logy
-radiometer	iso-mlgt	0	radio ##meter
 radiotherapy	osm	0	radio ##therapy
 radon	gemet	0	ra ##don
 rafting	osm	0	raft ##ing
@@ -4138,7 +4011,7 @@ recodes	qgis-gui	0	rec ##odes
 recombinant	gemet	0	rec ##om ##bina ##nt
 recombination	iate	0	rec ##om ##bina ##tion
 reconstructive	osm	0	rec ##ons ##truct ##ive
-rectified	iate,inspire,iso-mlgt,qgis-gui	0	rec ##ti ##fied
+rectified	iate,inspire,qgis-gui	0	rec ##ti ##fied
 rectifies	qgis-gui	0	rec ##ti ##fies
 recuperation	gemet	0	rec ##up ##eration
 recyclability	gemet	0	rec ##y ##cl ##ability
@@ -4150,7 +4023,7 @@ reeds	osm	0	reed ##s
 reefer	osm	0	reef ##er
 reencrypt	qgis-gui	0	re ##en ##cr ##yp ##t
 refectory	osm	0	ref ##ect ##ory
-referenceable	inspire,iso-mlgt	0	reference ##able
+referenceable	inspire	0	reference ##able
 referencingfieldidx	qgis-gui	0	referencing ##field ##id ##x
 referral	gemet	0	refer ##ral
 refill	osm	0	ref ##ill
@@ -4160,7 +4033,6 @@ reflexology	osm	0	reflex ##ology
 reformatting	qgis-gui	0	reform ##att ##ing
 refracting	osm	0	ref ##rac ##ting
 refreshable	qgis-gui	0	ref ##resh ##able
-refreshment	iso-mlgt	0	ref ##resh ##ment
 refrigerant	gemet	0	ref ##ri ##ger ##ant
 refrigeration	gemet	0	ref ##ri ##ger ##ation
 refurbish	osm	0	ref ##ur ##bis ##h
@@ -4192,7 +4064,6 @@ rescales	qgis-gui	0	res ##cal ##es
 resinous	gemet	0	resin ##ous
 resorption	gemet	0	res ##or ##ption
 respirology	osm	0	res ##pi ##rol ##ogy
-responsivity	iso-mlgt	0	res ##pon ##si ##vity
 restrictor	osm	0	restrict ##or
 retardation	qgis-gui	0	re ##tar ##dation
 retarding	gemet	0	re ##tar ##ding
@@ -4205,7 +4076,6 @@ rgbf	qgis-gui	0	r ##gb ##f
 rheuma	osm	0	r ##he ##uma
 rheumatologist	osm	0	r ##he ##uma ##to ##logist
 rheumatology	osm	0	r ##he ##uma ##tology
-rhumb	iso-mlgt	0	r ##hum ##b
 rickshaw	osm	0	rick ##shaw
 rideable	osm	0	ride ##able
 rigger	osm	0	rig ##ger
@@ -4249,7 +4119,7 @@ salines	corine	0	saline ##s
 salmonella	gemet	0	salmon ##ella
 saltmarsh	osm	0	salt ##mar ##sh
 samosa	osm	0	sam ##osa
-sampler	iso-mlgt,qgis-gui	0	sample ##r
+sampler	qgis-gui	0	sample ##r
 samplers	qgis-gui	0	sample ##rs
 samplingprocedures	qgis-gui	0	sampling ##pro ##ced ##ures
 samplings	qgis-gui	0	sampling ##s
@@ -4266,7 +4136,6 @@ sawdust	gemet	0	saw ##dust
 sawtooth	osm	0	saw ##tooth
 scaffolder	osm	0	sc ##af ##fold ##er
 scalebars	qgis-gui	0	scale ##bar ##s
-scansar	iso-mlgt	0	scans ##ar
 scarp	osm	0	scar ##p
 schistosomiasis	gemet	0	sc ##his ##tos ##omi ##asi ##s
 schoolwork	gemet	0	school ##work
@@ -4340,7 +4209,6 @@ shredders	osm	0	sh ##red ##ders
 shuffleboard	osm	0	shuffle ##board
 shunting	gemet	0	shu ##nting
 sichaun	osm	0	sic ##ha ##un
-sidelobe	iso-mlgt	0	side ##lo ##be
 sidepath	osm	0	side ##path
 sidereal	qgis-gui	0	side ##real
 sieved	qgis-gui	0	si ##eve ##d
@@ -4420,7 +4288,6 @@ souvenir	osm	0	so ##uven ##ir
 soybeans	osm	0	soy ##be ##ans
 spaceport	osm	0	space ##port
 spacer	qgis-gui	0	space ##r
-spacestamp	iso-mlgt	0	spaces ##tam ##p
 spanningtree	qgis-gui	0	spanning ##tree
 spasmodic	gemet	0	spa ##smo ##dic
 spate	osm	0	spat ##e
@@ -4434,7 +4301,6 @@ spectacles	osm	0	spectacle ##s
 specular	qgis-gui	0	spec ##ular
 spigot	osm	0	sp ##igo ##t
 spilhaus	qgis-gui	0	sp ##il ##haus
-spillover	iso-mlgt	0	spill ##over
 spiritualist	osm	0	spiritual ##ist
 spokes	qgis-gui	0	spoke ##s
 sportbike	osm	0	sport ##bi ##ke
@@ -4447,7 +4313,6 @@ spritz	osm	0	sp ##rit ##z
 spurting	gemet	0	spur ##ting
 spyglass	osm	0	spy ##glass
 squatter	gemet	0	squat ##ter
-squint	iso-mlgt	0	sq ##uin ##t
 srcnodata	qgis-gui	0	sr ##c ##no ##da ##ta
 srocks	qgis-gui	0	sr ##ocks
 sshould	qgis-gui	0	ss ##ho ##uld
@@ -4467,7 +4332,6 @@ stele	osm	0	ste ##le
 steppic	iate	0	step ##pic
 stereophotogrammetry	iate	0	stereo ##ph ##oto ##gram ##metry
 stereorestitution	iate	0	stereo ##rest ##it ##ution
-stereotype	iso-mlgt	0	stereo ##type
 stererographics	qgis-gui	0	ste ##rer ##ographic ##s
 sterilisation	gemet	0	ste ##ril ##isation
 steroid	gemet	0	ste ##roid
@@ -4488,23 +4352,18 @@ stratovolcano	osm	0	st ##rat ##ovo ##lc ##ano
 strawberries	osm	0	straw ##berries
 streetside	osm	0	streets ##ide
 strikeout	qgis-gui	0	strike ##out
-stripmap	iso-mlgt	0	strip ##ma ##p
 striptease	osm	0	strip ##tea ##se
 strolling	osm	0	stroll ##ing
 strontium	gemet	0	st ##ron ##tium
 strpos	qgis-gui	0	st ##rp ##os
 stupa	osm	0	stu ##pa
-subcomplex	iso-mlgt	0	sub ##com ##plex
 subdiagram	qgis-gui	0	sub ##dia ##gram
-subelement	iso-mlgt	0	sub ##ele ##ment
-sublicensee	iso-mlgt	0	sub ##lice ##nse ##e
 submatrix	qgis-gui	0	sub ##mat ##rix
 subnets	qgis-gui	0	sub ##nets
 subranges	qgis-gui	0	sub ##rang ##es
-subregister	iso-mlgt	0	sub ##re ##gist ##er
 subsections	qgis-gui	0	sub ##section ##s
 subsoil	gemet	0	sub ##so ##il
-substitutability	gemet,iso-mlgt	0	sub ##sti ##tu ##ta ##bility
+substitutability	gemet	0	sub ##sti ##tu ##ta ##bility
 substitutions	qgis-gui	0	substitution ##s
 subtree	qgis-gui	0	sub ##tree
 subunits	qgis-gui	0	subunit ##s
@@ -4522,9 +4381,7 @@ sunmask	qgis-gui	0	sun ##mas ##k
 supercharger	osm	0	super ##cha ##rger
 superimposed	iate	0	super ##im ##posed
 superkarts	osm	0	super ##kar ##ts
-superordinate	iso-mlgt	0	super ##ord ##inate
 superscript	qgis-gui	0	super ##script
-supersession	iso-mlgt	0	super ##ses ##sion
 sushi	osm	0	su ##shi
 swallet	osm	0	sw ##alle ##t
 sweeper	osm	0	sweep ##er
@@ -4539,7 +4396,6 @@ symptom	gemet	0	sy ##mpt ##om
 synecology	gemet	0	syn ##ec ##ology
 synergism	gemet	0	syn ##er ##gis ##m
 synergistic	gemet	0	syn ##er ##gist ##ic
-synonymy	iso-mlgt	0	synonym ##y
 tabernacle	osm	0	tab ##ern ##acle
 tabletop	osm	0	tablet ##op
 tableuri	qgis-gui	0	table ##uri
@@ -4553,7 +4409,7 @@ tailrace	osm	0	tail ##race
 takeaway	osm	0	take ##away
 takeout	osm	0	take ##out
 tamales	osm	0	tam ##ales
-tangential	iso-mlgt,qgis-gui	0	tangent ##ial
+tangential	qgis-gui	0	tangent ##ial
 tangents	qgis-gui	0	tangent ##s
 tannin	gemet	0	tan ##nin
 tanning	osm	0	tan ##ning
@@ -4585,7 +4441,6 @@ teratogenesis	gemet	0	ter ##ato ##genesis
 teratogenic	gemet	0	ter ##ato ##genic
 teratogenicity	gemet	0	ter ##ato ##genic ##ity
 terephtalate	gemet	0	ter ##ep ##hta ##late
-terminological	iso-mlgt	0	term ##ino ##logical
 termite	gemet	0	term ##ite
 terphenyl	gemet	0	ter ##ph ##en ##yl
 terse	qgis-gui	0	ter ##se
@@ -4653,7 +4508,6 @@ tradesman	osm	0	trades ##man
 tradesperson	osm	0	trades ##person
 trailhead	osm	0	trail ##head
 trampoline	osm	0	tram ##pol ##ine
-transducer	iso-mlgt	0	trans ##du ##cer
 transfusion	osm	0	trans ##fusion
 transhumance	gemet	0	trans ##hum ##ance
 transistor	osm	0	trans ##isto ##r
@@ -4744,7 +4598,6 @@ unmerge	qgis-gui	0	un ##mer ##ge
 unorthodox	osm	0	uno ##rth ##od ##ox
 unpinned	qgis-gui	0	un ##pin ##ned
 unpublish	qgis-gui	0	un ##pu ##bl ##ish
-unqualified	iso-mlgt	0	un ##qual ##ified
 unreal	qgis-gui	0	un ##real
 unregisters	qgis-gui	0	un ##re ##gist ##ers
 untwine	qgis-gui	0	un ##t ##wine
@@ -4786,7 +4639,6 @@ vermin	gemet	0	ve ##rmin
 vertebrate	gemet	0	ve ##rte ##brate
 vestibule	osm	0	vest ##ib ##ule
 vetern	osm	0	vet ##ern
-vicarious	iso-mlgt	0	vicar ##ious
 vihara	osm	0	vi ##hara
 vinasse	gemet	0	vin ##asse
 virology	gemet	0	vi ##rol ##ogy
@@ -4837,7 +4689,6 @@ wfs3	qgis-gui	0	w ##fs ##3
 wheelbender	osm	0	wheel ##ben ##der
 whereoption	qgis-gui	0	where ##op ##tion
 whey	gemet	0	w ##hey
-whiskbroom	iso-mlgt	0	w ##his ##k ##bro ##om
 wholefood	osm	0	whole ##fo ##od
 widest	qgis-gui	0	wide ##st
 wier	osm	0	wi ##er

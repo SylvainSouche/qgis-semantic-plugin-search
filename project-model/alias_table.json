@@ -89,6 +89,12 @@
     "status": "open",
     "type": "cand"
   },
+  "cand-glossary-keyword-boost": {
+    "active": true,
+    "id": "0f87-6b04-6f24-9d1d",
+    "status": "open",
+    "type": "cand"
+  },
   "cand-golden-query-eval": {
     "active": true,
     "id": "0f87-6ae3-e6f9-8631",
@@ -122,6 +128,18 @@
   "cand-multilingual-model": {
     "active": true,
     "id": "0f87-6ae3-b62e-1a1e",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-plugin-text-langid": {
+    "active": true,
+    "id": "0f87-6b04-6f2b-d62d",
+    "status": "open",
+    "type": "cand"
+  },
+  "cand-query-langid": {
+    "active": true,
+    "id": "0f87-6b04-6f2b-318f",
     "status": "open",
     "type": "cand"
   },
@@ -344,6 +362,12 @@
   "dec-makefile": {
     "active": true,
     "id": "0f87-6ae3-7ce1-1c69",
+    "status": "recorded",
+    "type": "dec"
+  },
+  "dec-ml-data-set": {
+    "active": true,
+    "id": "0f87-6b04-718c-6492",
     "status": "recorded",
     "type": "dec"
   },

@@ -4,6 +4,8 @@ The CI fetches, embeds and stores, nothing more: no release API, no network
 in this step. Fresh databases land under content addressed names, universes
 not rebuilt this run are carried over from the stored index, a broken build
 is refused without touching the store, and unreferenced files are pruned.
+Two variants (the legacy data set and the ml one) share the branch without
+ever deleting each other's files.
 """
 from __future__ import annotations
 
@@ -15,7 +17,7 @@ import pytest
 
 from pipeline.BuildEmbeddings import EmbeddingDatabaseWriter
 from pipeline.PluginCatalogue import parseCatalogue
-from pipeline.StoreEmbeddings import GateFailure, storeEmbeddings
+from pipeline.StoreEmbeddings import GateFailure, ownsFile, storeEmbeddings
 from SemanticPluginSearch.Data.StaticModelLoader import NpzStaticModel
 from tests.conftest import fixtureTokenizer
 
@@ -95,8 +97,12 @@ def test_the_readme_survives_pruning(tmp_path, modelPath, buildDatabase):
     store.mkdir()
     (store / "README.md").write_text("data branch")
     (store / "stale.bin").write_bytes(b"old")
+    (store / "Embeddings-4.0123456789ab.sqlite").write_bytes(b"old")
     storeEmbeddings(store, {"4": buildDatabase("4", "20261027T000000Z")}, BASE, model=modelPath)
-    assert "README.md" in stored(store) and "stale.bin" not in stored(store)
+    assert "README.md" in stored(store)
+    assert "Embeddings-4.0123456789ab.sqlite" not in stored(store), "own stale data is pruned"
+    # Files the store does not own stay; the workflow commits only known patterns.
+    assert "stale.bin" in stored(store)
     shutil.rmtree(store)
 
 
@@ -159,3 +165,41 @@ def test_a_database_built_with_another_model_is_refused(tmp_path, modelPath, bui
     with pytest.raises(GateFailure, match="rebuild every universe"):
         storeEmbeddings(store, {"4": stale}, BASE)
     assert stored(store) == before, "the store is left untouched"
+
+
+def test_variants_share_the_store_without_pruning_each_other(tmp_path, modelPath, buildDatabase):
+    store = tmp_path / "store"
+    legacy = storeEmbeddings(store, {"3": buildDatabase("3", "20261123T000000Z")}, BASE,
+                             model=modelPath)
+    ml = storeEmbeddings(store, {"3": buildDatabase("3", "20261123T000001Z")}, BASE,
+                         model=modelPath, variant="ml")
+    assert {"index.json", "index-ml.json"} <= stored(store)
+    assert ml["model"]["url"].startswith(BASE + "/EmbeddingModel-ml.")
+    assert ml["universes"]["3"]["url"].rsplit("/", 1)[-1].startswith("Embeddings-ml-3.")
+    assert ml["universes_q8"]["3"]["url"].rsplit("/", 1)[-1].startswith("Embeddings-ml-3-q8.")
+
+    def names(index: dict) -> set[str]:
+        urls = [index["model"]["url"]] + [entry["url"] for key in ("universes", "universes_q8")
+                                          for entry in index[key].values()]
+        return {url.rsplit("/", 1)[-1] for url in urls}
+
+    assert names(legacy) | names(ml) <= stored(store), "the ml run kept the legacy files"
+    rebuilt = storeEmbeddings(store, {"3": buildDatabase("3", "20261130T000000Z")}, BASE)
+    assert names(ml) <= stored(store), "the legacy run kept the ml files"
+    assert legacy["universes"]["3"]["url"].rsplit("/", 1)[-1] not in stored(store)
+    assert names(rebuilt) <= stored(store)
+    assert json.loads((store / "index-ml.json").read_text()) == ml
+
+
+def test_file_ownership_by_variant():
+    assert ownsFile("EmbeddingModel.4f5f1043f084.npz")
+    assert ownsFile("Embeddings-3.ec81cd63275f.sqlite")
+    assert ownsFile("Embeddings-4-q8.11bfc1181099.sqlite")
+    assert ownsFile(".Embeddings-4-q8.sqlite")
+    assert not ownsFile("EmbeddingModel-ml.4f5f1043f084.npz")
+    assert not ownsFile("Embeddings-ml-3.ec81cd63275f.sqlite")
+    assert ownsFile("EmbeddingModel-ml.4f5f1043f084.npz", "ml")
+    assert ownsFile("Embeddings-ml-3-q8.ec81cd63275f.sqlite", "ml")
+    assert not ownsFile("Embeddings-3.ec81cd63275f.sqlite", "ml")
+    for keep in ("README.md", "Readmes-3.json.gz", "index.json", "index-ml.json"):
+        assert not ownsFile(keep) and not ownsFile(keep, "ml")

@@ -10,7 +10,6 @@ was found in (`sources` column).
 
 | source | provider and terms of reuse |
 |---|---|
-| `iso-mlgt` | ISO/TC 211 Multi-Lingual Glossary of Terms, © ISO/TC 211, via geolexica/isotc211-glossary commit e160ccc5; made freely available by the ISO/TC 211 TMG, no licence stated |
 | `iate` | Download IATE, European Union, 2026; the legal notice states the download data is not copyright protected and may be reproduced, commercially or not |
 | `qgis-gui` | QGIS translation catalogues, QGIS project and its translators, GNU GPL, commit 6fe9e8b4 |
 | `qgis-manual` | QGIS User Guide section headings, QGIS project, GNU FDL 1.3 or later |
@@ -19,7 +18,8 @@ was found in (`sources` column).
 | `gemet` | GEMET, GEneral Multilingual Environmental Thesaurus, European Environment Agency; CC BY 4.0 |
 | `corine` | CORINE Land Cover nomenclature as published by NIBIO; the report states no licence, the same legend accompanies NIBIO's Corine Landcover Norge dataset under the Norwegian Licence for Open Government Data |
 
-Not used: the Snorre termbase (all standards fields, not GIS-specific), the
+Not used: the ISO/TC 211 Multi-Lingual Glossary of Terms (no licence stated;
+permission asked by the gis-glossary project, not yet answered), the Snorre termbase (all standards fields, not GIS-specific), the
 Árni Magnússon Institute dictionaries (general language), and Kartverket
 INT 1 (no reuse terms stated). None of the providers has reviewed or
 endorsed this list.

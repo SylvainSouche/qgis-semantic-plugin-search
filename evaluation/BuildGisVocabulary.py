@@ -3,7 +3,7 @@
     python evaluation/BuildGisVocabulary.py /path/to/gis-glossary/published
 
 Reads the English terms of the gis-glossary project's published term lists
-(ISO/TC 211 MLGT, IATE GIS terms, QGIS interface labels, QGIS manual
+(IATE GIS terms, QGIS interface labels, QGIS manual
 headings, INSPIRE regulation names, OpenStreetMap tagging schema labels,
 GEMET, CORINE land cover classes; see GisVocabulary.ATTRIBUTION.md), splits
 them into words, and
@@ -11,7 +11,8 @@ keeps the words of four letters or more that the shipped model's WordPiece
 vocabulary cannot represent as one token (it cuts them into pieces such as
 con + ##tour). Left out: the broad Snorre termbase (every standards field,
 not GIS), the general Icelandic dictionaries, and Kartverket INT 1 (no reuse
-terms).
+terms), and the ISO/TC 211 MLGT, whose reuse its holder has not yet
+confirmed (add it back to glossaryTerms once it has).
 
 The words are chosen from the glossary only, never from the evaluation's
 queries. plugin_docs counts the snapshot plugin texts (QGIS 3 and 4) that
@@ -44,8 +45,6 @@ def fold(text: str) -> str:
 def glossaryTerms(published: Path) -> dict[str, set[str]]:
     csv.field_size_limit(10**8)
     terms: dict[str, set[str]] = collections.defaultdict(set)
-    with (published / "iso-mlgt/mlgt_terms.csv").open(encoding="utf-8") as stream:
-        terms["iso-mlgt"] = {r["term"] for r in csv.DictReader(stream) if r["language"] == "en"}
     with (published / "iate/iate_gis_terms.csv").open(encoding="utf-8") as stream:
         terms["iate"] = {r["term"] for r in csv.DictReader(stream) if r["language"] == "en"}
     with lzma.open(published / "qgis-gui/qgis_gui_labels.csv.xz", "rt", encoding="utf-8") as stream:

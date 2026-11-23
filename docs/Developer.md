@@ -57,10 +57,22 @@ The model is a **static token embedding**:
 versions working: they ignore it, and the normalised mean of the token
 vectors is unchanged by a constant factor.
 
-The plugin vectors are stored twice on the `embeddings` branch:
+The `embeddings` branch holds two data sets side by side, built in the same
+run from the same catalogue and readmes (`StoreEmbeddings.py --variant`):
 
-- as float32 under `universes` in `index.json`, which every plugin version
-  reads;
+| data set | index | files | model | read by |
+|---|---|---|---|---|
+| legacy | `index.json` | `EmbeddingModel.<hash>.npz`, `Embeddings-<u>.<hash>.sqlite` | potion-base-8M | released versions up to 0.4.8 |
+| ml | `index-ml.json` | `EmbeddingModel-ml.<hash>.npz`, `Embeddings-ml-<u>.<hash>.sqlite` | static-similarity-mrl-multilingual-v1, 256 dims | this version and later |
+
+A run of one data set never deletes the other's files; the readme caches are
+shared. Old installations keep the model they were released with until they
+update the plugin. The legacy data set can go once no supported version reads
+`index.json`.
+
+Within each data set the plugin vectors are stored twice:
+
+- as float32 under `universes`, which every plugin version reads;
 - as int8 with a per-vector scale under `universes_q8`
   (`pipeline/QuantizeDatabase.py`, `Data/VectorCodec.py`), about 45 % smaller,
   which this version prefers.
@@ -209,16 +221,18 @@ a manual run builds both. Each run:
    guesses come first, then one GitHub API call only when every guess
    missed, and a capped package download as the last resort. A manual run
    with *refresh_readmes* fetches everything again;
-4. builds each embeddings database (`BuildEmbeddings.py`);
-5. stores them (`StoreEmbeddings.py`): content addressed file names, the
-   universes not rebuilt carried over, the run refused if a universe has no
-   plugins or its count moved more than 10% (`PublishGate.py`), stale files
-   pruned, and `index.json` written;
+4. builds each embeddings database (`BuildEmbeddings.py`), once per data set;
+5. stores them (`StoreEmbeddings.py`, once per data set): content addressed
+   file names, the universes not rebuilt carried over, the run refused if a
+   universe has no plugins or its count moved more than 10% (`PublishGate.py`),
+   the data set's stale files pruned, and `index.json` or `index-ml.json`
+   written;
 6. force pushes the branch as a single commit, so it never accumulates
    history.
 
 The job stops after 60 minutes. The plugin reads
-`https://raw.githubusercontent.com/<repo>/embeddings/index.json`, and because
+`https://raw.githubusercontent.com/<repo>/embeddings/index-ml.json` (versions
+up to 0.4.8 read `index.json`), and because
 the data files carry a content hash in their names, the raw host's cache
 can never pair a new index with an old file.
 

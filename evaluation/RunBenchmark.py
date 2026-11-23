@@ -49,11 +49,20 @@ LANGUAGE_TAG = {"en": "en", "fr": "fr", "de": "de", "es": "es", "pt": "pt", "it"
                 "ru": "ru", "zh": "cjk", "ja": "cjk"}
 
 
-def candidateById(candidateId: str) -> dict:
-    for candidate in loadJson("Candidates.json")["candidates"]:
+def candidateById(candidateId: str, candidatesFile: str | None = None) -> dict:
+    """A candidate from Candidates.json, or from a local file of the same shape.
+
+    The local file is for models that must not leave the machine (unpublished
+    or trained on data not cleared for reuse): run them here, not in CI.
+    """
+    if candidatesFile:
+        candidates = json.loads(Path(candidatesFile).read_text(encoding="utf-8"))["candidates"]
+    else:
+        candidates = loadJson("Candidates.json")["candidates"]
+    for candidate in candidates:
         if candidate["id"] == candidateId:
             return candidate
-    raise SystemExit(f"unknown candidate {candidateId!r}: see evaluation/Candidates.json")
+    raise SystemExit(f"unknown candidate {candidateId!r}")
 
 
 def buildVectors(candidate: dict, corpus: Corpus) -> tuple[EncodedVectors, dict]:
@@ -87,8 +96,10 @@ def buildVectors(candidate: dict, corpus: Corpus) -> tuple[EncodedVectors, dict]
     elif kind == "sentence-transformers":
         from sentence_transformers import SentenceTransformer  # noqa: PLC0415
 
-        model = SentenceTransformer(candidate["model"], device="cpu",
+        model = SentenceTransformer(candidate["model"], device=candidate.get("device", "cpu"),
                                     truncate_dim=candidate.get("dim"))
+        if candidate.get("maxSeqLength"):
+            model.max_seq_length = candidate["maxSeqLength"]
         queryPrefix = candidate.get("queryPrefix", "")
         documentPrefix = candidate.get("documentPrefix", "")
         documents = model.encode([documentPrefix + t for t in corpus.texts], batch_size=BATCH,
@@ -213,8 +224,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--universes", default="3", help="space separated, e.g. '3 4'")
     parser.add_argument("--out", default="build/benchmark")
+    parser.add_argument("--candidates", default=None,
+                        help="local candidates file instead of evaluation/Candidates.json")
     args = parser.parse_args(argv)
-    candidate = candidateById(args.candidate)
+    candidate = candidateById(args.candidate, args.candidates)
     queries = loadJson("Queries.json")
     qrels = loadJson("Judgments.json")
     judgments = qrels["judgments"]

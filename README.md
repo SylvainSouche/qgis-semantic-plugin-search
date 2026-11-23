@@ -2,13 +2,38 @@
 
 **Find the QGIS plugin you need by describing what you want to do.**
 
-There are more than 1500 QGIS plugins, and the plugin manager only finds
+There are more than 3,000 QGIS plugins, and the plugin manager only finds
 them by keyword: you have to already know the word a plugin's author
-used. Semantic Plugin Search lets you express the need instead:
+used. Semantic Plugin Search lets you express the need instead, in your own
+language:
 
 > *classify a drone orthophoto into land cover classes*
-> *create contour lines from a DEM*
-> *export my project to an interactive web map*
+> *créer des courbes de niveau à partir d'un MNT*
+> *exportere prosjektet til et interaktivt nettkart*
+
+## New in 0.7: search in your language
+
+Earlier versions understood English only. A query in another language mostly
+found plugins whose texts happened to be written in that language, not the
+plugins that do the job. From 0.7 the plugin uses a multilingual model: you
+can describe your need in French, German, Norwegian, Polish, Arabic, Japanese
+and many other languages, and it finds the plugins described in English.
+
+| measured on the benchmark | up to 0.4.8 | 0.7 |
+|---|---|---|
+| a need matches its own translation (21 languages, every pair) | 31% | 87% |
+| quality kept by a French, German, Spanish, Portuguese or Italian query, relative to English | 18% | 74% |
+| results written in the query's own language rather than matching its meaning | 73% | 7% |
+| English, description of the need (nDCG@10) | 0.518 | 0.498 |
+| English, keywords (nDCG@10) | 0.558 | 0.585 |
+
+English results stay on a par; the 0.7 figures are still being completed
+(about 12% of its English first screens are not yet judged). Icelandic is the
+weakest language (65% against English), since the model was not trained on
+it. The [roadmap](ROADMAP.md) explains how this will improve.
+
+Installations of 0.4.8 and earlier keep their English model until you update
+the plugin.
 
 ## Objective
 
@@ -40,13 +65,10 @@ sentence for this search, and the keywords a keyword search user would type.
 - **Level 2 is not reached yet.** A keyword ranker still puts more relevant
   plugins on the first screen. Long, detailed descriptions also weaken the
   current model, so short descriptions work best.
-- **Other languages: switching to a multilingual model.**
-  - The English-only model matched the language of a query rather than its
-    meaning: a French query kept about a fifth of its English quality.
-  - The pipeline now uses a multilingual static model. Across 21 languages,
-    a need finds its English counterpart 95–100% of the time, except
-    Icelandic at 65%.
-  - Arabic, Chinese, Greek, Japanese and Russian included.
+- **Level 1 now holds across languages.** With the multilingual model, a
+  need in one of the benchmark's 21 languages finds its English counterpart
+  95–100% of the time, except Icelandic at 65%. Arabic, Chinese, Greek,
+  Japanese and Russian included.
 
 ## Techniques
 
@@ -55,7 +77,7 @@ sentence for this search, and the keywords a keyword search user would type.
   boost for literal matches in plugin names, tags and descriptions. It runs
   inside QGIS with numpy only, and nothing leaves your computer.
 - **Under evaluation:**
-  - larger or retrieval-tuned static models, and multilingual ones;
+  - larger or retrieval-tuned static models;
   - a stronger keyword component, such as BM25, combined with the
     embedding;
   - neural (transformer) models, measured as a quality ceiling.
@@ -64,10 +86,25 @@ sentence for this search, and the keywords a keyword search user would type.
   workflow benchmarks each candidate on GitHub, on the same data, so every
   result can be reproduced.
 
+## Roadmap
+
+Two projects are under way to extend the multilingual search (details in
+[ROADMAP.md](ROADMAP.md)):
+
+- **Language identification.** A lightweight language identification model,
+  [langid-32](https://github.com/SylvainSouche/langid-32), will tell which
+  language a query is written in, so the search can add the matching
+  vocabulary for that language.
+- **A multilingual GIS glossary.** Equivalent GIS terms across languages,
+  from sources whose holders allow reuse. It will add the English
+  equivalents of a query's GIS terms to the keyword part of the search, and
+  fine-tune the model, with extra attention to the languages it handles
+  least well today (Icelandic, Greek, Arabic, Nynorsk).
+
 ## What it does
 
-- **Search in plain language.** Results update as you type, and typing a
-  plugin's name puts it first.
+- **Search in plain language, in your language.** Results update as you
+  type, and typing a plugin's name puts it first.
 - **See everything about a plugin at a glance**: icon, description, version,
   compatibility, rating, links and its readme.
 - **Know what you already have.** Installed plugins carry a green

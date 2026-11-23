@@ -14,6 +14,10 @@ ORGANIZATION = "SemanticPluginSearch"
 APPLICATION = "SemanticPluginSearch"
 INDEX_URL_KEY = "embeddings/indexUrl"
 DATA_BRANCH = "embeddings"
+# The data branch holds two data sets: index.json keeps serving potion-base-8M
+# to the released versions up to 0.4.8; this version reads the multilingual
+# data set (pipeline/StoreEmbeddings.py, variant "ml").
+INDEX_NAME = "index-ml.json"
 UI_PREFIX = f"{ORGANIZATION}/ui"
 UI_INCLUDE_EXPERIMENTAL = f"{UI_PREFIX}/includeExperimental"
 UI_INCLUDE_DEPRECATED = f"{UI_PREFIX}/includeDeprecated"
@@ -26,7 +30,7 @@ def defaultIndexUrl() -> str:
     # The data branch the BuildEmbeddings workflow rewrites each run; the
     # files it names carry content hashes, so raw caching stays consistent.
     return (
-        f"https://raw.githubusercontent.com/{DEFAULT_REPOSITORY}/{DATA_BRANCH}/index.json"
+        f"https://raw.githubusercontent.com/{DEFAULT_REPOSITORY}/{DATA_BRANCH}/{INDEX_NAME}"
     )
 
 

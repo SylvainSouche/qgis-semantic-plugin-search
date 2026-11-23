@@ -174,7 +174,11 @@ Readmes and icons need the network, and are cached once seen.
 
 The plugin needs no configuration. For special set-ups (a company mirror, a
 test repository), the index address can be changed in *Settings › Options ›
-Advanced* under the key `SemanticPluginSearch/embeddings/indexUrl`.
+Advanced* under the key `SemanticPluginSearch/embeddings/indexUrl`. Its
+default is the multilingual data set, `index-ml.json` on the project's
+`embeddings` branch. If you set this key yourself for an earlier version,
+point it at `index-ml.json` (an address ending in `index.json` gives the
+older English-only model).
 
 Downloaded files live in the `semantic-search` folder of your QGIS profile
 folder (*Settings › User Profiles › Open Active Profile Folder*). Deleting

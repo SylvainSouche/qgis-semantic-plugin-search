@@ -377,8 +377,12 @@ Reading the results:
 GIS vocabulary. The shipped model splits many GIS words into generic
 pieces: *contour* becomes con + tour, *lidar* lid + ar, *hillshade*
 hills + had + e. Even *qgis* and *plugin* are split.
-`evaluation/GisVocabulary.tsv` lists 4,881 such words, of which 1,844
-appear in plugin texts (2,466 and 1,477 with the glossary of 2026-11-12).
+`evaluation/GisVocabulary.tsv` lists 4,732 such words, of which 1,782
+appear in plugin texts. The results below used earlier lists: 2,466 words
+(glossary of 2026-11-12) and 4,881 (glossary of 2026-11-14). Since 0.7.0 the
+list leaves out the ISO/TC 211 Multi-Lingual Glossary of Terms, whose holder
+has not yet answered the glossary project's request for permission: 149
+words came from it alone.
 They are taken from the English terms of the gis-glossary project (`evaluation/BuildGisVocabulary.py`; sources and terms
 of reuse in `GisVocabulary.ATTRIBUTION.md`). Two ways of adding them are
 compared, built on GitHub by `evaluation/BuildVocabularyModels.py`:
