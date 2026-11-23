@@ -32,8 +32,8 @@ you pick, through the standard QGIS plugin manager.
 
 - **QGIS 3.44 or later, or QGIS 4.x.** The same plugin works on both.
 - **An internet connection the first time** you open the search window, to
-  download the search model (about 17 MB) and the plugin index for your QGIS
-  version (about 5 MB). After that, search works offline.
+  download the search model (about 25 MB) and the plugin index for your QGIS
+  version (about 3 to 7 MB). After that, search works offline.
 - Nothing else to install: the plugin only uses what QGIS already ships
   (Python and numpy).
 
@@ -88,8 +88,10 @@ Tips for good results:
   *WMS* and similar words help a lot.
 - **Know the name? Type it.** A plugin's exact name, such as *QuickWKT* or
   *qgis2web*, puts that plugin first, and part of a name works too.
-- **English works best.** Plugin descriptions are mostly in English, and so
-  is the search model.
+- **Write in your own language.** The search model is multilingual. A need
+  written in French, German, Polish, Greek, Arabic, Japanese or many other
+  languages finds the English plugins that answer it. English remains
+  slightly more precise, since most plugin descriptions are in English.
 
 ## Reading the results
 
@@ -172,7 +174,11 @@ Readmes and icons need the network, and are cached once seen.
 
 The plugin needs no configuration. For special set-ups (a company mirror, a
 test repository), the index address can be changed in *Settings › Options ›
-Advanced* under the key `SemanticPluginSearch/embeddings/indexUrl`.
+Advanced* under the key `SemanticPluginSearch/embeddings/indexUrl`. Its
+default is the multilingual data set, `index-ml.json` on the project's
+`embeddings` branch. If you set this key yourself for an earlier version,
+point it at `index-ml.json` (an address ending in `index.json` gives the
+older English-only model).
 
 Downloaded files live in the `semantic-search` folder of your QGIS profile
 folder (*Settings › User Profiles › Open Active Profile Folder*). Deleting
@@ -181,7 +187,7 @@ that folder is safe: everything is downloaded again on the next launch.
 ## Troubleshooting
 
 **"Preparing the search…" in the window's status line.**
-The plugin is downloading its index (first launch, about 22 MB) or loading
+The plugin is downloading its index (first launch, about 30 MB) or loading
 it. Your query runs by itself as soon as it is ready, usually within
 seconds. If it stays there, check your internet connection or your proxy
 in *Settings › Options › Network*, then close and reopen the window.

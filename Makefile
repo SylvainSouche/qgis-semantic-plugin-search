@@ -5,15 +5,15 @@
 # @impl 4be9-6ae4-471f-260f
 
 .DEFAULT_GOAL := help
-.PHONY: help test smoke fetch embed dist version increment clean clean-all _python _venv
+.PHONY: help test smoke fetch embed dist eval eval-data benchmark version increment clean clean-all _python _venv
 
 PLUGIN := SemanticPluginSearch
 DATA_DIR := data
 BUILD_DIR := build
 DIST_DIR := dist
 MODEL := $(BUILD_DIR)/EmbeddingModel.npz
-MODEL_ID ?= static-potion-base-8M
-HF_BASE ?= https://huggingface.co/minishlab/potion-base-8M/resolve/bf8b056651a2c21b8d2565580b8569da283cab23
+MODEL_ID ?= static-similarity-mrl-multilingual-v1-256
+HF_BASE ?= https://huggingface.co/sentence-transformers/static-similarity-mrl-multilingual-v1/resolve/b68f4122911bcffcd6e1f695f2d99cd6788972d8/0_StaticEmbedding
 # System Python: the first of python3 and python that actually runs Python
 # 3.9+. On Windows and Cygwin, python3 is often the Microsoft Store
 # placeholder: it exists on the PATH but only prints "Python was not found".
@@ -112,6 +112,39 @@ embed: _venv $(MODEL) ## Embed the fetched plugins into per universe databases; 
 dist: _python ## Check, then package the plugin as dist/<plugin>.<version>.zip (no venv needed)
 	@"$(PYTHON)" tools/PackageCheck.py --zip $(DIST_DIR)
 
+# The evaluation runs on a pinned commit of the embeddings branch, so results
+# stay comparable across weekly rebuilds; change EVAL_COMMIT on purpose only.
+# The branch is force pushed weekly, so the tag EVAL_TAG keeps that commit
+# reachable for CI and fresh clones.
+EVAL_COMMIT ?= 97fc1c9592beb53d4c2e5d725898bdb34c782807
+EVAL_TAG ?= eval-snapshot-97fc1c9
+EVAL_DIR := $(BUILD_DIR)/eval/snapshot
+EVAL_FILES := EmbeddingModel.4f5f1043f084.npz Embeddings-3.e85e407c80cb.sqlite \
+	Embeddings-4.e2adea4752e9.sqlite Readmes-3.json.gz Readmes-4.json.gz index.json
+
+eval-data: ## Extract the pinned embeddings snapshot used by eval into build/eval/snapshot
+	@git cat-file -e $(EVAL_COMMIT) 2>/dev/null || { \
+		echo "==> Fetching the evaluation snapshot"; \
+		git fetch --quiet origin "refs/tags/$(EVAL_TAG):refs/tags/$(EVAL_TAG)" \
+		|| git fetch --quiet origin refs/heads/embeddings:refs/remotes/origin/embeddings || exit 1; \
+		git cat-file -e $(EVAL_COMMIT) || { echo "Snapshot $(EVAL_COMMIT) not found"; exit 1; }; }
+	@mkdir -p $(EVAL_DIR)
+	@for f in $(EVAL_FILES); do \
+		test -s $(EVAL_DIR)/$$f || git show $(EVAL_COMMIT):$$f > $(EVAL_DIR)/$$f || exit 1; \
+	done
+	@echo "==> Snapshot $(EVAL_COMMIT) in $(EVAL_DIR)"
+
+eval: _venv eval-data ## Search quality evaluation: semantic vs keyword, cross language (writes evaluation/Results.md)
+	@"$(PY)" evaluation/RunEvaluation.py > /dev/null && echo "==> Wrote evaluation/Results.md and evaluation/Results.json"
+
+# Embedding model benchmark. Meant for the BenchmarkEmbeddings GitHub workflow,
+# which downloads the models there; locally only "shipped" needs nothing more.
+CANDIDATES ?= shipped
+BENCH_DIR := $(BUILD_DIR)/benchmark
+benchmark: _venv eval-data ## Benchmark embedding models (CANDIDATES="shipped ..."; others need sentence-transformers, model2vec)
+	@for c in $(CANDIDATES); do "$(PY)" evaluation/RunBenchmark.py --candidate $$c --universes "3 4" --out $(BENCH_DIR) || exit 1; done
+	@"$(PY)" evaluation/BenchmarkReport.py $(BENCH_DIR) > $(BENCH_DIR)/BenchmarkReport.md && echo "==> Wrote $(BENCH_DIR)/BenchmarkReport.md"
+
 version: _python ## Set the plugin version: make version VERSION=0.4.1 COMMENT="What changed"
 	@test "$(origin VERSION)" = "command line" || { echo "Usage: make version VERSION=x.y.z [COMMENT=\"...\"] (current: $(CURRENT_VERSION))"; exit 1; }
 	@"$(PYTHON)" tools/SetVersion.py --set $(VERSION) --comment "$$COMMENT"
@@ -137,14 +170,16 @@ clean-all: ## Remove everything clean removes, plus data/ (fetched plugins data)
 $(MODEL): pipeline/ConvertStaticModel.py | _venv
 	@command -v curl >/dev/null || { echo "curl is required"; exit 1; }
 	@mkdir -p $(BUILD_DIR)/model-src
-	@echo "==> Downloading the static model (MIT licensed, commercial use allowed)"
+	@echo "==> Downloading the static model (Apache-2.0, commercial use allowed; 434 MB, converted to about 27 MB)"
 	curl -fsSL --retry 3 $(HF_BASE)/model.safetensors -o $(BUILD_DIR)/model-src/model.safetensors
 	curl -fsSL --retry 3 $(HF_BASE)/tokenizer.json -o $(BUILD_DIR)/model-src/tokenizer.json
 	$(PY) pipeline/ConvertStaticModel.py \
 		--model-dir $(BUILD_DIR)/model-src \
 		--model-id $(MODEL_ID) \
-		--source-model "minishlab/potion-base-8M" \
-		--license-note "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed" \
+		--tensor-name embedding.weight \
+		--dims 256 \
+		--source-model "sentence-transformers/static-similarity-mrl-multilingual-v1" \
+		--license-note "Apache-2.0 (sentence-transformers/static-similarity-mrl-multilingual-v1); commercial use allowed" \
 		--output $(MODEL)
 
 _python:

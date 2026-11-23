@@ -4,6 +4,8 @@ The CI fetches, embeds and stores, nothing more: no release API, no network
 in this step. Fresh databases land under content addressed names, universes
 not rebuilt this run are carried over from the stored index, a broken build
 is refused without touching the store, and unreferenced files are pruned.
+Two variants (the legacy data set and the ml one) share the branch without
+ever deleting each other's files.
 """
 from __future__ import annotations
 
@@ -15,7 +17,7 @@ import pytest
 
 from pipeline.BuildEmbeddings import EmbeddingDatabaseWriter
 from pipeline.PluginCatalogue import parseCatalogue
-from pipeline.StoreEmbeddings import GateFailure, storeEmbeddings
+from pipeline.StoreEmbeddings import GateFailure, ownsFile, storeEmbeddings
 from SemanticPluginSearch.Data.StaticModelLoader import NpzStaticModel
 from tests.conftest import fixtureTokenizer
 
@@ -57,7 +59,10 @@ def test_first_store_needs_and_keeps_the_model(tmp_path, modelPath, buildDatabas
     assert index["model"]["url"].startswith(BASE + "/EmbeddingModel.")
     name = index["universes"]["4"]["url"].rsplit("/", 1)[-1]
     assert name.startswith("Embeddings-4.") and name.endswith(".sqlite")
-    assert stored(store) == {"index.json", name, index["model"]["url"].rsplit("/", 1)[-1]}
+    quantized = index["universes_q8"]["4"]["url"].rsplit("/", 1)[-1]
+    assert quantized.startswith("Embeddings-4-q8.") and quantized.endswith(".sqlite")
+    assert stored(store) == {"index.json", name, quantized,
+                             index["model"]["url"].rsplit("/", 1)[-1]}
 
 
 def test_universes_not_rebuilt_are_carried_over(tmp_path, modelPath, buildDatabase):
@@ -92,8 +97,12 @@ def test_the_readme_survives_pruning(tmp_path, modelPath, buildDatabase):
     store.mkdir()
     (store / "README.md").write_text("data branch")
     (store / "stale.bin").write_bytes(b"old")
+    (store / "Embeddings-4.0123456789ab.sqlite").write_bytes(b"old")
     storeEmbeddings(store, {"4": buildDatabase("4", "20261027T000000Z")}, BASE, model=modelPath)
-    assert "README.md" in stored(store) and "stale.bin" not in stored(store)
+    assert "README.md" in stored(store)
+    assert "Embeddings-4.0123456789ab.sqlite" not in stored(store), "own stale data is pruned"
+    # Files the store does not own stay; the workflow commits only known patterns.
+    assert "stale.bin" in stored(store)
     shutil.rmtree(store)
 
 
@@ -106,3 +115,91 @@ def test_readme_caches_are_kept_but_not_indexed(tmp_path, modelPath, buildDataba
     )
     assert (store / "Readmes-4.json.gz").read_bytes() == b"cache"
     assert "Readmes" not in json.dumps(index)
+
+
+def test_int8_copies_load_like_the_float32_databases(tmp_path, modelPath, buildDatabase):
+    import numpy as np
+
+    from SemanticPluginSearch.Data.SqliteVectorStore import SqliteVectorStore
+
+    store = tmp_path / "store"
+    index = storeEmbeddings(store, {"4": buildDatabase("4", "20261029T000000Z")}, BASE,
+                            model=modelPath)
+    plain = SqliteVectorStore.open(store / index["universes"]["4"]["url"].rsplit("/", 1)[-1])
+    small = SqliteVectorStore.open(store / index["universes_q8"]["4"]["url"].rsplit("/", 1)[-1])
+    assert small.meta()["vector_format"] == "int8-scaled"
+    assert "vector_format" not in plain.meta(), "released plugins read this file unchanged"
+    assert small.pluginIds() == plain.pluginIds()
+    assert index["universes_q8"]["4"]["plugin_count"] == index["universes"]["4"]["plugin_count"]
+    cosines = (small.embeddings() * plain.embeddings()).sum(axis=1)
+    assert np.all(cosines[np.linalg.norm(plain.embeddings(), axis=1) > 0] > 0.999)
+
+
+def test_int8_copies_of_carried_universes_are_kept(tmp_path, modelPath, buildDatabase):
+    store = tmp_path / "store"
+    storeEmbeddings(
+        store,
+        {"3": buildDatabase("3", "20261026T000000Z"), "4": buildDatabase("4", "20261027T000000Z")},
+        BASE,
+        model=modelPath,
+    )
+    first = json.loads((store / "index.json").read_text())
+    index = storeEmbeddings(store, {"3": buildDatabase("3", "20261102T000000Z")}, BASE)
+    assert index["universes_q8"]["4"] == first["universes_q8"]["4"]
+    assert index["universes_q8"]["3"]["build_stamp"] == "20261102T000000Z"
+    assert first["universes_q8"]["3"]["url"].rsplit("/", 1)[-1] not in stored(store)
+
+
+def test_a_database_built_with_another_model_is_refused(tmp_path, modelPath, buildDatabase):
+    import sqlite3
+
+    store = tmp_path / "store"
+    storeEmbeddings(store, {"3": buildDatabase("3", "20261026T000000Z"),
+                            "4": buildDatabase("4", "20261027T000000Z")}, BASE, model=modelPath)
+    stale = buildDatabase("4", "20261103T000000Z")
+    connection = sqlite3.connect(stale)
+    connection.execute("UPDATE meta SET value = 'another-model' WHERE key = 'model_id'")
+    connection.commit()
+    connection.close()
+    before = stored(store)
+    with pytest.raises(GateFailure, match="rebuild every universe"):
+        storeEmbeddings(store, {"4": stale}, BASE)
+    assert stored(store) == before, "the store is left untouched"
+
+
+def test_variants_share_the_store_without_pruning_each_other(tmp_path, modelPath, buildDatabase):
+    store = tmp_path / "store"
+    legacy = storeEmbeddings(store, {"3": buildDatabase("3", "20261123T000000Z")}, BASE,
+                             model=modelPath)
+    ml = storeEmbeddings(store, {"3": buildDatabase("3", "20261123T000001Z")}, BASE,
+                         model=modelPath, variant="ml")
+    assert {"index.json", "index-ml.json"} <= stored(store)
+    assert ml["model"]["url"].startswith(BASE + "/EmbeddingModel-ml.")
+    assert ml["universes"]["3"]["url"].rsplit("/", 1)[-1].startswith("Embeddings-ml-3.")
+    assert ml["universes_q8"]["3"]["url"].rsplit("/", 1)[-1].startswith("Embeddings-ml-3-q8.")
+
+    def names(index: dict) -> set[str]:
+        urls = [index["model"]["url"]] + [entry["url"] for key in ("universes", "universes_q8")
+                                          for entry in index[key].values()]
+        return {url.rsplit("/", 1)[-1] for url in urls}
+
+    assert names(legacy) | names(ml) <= stored(store), "the ml run kept the legacy files"
+    rebuilt = storeEmbeddings(store, {"3": buildDatabase("3", "20261130T000000Z")}, BASE)
+    assert names(ml) <= stored(store), "the legacy run kept the ml files"
+    assert legacy["universes"]["3"]["url"].rsplit("/", 1)[-1] not in stored(store)
+    assert names(rebuilt) <= stored(store)
+    assert json.loads((store / "index-ml.json").read_text()) == ml
+
+
+def test_file_ownership_by_variant():
+    assert ownsFile("EmbeddingModel.4f5f1043f084.npz")
+    assert ownsFile("Embeddings-3.ec81cd63275f.sqlite")
+    assert ownsFile("Embeddings-4-q8.11bfc1181099.sqlite")
+    assert ownsFile(".Embeddings-4-q8.sqlite")
+    assert not ownsFile("EmbeddingModel-ml.4f5f1043f084.npz")
+    assert not ownsFile("Embeddings-ml-3.ec81cd63275f.sqlite")
+    assert ownsFile("EmbeddingModel-ml.4f5f1043f084.npz", "ml")
+    assert ownsFile("Embeddings-ml-3-q8.ec81cd63275f.sqlite", "ml")
+    assert not ownsFile("Embeddings-3.ec81cd63275f.sqlite", "ml")
+    for keep in ("README.md", "Readmes-3.json.gz", "index.json", "index-ml.json"):
+        assert not ownsFile(keep) and not ownsFile(keep, "ml")

@@ -1,8 +1,10 @@
 name: BuildEmbeddings
 
 # Fetch the plugin metadata and readmes, compute the embeddings, store them
-# on the `embeddings` branch. Nothing else: no QGIS, no release API, and the
-# model is converted only once, when the branch has none.
+# on the `embeddings` branch, as two data sets: legacy (potion-base-8M,
+# index.json) and ml (multilingual model, index-ml.json). Nothing else: no
+# QGIS, no release API, and each model is converted only when the branch has
+# none (or, for ml, not this one as int8).
 
 on:
   schedule:
@@ -52,27 +54,66 @@ jobs:
           fi
           ls -l store
 
-      - name: Convert the model (only when none is stored)
+      # Two data sets live side by side on the branch (pipeline/StoreEmbeddings.py):
+      # - legacy: index.json, EmbeddingModel.<hash>.npz, Embeddings-<u>.<hash>.sqlite,
+      #   potion-base-8M, for the released plugin versions up to 0.4.8;
+      # - ml: index-ml.json, EmbeddingModel-ml.<hash>.npz, Embeddings-ml-<u>.<hash>.sqlite,
+      #   the multilingual model, for the plugin versions that read index-ml.json.
+      # Both are built from the same fetched catalogue and readmes.
+      - name: Convert the legacy model (only when none is stored)
         run: |
           if ls store/EmbeddingModel.*.npz >/dev/null 2>&1; then
-            echo "Model already stored: nothing to download."
+            echo "Legacy model already stored: nothing to download."
             exit 0
           fi
-          # minishlab/potion-base-8M: MIT licensed, distilled from the
-          # Apache-2.0 all-MiniLM-L6-v2. Revision and checksum are pinned.
+          # minishlab/potion-base-8M: MIT licensed, distilled from
+          # BAAI/bge-base-en-v1.5 (MIT), then trained with Tokenlearn.
+          # Revision and checksum are pinned.
           REV=bf8b056651a2c21b8d2565580b8569da283cab23
-          mkdir -p build/model
-          curl -fL --retry 3 -o build/model/model.safetensors \
+          mkdir -p build/model-legacy
+          curl -fL --retry 3 -o build/model-legacy/model.safetensors \
             "https://huggingface.co/minishlab/potion-base-8M/resolve/$REV/model.safetensors"
-          echo "f65d0f325faadc1e121c319e2faa41170d3fa07d8c89abd48ca5358d9a223de2  build/model/model.safetensors" | sha256sum --check -
-          curl -fL --retry 3 -o build/model/tokenizer.json \
+          echo "f65d0f325faadc1e121c319e2faa41170d3fa07d8c89abd48ca5358d9a223de2  build/model-legacy/model.safetensors" | sha256sum --check -
+          curl -fL --retry 3 -o build/model-legacy/tokenizer.json \
             "https://huggingface.co/minishlab/potion-base-8M/resolve/$REV/tokenizer.json"
           python pipeline/ConvertStaticModel.py \
-            --model-dir build/model \
+            --model-dir build/model-legacy \
             --model-id static-potion-base-8M \
             --source-model "minishlab/potion-base-8M" \
-            --license-note "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed" \
+            --license-note "MIT (potion-base-8M, distilled from BAAI/bge-base-en-v1.5, MIT); commercial use allowed" \
             --output build/EmbeddingModel.npz
+
+      - name: Convert the multilingual model (only when the stored one is not this model as int8)
+        env:
+          MODEL_ID: static-similarity-mrl-multilingual-v1-256
+        run: |
+          STORED=$(ls store/EmbeddingModel-ml.*.npz 2>/dev/null | head -1)
+          if [ -n "$STORED" ] && python -c "import json,os,sys,numpy as np; m=json.loads(str(np.load(sys.argv[1])['meta'])); sys.exit(not (m.get('dtype') == 'int8' and m.get('model_id') == os.environ['MODEL_ID']))" "$STORED"; then
+            echo "$MODEL_ID already stored as int8: nothing to download."
+            exit 0
+          fi
+          # sentence-transformers/static-similarity-mrl-multilingual-v1:
+          # Apache-2.0, multilingual static embeddings over the uncased
+          # multilingual BERT WordPiece vocabulary, Matryoshka trained, kept
+          # at 256 dimensions. Revision and checksums are pinned.
+          REPO=sentence-transformers/static-similarity-mrl-multilingual-v1
+          REV=b68f4122911bcffcd6e1f695f2d99cd6788972d8
+          mkdir -p build/model-ml
+          curl -fL --retry 3 -o build/model-ml/model.safetensors \
+            "https://huggingface.co/$REPO/resolve/$REV/0_StaticEmbedding/model.safetensors"
+          echo "8245ab78ee71dded845a82d2270fcb9e785b29dad0e1619f69d5390c47d9ba00  build/model-ml/model.safetensors" | sha256sum --check -
+          curl -fL --retry 3 -o build/model-ml/tokenizer.json \
+            "https://huggingface.co/$REPO/resolve/$REV/0_StaticEmbedding/tokenizer.json"
+          echo "11aaf894a4ccf3d95e8830e27c0f8152791fbbff2b988e29a265580b86edd216  build/model-ml/tokenizer.json" | sha256sum --check -
+          python pipeline/ConvertStaticModel.py \
+            --model-dir build/model-ml \
+            --tensor-name embedding.weight \
+            --dims 256 \
+            --model-id "$MODEL_ID" \
+            --source-model "$REPO" \
+            --license-note "Apache-2.0 (sentence-transformers/static-similarity-mrl-multilingual-v1); commercial use allowed" \
+            --dtype int8 \
+            --output build/EmbeddingModel-ml.npz
 
       - name: Fetch, embed and store
         run: |
@@ -81,30 +122,40 @@ jobs:
             "0 3 * * 2") VERSIONS="4.2" ;;
             *) VERSIONS="3.44 4.2" ;;
           esac
-          if [ -f build/EmbeddingModel.npz ]; then
-            MODEL=build/EmbeddingModel.npz
-            MODEL_ARG="--model $MODEL"
-          else
-            MODEL=$(ls store/EmbeddingModel.*.npz)
-            MODEL_ARG=""
-          fi
-          DATABASES=""
+          # A new model changes the vector space: every universe is rebuilt
+          # in the same run, so no database built with the old model remains.
+          if ls build/EmbeddingModel*.npz >/dev/null 2>&1; then VERSIONS="3.44 4.2"; fi
           for v in $VERSIONS; do
-            u=${v%%.*}
             # Only new or updated plugins are fetched; the cache lives on the branch.
             python pipeline/FetchCatalogue.py "$v" --output-dir build --connections 12 \
-              --readme-cache "store/Readmes-$u.json.gz" $REFRESH_READMES
-            python pipeline/BuildEmbeddings.py \
-              --catalogue "build/plugins-$v.xml" \
-              --readmes "build/plugins-$v" \
-              --readme-urls "build/readme-urls-$v.json" \
-              --model "$MODEL" \
-              --universe "$u" \
-              --output "build/Embeddings-$u.sqlite"
-            DATABASES="$DATABASES --database $u=build/Embeddings-$u.sqlite"
+              --readme-cache "store/Readmes-${v%%.*}.json.gz" $REFRESH_READMES
           done
-          python pipeline/StoreEmbeddings.py --store store $DATABASES $MODEL_ARG \
-            --base-url "https://raw.githubusercontent.com/${{ github.repository }}/embeddings"
+          # Variant "" is the legacy data set, "ml" the multilingual one.
+          for variant in "" ml; do
+            SUFFIX=${variant:+-$variant}
+            if [ -f "build/EmbeddingModel$SUFFIX.npz" ]; then
+              MODEL="build/EmbeddingModel$SUFFIX.npz"
+              MODEL_ARG="--model $MODEL"
+            else
+              MODEL=$(ls store/EmbeddingModel$SUFFIX.*.npz)
+              MODEL_ARG=""
+            fi
+            DATABASES=""
+            for v in $VERSIONS; do
+              u=${v%%.*}
+              python pipeline/BuildEmbeddings.py \
+                --catalogue "build/plugins-$v.xml" \
+                --readmes "build/plugins-$v" \
+                --readme-urls "build/readme-urls-$v.json" \
+                --model "$MODEL" \
+                --universe "$u" \
+                --output "build/Embeddings$SUFFIX-$u.sqlite"
+              DATABASES="$DATABASES --database $u=build/Embeddings$SUFFIX-$u.sqlite"
+            done
+            python pipeline/StoreEmbeddings.py --store store $DATABASES $MODEL_ARG \
+              ${variant:+--variant $variant} \
+              --base-url "https://raw.githubusercontent.com/${{ github.repository }}/embeddings"
+          done
 
       - name: Push the embeddings branch
         run: |
@@ -113,7 +164,7 @@ jobs:
           # A single commit, force pushed: the branch never accumulates history.
           # Only the data files are committed, whatever else the directory holds.
           git init -q -b embeddings
-          git add -- index.json README.md EmbeddingModel.*.npz Embeddings-*.sqlite Readmes-*.json.gz
+          git add -- index.json index-ml.json README.md EmbeddingModel*.npz Embeddings-*.sqlite Readmes-*.json.gz
           git -c user.name="github-actions[bot]" \
               -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
               commit -q -m "Embeddings $(date -u +%Y-%m-%dT%H:%MZ)"

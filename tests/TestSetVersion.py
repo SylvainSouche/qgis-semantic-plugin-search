@@ -3,7 +3,14 @@ from __future__ import annotations
 
 import pytest
 
-from tools.SetVersion import TODO_MARK, VersionError, incremented, main, withVersion
+from tools.SetVersion import (
+    TODO_MARK,
+    VersionError,
+    incremented,
+    main,
+    withChangelogEntry,
+    withVersion,
+)
 
 METADATA = """; @impl x
 [general]
@@ -40,9 +47,11 @@ def test_the_new_version_gets_a_changelog_entry_to_fill_in():
 def test_the_cli_rewrites_the_file(tmp_path):
     metadata = tmp_path / "metadata.txt"
     metadata.write_text(METADATA, encoding="utf-8")
-    assert main(["--increment", "min", "--metadata", str(metadata)]) == 0
+    assert main(["--increment", "min", "--metadata", str(metadata),
+                 "--changelog", str(tmp_path / "none.md")]) == 0
     assert "version=0.5.0" in metadata.read_text(encoding="utf-8")
-    assert main(["--set", "bad", "--metadata", str(metadata)]) == 1
+    assert main(["--set", "bad", "--metadata", str(metadata),
+                 "--changelog", str(tmp_path / "none.md")]) == 1
     assert "version=0.5.0" in metadata.read_text(encoding="utf-8")
 
 
@@ -55,5 +64,40 @@ def test_a_comment_becomes_the_changelog_entry():
 def test_the_cli_accepts_a_comment(tmp_path):
     metadata = tmp_path / "metadata.txt"
     metadata.write_text(METADATA, encoding="utf-8")
-    assert main(["--increment", "rel", "--comment", "Badges", "--metadata", str(metadata)]) == 0
+    changelog = tmp_path / "CHANGELOG.md"
+    changelog.write_text(CHANGELOG, encoding="utf-8")
+    assert main(["--increment", "rel", "--comment", "Badges", "--metadata", str(metadata),
+                 "--changelog", str(changelog)]) == 0
     assert "changelog=0.4.1 - Badges" in metadata.read_text(encoding="utf-8")
+    assert "- **0.4.1** (" in changelog.read_text(encoding="utf-8")
+
+
+CHANGELOG = """# Changelog
+
+Intro.
+
+## 0.4: Fixes
+
+Released.
+
+- **0.4.0** (2026-10-30): Fixes
+
+## 0.3: Hardening
+
+- **0.3.0** (2026-10-30): Hardening
+"""
+
+
+def test_a_release_joins_its_series_in_the_changelog():
+    text = withChangelogEntry(CHANGELOG, "0.4.1", "Badges", "2026-11-23")
+    assert "Released.\n\n- **0.4.1** (2026-11-23): Badges\n- **0.4.0**" in text
+
+
+def test_a_new_series_gets_its_own_heading():
+    text = withChangelogEntry(CHANGELOG, "0.5.0", "", "2026-11-23")
+    assert f"Intro.\n\n## 0.5\n\n- **0.5.0** (2026-11-23): {TODO_MARK}\n\n## 0.4: Fixes" in text
+
+
+def test_a_percent_sign_in_the_comment_is_refused():
+    with pytest.raises(VersionError, match="percent"):
+        withVersion(METADATA, "0.4.1", "45% smaller")

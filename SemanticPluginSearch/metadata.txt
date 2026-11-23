@@ -3,21 +3,39 @@
 name=Semantic Plugin Search
 qgisMinimumVersion=3.44
 qgisMaximumVersion=4.99
-description=Find QGIS plugins with natural language semantic search over plugin metadata and readmes
-about=Describe what you need in plain language, for example "classify a drone orthophoto into land cover classes" or "create contour lines from a DEM", and get the matching QGIS plugins ranked by relevance, with their metadata, readme and the usual Install, Upgrade, Reinstall and Uninstall buttons, which are carried out by the standard plugin manager. Plugins you already have are marked installed, or update when a newer version exists. Requirements: an internet connection on first use, to download a compact embedding model (about 17 MB) and the plugin index for your QGIS version (about 5 MB) from the project GitHub repository; both are cached in your profile and refreshed automatically. No other dependency: numpy, which QGIS bundles, and the Python standard library. Your query never leaves your machine: it is turned into an embedding locally.
-version=0.4.8
+description=Find QGIS plugins by describing what you need, in your own language: multilingual semantic search over plugin metadata and readmes
+about=Describe what you need in plain language, in English or in your own language, for example "classify a drone orthophoto into land cover classes" or "créer des courbes de niveau à partir d'un MNT", and get the matching QGIS plugins ranked by relevance, with their metadata, readme and the usual Install, Upgrade, Reinstall and Uninstall buttons, which are carried out by the standard plugin manager. Plugins you already have are marked installed, or update when a newer version exists. Requirements: an internet connection on first use, to download a compact multilingual embedding model (about 20 MB) and the plugin index for your QGIS version (a few MB) from the project GitHub repository; both are cached in your profile and refreshed automatically. No other dependency: numpy, which QGIS bundles, and the Python standard library. Your query never leaves your machine: it is turned into an embedding locally.
+version=0.7.3
 author=SylvainSouche
 email=sylvain@souche.fr
 tracker=https://github.com/SylvainSouche/qgis-semantic-plugin-search/issues
 repository=https://github.com/SylvainSouche/qgis-semantic-plugin-search
 homepage=https://github.com/SylvainSouche/qgis-semantic-plugin-search
 icon=assets/Icon.svg
-tags=semantic search,embeddings,plugin manager,discovery,nlp
+tags=semantic search,embeddings,plugin manager,discovery,nlp,multilingual
 experimental=True
 deprecated=False
 server=False
 license=MIT
-changelog=0.4.8 - Author email in the metadata, ready for the plugin repository
+changelog=0.7.3 - metadata.txt without percent signs, which the plugin repository rejects; make dist and make increment now refuse them
+    0.7.2 - CHANGELOG.md with every version grouped by series; make increment adds each new entry to it
+    0.7.1 - Tests run Python 3.9 and 3.12 in the official Python containers
+    0.7.0 - Search in your own language: multilingual model (21 languages measured, a need matches its translation 87 percent of the time against 31 percent before), English results on a par; plugin index stored as int8, about 45 percent smaller
+    0.6.4 - GIS vocabulary rerun with the updated glossary: no gain beyond noise, not shipped; benchmark kept
+    0.6.3 - GIS vocabulary benchmark rebuilt from the updated gis-glossary (INSPIRE, OpenStreetMap tagging schema, GEMET and CORINE added): 4,881 words
+    0.6.2 - Benchmark also reruns when the search engine, tokenizer, model loader or converter change
+    0.6.1 - Tokenizer matches the reference BERT tokenizer exactly: control and format characters removed, text kept decomposed after accent stripping, lowercasing per character
+    0.6.0 - Multilingual search: the static model becomes static-similarity-mrl-multilingual-v1 (Apache-2.0, 256 dimensions, int8), chosen with the embedding benchmark; the model stays int8 in memory
+    0.5.8 - Benchmark also reruns when queries, judgments or evaluation code change
+    0.5.7 - Language matrix over the 21 languages the plugin aims to serve, Arabic included
+    0.5.6 - Language matrix over the gis-glossary project's languages: the 40 needs translated into Norwegian Bokmål and Nynorsk, Icelandic, Danish, Swedish, Polish, Slovenian, Slovak, Greek, Romanian and Bulgarian
+    0.5.5 - Embedding benchmark: language matrix (alignment of the same need across nine query languages) and reruns named in a commit message
+    0.5.4 - Benchmark of GIS vocabulary added to the static model, from the gis-glossary project; potion-base-8M's origin corrected to bge-base-en-v1.5
+    0.5.3 - int8 search model and int8 copies of the plugin vector databases: about half the first download, no measured quality loss, released versions keep working
+    0.5.2 - README states the objective (describe a need instead of knowing keywords, then beat keyword search), where it stands and the techniques evaluated
+    0.5.1 - Search evaluation with blind sentence and keyword queries, keyword sessions, and an embedding model benchmark workflow
+    0.5.0 - Search quality evaluation against keyword baselines and a cross language assessment
+    0.4.8 - Author email in the metadata, ready for the plugin repository
     0.4.7 - make works on Cygwin and Windows: skips the Microsoft Store python3 placeholder and builds the zip without the zip command
     0.4.6 - make rebuilds a .venv whose Python no longer runs (removed or upgraded interpreter) instead of failing
     0.4.5 - make dist, version and increment need no venv or numpy and work where Python is called python (Cygwin, Windows); the package checks run standalone

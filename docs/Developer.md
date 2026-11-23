@@ -34,11 +34,53 @@ branch "embeddings"                            QGIS
 
 ### Embeddings
 
-The model is a **static token embedding** (model2vec style):
-[minishlab/potion-base-8M](https://huggingface.co/minishlab/potion-base-8M),
-MIT licensed and distilled from the Apache-2.0 all-MiniLM-L6-v2, converted
-into a plain float16 matrix of token vectors (`.npz`, about 17 MB, 29528
-tokens × 256 dimensions). The revision and file checksum are pinned.
+The model is a **static token embedding**:
+[sentence-transformers/static-similarity-mrl-multilingual-v1](https://huggingface.co/sentence-transformers/static-similarity-mrl-multilingual-v1).
+
+- **Licence and vocabulary:** Apache-2.0, over the uncased multilingual BERT
+  WordPiece vocabulary of 105,879 tokens.
+- **Conversion:** its token vectors are trained Matryoshka style, so they
+  are cut to their first 256 dimensions. They are stored as a compressed
+  int8 matrix with one global scale (`.npz`, about 25 MB). The plugin keeps
+  that matrix as int8 in memory, about 27 MB, and converts rows as it looks
+  them up.
+- **Pinning:** the revision and both file checksums are pinned in the
+  BuildEmbeddings workflow.
+- **Why this model:** it was chosen with the embedding benchmark. Across 21
+  languages, a need's sentence finds its English counterpart 95–100% of the
+  time (Icelandic 65%), against 10–65% for the previous English-only
+  potion-base-8M. That model is MIT licensed and was distilled from
+  BAAI/bge-base-en-v1.5.
+- **Switching models:** the workflow converts the model again whenever the
+  stored model id differs, and then rebuilds every universe in the same run.
+  `pipeline/StoreEmbeddings.py` refuses a database built with another model. One scale for the whole table keeps released plugin
+versions working: they ignore it, and the normalised mean of the token
+vectors is unchanged by a constant factor.
+
+The `embeddings` branch holds two data sets side by side, built in the same
+run from the same catalogue and readmes (`StoreEmbeddings.py --variant`):
+
+| data set | index | files | model | read by |
+|---|---|---|---|---|
+| legacy | `index.json` | `EmbeddingModel.<hash>.npz`, `Embeddings-<u>.<hash>.sqlite` | potion-base-8M | released versions up to 0.4.8 |
+| ml | `index-ml.json` | `EmbeddingModel-ml.<hash>.npz`, `Embeddings-ml-<u>.<hash>.sqlite` | static-similarity-mrl-multilingual-v1, 256 dims | this version and later |
+
+A run of one data set never deletes the other's files; the readme caches are
+shared. Old installations keep the model they were released with until they
+update the plugin. The legacy data set can go once no supported version reads
+`index.json`.
+
+Within each data set the plugin vectors are stored twice:
+
+- as float32 under `universes`, which every plugin version reads;
+- as int8 with a per-vector scale under `universes_q8`
+  (`pipeline/QuantizeDatabase.py`, `Data/VectorCodec.py`), about 45 % smaller,
+  which this version prefers.
+
+The search quality evaluation measured no loss from either quantization: on
+QGIS 3, nDCG@10 is 0.517 against 0.518 for a sentence, and 0.563 against
+0.558 for keywords. The float32 files can go once released versions older
+than this one no longer matter.
 
 Plugin side, a query is tokenized by a pure-Python BERT WordPiece tokenizer,
 its token vectors are looked up and mean-pooled with numpy, and the result
@@ -62,6 +104,12 @@ live in the same space.
 The lexical index is an inverted index built once per database. A query
 over the 1567 plugins of QGIS 4.2 takes about 1 to 6 ms. The percentage
 shown is the hybrid score, capped at 100.
+
+How good this ranking is, against keyword search and across languages, is
+measured by `make eval` and discussed in
+[SearchQualityEvaluation.md](SearchQualityEvaluation.md). Rerun it before
+changing weights, text preparation or the model. Alternative models are
+compared by the BenchmarkEmbeddings workflow, on GitHub's runners.
 
 ### Installed state
 
@@ -94,6 +142,7 @@ download.
 | `SemanticPluginSearch/QgisBridge/` | The only QGIS-aware code: paths, settings, message bar, network, installer, threads |
 | `pipeline/` | GitHub side: fetch, embed, convert model, write index, publish gate |
 | `tools/` | Headless smoke test inside a real QGIS |
+| `evaluation/` | Search quality evaluation: golden queries, relevance judgments, runner (`make eval`) |
 | `tests/` | Functional suite, runs without QGIS |
 | `project-model/` | Requirements, decisions, use cases and their links to code |
 | `docs/` | User guide, this guide, and the generated specification |
@@ -128,6 +177,8 @@ make test        # pytest suite, no QGIS needed (ARGS="-k ranking" to filter)
 make smoke       # load and exercise the plugin headless in every installed QGIS
 make fetch       # catalogue and readmes into data/ (QGIS_VERSIONS="3.44 4.2")
 make embed       # model and per-universe databases into build/, fetching first if needed
+make eval        # search quality vs keyword baselines and across languages, on a pinned snapshot
+make benchmark   # the same for embedding models in evaluation/Candidates.json (CI: BenchmarkEmbeddings)
 make dist        # package checks (standard library only, no venv), then dist/SemanticPluginSearch.<version>.zip
 make version VERSION=0.4.1 COMMENT="What changed"   # set the version and its changelog entry
 make increment INC=rel COMMENT="What changed"       # bump maj, min or rel (0.4.0 -> 1.0.0, 0.5.0, 0.4.1)
@@ -170,16 +221,18 @@ a manual run builds both. Each run:
    guesses come first, then one GitHub API call only when every guess
    missed, and a capped package download as the last resort. A manual run
    with *refresh_readmes* fetches everything again;
-4. builds each embeddings database (`BuildEmbeddings.py`);
-5. stores them (`StoreEmbeddings.py`): content addressed file names, the
-   universes not rebuilt carried over, the run refused if a universe has no
-   plugins or its count moved more than 10% (`PublishGate.py`), stale files
-   pruned, and `index.json` written;
+4. builds each embeddings database (`BuildEmbeddings.py`), once per data set;
+5. stores them (`StoreEmbeddings.py`, once per data set): content addressed
+   file names, the universes not rebuilt carried over, the run refused if a
+   universe has no plugins or its count moved more than 10% (`PublishGate.py`),
+   the data set's stale files pruned, and `index.json` or `index-ml.json`
+   written;
 6. force pushes the branch as a single commit, so it never accumulates
    history.
 
 The job stops after 60 minutes. The plugin reads
-`https://raw.githubusercontent.com/<repo>/embeddings/index.json`, and because
+`https://raw.githubusercontent.com/<repo>/embeddings/index-ml.json` (versions
+up to 0.4.8 read `index.json`), and because
 the data files carry a content hash in their names, the raw host's cache
 can never pair a new index with an old file.
 
@@ -194,9 +247,11 @@ version.
 
 1. `make increment INC=rel COMMENT="What changed"` (or `INC=min`, `INC=maj`,
    or `make version VERSION=x.y.z COMMENT="..."`). This sets the version in
-   `metadata.txt` and adds the changelog entry. Without `COMMENT`, the entry
-   reads `<version> - TODO describe this release`: replace the TODO with
-   what changed.
+   `metadata.txt` and adds the changelog entry, there and, dated, in
+   [CHANGELOG.md](../CHANGELOG.md) under its MAJOR.MINOR series (give a new
+   series' heading a title). Without `COMMENT`, the entry reads
+   `<version> - TODO describe this release`: replace the TODO in both files
+   with what changed.
 2. `make test`, then `make dist`. `make dist` runs `tools/PackageCheck.py`
    (repository rules, LICENSE, no binaries, QGIS network stack only, every
    private attribute defined, changelog entry not a TODO) and refuses to

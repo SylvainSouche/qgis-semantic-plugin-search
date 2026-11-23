@@ -1,0 +1,13 @@
+You want to find a QGIS plugin that helps you with this task:
+
+{task}
+
+Answer from your own knowledge only. Do not use any tools: do not read, search or open any file or web page.
+
+Write the two searches you would make to find such a plugin:
+
+1. sentence: a short, direct description of what you need, in fewer than 10 words, as you would type it into a search box that understands plain language.
+2. keywords: what you would type into a keyword search box, in the order you would type them. The first keyword is what you would try on its own. If the results were not good enough, you would add the second keyword after it, so the box then holds both, and so on. Each keyword adds something new: do not repeat a word already typed. Give two to four keywords; a keyword may be a short term of two words.
+
+Reply with only this JSON object and nothing else:
+{"sentence": "...", "keywords": ["...", "..."]}
