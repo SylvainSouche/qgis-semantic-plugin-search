@@ -5,7 +5,7 @@ qgisMinimumVersion=3.44
 qgisMaximumVersion=4.99
 description=Find QGIS plugins by describing what you need, in your own language: multilingual semantic search over plugin metadata and readmes
 about=Describe what you need in plain language, in English or in your own language, for example "classify a drone orthophoto into land cover classes" or "créer des courbes de niveau à partir d'un MNT", and get the matching QGIS plugins ranked by relevance, with their metadata, readme and the usual Install, Upgrade, Reinstall and Uninstall buttons, which are carried out by the standard plugin manager. Plugins you already have are marked installed, or update when a newer version exists. Requirements: an internet connection on first use, to download a compact multilingual embedding model (about 20 MB) and the plugin index for your QGIS version (a few MB) from the project GitHub repository; both are cached in your profile and refreshed automatically. No other dependency: numpy, which QGIS bundles, and the Python standard library. Your query never leaves your machine: it is turned into an embedding locally.
-version=0.7.2
+version=0.7.3
 author=SylvainSouche
 email=sylvain@souche.fr
 tracker=https://github.com/SylvainSouche/qgis-semantic-plugin-search/issues
@@ -17,9 +17,10 @@ experimental=True
 deprecated=False
 server=False
 license=MIT
-changelog=0.7.2 - CHANGELOG.md with every version grouped by series; make increment adds each new entry to it
+changelog=0.7.3 - metadata.txt without percent signs, which the plugin repository rejects; make dist and make increment now refuse them
+    0.7.2 - CHANGELOG.md with every version grouped by series; make increment adds each new entry to it
     0.7.1 - Tests run Python 3.9 and 3.12 in the official Python containers
-    0.7.0 - Search in your own language: multilingual model (21 languages measured, a need matches its translation 87% of the time against 31% before), English results on a par; plugin index stored as int8, about 45% smaller
+    0.7.0 - Search in your own language: multilingual model (21 languages measured, a need matches its translation 87 percent of the time against 31 percent before), English results on a par; plugin index stored as int8, about 45 percent smaller
     0.6.4 - GIS vocabulary rerun with the updated glossary: no gain beyond noise, not shipped; benchmark kept
     0.6.3 - GIS vocabulary benchmark rebuilt from the updated gis-glossary (INSPIRE, OpenStreetMap tagging schema, GEMET and CORINE added): 4,881 words
     0.6.2 - Benchmark also reruns when the search engine, tokenizer, model loader or converter change

@@ -45,6 +45,21 @@ def test_a_todo_changelog_entry_is_refused(tmp_path):
     assert any("TODO" in problem for problem in problems)
 
 
+def test_a_percent_sign_is_refused(tmp_path):
+    # plugins.qgis.org parses metadata.txt with ConfigParser interpolation.
+    plugin = tmp_path / "Plugin"
+    plugin.mkdir()
+    (plugin / "metadata.txt").write_text(
+        "[general]\nname=X\nqgisMinimumVersion=3.44\nqgisMaximumVersion=4.99\n"
+        "description=d\nabout=a\nversion=1.0.1\nauthor=me\n"
+        "repository=https://x.test/r\ntracker=https://x.test/r/issues\nhomepage=https://x.test/r\n"
+        "changelog=1.0.1 - 45% smaller\n    1.0.0 - First\n",
+        encoding="utf-8",
+    )
+    problems = PackageCheck.metadataProblems(plugin)
+    assert any("changelog contains %" in problem for problem in problems)
+
+
 def test_the_zip_holds_the_plugin_folder_without_caches(tmp_path):
     import zipfile
 

@@ -96,3 +96,8 @@ def test_a_release_joins_its_series_in_the_changelog():
 def test_a_new_series_gets_its_own_heading():
     text = withChangelogEntry(CHANGELOG, "0.5.0", "", "2026-11-23")
     assert f"Intro.\n\n## 0.5\n\n- **0.5.0** (2026-11-23): {TODO_MARK}\n\n## 0.4: Fixes" in text
+
+
+def test_a_percent_sign_in_the_comment_is_refused():
+    with pytest.raises(VersionError, match="percent"):
+        withVersion(METADATA, "0.4.1", "45% smaller")

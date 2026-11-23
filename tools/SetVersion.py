@@ -67,6 +67,9 @@ def withVersion(metadata: str, version: str, comment: str = "") -> str:
     text = re.sub(r"^version=.*$", f"version={version}", metadata, count=1, flags=re.M)
     match = re.search(r"^changelog=(.*)$", text, re.M)
     comment = " ".join(comment.split())  # one line: the changelog is line based
+    if "%" in comment:
+        # plugins.qgis.org parses metadata.txt with ConfigParser interpolation.
+        raise VersionError("the plugin repository rejects % in metadata.txt: write percent")
     stub = f"{version} - {comment or TODO_MARK}"
     if match:
         text = (

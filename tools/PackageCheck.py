@@ -60,6 +60,21 @@ def versionTuple(text: str) -> tuple[int, ...]:
     return tuple(int(part) for part in text.split("."))
 
 
+def interpolationProblems(pluginRoot: Path = PLUGIN_ROOT) -> list[str]:
+    """plugins.qgis.org reads metadata.txt with interpolation on: a bare % fails the upload."""
+    parser = configparser.ConfigParser()
+    parser.optionxform = str
+    parser.read(pluginRoot / "metadata.txt", encoding="utf-8")
+    problems = []
+    for key in parser["general"]:
+        try:
+            parser["general"][key]
+        except configparser.InterpolationError:
+            problems.append(f"{key} contains %, which the plugin repository rejects:"
+                            " write percent instead")
+    return problems
+
+
 def metadataProblems(pluginRoot: Path = PLUGIN_ROOT) -> list[str]:
     general = metadata(pluginRoot)
     problems = [f"missing metadata: {key}" for key in MANDATORY if not general.get(key, "").strip()]
@@ -87,7 +102,7 @@ def metadataProblems(pluginRoot: Path = PLUGIN_ROOT) -> list[str]:
         problems.append(f"category must be one of {', '.join(CATEGORIES)}")
     if general.get("name", "").lower().rstrip().endswith("plugin"):
         problems.append("the name must not end with the word plugin")
-    return problems
+    return problems + interpolationProblems(pluginRoot)
 
 
 def missingEmail(pluginRoot: Path = PLUGIN_ROOT) -> bool:

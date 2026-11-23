@@ -12,6 +12,7 @@ The plugin uses a multilingual static model and reads its own data set,
 `index-ml.json`, so versions up to 0.4.8 keep their English model and data.
 The first release on the QGIS plugin repository since 0.4.8.
 
+- **0.7.3** (2026-11-23): metadata.txt without percent signs, which the plugin repository rejects; make dist and make increment now refuse them
 - **0.7.2** (2026-11-23): CHANGELOG.md with every version grouped by series; make increment adds each new entry to it
 - **0.7.1** (2026-11-23): Tests run Python 3.9 and 3.12 in the official Python containers
 - **0.7.0** (2026-11-23): Search in your own language: multilingual model (21 languages measured, a need matches its translation 87% of the time against 31% before), English results on a par; plugin index stored as int8, about 45% smaller
