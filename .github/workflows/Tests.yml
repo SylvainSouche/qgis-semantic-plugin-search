@@ -9,11 +9,12 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.9", "3.12"]
+    # The official Python images, not setup-python: the runner images drop
+    # old Python versions (3.9 is gone from Ubuntu 26.04), and 3.9 is still
+    # the minimum the plugin and the Makefile support.
+    container: python:${{ matrix.python-version }}-slim
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
       - run: python -m pip install numpy pytest ruff
       - name: Lint
         run: ruff check SemanticPluginSearch pipeline tests tools
