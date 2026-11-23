@@ -101,6 +101,8 @@ Two projects are under way to extend the multilingual search (details in
   fine-tune the model, with extra attention to the languages it handles
   least well today (Icelandic, Greek, Arabic, Nynorsk).
 
+What changed in each version is in [CHANGELOG.md](CHANGELOG.md).
+
 ## What it does
 
 - **Search in plain language, in your language.** Results update as you

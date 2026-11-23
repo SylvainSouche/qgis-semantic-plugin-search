@@ -9,16 +9,21 @@ of the changelog: "<version> - <comment>", or without a comment
 "<version> - TODO describe this release". The QGIS plugin repository
 requires a changelog for updates, and TestPluginRepositoryRules (so
 `make dist`) refuses to package while the current version's entry still
-says TODO.
+says TODO. The same entry, dated, goes into CHANGELOG.md, under the heading
+of its MAJOR.MINOR series (a new series gets a new heading to title).
 """
 from __future__ import annotations
 
 import argparse
+import datetime
 import re
 import sys
 from pathlib import Path
 
-METADATA = Path(__file__).resolve().parents[1] / "SemanticPluginSearch" / "metadata.txt"
+ROOT = Path(__file__).resolve().parents[1]
+METADATA = ROOT / "SemanticPluginSearch" / "metadata.txt"
+CHANGELOG = ROOT / "CHANGELOG.md"
+ENTRY_RE = re.compile(r"^- \*\*(\d+)\.(\d+)\.\d+\*\*", re.M)
 VERSION_RE = re.compile(r"^(\d+)\.(\d+)\.(\d+)$")
 PARTS = ("maj", "min", "rel")
 TODO_MARK = "TODO describe this release"
@@ -74,6 +79,20 @@ def withVersion(metadata: str, version: str, comment: str = "") -> str:
     return text
 
 
+def withChangelogEntry(changelog: str, version: str, comment: str, date: str) -> str:
+    """CHANGELOG.md with the version's entry on top of its series."""
+    major, minor, _ = parseVersion(version)
+    entry = f"- **{version}** ({date}): {' '.join(comment.split()) or TODO_MARK}\n"
+    latest = ENTRY_RE.search(changelog)
+    if latest and (int(latest.group(1)), int(latest.group(2))) == (major, minor):
+        return changelog[: latest.start()] + entry + changelog[latest.start():]
+    section = f"## {major}.{minor}\n\n{entry}\n"
+    heading = re.search(r"^## ", changelog, re.M)
+    if heading:
+        return changelog[: heading.start()] + section + changelog[heading.start():]
+    return changelog.rstrip("\n") + "\n\n" + section
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     group = parser.add_mutually_exclusive_group(required=True)
@@ -81,6 +100,8 @@ def main(argv: list[str] | None = None) -> int:
     group.add_argument("--increment", metavar="PART", help="maj, min or rel")
     parser.add_argument("--comment", default="", help="Changelog entry for the new version")
     parser.add_argument("--metadata", default=str(METADATA))
+    parser.add_argument("--changelog", default=str(CHANGELOG),
+                        help="CHANGELOG.md to update too (skipped when missing)")
     args = parser.parse_args(argv)
 
     path = Path(args.metadata)
@@ -89,6 +110,12 @@ def main(argv: list[str] | None = None) -> int:
         current = currentVersion(metadata)
         version = args.set if args.set else incremented(current, args.increment)
         path.write_text(withVersion(metadata, version, args.comment), encoding="utf-8")
+        changelog = Path(args.changelog)
+        if changelog.is_file():
+            today = datetime.date.today().isoformat()
+            changelog.write_text(withChangelogEntry(changelog.read_text(encoding="utf-8"),
+                                                    version, args.comment, today),
+                                 encoding="utf-8")
     except VersionError as error:
         print(f"Version unchanged: {error}", file=sys.stderr)
         return 1

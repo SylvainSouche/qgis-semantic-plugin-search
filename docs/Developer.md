@@ -247,9 +247,11 @@ version.
 
 1. `make increment INC=rel COMMENT="What changed"` (or `INC=min`, `INC=maj`,
    or `make version VERSION=x.y.z COMMENT="..."`). This sets the version in
-   `metadata.txt` and adds the changelog entry. Without `COMMENT`, the entry
-   reads `<version> - TODO describe this release`: replace the TODO with
-   what changed.
+   `metadata.txt` and adds the changelog entry, there and, dated, in
+   [CHANGELOG.md](../CHANGELOG.md) under its MAJOR.MINOR series (give a new
+   series' heading a title). Without `COMMENT`, the entry reads
+   `<version> - TODO describe this release`: replace the TODO in both files
+   with what changed.
 2. `make test`, then `make dist`. `make dist` runs `tools/PackageCheck.py`
    (repository rules, LICENSE, no binaries, QGIS network stack only, every
    private attribute defined, changelog entry not a TODO) and refuses to
