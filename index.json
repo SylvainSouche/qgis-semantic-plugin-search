@@ -1,0 +1,47 @@
+{
+  "format": "qgis-semantic-search-index-v1",
+  "generated_at": "20261124T131527Z",
+  "model": {
+    "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/EmbeddingModel.4f5f1043f084.npz",
+    "sha256": "4f5f1043f084e1266598fa95f2286fafdb880f18984c58de9f0d25ee9255d805",
+    "bytes": 17246212,
+    "model_id": "static-potion-base-8M",
+    "dim": 256,
+    "format": "static-token-embeddings-v1",
+    "tokenizer": "bert-wordpiece-uncased",
+    "license": "MIT (potion-base-8M), distilled from all-MiniLM-L6-v2 (Apache-2.0); commercial use allowed",
+    "source_model": "minishlab/potion-base-8M"
+  },
+  "universes": {
+    "3": {
+      "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/Embeddings-3.ba7eba1147c0.sqlite",
+      "sha256": "ba7eba1147c07c3f9a6f06f3f0f8797e0e110c0e3a6794046e4ba43cc6ee19c0",
+      "bytes": 12726272,
+      "build_stamp": "20261123T171036Z",
+      "plugin_count": 4010
+    },
+    "4": {
+      "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/Embeddings-4.9e8026c6ebaa.sqlite",
+      "sha256": "9e8026c6ebaab0545a48fa6b0818a971e19e31ee63830a5687d1c7c5c6ab3ead",
+      "bytes": 5816320,
+      "build_stamp": "20261124T131508Z",
+      "plugin_count": 1718
+    }
+  },
+  "universes_q8": {
+    "3": {
+      "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/Embeddings-3-q8.94f744ba841c.sqlite",
+      "sha256": "94f744ba841ccff5699efda2eabd9b7f4b21094277353d4693cc9aff484bd317",
+      "bytes": 7188480,
+      "build_stamp": "20261123T171036Z",
+      "plugin_count": 4010
+    },
+    "4": {
+      "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/Embeddings-4-q8.1b1ab2f71737.sqlite",
+      "sha256": "1b1ab2f71737d79de997d3fb309654c06b5bd0c65a239a4faa63dd877f7aa9b1",
+      "bytes": 3485696,
+      "build_stamp": "20261124T131508Z",
+      "plugin_count": 1718
+    }
+  }
+}

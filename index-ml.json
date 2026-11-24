@@ -1,0 +1,47 @@
+{
+  "format": "qgis-semantic-search-index-v1",
+  "generated_at": "20261124T131546Z",
+  "model": {
+    "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/EmbeddingModel-ml.31012f2e1fb2.npz",
+    "sha256": "31012f2e1fb21a740c8890570db8869a833630a19e4cc0c0563ce7730afd0229",
+    "bytes": 19811311,
+    "model_id": "static-similarity-mrl-multilingual-v1-256",
+    "dim": 256,
+    "format": "static-token-embeddings-v1",
+    "tokenizer": "bert-wordpiece-uncased",
+    "license": "Apache-2.0 (sentence-transformers/static-similarity-mrl-multilingual-v1); commercial use allowed",
+    "source_model": "sentence-transformers/static-similarity-mrl-multilingual-v1"
+  },
+  "universes": {
+    "3": {
+      "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/Embeddings-ml-3.30e65e36e246.sqlite",
+      "sha256": "30e65e36e246d242de3824e018fdb1626872ec880bd337707b2d816bbb03c4bd",
+      "bytes": 12726272,
+      "build_stamp": "20261123T171132Z",
+      "plugin_count": 4010
+    },
+    "4": {
+      "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/Embeddings-ml-4.a347a0e6c8e9.sqlite",
+      "sha256": "a347a0e6c8e9ee2b06d3a751d35716959af86355212746fb4e49522691f7de16",
+      "bytes": 5816320,
+      "build_stamp": "20261124T131528Z",
+      "plugin_count": 1718
+    }
+  },
+  "universes_q8": {
+    "3": {
+      "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/Embeddings-ml-3-q8.47f6e7ea2abc.sqlite",
+      "sha256": "47f6e7ea2abc1aa88ab5ea05c7fc93da12b693e8b22540584b0da997d971e87b",
+      "bytes": 7188480,
+      "build_stamp": "20261123T171132Z",
+      "plugin_count": 4010
+    },
+    "4": {
+      "url": "https://raw.githubusercontent.com/SylvainSouche/qgis-semantic-plugin-search/embeddings/Embeddings-ml-4-q8.a6dedc1a91c4.sqlite",
+      "sha256": "a6dedc1a91c4d0dbcb5ca72fb9c7c07db75fd5f9444b0062a8fcc419c800b011",
+      "bytes": 3485696,
+      "build_stamp": "20261124T131528Z",
+      "plugin_count": 1718
+    }
+  }
+}
